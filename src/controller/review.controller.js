@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const axios = require("axios");
 const db = require("../config/db");
 
@@ -18,7 +20,8 @@ exports.createReview = async (req, res) => {
       return res.status(400).json({ message: 'Review é obrigatoria!' });
     }
 
-    const omdbResponse = await axios.get(`http://www.omdbapi.com/?t=${title}&apikey=8acf114e`);
+    const omdbApiKey = process.env.OMDB_API_KEY;
+    const omdbResponse = await axios.get(`http://www.omdbapi.com/?t=${title}&apikey=${omdbApiKey}`);
     if (!omdbResponse.data || omdbResponse.data.Error) {
       return res.status(400).json({ message: 'Filme não encontrado no OMDB' });
     }

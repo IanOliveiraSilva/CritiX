@@ -1,7 +1,5 @@
 const userController = require('../src/controller/user.controller')
-const reviewController = require('../src/controller/review.controller')
-const jwt = require('jsonwebtoken');
-const db = require("../src/config/db");
+
 
 
 describe('User Controller', () => {
