@@ -91,6 +91,11 @@ Para executar os testes, utilize o seguinte comando:
   npm run test
 ```
 
+## Database diagram
+
+![App Screenshot](databasediagram.png)
+
+
 
 ## Roadmap
 
