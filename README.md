@@ -32,6 +32,14 @@ Agora você pode prosseguir com as etapas de instalação local.
 ```bash
   git clone https://github.com/IanOliveiraSilva/CriticX
 ```
+### Configure o banco de dados:
+- Certifique-se de ter o PostgreSQL instalado e configurado corretamente em sua máquina.
+- Crie um banco de dados chamado `movie_review_db`.- Execute o script SQL fornecido abaixo para criar as tabelas necessárias:
+```bash
+psql -U seu-usuario -d movie_review_db -f caminho/do/script.sql
+```
+Certifique-se de substituir `seu-usuario` pelo seu nome de usuário do PostgreSQL e `caminho/do/script.sql` pelo caminho do arquivo que contém o script SQL mencionado anteriormente.
+
 ### Instalando as dependências
 ```bash
 cd nome-do-projeto
@@ -50,17 +58,6 @@ Certifique-se de que o banco de dados esteja em execução e, em seguida, inicie
 npm start
 ```
 Acesse o servidor local em http://localhost:3000.
-
-
-
-
-### Remoto
-Para usar remotamente, basta acessar o link:
-
-  - [CriticX](https://github.com/IanOliveiraSilva)
-
-
-
 
 ## Variáveis de Ambiente
 Para executar este projeto, você precisará adicionar as seguintes variáveis de ambiente ao seu arquivo `.env`:
