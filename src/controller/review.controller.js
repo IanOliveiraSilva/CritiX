@@ -51,7 +51,8 @@ exports.createReview = async (req, res) => {
     res.status(201).json({
       message: 'Review criada com sucesso!',
       body: {
-        review
+        review,
+        title: Title
       }
     });
   } catch (error) {
