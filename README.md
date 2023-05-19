@@ -45,21 +45,6 @@ Certifique-se de substituir `seu-usuario` pelo seu nome de usuário do PostgreSQ
 cd nome-do-projeto
 npm install
 ```
-### Configurando as variáveis de ambiente
-Crie um arquivo .env na raiz do projeto
-
-Certifique-se de ter as seguintes variáveis de ambiente configuradas:
-```bash
-DATABASE_URL=minha-url-do-banco-de-dados
-JWT_SECRET=sua-secret-key
-OMDB_API_KEY=minha-chave-de-api-da-omdb
-```
-### Iniciando o servidor local
-Certifique-se de que o banco de dados esteja em execução e, em seguida, inicie o servidor local:
-```bash
-npm start
-```
-Acesse o servidor local em http://localhost:3000.
 
 ## Variáveis de Ambiente
 Para executar este projeto, você precisará adicionar as seguintes variáveis de ambiente ao seu arquivo `.env`:
@@ -84,6 +69,22 @@ Para executar este projeto, você precisará adicionar as seguintes variáveis d
 ```bash
   4 - no arquivo ".env" altere a {Api Key} para sua chave
 ```
+
+### Configurando as variáveis de ambiente
+Crie um arquivo .env na raiz do projeto
+
+Certifique-se de ter as seguintes variáveis de ambiente configuradas:
+```bash
+DATABASE_URL=minha-url-do-banco-de-dados
+JWT_SECRET=sua-secret-key
+OMDB_API_KEY=minha-chave-de-api-da-omdb
+```
+### Iniciando o servidor local
+Certifique-se de que o banco de dados esteja em execução e, em seguida, inicie o servidor local:
+```bash
+npm start
+```
+Acesse o servidor local em http://localhost:3000.
 
 
 ## Executando os Testes
