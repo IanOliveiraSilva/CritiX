@@ -46,9 +46,11 @@ cd nome-do-projeto
 npm install
 ```
 ### Configurando as variáveis de ambiente
+Crie um arquivo .env na raiz do projeto
+
 Certifique-se de ter as seguintes variáveis de ambiente configuradas:
 ```bash
-DATABASE_URL=postgres://postgres:123@localhost:5432/movie_review_db
+DATABASE_URL=minha-url-do-banco-de-dados
 JWT_SECRET=sua-secret-key
 OMDB_API_KEY=minha-chave-de-api-da-omdb
 ```
