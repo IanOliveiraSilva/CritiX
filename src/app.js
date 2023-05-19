@@ -5,6 +5,7 @@ const cors = require('cors');
 const index = require('./route/index');
 const reviewRoute = require('./route/review.routes');
 const userRoute = require('./route/user.routes');
+const movieRoute = require('./route/movie.routes')
 
 
 const app = express();
@@ -16,5 +17,6 @@ app.use(cors());
 app.use(index);
 app.use('/api/', reviewRoute);
 app.use('/api/', userRoute);
+app.use('/api/', movieRoute);
 
 module.exports = app;
