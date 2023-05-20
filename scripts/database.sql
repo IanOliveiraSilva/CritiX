@@ -1,8 +1,3 @@
--- Criação do banco de dados
-CREATE DATABASE movie_review_db;
-
--- Conexão com o banco de dados
-\c movie_review_db;
 
 -- Criação da tabela 'users'
 CREATE TABLE users (

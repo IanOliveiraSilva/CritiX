@@ -3,6 +3,19 @@ require('dotenv').config();
 const axios = require("axios");
 const db = require("../config/db");
 
+const updateMovieAverageRating = async (movieId) => {
+  const { rows: [movie] } = await db.query(
+    `SELECT AVG(rating) AS average_rating FROM reviews WHERE movieId = $1`,
+    [movieId]
+  );
+  const averageRating = movie.average_rating || 0;
+  await db.query(
+    `UPDATE movies SET mediaNotas = $1 WHERE id = $2`,
+    [averageRating, movieId]
+  );
+  return averageRating;
+};
+
 exports.createReview = async (req, res) => {
   const { title, rating, comment, isPublic } = req.body;
   const userId = req.user.id;
@@ -47,6 +60,9 @@ exports.createReview = async (req, res) => {
       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
       [userId, movieId, rating, comment, isPublic]
     );
+
+    // Atualiza a média de notas
+    await updateMovieAverageRating(movieId);
 
     res.status(201).json({
       message: 'Review criada com sucesso!',
