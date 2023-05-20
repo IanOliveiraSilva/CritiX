@@ -26,7 +26,8 @@ CREATE TABLE movies (
   poster VARCHAR(255) NOT NULL,
   imdbRating VARCHAR(255) NOT NULL,
   metascore VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  mediaNotas DECIMAL(10,2) 	
 );
 
 -- Criação da tabela 'reviews'
@@ -39,3 +40,4 @@ CREATE TABLE reviews (
   isPublic BOOLEAN DEFAULT true,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
