@@ -51,11 +51,80 @@ exports.getMoviesByGenre = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: 'Erro ao pesquisar filmes' });
   }
-
-  
-  
 };
 
+exports.getMoviesByDirector = async (req, res) => {
+  const { director } = req.query;
+  try {
+    const { rows: movies } = await db.query('SELECT * FROM movies WHERE director LIKE $1', [`%${director}%`]);
+    res.status(200).json({
+      body: {
+        movies
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao pesquisar filmes' });
+  }
+};
+
+exports.getMoviesByCountry = async (req, res) => {
+  const { country } = req.query;
+  try {
+    const { rows: movies } = await db.query('SELECT * FROM movies WHERE country LIKE $1', [`%${country}%`]);
+    res.status(200).json({
+      body: {
+        movies
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao pesquisar filmes' });
+  }
+};
+
+exports.getMoviesByActors = async (req, res) => {
+  const { actors } = req.query;
+  try {
+    const { rows: movies } = await db.query('SELECT * FROM movies WHERE actors LIKE $1', [`%${actors}%`]);
+    res.status(200).json({
+      body: {
+        movies
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao pesquisar filmes' });
+  }
+};
+
+exports.getMoviesByWriter = async (req, res) => {
+  const { writer } = req.query;
+  try {
+    const { rows: movies } = await db.query('SELECT * FROM movies WHERE writer LIKE $1', [`%${writer}%`]);
+    res.status(200).json({
+      body: {
+        movies
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao pesquisar filmes' });
+  }
+};
+
+exports.getMoviesByPerson = async (req, res) => {
+  const { person } = req.query;
+  try {
+    const { rows: movies } = await db.query(
+      'SELECT * FROM movies WHERE writer LIKE $1 OR director LIKE $1 OR actors LIKE $1',
+      [`%${person}%`]
+    );
+    res.status(200).json({
+      body: {
+        movies
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao pesquisar filmes' });
+  }
+};
 
 
 

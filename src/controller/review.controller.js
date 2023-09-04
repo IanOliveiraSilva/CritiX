@@ -84,7 +84,7 @@ exports.getAllReviews = async (req, res) => {
     const userId = req.user.id;
 
     const reviews = await db.query(
-      'SELECT * FROM reviews WHERE userId = $1',
+      'SELECT r.id, r.userid, r.movieid, m.title, r.rating, r.review, r.ispublic, r.created_at FROM reviews r JOIN movies m ON r.movieid = m.id WHERE r.userId = $1',
       [userId]
     );
 
@@ -100,6 +100,7 @@ exports.getAllReviews = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 
 exports.getAllReviewsFromMovie = async (req, res) => {
