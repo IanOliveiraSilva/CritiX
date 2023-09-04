@@ -17,7 +17,7 @@ const updateMovieAverageRating = async (movieId) => {
 };
 
 exports.createReview = async (req, res) => {
-  const { title, rating, comment, isPublic } = req.body;
+  const { title, rating, comment, isPublic, fearLevel  } = req.body;
   const userId = req.user.id;
 
   try {
@@ -55,10 +55,30 @@ exports.createReview = async (req, res) => {
       movieId = newMovie.id;
     }
 
+    if (Genre.includes('Horror')) {
+      if (fearLevel === undefined || fearLevel < 0 || fearLevel > 5) {
+        return res.status(400).json({ message: 'Nivel de medo deve ser um numero entre 0 a 5' });
+      }
+    }
+
     const { rows: [review] } = await db.query(
-      `INSERT INTO reviews (userId, movieId, rating, review, isPublic)
-      VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [userId, movieId, rating, comment, isPublic]
+      `INSERT INTO reviews (userId, movieId, rating,
+        review,
+        isPublic,
+        fearLevel)
+      VALUES ($1,
+        $2,
+        $3,
+        $4,
+        $5,
+        $6)
+      RETURNING *`,
+      [userId,
+       movieId,
+       rating,
+       comment,
+       isPublic,
+       Genre.includes('Horror') ? fearLevel : null]
     );
 
     await updateMovieAverageRating(movieId);
@@ -108,7 +128,11 @@ exports.getAllReviewsFromMovie = async (req, res) => {
     const title = req.query.title;
 
     const reviews = await db.query(
-      'SELECT * FROM reviews INNER JOIN movies ON reviews.movieId = movies.id WHERE title = $1 AND ispublic = true',
+      `SELECT users.username, movies.title , reviews.rating, reviews.fearlevel, reviews.review, reviews.created_at 
+      FROM reviews 
+      INNER JOIN movies ON reviews.movieId = movies.id 
+      INNER JOIN users ON reviews.userId = users.id 
+      WHERE movies.title = $1 AND reviews.ispublic = true`,
       [title]
     );
 

@@ -126,6 +126,24 @@ exports.getMoviesByPerson = async (req, res) => {
   }
 };
 
+exports.surpriseMe = async (req, res) => {
+  try {
+    const { rows: movies } = await db.query('SELECT * FROM movies ORDER BY RANDOM() LIMIT 1');
+    if (movies.length > 0) {
+      res.status(200).json({
+        body: {
+          movie: movies[0]
+        }
+      });
+    } else {
+      return res.status(404).json({ message: 'Nenhum filme encontrado' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao pesquisar filme' });
+  }
+};
+
+
 
 
 

@@ -26,4 +26,7 @@ router.get('/movie/person', userController.AuthMiddleware, movieController.getMo
 // SELECIONAR TODOS OS FILMES
 router.get('/movie/', userController.AuthMiddleware, movieController.getAllMovies);
 
+// SELECIONAR FILME ALEATORIAMENTE
+router.get('/movie/surpriseMe', userController.AuthMiddleware, movieController.surpriseMe);
+
 module.exports = router;
