@@ -3,5 +3,13 @@ const movieController = require('../controller/movie.controller');
 const userController = require('../controller/user.controller')
 
 // SELECIONAR FILME POR TITULO
-router.get('/movie/', userController.AuthMiddleware, movieController.getMovieByTitle);
+router.get('/movie/title', userController.AuthMiddleware, movieController.getMovieByTitle);
+
+// SELECIONAR FILME POR GENERO
+router.get('/movie/genre', userController.AuthMiddleware, movieController.getMoviesByGenre);
+
+
+// SELECIONAR TODOS OS FILMES
+router.get('/movie/', userController.AuthMiddleware, movieController.getAllMovies);
+
 module.exports = router;

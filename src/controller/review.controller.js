@@ -61,7 +61,6 @@ exports.createReview = async (req, res) => {
       [userId, movieId, rating, comment, isPublic]
     );
 
-    // Atualiza a média de notas
     await updateMovieAverageRating(movieId);
 
     res.status(201).json({
@@ -198,7 +197,7 @@ exports.updateReview = async (req, res) => {
         message: 'Review is required'
       });
     }
-
+    
     const { rows } = await db.query(
       'UPDATE reviews SET rating = $1, review = $2 WHERE id = $3 AND userId = $4 RETURNING *',
       [rating, review, id, userId]
@@ -209,11 +208,12 @@ exports.updateReview = async (req, res) => {
         message: "Não foi possível encontrar a review com o id fornecido."
       });
     }
-
+    
     return res.status(200).json({
       message: "Review atualizada com sucesso!",
       review: rows[0]
     });
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({

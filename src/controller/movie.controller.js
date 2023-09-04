@@ -25,3 +25,41 @@ exports.getMovieByTitle = async (req, res) => {
   }
 };
 
+
+exports.getAllMovies = async (req, res) => {
+  try {
+    const { rows: movies } = await db.query('SELECT * FROM movies');
+    res.status(200).json({
+      body: {
+        movies
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao pesquisar filmes' });
+  }
+};
+
+exports.getMoviesByGenre = async (req, res) => {
+  const { genre } = req.query;
+  try {
+    const { rows: movies } = await db.query('SELECT * FROM movies WHERE genre LIKE $1', [`%${genre}%`]);
+    res.status(200).json({
+      body: {
+        movies
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao pesquisar filmes' });
+  }
+
+  
+  
+};
+
+
+
+
+
+
+
+
