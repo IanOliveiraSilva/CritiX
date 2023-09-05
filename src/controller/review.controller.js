@@ -3,6 +3,16 @@ require('dotenv').config();
 const axios = require("axios");
 const db = require("../config/db");
 
+const lowRating = 0;
+const highRating = 5;
+const specialRatingMap = new Map([
+  ['Horror', 'Horrormetro'],
+  ['Comedy', 'Risômetro'],
+  ['Action', 'Adrenalimetro'],
+  ['Romance', 'Amorômetro'],
+  ['Drama', 'Lagrimômetro'],
+]);
+
 const updateMovieAverageRating = async (movieId) => {
   const { rows: [movie] } = await db.query(
     `SELECT AVG(rating) AS average_rating FROM reviews WHERE movieId = $1`,
@@ -16,12 +26,20 @@ const updateMovieAverageRating = async (movieId) => {
   return averageRating;
 };
 
+const getSpecialRating = (genre) => {
+  const genreArray = genre.split(',');
+  const firstGenre = genreArray[0];
+  return specialRatingMap.get(firstGenre.trim());
+}
+
+
 exports.createReview = async (req, res) => {
-  const { title, rating, comment, isPublic, fearLevel  } = req.body;
+  const { title, rating, comment, isPublic, specialRating  } = req.body;
   const userId = req.user.id;
 
+
   try {
-    if (!rating || rating < 0 || rating > 5) {
+    if (!rating || rating < lowRating || rating > highRating) {
       return res.status(400).json({ message: 'Rating deve ser um numero entre 0 a 5' });
     }
 
@@ -55,17 +73,12 @@ exports.createReview = async (req, res) => {
       movieId = newMovie.id;
     }
 
-    if (Genre.includes('Horror')) {
-      if (fearLevel === undefined || fearLevel < 0 || fearLevel > 5) {
-        return res.status(400).json({ message: 'Nivel de medo deve ser um numero entre 0 a 5' });
-      }
-    }
 
     const { rows: [review] } = await db.query(
       `INSERT INTO reviews (userId, movieId, rating,
         review,
         isPublic,
-        fearLevel)
+        specialRating)
       VALUES ($1,
         $2,
         $3,
@@ -78,7 +91,7 @@ exports.createReview = async (req, res) => {
        rating,
        comment,
        isPublic,
-       Genre.includes('Horror') ? fearLevel : null]
+       specialRating]
     );
 
     await updateMovieAverageRating(movieId);
@@ -87,7 +100,8 @@ exports.createReview = async (req, res) => {
       message: 'Review criada com sucesso!',
       body: {
         review,
-        title: Title
+        title: Title,
+        [getSpecialRating(Genre)] : review.specialrating 
       }
     });
   } catch (error) {
