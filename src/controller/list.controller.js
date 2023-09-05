@@ -42,6 +42,27 @@ exports.createList = async (req, res) => {
   }
 };
 
+function formatListsResults(results) {
+  const lists = {};
+
+  for (const row of results) {
+      if (!lists[row.list_name]) {
+          lists[row.list_name] = {
+              user_name: row.user_name,
+              list_name: row.list_name,
+              list_description: row.list_description,
+              created_at: row.created_at,
+              movies: []
+          };
+      }
+
+      lists[row.list_name].movies.push(row.movie_title);
+  }
+
+  return Object.values(lists);
+}
+
+
 exports.getAllLists = async (req, res) => {
   try {
       const userId = req.user.id;
@@ -63,21 +84,9 @@ exports.getAllLists = async (req, res) => {
           });
       }
 
-      const formattedLists = {};
-      for (const row of lists.rows) {
-          if (!formattedLists[row.list_name]) {
-              formattedLists[row.list_name] = {
-                  user_name: row.user_name,
-                  list_name: row.list_name,
-                  list_description: row.list_description,
-                  created_at: row.created_at,
-                  movies: []
-              };
-          }
-          formattedLists[row.list_name].movies.push(row.movie_title);
-      }
+      const formattedLists = formatListsResults(lists.rows);
 
-      return res.status(200).json(Object.values(formattedLists));
+      return res.status(200).json(formattedLists);
   } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Internal server error' });
@@ -86,54 +95,42 @@ exports.getAllLists = async (req, res) => {
 
 exports.getListById = async (req, res) => {
   try {
-    const { id } = req.query;
-    const userId = req.user.id;
+      const { id } = req.query;
+      const userId = req.user.id;
 
-    const list = await db.query(
-      `SELECT u.username AS user, l.name AS list_name, m.title AS movie_title, l.description AS list_description, l.created_at AS Created_At
+      const lists = await db.query(
+          `SELECT u.username AS user, l.name AS list_name, m.title AS movie_title, l.description AS list_description, l.created_at AS Created_At
           FROM lists l
           JOIN users u ON l.userId = u.id
           JOIN movies_lists ml ON l.id = ml.listId
           JOIN movies m ON ml.movieId = m.id
           WHERE u.id = $1 and l.id = $2;
           `,
-      [userId, id]
-    );
+          [userId, id]
+      );
 
-    if (list.length === 0) {
-      return res.status(404).json({
-          message: 'Não foi possível encontrar a lista com o ID fornecido.'
-      });
-    } 
+      if (lists.rows.length === 0) {
+          return res.status(404).json({
+              message: 'Não foi possível encontrar a lista com o ID fornecido.'
+          });
+      }
 
-    const formattedLists = {};
-      for (const row of list.rows) {
-          if (!formattedLists[row.list_name]) {
-              formattedLists[row.list_name] = {
-                  user_name: row.user_name,
-                  list_name: row.list_name,
-                  list_description: row.list_description,
-                  created_at: row.created_at,
-                  movies: []
-              };
+      const formattedLists = formatListsResults(lists.rows);
+      return res.status(200).json({
+          message: 'Lista encontrada com sucesso!',
+          body: {
+              Lista : formattedLists[0]
           }
-          formattedLists[row.list_name].movies.push(row.movie_title);
-      }
-
-    return res.status(200).json({
-      message: 'Lista encontrada com sucesso!',
-      body: {
-        Lista : Object.values(formattedLists)[0]
-      }
-    });
+      });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      message: 'Ocorreu um erro ao buscar a lista.',
-      error
-    });
+      console.error(error);
+      return res.status(500).json({
+          message: 'Ocorreu um erro ao buscar a lista.',
+          error
+      });
   }
 };
+
 
 exports.deleteList = async (req, res) => {
   try {
