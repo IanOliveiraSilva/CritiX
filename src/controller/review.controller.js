@@ -72,8 +72,7 @@ exports.createReview = async (req, res) => {
       );
       movieId = newMovie.id;
     }
-
-
+    
     const { rows: [review] } = await db.query(
       `INSERT INTO reviews (userId, movieId, rating,
         review,
