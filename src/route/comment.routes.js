@@ -13,7 +13,10 @@ router.get('/comment/user/', userController.AuthMiddleware, commentController.ge
 // SELECIONAR TODOS COMENTARIOS DE UM USUARIO
 router.get('/comment/review/:reviewId', userController.AuthMiddleware, commentController.getReviewComments);
 
-// APAGAR REVIEW
+// APAGAR COMENTARIO
 router.delete('/comment/', userController.AuthMiddleware, commentController.deleteComment);
+
+// ATUALIZAR COMENTARIO
+router.put('/comment/', userController.AuthMiddleware, commentController.updateComment);
 
 module.exports = router;

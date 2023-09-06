@@ -35,7 +35,7 @@ exports.createComment = async (req, res) => {
     }
   };
 
-  exports.getAllCommentsFromUser = async (req, res) => {
+exports.getAllCommentsFromUser = async (req, res) => {
     try {
       const userId = req.user.id;
   
@@ -57,7 +57,7 @@ exports.createComment = async (req, res) => {
     }
   };
 
-  exports.getReviewComments = async (req, res) => {
+exports.getReviewComments = async (req, res) => {
     const { reviewId } = req.params;
   
     try {
@@ -81,7 +81,7 @@ exports.createComment = async (req, res) => {
     }
   };
 
-  exports.deleteComment = async (req, res) => {
+exports.deleteComment = async (req, res) => {
     try {
       const { id } = req.query;
       const userId = req.user.id;
@@ -112,5 +112,41 @@ exports.createComment = async (req, res) => {
     }
   };
   
+  exports.updateComment = async (req, res) => {
+    const { id } = req.query;
+    const userId = req.user.id;
+    const { comment } = req.body;
   
+    try {
+      if (!comment) {
+        return res.status(400).json({
+          message: 'Comentário é obrigatório'
+        });
+      }
+      
+      const { rows } = await db.query(
+        'UPDATE comments SET comment = $1 WHERE id = $2 AND userId = $3 RETURNING *',
+        [comment, id, userId]
+      );
   
+      if (rows.length === 0) {
+        return res.status(404).json({
+          message: "Não foi possível encontrar o comentário com o id fornecido."
+        });
+      }
+      
+      return res.status(200).json({
+        message: "Comentário atualizado com sucesso!",
+        comment: rows[0]
+      });
+  
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        message: "Ocorreu um erro ao atualizar o comentário.",
+        error
+      });
+    }
+  };
+  
+
