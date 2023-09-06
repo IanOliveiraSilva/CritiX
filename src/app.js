@@ -6,8 +6,9 @@ const cors = require('cors');
 const index = require('./route/index');
 const reviewRoute = require('./route/review.routes');
 const userRoute = require('./route/user.routes');
-const movieRoute = require('./route/movie.routes')
-const listRoute = require('./route/list.routes')
+const movieRoute = require('./route/movie.routes');
+const listRoute = require('./route/list.routes');
+const commentRoute = require('./route/comment.routes');
 
 
 const app = express();
@@ -21,6 +22,7 @@ app.use('/api/', reviewRoute);
 app.use('/api/', userRoute);
 app.use('/api/', movieRoute);
 app.use('/api/', listRoute);
+app.use('/api/', commentRoute);
 
 // Diretório público para servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
