@@ -1,6 +1,6 @@
 const router = require('express-promise-router')();
 const reviewController = require('../controller/review.controller');
-const userController = require('../controller/user.controller')
+const userController = require('../controller/user.controller');
 
 // ADICIONAR REVIEWS
 router.post('/review', userController.AuthMiddleware, reviewController.createReview);
@@ -21,6 +21,5 @@ router.delete('/review/', userController.AuthMiddleware, reviewController.delete
 router.put('/review/', userController.AuthMiddleware, reviewController.updateReview);
 
 router.patch('/review/', userController.AuthMiddleware, reviewController.updateReviewPartionally);
-
 
 module.exports = router;

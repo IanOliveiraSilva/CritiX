@@ -1,7 +1,9 @@
+require('dotenv').config();
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require("../config/db");
-const nodemailer = require('nodemailer');
+
 
 exports.signup = async (req, res) => {
   try {
@@ -53,6 +55,124 @@ exports.signup = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.userProfile = async (req, res) => {
+  const {name, familyName, bio} = req.body;
+  const userId = req.user.id;
+
+  try{
+    const { rows: [userProfile]} = await db.query(
+      `INSERT INTO user_profile(name, familyName, bio, userId) 
+      VALUES ($1, $2, $3, $4) 
+      RETURNING *`,
+      [name, familyName, bio, userId]
+    );
+
+    res.status(201).json({
+      message: 'Perfil criado com sucesso',
+      body: {
+        profile: userProfile
+      }
+    });
+  } catch (error){
+    console.log(error);
+    res.status(400).json({
+      message: 'Um erro aconteceu enquanto o perfil de usuario era criado',
+      error
+    });
+  }
+};
+
+exports.getUserProfile = async (req, res) => {
+  const userId = req.user.id;
+
+  try{
+    const { rows: [userProfile] } = await db.query(
+      `SELECT * 
+       FROM user_profile
+       WHERE userId = $1`,
+       [userId]
+    );
+    
+    res.status(201).json({
+      message: 'Perfil encontrado com sucesso!',
+      body: {
+        profile: userProfile
+      }
+    });
+  } catch(error){
+    res.status(500).json({
+      message: 'Um erro aconteceu enquanto o comentário era criado',
+      error
+    });
+  }
+};
+
+exports.updateUserProfile = async (req, res) => {
+  const {name, familyName, bio} = req.body;
+  const userId = req.user.id;
+
+  try{
+    const { rows: [newProfile] } = await db.query(
+      `UPDATE user_profile
+       SET name = $1, 
+       familyName = $2,
+       bio = $3
+       WHERE userId = $4 
+       RETURNING *`,
+       [name, familyName, bio, userId]
+    );
+    
+    return res.status(200).json({
+      message: "Perfil atualizado com sucesso",
+      profile: newProfile
+    });
+
+  } catch(error){
+    console.error(error);
+    return res.status(500).json({
+      message: "Ocorreu um erro ao atualizar a review.",
+      error
+    });
+  }
+};
+
+exports.updateUserProfilePartially = async (req, res) => {
+  const { name, familyName, bio } = req.body;
+  const userId = req.user.id;
+  
+  try {
+    const existingProfile = await db.query(
+      "SELECT * FROM user_profile WHERE userId = $1",
+      [userId]
+    );
+
+    const updatedProfile = {
+      name: name || existingProfile.rows[0].name,
+      familyName: familyName || existingProfile.rows[0].familyname,
+      bio: bio || existingProfile.rows[0].bio,
+    };
+
+    const { rows: [newProfile] } = await db.query(
+      `UPDATE user_profile 
+      SET name = $1, familyName = $2, bio = $3 
+      WHERE userId = $4 
+      RETURNING *`,
+      [updatedProfile.name, updatedProfile.familyName, updatedProfile.bio, userId]
+    );
+
+    return res.status(200).json({
+      message: "Perfil atualizado com sucesso!",
+      review: newProfile
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Ocorreu um erro ao atualizar a review.",
+      error,
+    });
   }
 };
 

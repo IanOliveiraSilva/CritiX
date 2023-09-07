@@ -40,7 +40,11 @@ exports.getAllCommentsFromUser = async (req, res) => {
       const userId = req.user.id;
   
       const comments = await db.query(
-        'SELECT c.id, c.reviewid, r.movieid, m.title, c.comment, c.createdAt FROM comments c JOIN reviews r ON c.reviewid = r.id JOIN movies m ON r.movieid = m.id WHERE c.userId = $1',
+        `SELECT c.id, c.reviewid, r.movieid, m.title, c.comment, c.createdAt 
+        FROM comments c 
+        JOIN reviews r ON c.reviewid = r.id 
+        JOIN movies m ON r.movieid = m.id 
+        WHERE c.userId = $1`,
         [userId]
       );
   
@@ -58,23 +62,18 @@ exports.getAllCommentsFromUser = async (req, res) => {
   };
 
 exports.getReviewComments = async (req, res) => {
-    const { reviewId } = req.params;
-  
     try {
-      const comments = await db.query(
+      const { id } = req.query;
+      const {rows: [comments]} = await db.query(
         'SELECT c.id, c.userId, u.username, c.comment, c.createdAt FROM comments c JOIN users u ON c.userId = u.id WHERE c.reviewId = $1',
-        [reviewId]
+        [id]
       );
-  
-      if (comments.rows.length === 0) {
-        return res.status(400).json({
+      if (!comments) {
+        return res.status(404).json({
           message: 'A review não possui comentários'
         });
       }
-
-      
-  
-      return res.status(200).json(comments.rows);
+      return res.status(200).json(comments);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Internal server error' });
@@ -112,7 +111,7 @@ exports.deleteComment = async (req, res) => {
     }
   };
   
-  exports.updateComment = async (req, res) => {
+exports.updateComment = async (req, res) => {
     const { id } = req.query;
     const userId = req.user.id;
     const { comment } = req.body;

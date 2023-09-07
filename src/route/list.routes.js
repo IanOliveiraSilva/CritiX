@@ -1,11 +1,11 @@
 const router = require('express-promise-router')();
-const listController = require('../controller/list.controller')
-const userController = require('../controller/user.controller')
+const listController = require('../controller/list.controller');
+const userController = require('../controller/user.controller');
 
-//CRIAR LISTA
+// CRIAR LISTA
 router.post('/list', userController.AuthMiddleware, listController.createList);
 
-//RETORNAR TODAS AS LISTAS
+// RETORNAR TODAS AS LISTAS
 router.get('/allLists/', userController.AuthMiddleware, listController.getAllLists);
 
 // SELECIONAR LISTA POR ID
@@ -18,7 +18,5 @@ router.delete('/list/', userController.AuthMiddleware, listController.deleteList
 router.put('/list/', userController.AuthMiddleware, listController.updateList);
 
 router.patch('/list/', userController.AuthMiddleware, listController.updateListPartially);
-
-
 
 module.exports = router;

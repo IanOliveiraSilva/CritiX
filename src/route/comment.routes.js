@@ -10,8 +10,8 @@ router.post('/comment', userController.AuthMiddleware, commentController.createC
 // SELECIONAR TODOS COMENTARIOS DE UM USUARIO
 router.get('/comment/user/', userController.AuthMiddleware, commentController.getAllCommentsFromUser);
 
-// SELECIONAR TODOS COMENTARIOS DE UM USUARIO
-router.get('/comment/review/:reviewId', userController.AuthMiddleware, commentController.getReviewComments);
+// SELECIONAR TODOS COMENTARIOS DE UMA REVIEW
+router.get('/comment/review/', userController.AuthMiddleware, commentController.getReviewComments);
 
 // APAGAR COMENTARIO
 router.delete('/comment/', userController.AuthMiddleware, commentController.deleteComment);
