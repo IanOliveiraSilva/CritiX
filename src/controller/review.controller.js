@@ -32,7 +32,6 @@ const getSpecialRating = (genre) => {
   return specialRatingMap.get(firstGenre.trim());
 }
 
-
 exports.createReview = async (req, res) => {
   const { title, rating, comment, isPublic, specialRating  } = req.body;
   const userId = req.user.id;
@@ -133,8 +132,6 @@ exports.getAllReviews = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
-
 
 exports.getAllReviewsFromMovie = async (req, res) => {
   try {

@@ -5,13 +5,37 @@
   </head>
   <body>
     <h1>Login</h1>
-    <form action="/login" method="POST">
-      <label for="username">Nome de usuário:</label>
-      <input type="text" id="username" name="username" required><br><br>
+    <form id="login-form">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required><br><br>
       <label for="password">Senha:</label>
       <input type="password" id="password" name="password" required><br><br>
       <input type="submit" value="Entrar">
     </form>
     <a href="/">Voltar para a página inicial</a>
+
+    <script>
+    const loginForm = document.getElementById('login-form');
+      loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const response = await fetch('/api/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await response.json();
+        if (response.ok) {
+          // Armazenar o token de autenticação no armazenamento local do navegador
+          // localStorage.setItem('token', data.token);
+          alert(`Usuário ${data.user.username} logado com sucesso!`);
+        } else {
+          alert(data.message);
+        }
+    });
+    </script>
   </body>
 </html>

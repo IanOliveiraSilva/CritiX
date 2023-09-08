@@ -58,7 +58,51 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.userProfile = async (req, res) => {
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Verificar se o email e a senha são fornecidos
+    if (!email) {
+      return res.status(400).json({
+        message: 'Email is required'
+      });
+    }
+
+    if (!password) {
+      return res.status(400).json({
+        message: 'Password is required'
+      });
+    }
+
+    // Verificar se o usuário existe pelo email
+    const user = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (user.rows.length === 0) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    }
+
+    // Verificar se a senha está correta
+    const isPasswordCorrect = await bcrypt.compare(password, user.rows[0].password);
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    }
+
+    // Gerar o token de autenticação do usuário
+    const token = jwt.sign(
+      { id: user.rows[0].id, username: user.rows[0].username },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    // Retornar o usuário e o token
+    return res.status(200).json({ user: user.rows[0], token });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+exports.createUserProfile = async (req, res) => {
   const {name, familyName, bio} = req.body;
   const userId = req.user.id;
 

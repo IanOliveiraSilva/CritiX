@@ -40,4 +40,14 @@ app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'register.html'));
 });
 
+app.get('/createReview', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'createReview.html'));
+});
+
+app.get('/getAllReviews', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'getAllReviews.html'));
+});
+
+
+
 module.exports = app;

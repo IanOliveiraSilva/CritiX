@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Criar Review</title>
+  </head>
+  <body>
+    <h1>Criar Review</h1>
+    <form id="review-form">
+      <label for="title">Título do Filme:</label>
+      <input type="text" id="title" name="title" required><br><br>
+      <label for="rating">Avaliação (0 a 5):</label>
+      <input type="number" id="rating" name="rating" min="0" max="5" required><br><br>
+      <label for="comment">Comentário:</label><br>
+      <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br><br>
+      <label for="isPublic">Público:</label>
+      <input type="checkbox" id="isPublic" name="isPublic"><br><br>
+      <label for="specialRating">Avaliação Especial:</label>
+      <input type="number" id="specialRating" name="specialRating"><br><br>
+      <input type="submit" value="Enviar">
+    </form>
+    <a href="/">Voltar para a página inicial</a>
+
+    <script>
+    const reviewForm = document.getElementById('review-form');
+    reviewForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const title = document.getElementById('title').value;
+        const rating = document.getElementById('rating').value;
+        const comment = document.getElementById('comment').value;
+        const isPublic = document.getElementById('isPublic').checked;
+        const specialRating = document.getElementById('specialRating').value;
+        
+        const token = localStorage.getItem('token');
+
+        const response = await fetch('/api/review', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ title, rating, comment, isPublic, specialRating })
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert(`Review criada com sucesso!`);
+        } else {
+          alert(data.message);
+        }
+    });
+
+    </script>
+  </body>
+</html>
