@@ -26,6 +26,7 @@ app.use('/api/', commentRoute);
 
 // Diretório público para servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'))
 
 // Rotas para servir páginas HTML
 app.get('/', (req, res) => {
@@ -46,6 +47,10 @@ app.get('/createReview', (req, res) => {
 
 app.get('/getAllReviews', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'getAllReviews.html'));
+});
+
+app.get('/getMovie', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'getMovie.html'));
 });
 
 
