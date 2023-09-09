@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap');
+
+
+/* Estilos gerais */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+main {
+  flex: 1;
+}
+
+/* Cabeçalho */
+header {
+  background-color: #000000;
+  color: #e4d50c;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Título */
+h1 {
+  font-size: 36px;
+  margin: 10px 0;
+}
+
+/* Descrição */
+p {
+  font-size: 18px;
+}
+
+/* Navegação */
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav li {
+  margin: 10px;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #ffe600;
+}

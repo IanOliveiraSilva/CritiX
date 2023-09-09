@@ -4,8 +4,20 @@ body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
   background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
 }
 
+main {
+  flex: 1;
+}
+
+footer {
+  text-align: center;
+  padding: 10px 0;
+}
 .container {
   max-width: 800px;
   margin: 0 auto;
