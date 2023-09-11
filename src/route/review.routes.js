@@ -14,6 +14,9 @@ router.get('/allReviews/', userController.AuthMiddleware, reviewController.getAl
 // SELECIONAR TODAS REVIEWS DE UM FILME
 router.get('/allReviews/movies/', userController.AuthMiddleware, reviewController.getAllReviewsFromMovie);
 
+// SELECIONAR TODAS REVIEWS DE UM USUARIO
+router.get('/allReviews/user/', userController.AuthMiddleware, reviewController.getAllReviewsFromUser);
+
 // APAGAR REVIEW
 router.delete('/review/', userController.AuthMiddleware, reviewController.deleteReview);
 

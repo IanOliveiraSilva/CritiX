@@ -53,9 +53,15 @@ app.get('/getAllMovieReviews', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'getAllReviewsMovie.html'));
 });
 
+app.get('/getAllUserReviews', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'getAllReviewsUser.html'));
+});
+
 app.get('/getMovie', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'getMovie.html'));
 });
+
+
 
 
 

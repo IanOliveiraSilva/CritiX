@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap');
+/* Estilos gerais */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+main {
+  flex: 1;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Estilos para o cabeçalho e navegação */
+header {
+  background-color: #000000;
+  color: #e4d50c;
+  text-align: center;
+  padding: 20px 0;
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.nav-list li:last-child {
+  margin-right: 0;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Estilos para o conteúdo principal */
+main {
+  padding: 20px 0;
+}
+
+.reviews {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+
+/* Estilos específicos para a página de avaliações do usuário */
+#usernameForm {
+  margin-bottom: 20px;
+}
+
+#reviews {
+  margin-top: 20px;
+}
+
+/* Estilos para os botões */
+.btn {
+  font-weight: bold;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #333;
+}
+
+.btn-warning:hover {
+  background-color: #ffca2b;
+  border-color: #ffca2b;
+  color: #333;
+}
