@@ -158,7 +158,7 @@ exports.getAllReviewsFromUser = async (req, res) => {
     const user = req.query.user;
 
     const reviews = await db.query(
-      `SELECT users.username, movies.title , reviews.rating, reviews.specialrating, reviews.review, reviews.created_at 
+      `SELECT users.username, movies.title , reviews.rating, reviews.id, reviews.specialrating, reviews.review, reviews.created_at 
       FROM reviews 
       INNER JOIN movies ON reviews.movieId = movies.id 
       INNER JOIN users ON reviews.userId = users.id 

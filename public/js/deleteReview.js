@@ -1,25 +1,35 @@
-document.getElementById('delete-review-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const reviewId = document.getElementById('reviewId').value;
-    const token = localStorage.getItem('token');
+document.addEventListener('DOMContentLoaded', () => {
 
-    try {
-        const response = await fetch(`/api/review/?id=${reviewId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`
-              }
-        });
+    const idInput = document.getElementById('reviewId');
+    const reviewId = localStorage.getItem('reviewId');
+    const idElement = document.getElementById('reviewId');
 
-        const data = await response.json();
-
-        if (response.status === 200) {
-            document.getElementById('message').innerHTML = `<p>${data.message}</p>`;
-        } else {
-            document.getElementById('message').innerHTML = `<p>${data.message}</p>`;
-        }
-    } catch (error) {
-        console.error(error);
-        document.getElementById('message').innerHTML = `<p>Ocorreu um erro ao excluir a revisão.</p>`;
+    if (reviewId) {
+        idInput.value = reviewId;
+        idElement.textContent = reviewId;
     }
-});
+})
+
+
+const deleteReviewForm = document.getElementById('delete-review-form');
+deleteReviewForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem('token');
+    const reviewId = localStorage.getItem('reviewId');
+    
+    const response = await fetch(`/api/review/?id=${encodeURIComponent(reviewId)}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+      
+    });
+    const data = await response.json();
+    if (response.ok) {
+      alert(`Review criada com sucesso!`);
+    } else {
+      alert(data.message);
+    }
+  });
+  
+

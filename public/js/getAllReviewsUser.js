@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!response.ok) {
                 throw new Error('Erro ao obter revisões do usuário');
             }
-
+            
             const reviewsData = await response.json();
 
             reviewsContainer.innerHTML = '';
@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             reviewsContainer.appendChild(titleHeader);
 
             reviewsData.forEach((review) => {
+
                 const table = document.createElement('table');
                 table.classList.add('table');
 
@@ -67,9 +68,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const buttonRow = document.createElement('tr');
                 const buttonCell = document.createElement('td');
                 const deleteButton = document.createElement('button');
+                deleteButton.id = 'get-review-id'
                 deleteButton.textContent = 'Excluir';
                 deleteButton.addEventListener('click', () => {
-                    localStorage.setItem('id', `${review.id}`);
+                    localStorage.setItem('reviewId', review.id);
                     window.location.href = '/deleteReview';
                 });
                 buttonCell.appendChild(deleteButton);
@@ -80,7 +82,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 reviewsContainer.appendChild(table);
             });
 
-   
+
+
         } catch (error) {
             console.error('Erro ao buscar revisões do usuário:', error);
         }
