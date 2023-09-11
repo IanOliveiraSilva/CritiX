@@ -40,9 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   <li><strong>Rated:</strong> ${detailsData.Rated}</li>
                   <li><strong>IMDb Rating:</strong> ${detailsData.imdbRating}</li>
                   <li><strong>Metascore Rating:</strong> ${detailsData.Metascore}</li>
-                  <li><strong><button id="create-review-button">Criar Revisão</button></strong></li>
+                  <li><strong><button id="create-review-button">Criar Review</button></strong></li>
+                  <li><strong><button id="get-review-button">Ver Review</button></strong></li>
                 </ul>
-                
                 <a href="" class="btn-back">Voltar</a>
               `;
               resultsList.innerHTML = '';
@@ -52,6 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
               reviewButton.addEventListener('click', () => {
                 localStorage.setItem('movieTitle', movie.Title);
                 window.location.href = '/createReview';
+              });
+
+              const getReviewButton = document.getElementById('get-review-button');
+              getReviewButton.addEventListener('click', () => {
+                localStorage.setItem('movieTitle', movie.Title);
+                window.location.href = '/getAllMovieReviews';
               });
             });
             resultsList.appendChild(li);
