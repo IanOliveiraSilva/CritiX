@@ -19,8 +19,13 @@
 
     <main>
         <form id="delete-review-form" class="container mt-5">
-            <h2 id="reviewId" class="text-center">Id da review:</h2>
-            <button type="submit" class="btn btn-warning btn-block">Excluir</button>
+            <h2 class="text-center">Tem certeza que deseja excluir a review?</h2>
+            <button type="submit" class="btn btn-warning btn-block">Sim</button>
+            <button class="btn btn-warning btn-block">
+                <a href="/getAllUserReviews" class="back-link">
+                    Não
+                </a>
+            </button>
             <a href="/" class="back-link">Voltar para a página inicial</a>
         </form>
         <div id="message" class="container mt-3"></div>

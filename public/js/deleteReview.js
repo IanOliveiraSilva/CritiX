@@ -26,7 +26,7 @@ deleteReviewForm.addEventListener('submit', async (event) => {
     });
     const data = await response.json();
     if (response.ok) {
-      alert(`Review criada com sucesso!`);
+      alert(`Review Apagada com sucesso!`);
     } else {
       alert(data.message);
     }
