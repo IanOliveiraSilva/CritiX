@@ -45,10 +45,6 @@ app.get('/createReview', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'createReview.html'));
 });
 
-app.get('/getAllReviews', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'getAllReviews.html'));
-});
-
 app.get('/getAllMovieReviews', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'getAllReviewsMovie.html'));
 });
@@ -60,6 +56,11 @@ app.get('/getAllUserReviews', (req, res) => {
 app.get('/getMovie', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'getMovie.html'));
 });
+
+app.get('/deleteReview', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'deleteReview.html'));
+});
+
 
 
 

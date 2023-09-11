@@ -35,38 +35,52 @@ document.addEventListener('DOMContentLoaded', async () => {
             reviewsContainer.appendChild(titleHeader);
 
             reviewsData.forEach((review) => {
-              const table = document.createElement('table');
-              table.classList.add('table');
-      
-              const tbody = document.createElement('tbody');
+                const table = document.createElement('table');
+                table.classList.add('table');
 
-              const titleRow = document.createElement('tr');
-              const titleCell = document.createElement('td');
-              titleCell.textContent = `Título: ${review.title}`;
-              titleRow.appendChild(titleCell);
-              tbody.appendChild(titleRow);
-      
-              const ratingRow = document.createElement('tr');
-              const ratingCell = document.createElement('td');
-              ratingCell.textContent = `Nota: ${review.rating}`;
-              ratingRow.appendChild(ratingCell);
-              tbody.appendChild(ratingRow);
-      
-              const commentRow = document.createElement('tr');
-              const commentCell = document.createElement('td');
-              commentCell.textContent = `Comentário: ${review.review}`;
-              commentRow.appendChild(commentCell);
-              tbody.appendChild(commentRow);
+                const tbody = document.createElement('tbody');
 
-              const specialRatingRow = document.createElement('tr');
-              const specialRatingCell = document.createElement('td');
-              specialRatingCell.textContent = `Special Rating: ${review.specialrating}`;
-              specialRatingRow.appendChild(specialRatingCell);
-              tbody.appendChild(specialRatingRow);
-      
-              table.appendChild(tbody);
-              reviewsContainer.appendChild(table);
+                const titleRow = document.createElement('tr');
+                const titleCell = document.createElement('td');
+                titleCell.textContent = `Título: ${review.title}`;
+                titleRow.appendChild(titleCell);
+                tbody.appendChild(titleRow);
+
+                const ratingRow = document.createElement('tr');
+                const ratingCell = document.createElement('td');
+                ratingCell.textContent = `Nota: ${review.rating}`;
+                ratingRow.appendChild(ratingCell);
+                tbody.appendChild(ratingRow);
+
+                const commentRow = document.createElement('tr');
+                const commentCell = document.createElement('td');
+                commentCell.textContent = `Comentário: ${review.review}`;
+                commentRow.appendChild(commentCell);
+                tbody.appendChild(commentRow);
+
+                const specialRatingRow = document.createElement('tr');
+                const specialRatingCell = document.createElement('td');
+                specialRatingCell.textContent = `Special Rating: ${review.specialrating}`;
+                specialRatingRow.appendChild(specialRatingCell);
+                tbody.appendChild(specialRatingRow);
+
+                const buttonRow = document.createElement('tr');
+                const buttonCell = document.createElement('td');
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Excluir';
+                deleteButton.addEventListener('click', () => {
+                    localStorage.setItem('id', `${review.id}`);
+                    window.location.href = '/deleteReview';
+                });
+                buttonCell.appendChild(deleteButton);
+                buttonRow.appendChild(buttonCell);
+                tbody.appendChild(buttonRow);
+
+                table.appendChild(tbody);
+                reviewsContainer.appendChild(table);
             });
+
+   
         } catch (error) {
             console.error('Erro ao buscar revisões do usuário:', error);
         }
