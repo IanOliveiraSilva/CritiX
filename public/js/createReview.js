@@ -2,6 +2,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const titleInput = document.getElementById('movieTitle');
   const movieTitle = localStorage.getItem('movieTitle');
   const titleElement = document.getElementById('movieTitle');
+  const specialRatingInputTitle = document.getElementById('specialRatingTitle');
+  const movieGenre = localStorage.getItem('movieGenre');
+
+  const specialRatingMap = new Map([
+    ['Horror', 'Horrormetro'],
+    ['Comedy', 'Risômetro'],
+    ['Action', 'Adrenalimetro'],
+    ['Romance', 'Amorômetro'],
+    ['Drama', 'Lagrimômetro'],
+  ]);
+
+  const getSpecialRating = (genre) => {
+    const genreArray = genre.split(',');
+    const firstGenre = genreArray[0];
+    return specialRatingMap.get(firstGenre.trim());
+  }
+
+  const movieGenreMapped = getSpecialRating(movieGenre);
+
+  if (movieGenre) {
+    specialRatingInputTitle.textContent = `${movieGenreMapped}: `;
+  }
+
 
   if (movieTitle) {
     titleInput.value = movieTitle;

@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
               const reviewButton = document.getElementById('create-review-button');
               reviewButton.addEventListener('click', () => {
                 localStorage.setItem('movieTitle', movie.Title);
+                localStorage.setItem('movieGenre', detailsData.Genre);
                 window.location.href = '/createReview';
               });
 

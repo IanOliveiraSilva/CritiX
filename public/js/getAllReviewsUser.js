@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       
               const ratingRow = document.createElement('tr');
               const ratingCell = document.createElement('td');
-              ratingCell.textContent = `Avaliação: ${review.rating}`;
+              ratingCell.textContent = `Nota: ${review.rating}`;
               ratingRow.appendChild(ratingCell);
               tbody.appendChild(ratingRow);
       
@@ -57,6 +57,12 @@ document.addEventListener('DOMContentLoaded', async () => {
               commentCell.textContent = `Comentário: ${review.review}`;
               commentRow.appendChild(commentCell);
               tbody.appendChild(commentRow);
+
+              const specialRatingRow = document.createElement('tr');
+              const specialRatingCell = document.createElement('td');
+              specialRatingCell.textContent = `Special Rating: ${review.specialrating}`;
+              specialRatingRow.appendChild(specialRatingCell);
+              tbody.appendChild(specialRatingRow);
       
               table.appendChild(tbody);
               reviewsContainer.appendChild(table);
