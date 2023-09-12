@@ -57,6 +57,10 @@ app.get('/getMovie', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'getMovie.html'));
 });
 
+app.get('/getMovieSurprise', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'getMovieSurprise.html'));
+});
+
 app.get('/deleteReview', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'deleteReview.html'));
 });
