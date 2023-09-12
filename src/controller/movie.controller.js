@@ -128,13 +128,26 @@ exports.getMoviesByPerson = async (req, res) => {
 
 exports.surpriseMe = async (req, res) => {
   try {
-    const { rows: movies } = await db.query('SELECT * FROM movies ORDER BY RANDOM() LIMIT 1');
-    if (movies.length > 0) {
-      res.status(200).json({
-        body: {
-          movie: movies[0]
-        }
-      });
+    const keywords = ['action', 'drama', 'comedy', 'thriller', 'sci-fi', 'romance', 'horror', 'adventure'];
+    const randomKeyword = keywords[Math.floor(Math.random() * keywords.length)];
+
+    const omdbResponse = await axios.get(`http://www.omdbapi.com/?s=${randomKeyword}&apikey=${OMDB_API_KEY}`);
+    if (omdbResponse.status === 200 && omdbResponse.data && omdbResponse.data.Response === 'True') {
+      const movies = omdbResponse.data.Search;
+      const randomIndex = Math.floor(Math.random() * movies.length);
+      const movieTitle = movies[randomIndex].Title;
+
+      const movieResponse = await axios.get(`http://www.omdbapi.com/?t=${movieTitle}&apikey=${OMDB_API_KEY}`);
+      if (movieResponse.status === 200 && movieResponse.data && movieResponse.data.Response === 'True') {
+        const movieData = movieResponse.data;
+        res.status(200).json({
+          body: {
+            movie: movieData
+          }
+        });
+      } else {
+        return res.status(404).json({ message: 'Nenhum filme encontrado' });
+      }
     } else {
       return res.status(404).json({ message: 'Nenhum filme encontrado' });
     }
@@ -142,6 +155,8 @@ exports.surpriseMe = async (req, res) => {
     return res.status(500).json({ message: 'Erro ao pesquisar filme' });
   }
 };
+
+
 
 
 
