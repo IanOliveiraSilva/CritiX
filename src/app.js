@@ -61,8 +61,9 @@ app.get('/deleteReview', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'views', 'deleteReview.html'));
 });
 
-
-
+app.get('/updateReview', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'views', 'updateReview.html'));
+});
 
 
 

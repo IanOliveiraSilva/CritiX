@@ -182,11 +182,9 @@ exports.getAllReviewsFromUser = async (req, res) => {
 exports.getReviewById = async (req, res) => {
   try {
     const { id } = req.query;
-    const userId = req.user.id;
-
     const { rows: [review] } = await db.query(
-      'SELECT * FROM reviews WHERE userId = $1 AND id = $2',
-      [userId, id]
+      'SELECT * FROM reviews WHERE id = $1 and ispublic = true',
+      [id]
     );
 
     if (!review) {
@@ -287,7 +285,7 @@ exports.updateReview = async (req, res) => {
 exports.updateReviewPartionally = async (req, res) => {
   const { id } = req.query;
   const userId = req.user.id;
-  const { rating, review, ispublic } = req.body;
+  const { rating, review, ispublic, specialrating } = req.body;
 
   try {
     const existingReview = await db.query(
@@ -305,11 +303,13 @@ exports.updateReviewPartionally = async (req, res) => {
       rating: rating || existingReview.rows[0].rating,
       review: review || existingReview.rows[0].review,
       ispublic: ispublic !== undefined ? ispublic : existingReview.rows[0].ispublic,
+      specialrating: specialrating || existingReview.rows[0].specialrating,
+
     };
 
     const { rows } = await db.query(
-      "UPDATE reviews SET rating = $1, review = $2, ispublic = $3 WHERE userId = $4 AND id = $5 RETURNING *",
-      [updatedReview.rating, updatedReview.review, updatedReview.ispublic, userId, id]
+      "UPDATE reviews SET rating = $1, specialrating = $2, review = $3, ispublic = $4 WHERE userId = $5 AND id = $6 RETURNING *",
+      [updatedReview.rating, updatedReview.specialrating ,updatedReview.review, updatedReview.ispublic, userId, id]
     );
 
     return res.status(200).json({
