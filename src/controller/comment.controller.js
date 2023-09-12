@@ -12,6 +12,10 @@ exports.createComment = async (req, res) => {
       if (!existingReview || !existingReview.id) {
         return res.status(400).json({ message: 'Review não encontrada!' });
       }
+
+      if (existingReview.userid === userId) {
+        return res.status(400).json({ message: 'Você não pode comentar na sua própria revisão!' });
+      }
   
       const { rows: [newComment] } = await db.query(
         `INSERT INTO comments (reviewId, userId, comment)
