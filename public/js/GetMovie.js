@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
           resultsList.innerHTML = '';
           data.Search.forEach(movie => {
             const li = document.createElement('li');
-            li.textContent = movie.Title;
+            li.textContent = `${movie.Title} (${movie.Year})`;
             li.addEventListener('click', async () => {
               const detailsUrl = `https://www.omdbapi.com/?i=${movie.imdbID}&apikey=${omdbApiKey}`;
               const detailsResponse = await fetch(detailsUrl);
