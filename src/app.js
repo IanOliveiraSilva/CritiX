@@ -20,7 +20,7 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: 'minhaChaveSecretaSuperSegura123!@#',
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://critix-402174fcc250.herokuapp.com/',
   clientID: '98Vu4GGbLqr3q5EzRPV52lxAQswGHsAf',
   issuerBaseURL: 'https://dev-q0cc14eebp14ttye.us.auth0.com'
 };
