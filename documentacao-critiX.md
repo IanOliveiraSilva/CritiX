@@ -4,7 +4,7 @@
 - [Introdução](#introducao)
 - [Autenticação](#autenticacao)
   - [Descrição](#descricao-autenticacao)
-  - [POST /auth/register](#post-authregister)
+  - [POST /user/signup](#post-user-signup)
 - [Reviews](#review)
   - [Descrição](#descricao-reviews)
   - [POST api/review](#post-reviews)
@@ -30,7 +30,7 @@ Já a função AuthMiddleware é responsável por verificar se o token JWT prese
 O uso do JWT traz algumas vantagens para o sistema de autenticação, como o fato de ser uma solução sem estado (stateless), ou seja, a sessão do usuário não é armazenada no servidor, o que permite uma escalabilidade mais fácil da aplicação. Além disso, o JWT permite que o servidor possa validar rapidamente se o token é válido, evitando consultas desnecessárias na base de dados a cada requisição. No entanto, é importante tomar algumas precauções ao usar tokens JWT, como definir um tempo de expiração adequado, usar algoritmos de criptografia seguros e não armazenar informações sensíveis no payload do token.
 
 
-### POST /auth/register
+### POST /user/signup
 Essa função é responsável por criar um novo usuário no banco de dados, a partir dos dados fornecidos pelo corpo da requisição (req.body). Além disso, a função também verifica se o email informado já foi cadastrado anteriormente e, em caso afirmativo, retorna uma mensagem de erro.
 
 #### Parâmetros
@@ -71,6 +71,173 @@ Código: 400
 Código: 500
 - Conteúdo: objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
 
+-----------------------------------------------
+
+### POST /user/profile
+Essa função é responsável por criar um novo perfil de usuário no banco de dados, a partir dos dados fornecidos pelo corpo da requisição (req.body).
+
+#### Parâmetros
+Os seguintes parâmetros devem ser enviados no corpo da requisição:
+
+name (obrigatório): nome do usuário.
+familyName (obrigatório): sobrenome do usuário.
+bio (obrigatório): biografia do usuário.
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: mensagem indicando que o perfil foi criado com sucesso.
+- body: objeto contendo o perfil do usuário que foi criado.
+
+Exemplo de resposta:
+
+```json
+{
+    "message": "Perfil criado com sucesso",
+    "body": {
+        "profile": {
+            "id": 3,
+            "userid": 14,
+            "name": "Ian",
+            "familyname": "Oliveira",
+            "icon": null,
+            "bio": "Teste"
+        }
+    }
+}
+```
+
+### Erros
+
+Código: 400
+- Conteúdo: objeto JSON com a mensagem de erro correspondente a um dos seguintes casos:
+- Um erro aconteceu enquanto o perfil de usuario era criado: ocorreu um erro ao tentar criar o perfil do usuário no banco de dados. Isso pode ser causado por uma variedade de razões, como um erro de conexão com o banco de dados ou um erro na consulta SQL.
+Código: 500
+- Conteúdo: objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+-----------------------------------------------
+
+
+### GET /user/profile
+Essa função é responsável por obter o perfil do usuário atualmente autenticado.
+
+#### Parâmetros
+Os seguintes parâmetros devem ser enviados no corpo da requisição:
+
+Nenhum parâmetro é necessário para essa rota.
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: mensagem indicando que o perfil foi atualizado com sucesso.
+- body: objeto contendo o perfil do usuário que foi atualizado.
+
+Exemplo de resposta:
+
+```json
+{
+    "message": "Perfil atualizado com sucesso",
+    "profile": {
+        "id": 3,
+        "userid": 14,
+        "name": "Ian",
+        "familyname": "Silva",
+        "icon": null,
+        "bio": "Teste 3"
+    }
+}
+```
+
+### Erros
+
+Código: 500
+- Conteúdo: objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+-----------------------------------------------
+
+### PUT /user/profile
+Essa função é responsável por atualizar o perfil do usuário atualmente autenticado.
+
+#### Parâmetros
+Os seguintes parâmetros devem ser enviados no corpo da requisição:
+
+- name (obrigatório): nome do usuário.
+- familyName (obrigatório): sobrenome do usuário.
+- bio (obrigatório): biografia do usuário.
+
+#### Resposta
+Sucesso
+- Código: 200
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: mensagem indicando que o perfil foi encontrado com sucesso.
+- body: objeto contendo o perfil do usuário.
+
+Exemplo de resposta:
+
+```json
+{
+    "message": "Perfil encontrado com sucesso!",
+    "body": {
+        "profile": {
+            "id": 3,
+            "userid": 14,
+            "name": "Ian",
+            "familyname": "Oliveira",
+            "icon": null,
+            "bio": "Teste"
+        }
+    }
+}
+```
+
+### Erros
+
+Código: 500
+- Conteúdo: objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+-----------------------------------------------
+
+### PATCH /user/profile
+Essa função é responsável por atualizar parcialmente o perfil do usuário atualmente autenticado.
+
+#### Parâmetros
+Os seguintes parâmetros devem ser enviados no corpo da requisição:
+
+- name (opcional): nome do usuário.
+- familyName (opcional): sobrenome do usuário.
+- bio (opcional): biografia do usuário.
+
+#### Resposta
+Sucesso
+- Código: 200
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: mensagem indicando que o perfil foi encontrado com sucesso.
+- body: objeto contendo o perfil do usuário.
+
+Exemplo de resposta:
+
+```json
+{
+    "message": "Perfil atualizado com sucesso!",
+    "review": {
+        "id": 3,
+        "userid": 14,
+        "name": "Ian",
+        "familyname": "Silva",
+        "icon": null,
+        "bio": "teste 4"
+    }
+}
+```
+
+### Erros
+
+Código: 500
+- Conteúdo: objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+-----------------------------------------------
 
 ## Reviews
 ### Descrição
