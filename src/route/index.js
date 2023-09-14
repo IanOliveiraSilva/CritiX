@@ -9,11 +9,11 @@ router.get('/', function (req, res, next) {
   });
 });
 
-app.get('/login', (req, res) => {
+router.get('/login', (req, res) => {
   res.oidc.login({ returnTo: '/profile' });
 });
 
-app.get('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
   res.oidc.logout({ returnTo: '/' });
 });
 
