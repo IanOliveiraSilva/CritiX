@@ -81,15 +81,8 @@
           <p>Email: <%= user.email %>
           </p>
 
-          <% if (bio) { %>
-            <p>Bio: <%= bio %></p>
-          <% } %>
-          <% if (familyName) { %>
-            <p>Family Name: <%= familyName %></p>
-          <% } %>
-          <% if (givenName) { %>
-            <p>Given Name: <%= givenName %></p>
-          <% } %>
+          <p>Bio: <% profile.user_metadata.bio%
+          </p>
 
           
           <a href="/" class="back-link">Voltar para a Página Inicial</a>
