@@ -1,11 +1,13 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const resultsList = document.querySelector('#results');
+  const genreSelect = document.getElementById('genreSelect');
 
   surpriseButton.addEventListener('click', async () => {
     const token = localStorage.getItem('token');
+    const selectedGenre = genreSelect.value;
     try {
-      const response = await fetch(`/api/movie/surpriseMe/`, {
+      const response = await fetch(`/api/movie/surpriseMe?genre=${selectedGenre}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

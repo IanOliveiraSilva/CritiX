@@ -21,8 +21,22 @@
 
   <main>
     <div class="container">
+      <div class="form-group">
+        <label for="genreSelect">Selecione seu gênero preferido:</label>
+        <select class="form-control" id="genreSelect">
+          <option value="action">Ação</option>
+          <option value="drama">Drama</option>
+          <option value="comedy">Comédia</option>
+          <option value="horror">Terror</option>
+          <option value="romance">Romance</option>
+          <option value="thriller">Suspense</option>
+          <option value="sci-fi">Ficção Cientifica</option>
+          <option value="adventure">Aventura</option>
+        </select>
+      </div>      
       <h1 class="text-center">Clique no botão para ver um filme surpresa</h1>
       <button class="btn btn-warning btn-block" id="surpriseButton">Surpresa!</button>
+      <a class="text-dark" href="/">Voltar para a página inicial</a>
         <ul id="results"></ul>
     </div>
   </main>

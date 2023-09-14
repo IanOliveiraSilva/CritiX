@@ -16,6 +16,13 @@ router.get('/profile', requiresAuth(), function (req, res, next) {
   });
 });
 
+router.get("/signup", (req, res) => {
+  res.oidc.login({
+    returnTo: "/",
+    authorizationParams: { screen_hint: "signup" },
+  });
+});
+
 router.get('/createReview', requiresAuth(), function (req, res, next) {
   res.render('createReview', {
     userProfile: JSON.stringify(req.oidc.user, null, 2),

@@ -1,5 +1,42 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap');
 
+.star-rating {
+  font-size: 0;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Alinhar à esquerda */
+  flex-direction: row-reverse; /* Inverter a direção */
+}
+
+.star {
+  cursor: pointer;
+  font-size: 50px;
+  color: rgb(122, 122, 122);
+  margin-right: 10px; /* Ajuste a margem direita conforme necessário */
+}
+
+.star:hover:before,
+.star:hover ~ .star:before {
+  content: "\2605";
+  color: rgb(0, 0, 0);
+}
+
+.star:before {
+  content: "\2606";
+}
+
+.star.active:before,
+.star.active ~ .star:before {
+  content: "\2605";
+  color: gold;
+  transform: scaleX(-1);
+}
+
+
+
+
+
 /* Reset CSS padrão */
 html, body, div, h1, h2, p, ul, li {
   margin: 0;

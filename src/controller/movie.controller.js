@@ -29,8 +29,9 @@ exports.surpriseMe = async (req, res) => {
   try {
     const keywords = ['action', 'drama', 'comedy', 'thriller', 'sci-fi', 'romance', 'horror', 'adventure'];
     const randomKeyword = keywords[Math.floor(Math.random() * keywords.length)];
+    const selectedGenre = req.query.genre;
 
-    const omdbResponse = await axios.get(`http://www.omdbapi.com/?s=${randomKeyword}&apikey=${OMDB_API_KEY}`);
+    const omdbResponse = await axios.get(`http://www.omdbapi.com/?s=${selectedGenre}&type=movie&apikey=${OMDB_API_KEY}`);
     if (omdbResponse.status === 200 && omdbResponse.data && omdbResponse.data.Response === 'True') {
       const movies = omdbResponse.data.Search;
       const randomIndex = Math.floor(Math.random() * movies.length);
