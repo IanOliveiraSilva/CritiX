@@ -81,7 +81,7 @@
           <p>Email: <%= user.email %>
           </p>
 
-
+         
           <a href="/" class="back-link">Voltar para a Página Inicial</a>
     </div>
   </main>
@@ -93,31 +93,7 @@
   </footer>
 
 
-  <script src="https://cdn.auth0.com/js/lock/11.27/lock.min.js"></script>
-  <script type="text/javascript">
-    var lock = new Auth0Lock('98Vu4GGbLqr3q5EzRPV52lxAQswGHsAf', 'dev-q0cc14eebp14ttye.us.auth0.com', {
-      auth: {
-        responseType: 'token id_token',
-        scope: 'openid profile'
-      }
-    });
-
-    lock.on("authenticated", function (authResult) {
-      lock.getUserInfo(authResult.accessToken, function (error, profile) {
-        if (!error) {
-          document.querySelector('.user-info').innerHTML = `
-                    <h1>Welcome ${profile.nickname}</h1>
-                    <p>Bio: ${profile.bio}</p>
-                    <p>Family Name: ${profile.familyName}</p>
-                    <p>Given Name: ${profile.givenName}</p>
-                `;
-        }
-      });
-    });
-
-    lock.show();
-  </script>
-
+  
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
