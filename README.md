@@ -1,4 +1,4 @@
-# CriticX - API de avalição de filmes
+# CritiX - API de avalição de filmes
 
 Este projeto é uma plataforma para avaliação de filmes, permitindo que os usuários compartilhem suas opiniões e classifiquem filmes.
 ## Tech Stack
@@ -42,7 +42,6 @@ Certifique-se de substituir `seu-usuario` pelo seu nome de usuário do PostgreSQ
 
 ### Instalando as dependências
 ```bash
-cd nome-do-projeto
 npm install
 ```
 
@@ -96,7 +95,7 @@ Para executar os testes, utilize o seguinte comando:
 
 ## Database diagram
 
-![App Screenshot](databasediagram.png)
+![App Screenshot](databasediagram1.png)
 
 
 
