@@ -22,12 +22,16 @@ router.get('/profile', (req, res) => {
     const { user } = req.oidc;
     res.render('profile', {
       userProfile: JSON.stringify(user, null, 2),
-      title: 'Profile page'
+      title: 'Profile page',
+      familyName: user['https://critix-402174fcc250.herokuapp.com/familyName'],
+      givenName: user['https://critix-402174fcc250.herokuapp.com/givenName'],
+      bio: user['https://critix-402174fcc250.herokuapp.com/bio']
     });
   } else {
     res.redirect('/login');
   }
 });
+
 
 
 router.get("/signup", (req, res) => {
