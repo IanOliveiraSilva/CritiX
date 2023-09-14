@@ -9,6 +9,14 @@ router.get('/', function (req, res, next) {
   });
 });
 
+app.get('/login', (req, res) => {
+  res.oidc.login({ returnTo: '/profile' });
+});
+
+app.get('/logout', (req, res) => {
+  res.oidc.logout({ returnTo: '/' });
+});
+
 router.get('/profile', requiresAuth(), function (req, res, next) {
   res.render('profile', {
     userProfile: JSON.stringify(req.oidc.user, null, 2),
