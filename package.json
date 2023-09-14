@@ -9,6 +9,7 @@
   "author": "Ian Oliveira",
   "license": "ISC",
   "dependencies": {
+    "auth0-lock": "^12.1.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",

@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { requiresAuth } = require('express-openid-connect');
+const Auth0Lock = require('auth0-lock');
+const lock = new Auth0Lock('98Vu4GGbLqr3q5EzRPV52lxAQswGHsAf', 'https://dev-q0cc14eebp14ttye.us.auth0.com');
 
 
 router.get('/', function (req, res, next) {
@@ -19,18 +21,24 @@ router.get('/logout', (req, res) => {
 
 router.get('/profile', (req, res) => {
   if (req.oidc.isAuthenticated()) {
-    const { user } = req.oidc;
-    res.render('profile', {
-      userProfile: JSON.stringify(user, null, 2),
-      title: 'Profile page',
-      familyName: user['https://critix-402174fcc250.herokuapp.com/familyName'],
-      givenName: user['https://critix-402174fcc250.herokuapp.com/givenName'],
-      bio: user['https://critix-402174fcc250.herokuapp.com/bio']
+    const { accessToken } = req.oidc;
+    lock.getUserInfo(accessToken, function(error, profile) {
+      if (!error) {
+        res.render('profile', {
+          userProfile: JSON.stringify(profile, null, 2),
+          title: 'Profile page',
+          bio: profile['https://critix-402174fcc250.herokuapp.com/bio'],
+          familyName: profile['https://critix-402174fcc250.herokuapp.com/familyName'],
+          givenName: profile['https://critix-402174fcc250.herokuapp.com/givenName']
+        });
+      } else {
+      }
     });
   } else {
     res.redirect('/login');
   }
 });
+
 
 
 

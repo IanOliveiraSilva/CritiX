@@ -81,16 +81,17 @@
           <p>Email: <%= user.email %>
           </p>
 
-          <% if (user['https://critix-402174fcc250.herokuapp.com/bio']) { %>
-            <p>Bio: <%= user['https://critix-402174fcc250.herokuapp.com/bio'] %></p>
+          <% if (bio) { %>
+            <p>Bio: <%= bio %></p>
           <% } %>
-          <% if (user['https://critix-402174fcc250.herokuapp.com/familyName']) { %>
-            <p>Family Name: <%= user['https://critix-402174fcc250.herokuapp.com/familyName'] %></p>
+          <% if (familyName) { %>
+            <p>Family Name: <%= familyName %></p>
           <% } %>
-          <% if (user['https://critix-402174fcc250.herokuapp.com/givenName']) { %>
-            <p>Given Name: <%= user['https://critix-402174fcc250.herokuapp.com/givenName'] %></p>
+          <% if (givenName) { %>
+            <p>Given Name: <%= givenName %></p>
           <% } %>
 
+          
           <a href="/" class="back-link">Voltar para a Página Inicial</a>
     </div>
   </main>
