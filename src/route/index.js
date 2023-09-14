@@ -17,12 +17,18 @@ router.get('/logout', (req, res) => {
   res.oidc.logout({ returnTo: '/' });
 });
 
-router.get('/profile', requiresAuth(), function (req, res, next) {
-  res.render('profile', {
-    userProfile: JSON.stringify(req.oidc.user, null, 2),
-    title: 'Profile page'
-  });
+router.get('/profile', (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    const { user } = req.oidc;
+    res.render('profile', {
+      userProfile: JSON.stringify(user, null, 2),
+      title: 'Profile page'
+    });
+  } else {
+    res.redirect('/login');
+  }
 });
+
 
 router.get("/signup", (req, res) => {
   res.oidc.login({
