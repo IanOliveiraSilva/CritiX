@@ -5,7 +5,6 @@ const router = require('../src/route/index');
 const cors = require('cors');
 
 
-
 const app = express();
 
 app.set('views', path.join(__dirname, '..', 'public', 'views'));
