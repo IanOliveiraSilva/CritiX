@@ -5,6 +5,11 @@
 - [Autenticação](#autenticacao)
   - [Descrição](#descricao-autenticacao)
   - [POST /user/signup](#post-user-signup)
+  - [POST /user/profile](#post-user-profile)
+  - [GET /user/profile](#get-user-profile)
+  - [PUT /user/profile](#put-user-profile)
+  - [PATCH /user/profile](#patch-user-profile)
+  
 - [Reviews](#review)
   - [Descrição](#descricao-reviews)
   - [POST api/review](#post-reviews)
