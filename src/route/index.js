@@ -30,7 +30,7 @@ router.get('/createReview', requiresAuth(), function (req, res, next) {
   });
 });
 
-router.get('/getAllUserReviews', requiresAuth(), function (req, res, next) {
+router.get('/getAllUserReviews', function (req, res, next) {
   res.render('getAllReviewsUser', {
     userProfile: JSON.stringify(req.oidc.user, null, 2),
     title: 'Get All Review from a User Page'
