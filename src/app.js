@@ -3,7 +3,6 @@ const {  auth  } = require('express-openid-connect');
 const path = require('path');
 const router = require('../src/route/index');
 const cors = require('cors');
-const Auth0Lock = require('auth0-lock');
 
 
 
@@ -29,8 +28,6 @@ const config = {
 };
 
 app.use(auth(config));
-
-const lock = new Auth0Lock('98Vu4GGbLqr3q5EzRPV52lxAQswGHsAf', 'https://dev-q0cc14eebp14ttye.us.auth0.com');
 
 app.use(function (req, res, next) {
   res.locals.user = req.oidc.user;

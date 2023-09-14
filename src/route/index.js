@@ -9,13 +9,7 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.get('/login', (req, res) => {
-  res.oidc.login({ returnTo: '/profile' });
-});
 
-router.get('/logout', (req, res) => {
-  res.oidc.logout({ returnTo: '/' });
-});
 
 router.get('/profile', requiresAuth(), function (req, res, next) {
   res.render('profile', {
