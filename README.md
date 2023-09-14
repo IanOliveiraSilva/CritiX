@@ -30,10 +30,11 @@ Agora você pode prosseguir com as etapas de instalação local.
 
 ### Clonando o projeto
 ```bash
-  git clone https://github.com/IanOliveiraSilva/CriticX
+  git clone https://github.com/IanOliveiraSilva/CritiX
 ```
 ### Configure o banco de dados:
 - Certifique-se de ter o PostgreSQL instalado e configurado corretamente em sua máquina.
+- Crie um banco de dados chamado movie_review_db
 - Execute o script SQL fornecido abaixo para criar as tabelas necessárias:
 ```bash
 psql -U seu-usuario -d movie_review_db -f caminho/do/script.sql
@@ -95,7 +96,7 @@ Para executar os testes, utilize o seguinte comando:
 
 ## Database diagram
 
-![App Screenshot](databasediagram1.png)
+![App Screenshot](databasediagram.png)
 
 
 
