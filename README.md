@@ -30,7 +30,7 @@ Agora você pode prosseguir com as etapas de instalação local.
 
 ### Clonando o projeto
 ```bash
-  git clone https://github.com/IanOliveiraSilva/CriticX
+  git clone https://github.com/IanOliveiraSilva/CritiX
 ```
 ### Configure o banco de dados:
 - Certifique-se de ter o PostgreSQL instalado e configurado corretamente em sua máquina.
