@@ -6,11 +6,11 @@ const db = require("../config/db");
 const lowRating = 0;
 const highRating = 5;
 const specialRatingMap = new Map([
-  ['Horror', 'Horrormetro'],
-  ['Comedy', 'Risômetro'],
-  ['Action', 'Adrenalimetro'],
-  ['Romance', 'Amorômetro'],
-  ['Drama', 'Lagrimômetro'],
+  ['Horror', 'Nivel de Medo'],
+  ['Comedy', 'Nivel de Diversão'],
+  ['Action', 'Nivel de Adrenalina'],
+  ['Romance', 'Nivel de Amor'],
+  ['Drama', 'Nivel de Choro'],
 ]);
 
 const updateMovieAverageRating = async (movieId) => {

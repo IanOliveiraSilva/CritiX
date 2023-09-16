@@ -21,14 +21,6 @@ main {
   padding: 0 20px;
 }
 
-/* Estilos para o cabeçalho e navegação */
-header {
-  background-color: #000000;
-  color: #e4d50c;
-  text-align: center;
-  padding: 20px 0;
-}
-
 
 .navbar {
   display: flex;
@@ -36,9 +28,6 @@ header {
   align-items: center;
 }
 
-.logo {
-  font-size: 24px;
-}
 
 .nav-list {
   list-style: none;

@@ -244,6 +244,10 @@ Código: 500
 
 -----------------------------------------------
 
+
+
+-----------------------------------------------
+
 ## Reviews
 ### Descrição
 O CRUD implementado é um sistema básico que permite que os usuários gerenciem avaliações de filmes. As funções incluem criar uma nova avaliação, selecionar todas as avaliações existentes, selecionar uma avaliação específica por seu ID, apagar uma avaliação, atualizar uma avaliação por completo e atualizar parcialmente uma avaliação.

@@ -4,7 +4,6 @@ const path = require('path');
 const router = require('../src/route/index');
 const cors = require('cors');
 
-
 const app = express();
 
 app.set('views', path.join(__dirname, '..', 'public', 'views'));
@@ -32,8 +31,6 @@ app.use(function (req, res, next) {
   res.locals.user = req.oidc.user;
   next();
 });
-
-app.use('/', router);
 
 const index = require('./route/index');
 const reviewRoute = require('./route/review.routes');

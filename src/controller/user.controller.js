@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require("../config/db");
 
-
 exports.signup = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -240,6 +239,7 @@ exports.AuthMiddleware = async (req, res, next) => {
       return res.status(401).json({ message: 'Invalid token' });
     }
   };
+
   
   
 
