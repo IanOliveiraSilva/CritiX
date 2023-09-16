@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault();
       const query = input.value.trim();
       const omdbApiKey = '8acf114e';
-      const url = `https://www.omdbapi.com/?s=${query}&apikey=${omdbApiKey}`;
+      const url = `https://www.omdbapi.com/?s=${query}&page=1&apikey=${omdbApiKey}`;
   
       try {
         const response = await fetch(url);

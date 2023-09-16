@@ -22,6 +22,34 @@ router.get("/signup", (req, res) => {
   });
 });
 
+router.get('/login2', requiresAuth(), function (req, res, next) {
+  res.render('login2', {
+    userProfile: JSON.stringify(req.oidc.user, null, 2),
+    title: 'Login page'
+  });
+});
+
+router.get('/createList', requiresAuth(), function (req, res, next) {
+  res.render('createList', {
+    userProfile: JSON.stringify(req.oidc.user, null, 2),
+    title: 'Create List page'
+  });
+});
+
+router.get('/getAllLists', requiresAuth(), function (req, res, next) {
+  res.render('getAllLists', {
+    userProfile: JSON.stringify(req.oidc.user, null, 2),
+    title: 'Get All Lists page'
+  });
+});
+
+router.get('/register2', requiresAuth(), function (req, res, next) {
+  res.render('register2', {
+    userProfile: JSON.stringify(req.oidc.user, null, 2),
+    title: 'Register page'
+  });
+});
+
 router.get('/createReview', requiresAuth(), function (req, res, next) {
   res.render('createReview', {
     userProfile: JSON.stringify(req.oidc.user, null, 2),

@@ -6,11 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const movieGenre = localStorage.getItem('movieGenre');
 
   const specialRatingMap = new Map([
-    ['Horror', 'Horrormetro'],
-    ['Comedy', 'Risômetro'],
-    ['Action', 'Adrenalimetro'],
-    ['Romance', 'Amorômetro'],
-    ['Drama', 'Lagrimômetro'],
+    ['Horror', 'Nivel de Medo'],
+    ['Comedy', 'Nivel de Diversão'],
+    ['Action', 'Nivel de Adrenalina'],
+    ['Romance', 'Nivel de Amor'],
+    ['Drama', 'Nivel de Choro'],
   ]);
 
   const getSpecialRating = (genre) => {
@@ -42,7 +42,7 @@ reviewForm.addEventListener('submit', async (event) => {
 
   const token = localStorage.getItem('token');
 
-  const movieTitle = localStorage.getItem('movieTitle'); // Mova esta linha aqui
+  const movieTitle = localStorage.getItem('movieTitle');
 
   console.log(movieTitle);
 

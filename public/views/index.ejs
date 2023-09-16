@@ -13,17 +13,19 @@
 
 <body>
 
-  <header class="bg-dark text-warning text-center py-5">
-    <img src="../images/logo.png" alt="Logo do CritiX" width="100" height="100">
-    <h1>Bem-vindo ao CritiX!</h1>
-    <p class="lead">Uma plataforma para avaliar filmes.</p>
-  </header>
+  <body>
 
-  <main>
-    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-      <div class="container">
-        <ul class="navbar-nav mx-auto">
-          <% if (locals.isAuthenticated) { %>
+    <header class="bg-dark text-warning text-center py-5">
+      <img src="../images/logo.png" alt="Logo do CritiX" width="100" height="100">
+      <h1>Bem-vindo ao CritiX!</h1>
+      <p class="lead">Uma plataforma para avaliar filmes.</p>
+    </header>
+
+    <main>
+      <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+        <div class="container">
+          <ul class="navbar-nav mx-auto">
+            <!-- <% if (locals.isAuthenticated) { %>
             <li class="nav-item nav-link text-dark">Hello <%= user.nickname %>!</li>
             <li class="nav-item"><a href="/profile" class="nav-link text-dark"class="underline">Meu Perfil</a></li>
             <li class="nav-item"><a href="/logout" class="nav-link text-dark"class="underline">Sair da conta</a></li>
@@ -32,88 +34,95 @@
             <li class="nav-item"><a href="/login" class="nav-link text-dark"class="underline">Entre na sua conta</a></li>
             <li class="nav-item"><a href="/signup" class="nav-link text-dark"class="underline">Crie uma conta</a></li>
 
-        <% } %>
-          <li class="nav-item"><a class="nav-link text-dark" href="/getMovie">Veja todos os filmes</a></li>
-          <li class="nav-item"><a class="nav-link text-dark" href="/getMovieSurprise">Surpreenda-me</a></li>
-          <li class="nav-item"><a class="nav-link text-dark" href="/getAllUserReviews">Buscar usuario</a></li>
-        </ul>
-      </div>
-    </nav>
+        <% } %> -->
+            <li class="nav-item"><a class="nav-link text-dark" href="/register2">Crie sua conta</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/login2">Entre em sua conta</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/getMovie">Veja todos os filmes</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/createList">Crie uma lista</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/getAllLists">Minhas Listas</a></li>
 
-    <!-- Nova seção informativa -->
-    <section class="container mt-5">
-      <div class="row">
-        <div class="col-md-6">
-          <h2>Conheça Nossos Recursos</h2>
-          <p>
-            O CritiX oferece uma plataforma para você avaliar filmes e compartilhar suas opiniões com outros amantes do
-            cinema. Explore nossos recursos e comece a criar suas próprias avaliações hoje mesmo.
-          </p>
+            <li class="nav-item"><a class="nav-link text-dark" href="/getMovieSurprise">Surpreenda-me</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/getAllUserReviews">Buscar usuario</a></li>
+          </ul>
         </div>
-      </div>
-    </section>
+      </nav>
 
-    <!-- Nova seção de informações sobre o serviço -->
-    <section class="bg-light py-5">
-      <div class="container">
+      <!-- Nova seção informativa -->
+      <section class="container mt-5">
         <div class="row">
           <div class="col-md-6">
-            <h2>Por que escolher o CritiX?</h2>
+            <h2>Conheça Nossos Recursos</h2>
             <p>
-              No CritiX, você pode criar e ler avaliações detalhadas de filmes, encontrar recomendações personalizadas
-              com base em suas preferências e muito mais. Nossa comunidade de cinéfilos está pronta para compartilhar
-              suas opiniões e descobrir filmes incríveis.
+              O CritiX oferece uma plataforma para você avaliar filmes e compartilhar suas opiniões com outros amantes
+              do
+              cinema. Explore nossos recursos e comece a criar suas próprias avaliações hoje mesmo.
             </p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Nova seção informativa -->
-    <section class="container mt-5">
-      <div class="row">
-        <div class="col-md-6">
-          <h2>Participe de Discussões</h2>
-          <p>
-            No CritiX, você pode participar de discussões emocionantes sobre seus filmes favoritos. Interaja com outros
-            membros da comunidade, compartilhe teorias, análises e insights sobre filmes que você ama.
-          </p>
+      <!-- Nova seção de informações sobre o serviço -->
+      <section class="bg-light py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h2>Por que escolher o CritiX?</h2>
+              <p>
+                No CritiX, você pode criar e ler avaliações detalhadas de filmes, encontrar recomendações personalizadas
+                com base em suas preferências e muito mais. Nossa comunidade de cinéfilos está pronta para compartilhar
+                suas opiniões e descobrir filmes incríveis.
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Nova seção informativa -->
-    <section class="bg-light py-5">
-      <div class="container">
+      <!-- Nova seção informativa -->
+      <section class="container mt-5">
         <div class="row">
           <div class="col-md-6">
-            <h2>Crie Sua Lista de Favoritos</h2>
+            <h2>Participe de Discussões</h2>
             <p>
-              Mantenha uma lista pessoal de seus filmes favoritos. Marque os filmes que você já assistiu, aqueles que
-              deseja assistir e os que deseja revisitar. Organize suas preferências de maneira simples e eficaz.
+              No CritiX, você pode participar de discussões emocionantes sobre seus filmes favoritos. Interaja com
+              outros
+              membros da comunidade, compartilhe teorias, análises e insights sobre filmes que você ama.
             </p>
           </div>
         </div>
+      </section>
+
+      <!-- Nova seção informativa -->
+      <section class="bg-light py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h2>Crie Sua Lista de Favoritos</h2>
+              <p>
+                Mantenha uma lista pessoal de seus filmes favoritos. Marque os filmes que você já assistiu, aqueles que
+                deseja assistir e os que deseja revisitar. Organize suas preferências de maneira simples e eficaz.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="bg-dark text-warning text-center py-3">
+      <div class="container">
+        <p>&copy; 2023 CritiX</p>
       </div>
-    </section>
+    </footer>
 
-  </main>
-
-  <footer class="bg-dark text-warning text-center py-3">
-    <div class="container">
-      <p>&copy; 2023 CritiX</p>
-    </div>
-  </footer>
-
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-</body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+  </body>
 
 </html>
