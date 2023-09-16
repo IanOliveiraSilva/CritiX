@@ -1,4 +1,4 @@
-const token = localStorage.getItem('token'); // Assuming you have a valid token in local storage
+const token = localStorage.getItem('token');
 
 document.addEventListener('DOMContentLoaded', async () => {
     const usernameForm = document.getElementById('usernameForm');

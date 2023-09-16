@@ -63,7 +63,7 @@ exports.getAllLists = async (req, res) => {
         const userId = req.user.id;
   
         const lists = await db.query(
-            `SELECT u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
+            `SELECT l.id, u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
             FROM lists l
             JOIN users u ON l.userId = u.id
             WHERE u.id = $1;

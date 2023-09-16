@@ -43,6 +43,20 @@ router.get('/getAllLists', requiresAuth(), function (req, res, next) {
   });
 });
 
+router.get('/updateList', requiresAuth(), function (req, res, next) {
+  res.render('updateList', {
+    userProfile: JSON.stringify(req.oidc.user, null, 2),
+    title: 'Update List page'
+  });
+});
+
+router.get('/deleteList', requiresAuth(), function (req, res, next) {
+  res.render('deleteList', {
+    userProfile: JSON.stringify(req.oidc.user, null, 2),
+    title: 'Delete List page'
+  });
+});
+
 router.get('/register2', requiresAuth(), function (req, res, next) {
   res.render('register2', {
     userProfile: JSON.stringify(req.oidc.user, null, 2),
