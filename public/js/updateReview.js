@@ -36,6 +36,7 @@ updateReviewForm.addEventListener('submit', async (event) => {
     const data = await response.json();
     if (response.ok) {
       alert(`Review Atualizada com sucesso!`);
+      window.location.href = '/';
     } else {
       alert(data.message);
     }

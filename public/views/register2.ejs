@@ -84,6 +84,7 @@
             const data = await response.json();
             if (response.ok) {
                 alert(`Usuário ${data.user.username} criado com sucesso!`);
+                window.location.href = '/login2';
             } else {
                 alert(data.message);
             }

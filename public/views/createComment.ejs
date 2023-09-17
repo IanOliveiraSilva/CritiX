@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CritiX - Avaliação de Filmes</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/style2.css">
+</head>
+
+<body>
+  <header class="bg-dark text-warning text-center py-5">
+    <img src="../images/logo.png" alt="Logo do CritiX" width="100" height="100">
+    <h1>Bem-vindo ao CritiX!</h1>
+    <p class="lead">Uma plataforma para avaliar filmes.</p>
+  </header>
+
+  <main>
+    <div class="container background-container">
+
+      <form class="review-form bg-warning text-dark" id="create-comment-form">
+        <h1 class="text-dark">Comentar!</h1>
+
+        <label for="comment">Comentario::</label>
+        <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br><br>
+
+        <button class="submit-button bg-dark text-warning" type="submit">Criar Comentario</button>
+        <a href="/" class="back-link">Voltar para a página inicial</a>
+      </form>
+    </div>
+  </main>
+
+  <footer class="bg-dark text-warning text-center py-3">
+    <div class="container">
+      <p>&copy; 2023 CritiX</p>
+    </div>
+  </footer>
+
+  <script src="../js/createComment.js"></script>
+</body>
+
+</html>

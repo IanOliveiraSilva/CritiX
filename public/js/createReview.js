@@ -63,6 +63,7 @@ reviewForm.addEventListener('submit', async (event) => {
   const data = await response.json();
   if (response.ok) {
     alert(`Review criada com sucesso!`);
+    window.location.href = '/';
   } else {
     alert(data.message);
   }

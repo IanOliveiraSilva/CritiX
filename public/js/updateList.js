@@ -46,6 +46,7 @@ updateListForm.addEventListener('submit', async (event) => {
   const data = await response.json();
   if (response.ok) {
     alert(`Lista Atualizada com sucesso!`);
+    window.location.href = '/getAllLists';
   } else {
     alert(data.message);
   }

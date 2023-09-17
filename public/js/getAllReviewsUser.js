@@ -94,10 +94,36 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 table.appendChild(tbody);
                 reviewsContainer.appendChild(table);
+
+                const commentReviewButtonRow = document.createElement('tr');
+                const commentReviewButtonCell = document.createElement('td');
+                const commentButton = document.createElement('button');
+                commentButton.id = 'get-review-id'
+                commentButton.textContent = 'Comentar';
+                commentButton.addEventListener('click', () => {
+                    localStorage.setItem('reviewId', review.id);
+                    window.location.href = '/createComment';
+                });
+                commentReviewButtonCell.appendChild(commentButton);
+                commentReviewButtonRow.appendChild(commentReviewButtonCell);
+                tbody.appendChild(commentReviewButtonRow);
+
+                const getcommentReviewButtonRow = document.createElement('tr');
+                const getcommentReviewButtonCell = document.createElement('td');
+                const getcommentButton = document.createElement('button');
+                getcommentButton.id = 'get-review-id'
+                getcommentButton.textContent = 'Comentarios';
+                getcommentButton.addEventListener('click', () => {
+                    localStorage.setItem('reviewId', review.id);
+                    window.location.href = '/getAllReviewsComments';
+                });
+                getcommentReviewButtonCell.appendChild(getcommentButton);
+                getcommentReviewButtonRow.appendChild(getcommentReviewButtonCell);
+                tbody.appendChild(getcommentReviewButtonRow);
+
+                table.appendChild(tbody);
+                reviewsContainer.appendChild(table);
             });
-
-
-
         } catch (error) {
             console.error('Erro ao buscar revisões do usuário:', error);
         }

@@ -113,6 +113,19 @@ router.get('/updateReview', requiresAuth(), function (req, res, next) {
   });
 });
 
+router.get('/createComment', requiresAuth(), function (req, res, next) {
+  res.render('createComment', {
+    userProfile: JSON.stringify(req.oidc.user, null, 2),
+    title: 'Create Comment Page'
+  });
+});
+
+router.get('/getAllReviewsComments', requiresAuth(), function (req, res, next) {
+  res.render('getAllReviewsComments', {
+    userProfile: JSON.stringify(req.oidc.user, null, 2),
+    title: 'getAllReviewsComments Page'
+  });
+});
 
 router.get('/api', (req, res) => {
   res.status(200).send({

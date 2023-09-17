@@ -83,6 +83,7 @@
             if (response.ok) {
                 localStorage.setItem('token', data.token);
                 alert(`Usuário ${data.user.username} logado com sucesso!`);
+                window.location.href = '/';
             } else {
                 alert(data.message);
             }

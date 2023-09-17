@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (response.ok) {
               const data = await response.json();
               alert('Lista criada com sucesso!');
+              window.location.href = '/';
           } else {
               const data = await response.json();
               alert(`Erro: ${data.message}`);
