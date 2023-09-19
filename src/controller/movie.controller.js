@@ -28,7 +28,6 @@ exports.getMovieByTitle = async (req, res) => {
 exports.surpriseMe = async (req, res) => {
   try {
     const keywords = ['action', 'drama', 'comedy', 'thriller', 'sci-fi', 'romance', 'horror', 'adventure'];
-    const randomKeyword = keywords[Math.floor(Math.random() * keywords.length)];
     const selectedGenre = req.query.genre;
 
     const omdbResponse = await axios.get(`http://www.omdbapi.com/?s=${selectedGenre}&type=movie&apikey=${OMDB_API_KEY}`);

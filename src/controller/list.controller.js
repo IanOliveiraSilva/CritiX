@@ -56,8 +56,6 @@ exports.createList = async (req, res) => {
     }
 };
 
-  
-
 exports.getAllLists = async (req, res) => {
     try {
         const userId = req.user.id;
@@ -84,8 +82,7 @@ exports.getAllLists = async (req, res) => {
     }
   };
   
-
-  exports.getListById = async (req, res) => {
+exports.getListById = async (req, res) => {
     try {
         const { id } = req.query;
         const userId = req.user.id;
@@ -120,8 +117,6 @@ exports.getAllLists = async (req, res) => {
     }
   };
   
-
-
 exports.deleteList = async (req, res) => {
     try {
       const { id } = req.query;
@@ -153,8 +148,7 @@ exports.deleteList = async (req, res) => {
     }
   };
   
-
-  exports.updateList = async (req, res) => {
+exports.updateList = async (req, res) => {
     const { id } = req.query;
     const userId = req.user.id;
     const { name, description, isPublic, movieTitles } = req.body;
@@ -191,8 +185,7 @@ exports.deleteList = async (req, res) => {
     }
   };
   
-
-  exports.updateListPartially = async (req, res) => {
+exports.updateListPartially = async (req, res) => {
     const { id } = req.query;
     const userId = req.user.id;
     const { name, description, isPublic, movieTitles } = req.body;

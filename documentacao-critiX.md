@@ -5,22 +5,31 @@
 - [Autenticação](#autenticacao)
   - [Descrição](#descricao-autenticacao)
   - [AuthMidlleware](#authmiddleware)
-  - [POST /user/signup](#post-user-signup)
-  - [POST /user/profile](#post-user-profile)
-  - [GET /user/profile](#get-user-profile)
-  - [PUT /user/profile](#put-user-profile)
-  - [PATCH /user/profile](#patch-user-profile)
-  
+  - [POST /api/user/signup](#post-user-signup)
+  - [POST /api/user/profile](#post-user-profile)
+  - [GET /api/user/profile](#get-user-profile)
+  - [PUT /api/user/profile](#put-user-profile)
+  - [PATCH /api/user/profile](#patch-user-profile)
 - [Reviews](#review)
   - [Descrição](#descricao-reviews)
-  - [POST api/review](#post-reviews)
+  - [POST /api/review](#post-reviews)
   - [GET /api/allReviews](#get-reviews)
   - [GET /api/allReviews/user](#get-reviews-user)
   - [GET /api/allReviews/movies](#get-reviews-movies)
-  - [GET /api/reviews/:id](#get-reviews-byId)
+  - [GET /api/reviews/:id](#get-reviews-by-id)
   - [DELETE /api/:id](#delete-review)
   - [PUT /api/:id](#put-review)
   - [PATCH /api/:id](#patch-review)
+- [Movies](#movies)
+  - [GET /api/movie/surpriseMe](#surprise-me)
+  - [GET /api/movie/](#get-movie-title)
+- [List](#list)
+  - [POST /api/list](#post-list)
+  - [GET /api/allLists](#get-lists)
+  - [GET /api/listById:id](#get-lists-by-id)
+  - [DELETE /api/list:id](#delete-list)
+  - [PUT /api/list:id](#put-list)
+  - [PATCH /api/list:id](#patch-list)
 
 ## Introdução
 Este é o guia oficial da API do nosso aplicativo. Aqui você encontrará todas as informações necessárias para utilizar nossa API e desenvolver sua própria integração.
@@ -31,11 +40,7 @@ Para usar a API, é necessário ter uma chave de acesso, que pode ser obtida atr
 ### Descrição
 O  sistema de autenticação utiliza tokens JWT (JSON Web Tokens) para autenticar usuários em uma aplicação web. A funcionalidade é composta por duas partes: a função signup, responsável por criar um novo usuário na base de dados, criptografar a senha e gerar um token JWT para autenticar o usuário na aplicação; e a função AuthMiddleware, que é um middleware para proteger as rotas que requerem autenticação.
 
-A função signup é responsável por receber as informações do novo usuário (username, email e password), e verifica se todas as informações foram fornecidas. Se alguma informação faltar, a função retorna uma resposta HTTP com status 400 e uma mensagem de erro. Em seguida, a função verifica se já existe um usuário com o mesmo e-mail na base de dados. Caso já exista, a função retorna uma resposta HTTP com status 400 e uma mensagem de erro informando que o e-mail já está sendo utilizado. Caso contrário, a função criptografa a senha do usuário e insere um novo registro na base de dados, retornando uma resposta HTTP com status 201 contendo o novo usuário e o token JWT gerado.
-
-Já a função AuthMiddleware é responsável por verificar se o token JWT presente na requisição é válido e corresponde a um usuário existente na base de dados. Primeiramente, a função extrai o token da requisição HTTP, verificando se ele está no formato esperado e não está expirado. Em seguida, a função decodifica o token, obtendo o ID do usuário. Com o ID do usuário, a função faz uma consulta na base de dados, buscando o registro correspondente. Se o registro for encontrado, o middleware adiciona o usuário à requisição HTTP, e a função next() é chamada, permitindo que a requisição prossiga para a rota protegida. Caso contrário, a função retorna uma resposta HTTP com status 401 (Unauthorized) ou 500 (Internal Server Error), informando que o token é inválido ou houve um erro interno no servidor.
-
-O uso do JWT traz algumas vantagens para o sistema de autenticação, como o fato de ser uma solução sem estado (stateless), ou seja, a sessão do usuário não é armazenada no servidor, o que permite uma escalabilidade mais fácil da aplicação. Além disso, o JWT permite que o servidor possa validar rapidamente se o token é válido, evitando consultas desnecessárias na base de dados a cada requisição. No entanto, é importante tomar algumas precauções ao usar tokens JWT, como definir um tempo de expiração adequado, usar algoritmos de criptografia seguros e não armazenar informações sensíveis no payload do token.
+A função AuthMiddleware é responsável por verificar se o token JWT presente na requisição é válido e corresponde a um usuário existente na base de dados. Primeiramente, a função extrai o token da requisição HTTP, verificando se ele está no formato esperado e não está expirado. Em seguida, a função decodifica o token, obtendo o ID do usuário. Com o ID do usuário, a função faz uma consulta na base de dados, buscando o registro correspondente. Se o registro for encontrado, o middleware adiciona o usuário à requisição HTTP, e a função next() é chamada, permitindo que a requisição prossiga para a rota protegida. Caso contrário, a função retorna uma resposta HTTP com status 401 (Unauthorized) ou 500 (Internal Server Error), informando que o token é inválido ou houve um erro interno no servidor.
 
 ----------------------------------------
 
@@ -568,6 +573,7 @@ Código: 404
 Código: 500
 - objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados.
 
+-------------------------
 
 ### PUT /api/review/:id
 Essa função é responsável por atualizar completamente uma avaliação específica no banco de dados. 
@@ -631,6 +637,7 @@ Código: 500
 
 -  objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados.
 
+-----------------
 
 ### PATCH /api/review/:id
 
@@ -691,3 +698,526 @@ Código: 404
 Código: 500
 - objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados.
 
+
+-------------------------------------
+
+## Movies
+
+### Descrição
+O sistema implementado permite que os usuários possam escolher um filme pelo titulo e escolher aleatoriamente um filme com base no genero.
+
+### Endpoints
+
+-------------------------------------
+
+### GET /api/movie/surpriseMe
+Essa função é responsável por retornar um filme aleatorio de acordo com o genero escolhido.
+
+### Parâmetros
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:genre (obrigatório): genero do filme que deseja.
+
+#### Resposta
+Sucesso
+
+Código: 200
+Conteúdo: objeto JSON com os seguintes campos:
+body: objeto json contendo todas informações do filme.
+Exemplo de resposta:
+
+```json
+{
+    "body": {
+        "movie": {
+            "Title": "Missing in Action 2: The Beginning",
+            "Year": "1985",
+            "Rated": "R",
+            "Released": "01 Mar 1985",
+            "Runtime": "100 min",
+            "Genre": "Action, Drama, Thriller",
+            "Director": "Lance Hool",
+            "Writer": "Steve Bing, Larry Levinson, Arthur Silver",
+            "Actors": "Chuck Norris, Soon-Tek Oh, Steven Williams",
+            "Plot": "Prequel to the first Missing In Action, set in the early 1980s it shows the capture of Colonel Braddock during the Vietnam war in the 1970s, and his captivity with other American POWs in a brutal prison camp, and his plans to escape.",
+            "Language": "English, Vietnamese",
+            "Country": "United States",
+            "Awards": "N/A",
+            "Poster": "https://m.media-amazon.com/images/M/MV5BOTFhNTdiNDQtZGQ4Ny00MDA1LTg1ZjEtYzZhMGU5YjBjNTBhXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg",
+            "Ratings": [
+                {
+                    "Source": "Internet Movie Database",
+                    "Value": "5.3/10"
+                }
+            ],
+            "Metascore": "N/A",
+            "imdbRating": "5.3",
+            "imdbVotes": "8,951",
+            "imdbID": "tt0089604",
+            "Type": "movie",
+            "DVD": "01 May 2017",
+            "BoxOffice": "$10,755,447",
+            "Production": "N/A",
+            "Website": "N/A",
+            "Response": "True"
+        }
+    }
+}
+```
+
+### Erros
+
+Código: 404
+- objeto JSON com a mensagem de erro Filme não encontrado. 
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados.
+
+---------------------------------
+
+### GET /api/movie/
+Essa função é responsável por retornar um filme pelo titulo.
+
+### Parâmetros
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:title (obrigatório): titulo do filme que deseja escolher.
+
+#### Resposta
+Sucesso
+
+Código: 200
+Conteúdo: objeto JSON com os seguintes campos:
+body: objeto json contendo todas informações do filme.
+Exemplo de resposta:
+
+```json
+{
+    "body": {
+        "movieData": {
+            "Title": "Us",
+            "Year": "2019",
+            "Rated": "R",
+            "Released": "22 Mar 2019",
+            "Runtime": "116 min",
+            "Genre": "Horror, Mystery, Thriller",
+            "Director": "Jordan Peele",
+            "Writer": "Jordan Peele",
+            "Actors": "Lupita Nyong'o, Winston Duke, Elisabeth Moss",
+            "Plot": "A family's serene beach vacation turns to chaos when their doppelgängers appear and begin to terrorize them.",
+            "Language": "English",
+            "Country": "United States, China, Japan",
+            "Awards": "85 wins & 132 nominations",
+            "Poster": "https://m.media-amazon.com/images/M/MV5BZTliNWJhM2YtNDc1MC00YTk1LWE2MGYtZmE4M2Y5ODdlNzQzXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg",
+            "Ratings": [
+                {
+                    "Source": "Internet Movie Database",
+                    "Value": "6.8/10"
+                },
+                {
+                    "Source": "Rotten Tomatoes",
+                    "Value": "93%"
+                },
+                {
+                    "Source": "Metacritic",
+                    "Value": "81/100"
+                }
+            ],
+            "Metascore": "81",
+            "imdbRating": "6.8",
+            "imdbVotes": "322,220",
+            "imdbID": "tt6857112",
+            "Type": "movie",
+            "DVD": "04 Jun 2019",
+            "BoxOffice": "$175,084,580",
+            "Production": "N/A",
+            "Website": "N/A",
+            "Response": "True"
+        },
+        "movie": {
+            "medianotas": "2.43"
+        }
+    }
+}
+```
+
+### Erros
+
+Código: 404
+- objeto JSON com a mensagem de erro Filme não encontrado. 
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados.
+
+-------------------------------------
+
+## List
+
+### Descrição
+O CRUD implementado é um sistema básico que permite que os usuários gerenciem listas de filmes. As funções incluem criar uma nova list, selecionar todas as listas existentes, selecionar uma lista específica por seu ID, apagar uma lista, atualizar uma lista por completo e atualizar parcialmente uma lista.
+
+### Endpoints
+
+-------------------------------------
+
+### POST /api/list
+Essa função é responsável por criar uma nova lista no banco de dados.
+
+#### Parâmetros
+Os seguintes parâmetros devem ser enviados no corpo da requisição:
+
+- name (obrigatório): O nome da lista.
+- description (obrigatório): Uma breve descrição sobre a lista.
+- movieTitles (obrigatório): titulos dos filmes da lista.
+- ispublic (opcional): Um valor booleano que indica se a avaliação deve ser pública. O padrão é false.
+
+Exemplo de uso:
+```json
+{
+  "name": "Melhores filmes de terror 2023 2 ",
+  "description": "Uma lista dos melhores filmes de terror.",
+  "movieTitles": ["The medium", "X", "Pearl"],
+  "isPublic": true
+}
+```
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: Review criada com sucesso!
+- list: objeto json contendo todos dados da nova lista.
+
+Exemplo de resposta:
+```json
+{
+    "message": "Lista criada com sucesso!",
+    "body": {
+        "list": {
+            "id": 19,
+            "name": "Melhores filmes de terror 2023 2 ",
+            "description": "Uma lista dos melhores filmes de terror.",
+            "movies": [
+                "The medium",
+                "X",
+                "Pearl"
+            ],
+            "ispublic": true,
+            "userid": 14,
+            "created_at": "2023-09-19T15:11:22.534Z"
+        }
+    }
+}
+```
+
+### Erros
+
+Código: 400
+- Conteúdo: objeto JSON com a mensagem de erro correspondente a um dos seguintes casos:
+- Name is required: nome não foi fornecido no corpo da requisição.
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+------------------
+
+### GET /api/allLists
+Essa função é responsável por retornar todas as listas do usuario autenticado existentes no banco de dados.
+
+#### Parâmetros
+
+Nenhum parâmetro é necessário para essa rota.
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- list: objeto json contendo todos dados da lista.
+
+Exemplo de resposta:
+```json
+[
+    {
+        "id": 20,
+        "user": "testandoweb4",
+        "list_name": "Melhores filmes de terror 2023",
+        "movie_titles": [
+            "The medium",
+            "X",
+            "Pearl"
+        ],
+        "list_description": "Uma lista dos melhores filmes de terror.",
+        "created_at": "2023-09-19T15:15:05.181Z"
+    },
+    {
+        "id": 21,
+        "user": "testandoweb4",
+        "list_name": "Melhores filmes",
+        "movie_titles": [
+            "Interstellar",
+            "The texas chainsaw massacre",
+            "Elite squad"
+        ],
+        "list_description": "Uma lista dos melhores filmes",
+        "created_at": "2023-09-19T15:16:01.716Z"
+    }
+]
+```
+
+### Erros
+
+Código: 400
+- Conteúdo: objeto JSON com a mensagem de erro correspondente a um dos seguintes casos:
+- O usuário não possui listas: Quando o banco de dados não retorna nenhuma lista.
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+------------------
+
+### GET /api/listById/:id
+Essa função é responsável por retornar uma lista específica do banco de dados, com base no id fornecido.
+
+#### Parâmetros
+
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:id (obrigatório): id da lista que se deseja buscar.
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: Lista encontrada com sucesso!
+- list: objeto json contendo todos dados da lista.
+
+Exemplo de resposta:
+```json
+{
+    "message": "Lista encontrada com sucesso!",
+    "body": {
+        "Lista": {
+            "user": "testandoweb4",
+            "list_name": "Melhores filmes de terror 2023",
+            "movie_titles": [
+                "The medium",
+                "X",
+                "Pearl"
+            ],
+            "list_description": "Uma lista dos melhores filmes de terror.",
+            "created_at": "2023-09-19T15:15:05.181Z"
+        }
+    }
+}
+```
+
+### Erros
+
+Código: 400
+- Conteúdo: objeto JSON com a mensagem de erro correspondente a um dos seguintes casos:
+- Não foi possível encontrar a lista com o ID fornecido: Quando o banco de dados não retorna nenhuma lista.
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+------------------
+
+### DELETE /api/list/:id
+Essa função é responsável por deletar uma lista específica do banco de dados.
+
+#### Parâmetros
+
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:id (obrigatório): id da lista que se deseja buscar.
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: Lista deletada com sucesso!
+- list: objeto json contendo todos dados da lista.
+
+Exemplo de resposta:
+```json
+{
+    "message": "Lista deletada com sucesso!",
+    "list": {
+        "id": 20,
+        "name": "Melhores filmes de terror 2023",
+        "description": "Uma lista dos melhores filmes de terror.",
+        "movies": [
+            "The medium",
+            "X",
+            "Pearl"
+        ],
+        "ispublic": true,
+        "userid": 15,
+        "created_at": "2023-09-19T15:15:05.181Z"
+    }
+}
+```
+
+### Erros
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+------------------
+
+### PUT /api/list/:id
+Essa função é responsável por atualizar completamente uma lista específica no banco de dados.
+#### Parâmetros
+
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:id (obrigatório): id da lista que se deseja buscar.
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: Lista atualizada com sucesso!
+- list: objeto json contendo todos dados da lista.
+
+Exemplo de resposta:
+```json
+{
+    "message": "Lista atualizada com sucesso!",
+    "list": {
+        "id": 21,
+        "name": "Minha Lista de Filmes Atualizada",
+        "description": "Uma descrição atualizada da minha lista de filmes.",
+        "movies": [
+            "Inception",
+            "The Dark Knight",
+            "Interstellar",
+            "Dunkirk"
+        ],
+        "ispublic": true,
+        "userid": 15,
+        "created_at": "2023-09-19T15:16:01.716Z"
+    }
+}
+```
+
+### Erros
+
+Código: 400
+- Name is required: nome não foi fornecido no corpo da requisição.
+- O usuário não possui listas: Quando o banco de dados não retorna nenhuma lista.
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+------------------
+
+### PUT /api/list/:id
+Essa função é responsável por atualizar completamente uma lista específica no banco de dados.
+#### Parâmetros
+
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:id (obrigatório): id da lista que se deseja buscar.
+
+Exemplo de uso:
+```json
+{
+  "name": "Minha Lista de Filmes Atualizada",
+  "description": "Uma descrição atualizada da minha lista de filmes.",
+  "movieTitles": ["Inception", "The Dark Knight", "Interstellar", "Dunkirk"],
+  "isPublic": true
+}
+
+```
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: Lista atualizada com sucesso!
+- list: objeto json contendo todos dados da lista.
+
+Exemplo de resposta:
+```json
+{
+    "message": "Lista atualizada com sucesso!",
+    "list": {
+        "id": 21,
+        "name": "Minha Lista de Filmes Atualizada",
+        "description": "Uma descrição atualizada da minha lista de filmes.",
+        "movies": [
+            "Inception",
+            "The Dark Knight",
+            "Interstellar",
+            "Dunkirk"
+        ],
+        "ispublic": true,
+        "userid": 15,
+        "created_at": "2023-09-19T15:16:01.716Z"
+    }
+}
+```
+
+### Erros
+
+Código: 400
+- Name is required: nome não foi fornecido no corpo da requisição.
+- O usuário não possui listas: Quando o banco de dados não retorna nenhuma lista.
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+------------------
+
+------------------
+
+### PATCH /api/list/:id
+Essa função é responsável por atualizar parcialmente uma lista específica no banco de dados.
+
+#### Parâmetros
+
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:id (obrigatório): id da lista que se deseja buscar.
+
+Exemplo de uso:
+```json
+{
+  "movieTitles": ["Inception", "The Dark Knight", "Interstellar"]
+}
+```
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: Lista atualizada com sucesso!
+- list: objeto json contendo todos dados da lista.
+
+Exemplo de resposta:
+```json
+{
+    "message": "Lista atualizada com sucesso!",
+    "list": {
+        "id": 21,
+        "name": "Minha Lista de Filmes Atualizada",
+        "description": "Uma descrição atualizada da minha lista de filmes.",
+        "movies": [
+            "Inception",
+            "The Dark Knight",
+            "Interstellar"
+        ],
+        "ispublic": true,
+        "userid": 15,
+        "created_at": "2023-09-19T15:16:01.716Z"
+    }
+}
+```
+
+### Erros
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+------------------
