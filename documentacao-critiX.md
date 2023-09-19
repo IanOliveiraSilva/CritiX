@@ -584,6 +584,15 @@ Essa função é responsável por atualizar completamente uma avaliação espec�
 - ispublic (opcional) - Indica se a avaliação pode ser visualizada por outros usuários. Deve ser um valor booleano (true ou false).
 - specialRating (opcional): A classificação do filme de acordo com o seu genero. 
 
+Exemplo de uso:
+```json
+{
+    "rating": 4,
+    "review": "Obra Prima!",
+    "specialRating": 4
+}
+```
+
 ### Resposta
 Sucesso
 Código: 200
@@ -636,6 +645,13 @@ Essa função é responsável por atualizar parcialmente uma avaliação especí
 - ispublic - Indica se a avaliação pode ser visualizada por outros usuários. Deve ser um valor booleano (true ou false).
 - specialRating: A classificação do filme de acordo com o seu genero. 
 
+Exemplo de uso:
+```json
+{
+  "specialrating": 5
+}
+
+```
 
 ### Resposta
 Sucesso
