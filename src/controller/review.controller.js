@@ -116,7 +116,7 @@ exports.getAllReviews = async (req, res) => {
     const userId = req.user.id;
 
     const reviews = await db.query(
-      'SELECT r.id, r.userid, r.movieid, m.title, r.rating, r.review, r.ispublic, r.created_at FROM reviews r JOIN movies m ON r.movieid = m.id WHERE r.userId = $1',
+      'SELECT r.id, r.userid, r.movieid, m.title, r.specialrating, r.rating, r.review, r.ispublic, r.created_at FROM reviews r JOIN movies m ON r.movieid = m.id WHERE r.userId = $1',
       [userId]
     );
 
@@ -183,7 +183,11 @@ exports.getReviewById = async (req, res) => {
   try {
     const { id } = req.query;
     const { rows: [review] } = await db.query(
-      'SELECT * FROM reviews WHERE id = $1 and ispublic = true',
+      `SELECT users.username, movies.title, reviews.rating, reviews.specialrating, reviews.review, reviews.created_at 
+      FROM reviews 
+      INNER JOIN movies ON reviews.movieId = movies.id
+      INNER JOIN users ON reviews.userId = users.id
+      WHERE reviews.id = $1 and ispublic = true`,
       [id]
     );
 
@@ -242,7 +246,7 @@ exports.deleteReview = async (req, res) => {
 exports.updateReview = async (req, res) => {
   const { id } = req.query;
   const userId = req.user.id;
-  const { rating, review } = req.body;
+  const { rating, review, specialRating } = req.body;
 
   try {
     if (!rating) {
@@ -258,8 +262,8 @@ exports.updateReview = async (req, res) => {
     }
     
     const { rows } = await db.query(
-      'UPDATE reviews SET rating = $1, review = $2 WHERE id = $3 AND userId = $4 RETURNING *',
-      [rating, review, id, userId]
+      'UPDATE reviews SET rating = $1, review = $2, specialRating = $3 WHERE id = $4 AND userId = $5 RETURNING *',
+      [rating, review, specialRating , id, userId]
     );
 
     if (rows.length === 0) {
