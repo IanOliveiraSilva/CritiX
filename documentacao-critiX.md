@@ -30,6 +30,12 @@
   - [DELETE /api/list:id](#delete-list)
   - [PUT /api/list:id](#put-list)
   - [PATCH /api/list:id](#patch-list)
+- [Comment](#comment)
+  - [POST /api/comment](#post-comment)
+  - [GET /api/comment/user/:id](#get-comment-user)
+  - [GET /api/comment/review/:id](#get-comment-review)
+  - [DELETE /api/comment/:id](#delete-comment)
+  - [PUT /api/comment/:id](#put-comment)
 
 ## Introdução
 Este é o guia oficial da API do nosso aplicativo. Aqui você encontrará todas as informações necessárias para utilizar nossa API e desenvolver sua própria integração.
@@ -269,8 +275,6 @@ Exemplo de resposta:
 
 Código: 500
 - Conteúdo: objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
-
-
 
 -----------------------------------------------
 
@@ -1170,8 +1174,6 @@ Código: 500
 
 ------------------
 
-------------------
-
 ### PATCH /api/list/:id
 Essa função é responsável por atualizar parcialmente uma lista específica no banco de dados.
 
@@ -1221,3 +1223,246 @@ Código: 500
 - objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
 
 ------------------
+## Comment
+
+### Descrição
+O CRUD implementado é um sistema básico que permite que os usuários gerenciem comentarios de avaliações. As funções incluem comentar uma avaliação, selecionar comentarios específicos por usuario, selecionar comentarios especificos por avaliação, apagar um comentario, atualizar um comentario.
+
+### Endpoints
+
+---------
+
+### POST /api/comment
+Essa função é responsável por criar um nova comentario no banco de dados.
+
+#### Parâmetros
+Os seguintes parâmetros devem ser enviados no corpo da requisição:
+
+- reviewId (obrigatório): O id da review desejada.
+- comment (obrigatório): O comentário sobre a avaliação.
+
+
+Exemplo de uso:
+```json
+{
+  "reviewId": 716,
+  "comment": "Gostei da sua review!"
+}
+
+```
+ 
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: Comentario criado com sucesso!
+- body: objeto json contendo todos dados do novo comentario.
+
+Exemplo de resposta:
+```json
+{
+    "message": "Comentário criado com sucesso!",
+    "body": {
+        "comment": {
+            "id": 9,
+            "reviewid": 716,
+            "userid": 15,
+            "comment": "Gostei da sua review!",
+            "createdat": "2023-09-19T15:33:10.659Z"
+        }
+    }
+}
+```
+
+### Erros
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+----------------------
+
+### GET /api/comment/user
+Essa função é responsável por retornar todos os comentarios de um determinado usuario.
+
+#### Parâmetros
+
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:id(obrigatório) - id do usuario que deseja pesquisar os comentarios.
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- body: objeto json contendo todos dados dos comentario.
+
+Exemplo de resposta:
+```json
+[
+    {
+        "id": 8,
+        "reviewid": 658,
+        "movieid": 21,
+        "title": "The Nun",
+        "comment": "asdasdasdas",
+        "createdat": "2023-09-16T21:56:09.002Z"
+    },
+    {
+        "id": 7,
+        "reviewid": 659,
+        "movieid": 21,
+        "title": "The Nun",
+        "comment": "Amei a sua review!",
+        "createdat": "2023-09-16T21:31:58.434Z"
+    },
+    {
+        "id": 6,
+        "reviewid": 659,
+        "movieid": 21,
+        "title": "The Nun",
+        "comment": "Odiei a sua review!",
+        "createdat": "2023-09-16T21:31:46.654Z"
+    },
+    {
+        "id": 5,
+        "reviewid": 659,
+        "movieid": 21,
+        "title": "The Nun",
+        "comment": "Pessimo comentario",
+        "createdat": "2023-09-16T21:26:29.701Z"
+    },
+    {
+        "id": 9,
+        "reviewid": 716,
+        "movieid": 31,
+        "title": "Pearl",
+        "comment": "Gostei da sua review!",
+        "createdat": "2023-09-19T15:33:10.659Z"
+    }
+]
+```
+
+### Erros
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+----------------------
+
+### GET /api/comment/review
+Essa função é responsável por retornar todos os comentarios de uma determinada review.
+
+#### Parâmetros
+
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:id(obrigatório) - id da review que deseja pesquisar os comentarios.
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- body: objeto json contendo todos dados dos comentario.
+
+Exemplo de resposta:
+```json
+[
+    {
+        "id": 9,
+        "userid": 15,
+        "username": "testandoweb4",
+        "comment": "Gostei da sua review!",
+        "createdat": "2023-09-19T15:33:10.659Z"
+    }
+]
+```
+
+### Erros
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+----------------------
+
+### DELETE /api/comment/:id
+Essa função é responsável por deletar um comentario específico do banco de dados.
+
+#### Parâmetros
+
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:id(obrigatório) - id do comentario que deseja deletar o comentario.
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: Comentário deletado com sucesso!
+- body: objeto json contendo todos dados dos comentario.
+
+Exemplo de resposta:
+```json
+{
+    "message": "Comentário deletado com sucesso!",
+    "comment": {
+        "id": 9,
+        "reviewid": 716,
+        "userid": 15,
+        "comment": "Gostei da sua review!",
+        "createdat": "2023-09-19T15:33:10.659Z"
+    }
+}
+```
+
+### Erros
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+----------------------
+
+
+### PUT /api/comment/:id
+Essa função é responsável por atualizar um comentario específico do banco de dados.
+
+#### Parâmetros
+
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:id(obrigatório) - id do comentario que deseja atualizar o comentario.
+
+
+Exemplo de uso:
+```json
+{
+    "comment": "Eu amei esse filme"
+}
+```
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: Comentário atualizado com sucesso!
+- body: objeto json contendo todos dados dos comentario.
+
+Exemplo de resposta:
+```json
+{
+    "message": "Comentário atualizado com sucesso!",
+    "comment": {
+        "id": 6,
+        "reviewid": 659,
+        "userid": 15,
+        "comment": "Eu amei esse filme",
+        "createdat": "2023-09-16T21:31:46.654Z"
+    }
+}
+```
+
+### Erros
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+----------------------
