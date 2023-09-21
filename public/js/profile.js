@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const details = document.createElement('div');
         details.innerHTML =
-            `
+        `
         <strong>Nome:</strong> ${profileData.body.profile.name}<br>
         <strong>Sobrenome:</strong> ${profileData.body.profile.familyname}<br>
         <strong>Bio:</strong> ${profileData.body.profile.bio}<br>
-        <a class="nav-link text-dark" href="/getAllLists">Minhas Listas</a>
-        <a class="nav-link text-dark" href="/getAllReviews">Minhas Reviews</a>
+        <a class="nav-link text-dark" href="/getAllLists">Lists: ${profileData.body.profile.contadorlists}</a>
+        <a class="nav-link text-dark" href="/getAllReviews">Reviews: ${profileData.body.profile.contadorreviews}</a>
         `
         resultProfile.innerHTML = '';
         resultProfile.appendChild(details);

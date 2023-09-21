@@ -94,6 +94,22 @@ exports.createReview = async (req, res) => {
 
     await updateMovieAverageRating(movieId);
 
+    // Contador para a areview
+    const { rows: [userProfile] } = await db.query(
+      'SELECT "contadorreviews" FROM user_profile WHERE userId = $1',
+      [userId]
+    );
+
+    if (userProfile) {
+      const currentReviewCount = userProfile.contadorreviews || 0;
+      const newReviewCount = currentReviewCount + 1;
+    
+      await db.query(
+        'UPDATE user_profile SET "contadorreviews" = $1 WHERE userId = $2',
+        [newReviewCount, userId]
+      );
+    }
+
     res.status(201).json({
       message: 'Review criada com sucesso!',
       body: {
