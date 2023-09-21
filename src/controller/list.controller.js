@@ -152,6 +152,22 @@ exports.deleteList = async (req, res) => {
             });
         }
 
+        const { rows: [userProfile] } = await db.query(
+            'SELECT "contadorlists" FROM user_profile WHERE userId = $1',
+            [userId]
+          );
+      
+          if (userProfile) {
+            const currentListsCount = userProfile.contadorlists || 0;
+            const newListsCount = currentListsCount - 1;
+      
+            await db.query(
+              'UPDATE user_profile SET "contadorlists" = $1 WHERE userId = $2',
+              [newListsCount, userId]
+            );
+        }
+      
+
         return res.status(200).json({
             message: "Lista deletada com sucesso!",
             list: rows[0]

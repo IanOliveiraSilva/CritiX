@@ -33,7 +33,7 @@ const getSpecialRating = (genre) => {
 }
 
 exports.createReview = async (req, res) => {
-  const { title, rating, comment, isPublic, specialRating  } = req.body;
+  const { title, rating, comment, isPublic, specialRating } = req.body;
   const userId = req.user.id;
 
 
@@ -71,7 +71,7 @@ exports.createReview = async (req, res) => {
       );
       movieId = newMovie.id;
     }
-    
+
     const { rows: [review] } = await db.query(
       `INSERT INTO reviews (userId, movieId, rating,
         review,
@@ -85,11 +85,11 @@ exports.createReview = async (req, res) => {
         $6)
       RETURNING *`,
       [userId,
-       movieId,
-       rating,
-       comment,
-       isPublic,
-       specialRating]
+        movieId,
+        rating,
+        comment,
+        isPublic,
+        specialRating]
     );
 
     await updateMovieAverageRating(movieId);
@@ -103,7 +103,7 @@ exports.createReview = async (req, res) => {
     if (userProfile) {
       const currentReviewCount = userProfile.contadorreviews || 0;
       const newReviewCount = currentReviewCount + 1;
-    
+
       await db.query(
         'UPDATE user_profile SET "contadorreviews" = $1 WHERE userId = $2',
         [newReviewCount, userId]
@@ -115,7 +115,7 @@ exports.createReview = async (req, res) => {
       body: {
         review,
         title: Title,
-        [getSpecialRating(Genre)] : review.specialrating 
+        [getSpecialRating(Genre)]: review.specialrating
       }
     });
   } catch (error) {
@@ -246,6 +246,22 @@ exports.deleteReview = async (req, res) => {
       });
     }
 
+    const { rows: [userProfile] } = await db.query(
+      'SELECT "contadorreviews" FROM user_profile WHERE userId = $1',
+      [userId]
+    );
+
+    if (userProfile) {
+      const currentReviewCount = userProfile.contadorreviews || 0;
+      const newReviewCount = currentReviewCount - 1;
+
+      await db.query(
+        'UPDATE user_profile SET "contadorreviews" = $1 WHERE userId = $2',
+        [newReviewCount, userId]
+      );
+    }
+
+  
     return res.status(200).json({
       message: "Review deletada com sucesso!",
       review: rows[0]
@@ -276,10 +292,10 @@ exports.updateReview = async (req, res) => {
         message: 'Review is required'
       });
     }
-    
+
     const { rows } = await db.query(
       'UPDATE reviews SET rating = $1, review = $2, specialRating = $3 WHERE id = $4 AND userId = $5 RETURNING *',
-      [rating, review, specialRating , id, userId]
+      [rating, review, specialRating, id, userId]
     );
 
     if (rows.length === 0) {
@@ -287,7 +303,7 @@ exports.updateReview = async (req, res) => {
         message: "Não foi possível encontrar a review com o id fornecido."
       });
     }
-    
+
     return res.status(200).json({
       message: "Review atualizada com sucesso!",
       review: rows[0]
@@ -329,7 +345,7 @@ exports.updateReviewPartionally = async (req, res) => {
 
     const { rows } = await db.query(
       "UPDATE reviews SET rating = $1, specialrating = $2, review = $3, ispublic = $4 WHERE userId = $5 AND id = $6 RETURNING *",
-      [updatedReview.rating, updatedReview.specialrating ,updatedReview.review, updatedReview.ispublic, userId, id]
+      [updatedReview.rating, updatedReview.specialrating, updatedReview.review, updatedReview.ispublic, userId, id]
     );
 
     return res.status(200).json({

@@ -27,7 +27,7 @@ deleteReviewForm.addEventListener('submit', async (event) => {
     const data = await response.json();
     if (response.ok) {
       alert(`Review Apagada com sucesso!`);
-      window.location.href = '/';
+      window.location.href = '/profile';
     } else {
       alert(data.message);
     }
