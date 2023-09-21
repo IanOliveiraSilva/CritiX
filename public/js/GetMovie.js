@@ -1,29 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('#search-form');
-    const input = document.querySelector('#search-input');
-    const resultsList = document.querySelector('#results');
-  
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const query = input.value.trim();
-      const omdbApiKey = '8acf114e';
-      const url = `https://www.omdbapi.com/?s=${query}&page=1&apikey=${omdbApiKey}`;
-  
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-  
-        if (data.Search && data.Search.length > 0) {
-          resultsList.innerHTML = '';
-          data.Search.forEach(movie => {
-            const li = document.createElement('li');
-            li.textContent = `${movie.Title} (${movie.Year})`;
-            li.addEventListener('click', async () => {
-              const detailsUrl = `https://www.omdbapi.com/?i=${movie.imdbID}&apikey=${omdbApiKey}`;
-              const detailsResponse = await fetch(detailsUrl);
-              const detailsData = await detailsResponse.json();
-              const details = document.createElement('div');
-              details.innerHTML = `
+  const form = document.querySelector('#search-form');
+  const input = document.querySelector('#search-input');
+  const resultsList = document.querySelector('#results');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const query = input.value.trim();
+    const omdbApiKey = '8acf114e';
+    const url = `https://www.omdbapi.com/?s=${query}&page=1&apikey=${omdbApiKey}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.Search && data.Search.length > 0) {
+        resultsList.innerHTML = '';
+        data.Search.forEach(movie => {
+          const li = document.createElement('li');
+          li.textContent = `${movie.Title} (${movie.Year})`;
+          li.addEventListener('click', async () => {
+            const detailsUrl = `https://www.omdbapi.com/?i=${movie.imdbID}&apikey=${omdbApiKey}`;
+            const detailsResponse = await fetch(detailsUrl);
+            const detailsData = await detailsResponse.json();
+            const details = document.createElement('div');
+            details.innerHTML = `
                 <h2>${detailsData.Title} (${detailsData.Year})</h2>
                 <img src="${detailsData.Poster}" alt="${detailsData.Title} poster">
                 <p>${detailsData.Plot}</p>
@@ -45,30 +45,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 </ul>
                 <a href="" class="btn-back">Voltar</a>
               `;
-              resultsList.innerHTML = '';
-              resultsList.appendChild(details);
-  
-              const reviewButton = document.getElementById('create-review-button');
-              reviewButton.addEventListener('click', () => {
-                localStorage.setItem('movieTitle', movie.Title);
-                localStorage.setItem('movieGenre', detailsData.Genre);
-                window.location.href = '/createReview';
-              });
+            resultsList.innerHTML = '';
+            resultsList.appendChild(details);
 
-              const getReviewButton = document.getElementById('get-review-button');
-              getReviewButton.addEventListener('click', () => {
-                localStorage.setItem('movieTitle', movie.Title);
-                window.location.href = '/getAllMovieReviews';
-              });
+            const reviewButton = document.getElementById('create-review-button');
+            reviewButton.addEventListener('click', () => {
+              localStorage.setItem('movieTitle', movie.Title);
+              localStorage.setItem('movieGenre', detailsData.Genre);
+              window.location.href = '/createReview';
             });
-            resultsList.appendChild(li);
+
+            const getReviewButton = document.getElementById('get-review-button');
+            getReviewButton.addEventListener('click', () => {
+              localStorage.setItem('movieTitle', movie.Title);
+              window.location.href = '/getAllMovieReviews';
+            });
           });
-        } else {
-          resultsList.innerHTML = 'No results found.';
-        }
-  
-      } catch (error) {
-        console.log(error);
+          resultsList.appendChild(li);
+        });
+      } else {
+        resultsList.innerHTML = 'No results found.';
       }
-    });
+
+    } catch (error) {
+      console.log(error);
+    }
   });
+});

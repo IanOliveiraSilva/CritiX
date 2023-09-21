@@ -1,4 +1,3 @@
-// Seu JavaScript (GetAllReviews.js)
 const token = localStorage.getItem('token');
 
 document.addEventListener('DOMContentLoaded', async () => {
