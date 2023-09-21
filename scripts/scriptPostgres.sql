@@ -8,6 +8,19 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Criação da tabela 'users'
+CREATE TABLE user_profile (
+  id SERIAL PRIMARY KEY,
+  userid integer NOT NULL,
+  name character varying(30) NOT NULL,
+  familyName character varying(30) NOT NULL,
+  icon bytea,
+  bio character varying(30) NOT NULL,
+  contadorreviews integer,
+  contadorlists integer,
+  FOREIGN KEY (userid) REFERENCES users(id),
+);
+
 -- Criação da tabela 'movies'
 CREATE TABLE movies (
   id SERIAL PRIMARY KEY,
