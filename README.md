@@ -96,7 +96,7 @@ Para executar os testes, utilize o seguinte comando:
 
 ## Database diagram
 
-![App Screenshot](databasediagram.png)
+![App Screenshot](databasediagram1.png)
 
 
 
