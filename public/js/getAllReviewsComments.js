@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const commentsContainer = document.getElementById('comments-container');
 
         commentsData.forEach((comment) => {
-            // Criar elementos HTML para exibir cada comentário
             const commentElement = document.createElement('div');
             commentElement.classList.add('comment');
 
@@ -36,8 +35,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const commentTextElement = document.createElement('p');
             commentTextElement.textContent = `Comentário: ${comment.comment}`;
-
-            // Adicionar elementos ao container de comentários
             commentElement.appendChild(usernameElement);
             commentElement.appendChild(commentTextElement);
             commentsContainer.appendChild(commentElement);

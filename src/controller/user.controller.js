@@ -101,6 +101,18 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.logout = (req, res) => {
+  try {
+    localStorage.clear();
+
+    return res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 exports.createUserProfile = async (req, res) => {
   const {name, familyName, bio} = req.body;
   const userId = req.user.id;
@@ -240,7 +252,7 @@ exports.AuthMiddleware = async (req, res, next) => {
     }
   };
 
-  
+
   
 
 

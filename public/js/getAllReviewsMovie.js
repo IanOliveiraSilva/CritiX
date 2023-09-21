@@ -4,13 +4,13 @@ let movieTitle;
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     movieTitle = localStorage.getItem('movieTitle');
-    const titleInput = document.getElementById('movieTitle'); // Adicione esta linha
+    const titleInput = document.getElementById('movieTitle');
   
-    if (movieTitle && titleInput) { // Certifique-se de verificar se titleInput existe
+    if (movieTitle && titleInput) {
       titleInput.value = movieTitle;
     }
 
-    if (movieTitle) { // Só faça a solicitação se movieTitle existir
+    if (movieTitle) {
       const response = await fetch(`/api/allReviews/movies/?title=${encodeURIComponent(movieTitle)}`, {
         method: 'GET',
         headers: {

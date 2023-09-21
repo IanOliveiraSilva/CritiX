@@ -25,29 +25,20 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-warning">
         <div class="container">
           <ul class="navbar-nav mx-auto">
-            <!-- <% if (locals.isAuthenticated) { %>
-            <li class="nav-item nav-link text-dark">Hello <%= user.nickname %>!</li>
-            <li class="nav-item"><a href="/profile" class="nav-link text-dark"class="underline">Meu Perfil</a></li>
-            <li class="nav-item"><a href="/logout" class="nav-link text-dark"class="underline">Sair da conta</a></li>
-            
-        <% } else { %>
-            <li class="nav-item"><a href="/login" class="nav-link text-dark"class="underline">Entre na sua conta</a></li>
-            <li class="nav-item"><a href="/signup" class="nav-link text-dark"class="underline">Crie uma conta</a></li>
-
-        <% } %> -->
-            <li class="nav-item"><a class="nav-link text-dark" href="/register2">Crie sua conta</a></li>
-            <li class="nav-item"><a class="nav-link text-dark" href="/login2">Entre em sua conta</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" id="username-display"></a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/register2" id="signup-display"></a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/login2" id="login-display"></a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/" id="logout"></a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="/getMovie">Veja todos os filmes</a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="/createList">Crie uma lista</a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="/getAllLists">Minhas Listas</a></li>
-
+            <li class="nav-item"><a class="nav-link text-dark" href="/getAllReviews">Minhas Reviews</a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="/getMovieSurprise">Surpreenda-me</a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="/getAllUserReviews">Buscar usuario</a></li>
           </ul>
         </div>
       </nav>
 
-      <!-- Nova seção informativa -->
       <section class="container mt-5">
         <div class="row">
           <div class="col-md-6">
@@ -61,7 +52,6 @@
         </div>
       </section>
 
-      <!-- Nova seção de informações sobre o serviço -->
       <section class="bg-light py-5">
         <div class="container">
           <div class="row">
@@ -77,7 +67,6 @@
         </div>
       </section>
 
-      <!-- Nova seção informativa -->
       <section class="container mt-5">
         <div class="row">
           <div class="col-md-6">
@@ -91,7 +80,6 @@
         </div>
       </section>
 
-      <!-- Nova seção informativa -->
       <section class="bg-light py-5">
         <div class="container">
           <div class="row">
@@ -123,6 +111,24 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"></script>
+
+    <script>
+      document.getElementById('logout').addEventListener('click', function () {
+        localStorage.clear();
+        alert(`Logout bem-sucedido.`);
+      });
+
+      window.onload = function () {
+        const username = localStorage.getItem('username');
+        if (username) {
+          document.getElementById('username-display').textContent = `Olá, ${username}!`;
+          document.getElementById('logout').textContent = `Logout`;
+        } else {
+          document.getElementById('login-display').textContent = `Entre em sua conta`;
+          document.getElementById('signup-display').textContent = `Crie uma conta`;
+        }
+      };
+    </script>
   </body>
 
 </html>

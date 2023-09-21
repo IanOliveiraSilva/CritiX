@@ -65,32 +65,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                 specialRatingRow.appendChild(specialRatingCell);
                 tbody.appendChild(specialRatingRow);
 
-                const deleteButtonRow = document.createElement('tr');
-                const deleteButtonCell = document.createElement('td');
-                const deleteButton = document.createElement('button');
-                deleteButton.id = 'get-review-id'
-                deleteButton.textContent = 'Excluir';
-                deleteButton.addEventListener('click', () => {
-                    localStorage.setItem('reviewId', review.id);
-                    window.location.href = '/deleteReview';
-                });
-                deleteButtonCell.appendChild(deleteButton);
-                deleteButtonRow.appendChild(deleteButtonCell);
-                tbody.appendChild(deleteButtonRow);
+                // const deleteButtonRow = document.createElement('tr');
+                // const deleteButtonCell = document.createElement('td');
+                // const deleteButton = document.createElement('button');
+                // deleteButton.id = 'get-review-id'
+                // deleteButton.textContent = 'Excluir';
+                // deleteButton.addEventListener('click', () => {
+                //     localStorage.setItem('reviewId', review.id);
+                //     window.location.href = '/deleteReview';
+                // });
+                // deleteButtonCell.appendChild(deleteButton);
+                // deleteButtonRow.appendChild(deleteButtonCell);
+                // tbody.appendChild(deleteButtonRow);
 
                 
-                const editReviewButtonRow = document.createElement('tr');
-                const editReviewButtonCell = document.createElement('td');
-                const editButton = document.createElement('button');
-                editButton.id = 'get-review-id'
-                editButton.textContent = 'Editar';
-                editButton.addEventListener('click', () => {
-                    localStorage.setItem('reviewId', review.id);
-                    window.location.href = '/updateReview';
-                });
-                editReviewButtonCell.appendChild(editButton);
-                editReviewButtonRow.appendChild(editReviewButtonCell);
-                tbody.appendChild(editReviewButtonRow);
+                // const editReviewButtonRow = document.createElement('tr');
+                // const editReviewButtonCell = document.createElement('td');
+                // const editButton = document.createElement('button');
+                // editButton.id = 'get-review-id'
+                // editButton.textContent = 'Editar';
+                // editButton.addEventListener('click', () => {
+                //     localStorage.setItem('reviewId', review.id);
+                //     window.location.href = '/updateReview';
+                // });
+                // editReviewButtonCell.appendChild(editButton);
+                // editReviewButtonRow.appendChild(editReviewButtonCell);
+                // tbody.appendChild(editReviewButtonRow);
 
                 table.appendChild(tbody);
                 reviewsContainer.appendChild(table);

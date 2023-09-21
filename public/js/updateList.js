@@ -52,7 +52,6 @@ updateListForm.addEventListener('submit', async (event) => {
   }
 });
 
-// Adicione um evento de mudança ao campo movieTitles para rastrear se ele foi modificado pelo usuário
 const movieTitlesInput = document.getElementById('movieTitles');
 movieTitlesInput.addEventListener('change', () => {
   movieTitlesInput.dataset.modified = 'true';
