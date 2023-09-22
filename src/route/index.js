@@ -16,12 +16,13 @@ router.get('/profile', function (req, res, next) {
   });
 });
 
-router.get("/signup", (req, res) => {
-  res.oidc.login({
-    returnTo: "/",
-    authorizationParams: { screen_hint: "signup" },
+router.get('/createProfile', function (req, res, next) {
+  res.render('createProfile', {
+    userProfile: JSON.stringify(req.oidc.user, null, 2),
+    title: 'Create Profile page'
   });
 });
+
 
 router.get('/login2', function (req, res, next) {
   res.render('login2', {
