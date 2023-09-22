@@ -31,12 +31,13 @@
             <li class="nav-item"><a class="nav-link text-dark" href="/" id="logout"></a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="/getMovie">Veja todos os filmes</a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="/profile" id="profile"></a></li>
-            <li class="nav-item"><a class="nav-link text-dark" href="/createList">Crie uma lista</a></li>
+            <li class="nav-item"><a class="nav-link text-dark" href="/createList" id="create-list-display"></a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="/getMovieSurprise">Surpreenda-me</a></li>
             <li class="nav-item"><a class="nav-link text-dark" href="/getAllUserReviews">Buscar usuario</a></li>
           </ul>
         </div>
       </nav>
+
 
       <section class="container mt-5">
         <div class="row">
@@ -123,11 +124,19 @@
           document.getElementById('username-display').textContent = `Olá, ${username}!`;
           document.getElementById('logout').textContent = `Logout`;
           document.getElementById('profile').textContent = `Meu Perfil`;
+          document.getElementById('create-list-display').textContent = `Cria Lista`;
+
+          document.getElementById('login-display').style.display = 'none';
+          document.getElementById('signup-display').style.display = 'none';
         } else {
           document.getElementById('login-display').textContent = `Entre em sua conta`;
           document.getElementById('signup-display').textContent = `Crie uma conta`;
+
+          document.getElementById('profile').style.display = 'none';
+          document.getElementById('create-list-display').style.display = 'none';
         }
       };
+
     </script>
   </body>
 

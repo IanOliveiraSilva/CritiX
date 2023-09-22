@@ -1,19 +1,14 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const token = localStorage.getItem('token');
-        const idInput = document.getElementById('reviewId');
-        const reviewId = localStorage.getItem('reviewId');
-        const idElement = document.getElementById('reviewId');
 
-        if (reviewId) {
-            idInput.value = reviewId;
-            idElement.textContent = reviewId;
-        }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
+    const reviewId = localStorage.getItem('reviewId');
+    try {
+        const commentsContainer = document.getElementById('comments');
 
         const response = await fetch(`/api/comment/review/?id=${encodeURIComponent(reviewId)}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         });
@@ -24,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const commentsData = await response.json();
 
-        const commentsContainer = document.getElementById('comments-container');
+        commentsContainer.innerHTML = '';
 
         commentsData.forEach((comment) => {
             const commentElement = document.createElement('div');
