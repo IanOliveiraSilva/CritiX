@@ -1,53 +1,38 @@
-
 document.addEventListener('DOMContentLoaded', () => {
   const resultsList = document.querySelector('#results');
-  const genreSelect = document.getElementById('genreSelect');
 
   surpriseButton.addEventListener('click', async () => {
-    const token = localStorage.getItem('token');
-    const selectedGenre = genreSelect.value;
     try {
-      const response = await fetch(`/api/movie/surpriseMe?genre=${selectedGenre}`, {
+      const response = await fetch(`/api/movie/surpriseMe/`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
       });
       const data = await response.json();
 
       if (response.ok) {
         const movie = data.body.movie;
         const movieDetails = document.createElement('div');
-        resultsList.innerHTML = `
-      <h2>${movie.Title} (${movie.Year})</h2>
-      <img src="${movie.Poster}" alt="${movie.Title} poster">
-      <p>${movie.Plot}</p>
+        movieDetails.innerHTML = `
+      <h2>${movie.title} (${movie.release_date.split('-')[0]})</h2>
+      <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title} poster width="250" height="250">
+      <p>${movie.overview}</p>
       <ul>
-        <li><strong>Director:</strong> ${movie.Director}</li>
-        <li><strong>Released:</strong> ${movie.Released}</li>
-        <li><strong>Writer:</strong> ${movie.Writer}</li>
-        <li><strong>Country:</strong> ${movie.Country}</li>
-        <li><strong>Box Office:</strong> ${movie.BoxOffice}</li>
-        <li><strong>Awards:</strong> ${movie.Awards}</li>
-        <li><strong>Actors:</strong> ${movie.Actors}</li>
-        <li><strong>Genre:</strong> ${movie.Genre}</li>
-        <li><strong>Runtime:</strong> ${movie.Runtime}</li>
-        <li><strong>Rated:</strong> ${movie.Rated}</li>
-        <li><strong>IMDb Rating:</strong> ${movie.imdbRating}</li>
-        <li><strong>Metascore Rating:</strong> ${movie.Metascore}</li>
+        <li><strong>Idioma original:</strong> ${movie.original_language}</li>
+        <li><strong>Data de lançamento:</strong> ${movie.release_date}</li>
+        <li><strong>Popularidade:</strong> ${movie.popularity}</li>
+        <li><strong>Média de votos:</strong> ${movie.vote_average}</li>
+        <li><strong>Total de votos:</strong> ${movie.vote_count}</li>
         <li><strong><button id="create-review-button">Criar Review</button></strong></li>
         <li><strong><button id="get-review-button">Ver Review</button></strong></li>
       </ul>
         <a href="" class="btn-back">Voltar</a>
       `;
-        movieContainer.innerHTML = '';
-        movieContainer.appendChild(movieDetails);
+        resultsList.innerHTML = '';
+        resultsList.appendChild(movieDetails);
 
         const createReviewButton = document.getElementById('create-review-button');
         createReviewButton.addEventListener('click', () => {
           localStorage.setItem('movieTitle', movie.title);
-          localStorage.setItem('movieGenre', movie.genre);
+          localStorage.setItem('movieGenre', movie.genre_ids);
           window.location.href = '/createReview';
         });
 
@@ -56,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
           localStorage.setItem('movieTitle', movie.title);
           window.location.href = '/getAllMovieReviews';
         });
+
+        resultsList.appendChild(li);
       } else {
         console.error('Erro ao obter filme surpresa');
       }

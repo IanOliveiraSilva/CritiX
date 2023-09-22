@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const axios = require("axios");
 const OMDB_API_KEY = process.env.OMDB_API_KEY;
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const db = require("../config/db");
 
 exports.getMovieByTitle = async (req, res) => {
@@ -27,26 +28,17 @@ exports.getMovieByTitle = async (req, res) => {
 
 exports.surpriseMe = async (req, res) => {
   try {
-    const keywords = ['action', 'drama', 'comedy', 'thriller', 'sci-fi', 'romance', 'horror', 'adventure'];
-    const selectedGenre = req.query.genre;
+    const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}`);
+    
+    if (tmdbResponse.status === 200 && tmdbResponse.data && tmdbResponse.data.results.length > 0) {
+      const randomIndex = Math.floor(Math.random() * tmdbResponse.data.results.length);
+      const movieData = tmdbResponse.data.results[randomIndex];
 
-    const omdbResponse = await axios.get(`http://www.omdbapi.com/?s=${selectedGenre}&type=movie&apikey=${OMDB_API_KEY}`);
-    if (omdbResponse.status === 200 && omdbResponse.data && omdbResponse.data.Response === 'True') {
-      const movies = omdbResponse.data.Search;
-      const randomIndex = Math.floor(Math.random() * movies.length);
-      const movieTitle = movies[randomIndex].Title;
-
-      const movieResponse = await axios.get(`http://www.omdbapi.com/?t=${movieTitle}&apikey=${OMDB_API_KEY}`);
-      if (movieResponse.status === 200 && movieResponse.data && movieResponse.data.Response === 'True') {
-        const movieData = movieResponse.data;
-        res.status(200).json({
-          body: {
-            movie: movieData
-          }
-        });
-      } else {
-        return res.status(404).json({ message: 'Nenhum filme encontrado' });
-      }
+      res.status(200).json({
+        body: {
+          movie: movieData
+        }
+      });
     } else {
       return res.status(404).json({ message: 'Nenhum filme encontrado' });
     }
@@ -54,6 +46,9 @@ exports.surpriseMe = async (req, res) => {
     return res.status(500).json({ message: 'Erro ao pesquisar filme' });
   }
 };
+
+
+
 
 
 
