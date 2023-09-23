@@ -67,35 +67,7 @@
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const registerForm = document.getElementById('register-form');
-            registerForm.addEventListener('submit', async (event) => {
-                event.preventDefault();
-                const name = document.getElementById('name').value;
-                const familyName = document.getElementById('familyName').value;
-                const bio = document.getElementById('bio').value;
-                const token = localStorage.getItem('token');
-                const response = await fetch('api/user/profile', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ name, familyName, bio })
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    const data = await response.json();
-                    alert(`Usuário ${data.user.username} criado com sucesso!`);
-                    window.location.href = '/login2';
-                } else {
-                    const errorData = await response.json();
-                    alert(`Erro: ${errorData.message}`);
-                }
-            });
-        });
-    </script>
+    <script src="../js/createProfile.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

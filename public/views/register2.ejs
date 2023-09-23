@@ -86,6 +86,7 @@
                 alert(`Usuário ${data.user.username} criado com sucesso!`);
                 window.location.href = '/createProfile';
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('username', data.user.username)
             } else {
                 alert(data.message);
             }
