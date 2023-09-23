@@ -8,7 +8,6 @@ exports.signup = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    // Verificar se o email, username e password são fornecidos
     if (!email) {
       return res.status(400).json({
         message: 'Email is required'
@@ -27,29 +26,24 @@ exports.signup = async (req, res) => {
       });
     }
 
-    // Verificar se o usuário já existe pelo email
     const userExists = await db.query('SELECT * FROM users WHERE email = $1', [email]);
     if (userExists.rows.length > 0) {
       return res.status(400).json({ message: 'Email already taken' });
     }
 
-    // Criptografar a senha
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Inserir novo usuário no banco de dados
     const newUser = await db.query(
       'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id, username, email',
       [username, email, hashedPassword]
     );
 
-    // Gerar o token de autenticação do usuário
     const token = jwt.sign(
       { id: newUser.rows[0].id, username: newUser.rows[0].username },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
 
-    // Retornar o novo usuário e o token
     return res.status(201).json({ user: newUser.rows[0], token });
   } catch (error) {
     console.error(error);
@@ -61,7 +55,6 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Verificar se o email e a senha são fornecidos
     if (!email) {
       return res.status(400).json({
         message: 'Email is required'
@@ -74,26 +67,22 @@ exports.login = async (req, res) => {
       });
     }
 
-    // Verificar se o usuário existe pelo email
     const user = await db.query('SELECT * FROM users WHERE email = $1', [email]);
     if (user.rows.length === 0) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
-    // Verificar se a senha está correta
     const isPasswordCorrect = await bcrypt.compare(password, user.rows[0].password);
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
-    // Gerar o token de autenticação do usuário
     const token = jwt.sign(
       { id: user.rows[0].id, username: user.rows[0].username },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
 
-    // Retornar o usuário e o token
     return res.status(200).json({ user: user.rows[0], token });
   } catch (error) {
     console.error(error);
