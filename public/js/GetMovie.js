@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     const query = input.value.trim();
-    const omdbApiKey = '8acf114e';
+    const omdbApiKey = 'da10da96';
     const url = `https://www.omdbapi.com/?s=${query}&page=1&apikey=${omdbApiKey}`;
 
     try {
