@@ -233,6 +233,8 @@ exports.deleteReview = async (req, res) => {
     const { id } = req.query;
     const userId = req.user.id;
 
+    await db.query('DELETE FROM comments WHERE reviewid = $1', [id]);
+
     const { rows } = await db.query(
       `DELETE FROM reviews
        WHERE userId = $1 AND id = $2
@@ -260,7 +262,6 @@ exports.deleteReview = async (req, res) => {
         [newReviewCount, userId]
       );
     }
-
   
     return res.status(200).json({
       message: "Review deletada com sucesso!",
@@ -274,6 +275,7 @@ exports.deleteReview = async (req, res) => {
     });
   }
 };
+
 
 exports.updateReview = async (req, res) => {
   const { id } = req.query;
