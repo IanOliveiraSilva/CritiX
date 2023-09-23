@@ -132,27 +132,29 @@ exports.createUserProfile = async (req, res) => {
 exports.getUserProfile = async (req, res) => {
   const userId = req.user.id;
 
-  try{
+  try {
     const { rows: [userProfile] } = await db.query(
-      `SELECT * 
+      `SELECT *, (SELECT COUNT(*) FROM reviews WHERE userId = $1) AS contadorreviews, (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists
        FROM user_profile
        WHERE userId = $1`,
-       [userId]
+      [userId]
     );
-    
-    res.status(201).json({
+
+    res.status(200).json({
       message: 'Perfil encontrado com sucesso!',
       body: {
-        profile: userProfile
-      }
+        profile: userProfile,
+      },
     });
-  } catch(error){
+  } catch (error) {
+    console.error(error);
     res.status(500).json({
-      message: 'Um erro aconteceu enquanto o comentário era criado',
-      error
+      message: 'Um erro aconteceu enquanto o perfil era buscado',
+      error,
     });
   }
 };
+
 
 exports.updateUserProfile = async (req, res) => {
   const {name, familyName, bio} = req.body;
