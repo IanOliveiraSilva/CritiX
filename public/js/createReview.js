@@ -6,11 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const movieGenre = localStorage.getItem('movieGenre');
 
   const specialRatingMap = new Map([
-    ['Horror', 'Nivel de Medo'],
+    ['Horror', 'Nivel de Horror'],
     ['Comedy', 'Nivel de Diversão'],
     ['Action', 'Nivel de Adrenalina'],
     ['Romance', 'Nivel de Amor'],
-    ['Drama', 'Nivel de Choro'],
+    ['Drama', 'Nivel de Drama'],
   ]);
 
   const getSpecialRating = (genre) => {

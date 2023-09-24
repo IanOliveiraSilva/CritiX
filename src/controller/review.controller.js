@@ -130,7 +130,7 @@ exports.getAllReviews = async (req, res) => {
     const userId = req.user.id;
 
     const reviews = await db.query(
-      'SELECT r.id, r.userid, r.movieid, m.title, r.specialrating, r.rating, r.review, r.ispublic, r.created_at FROM reviews r JOIN movies m ON r.movieid = m.id WHERE r.userId = $1',
+      'SELECT r.id, r.userid, r.movieid, m.title, m.genre, r.specialrating, r.rating, r.review, r.ispublic, r.created_at FROM reviews r JOIN movies m ON r.movieid = m.id WHERE r.userId = $1',
       [userId]
     );
 
@@ -152,7 +152,7 @@ exports.getAllReviewsFromMovie = async (req, res) => {
     const title = req.query.title;
 
     const reviews = await db.query(
-      `SELECT users.username, movies.title , reviews.rating, reviews.specialrating, reviews.review, reviews.created_at 
+      `SELECT users.username, movies.title , movies.genre, reviews.rating, reviews.specialrating, reviews.review, reviews.created_at 
       FROM reviews 
       INNER JOIN movies ON reviews.movieId = movies.id 
       INNER JOIN users ON reviews.userId = users.id 
@@ -172,7 +172,7 @@ exports.getAllReviewsFromUser = async (req, res) => {
     const user = req.query.user;
 
     const reviews = await db.query(
-      `SELECT users.username, movies.title , reviews.rating, reviews.id, reviews.specialrating, reviews.review, reviews.created_at 
+      `SELECT users.username, movies.title, movies.genre , reviews.rating, reviews.id, reviews.specialrating, reviews.review, reviews.created_at 
       FROM reviews 
       INNER JOIN movies ON reviews.movieId = movies.id 
       INNER JOIN users ON reviews.userId = users.id 

@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!response.ok) {
                 throw new Error('Erro ao obter revisões do usuário');
             }
-            
+
             const reviewsData = await response.json();
 
             reviewsContainer.innerHTML = '';
@@ -35,6 +35,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             reviewsContainer.appendChild(titleHeader);
 
             reviewsData.forEach((review) => {
+                const movieGenre = `${review.genre}`;
+
+                const specialRatingMap = new Map([
+                    ['Horror', 'Nivel de Medo'],
+                    ['Comedy', 'Nivel de Diversão'],
+                    ['Action', 'Nivel de Adrenalina'],
+                    ['Romance', 'Nivel de Amor'],
+                    ['Drama', 'Nivel de Drama'],
+                ]);
+
+                const getSpecialRating = (genre) => {
+                    const genreArray = genre.split(',');
+                    const firstGenre = genreArray[0];
+                    return specialRatingMap.get(firstGenre.trim());
+                }
+
+                const movieGenreMapped = getSpecialRating(movieGenre);
 
                 const table = document.createElement('table');
                 table.classList.add('table');
@@ -59,38 +76,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 commentRow.appendChild(commentCell);
                 tbody.appendChild(commentRow);
 
-                const specialRatingRow = document.createElement('tr');
-                const specialRatingCell = document.createElement('td');
-                specialRatingCell.textContent = `Special Rating: ${review.specialrating}`;
-                specialRatingRow.appendChild(specialRatingCell);
-                tbody.appendChild(specialRatingRow);
 
-                // const deleteButtonRow = document.createElement('tr');
-                // const deleteButtonCell = document.createElement('td');
-                // const deleteButton = document.createElement('button');
-                // deleteButton.id = 'get-review-id'
-                // deleteButton.textContent = 'Excluir';
-                // deleteButton.addEventListener('click', () => {
-                //     localStorage.setItem('reviewId', review.id);
-                //     window.location.href = '/deleteReview';
-                // });
-                // deleteButtonCell.appendChild(deleteButton);
-                // deleteButtonRow.appendChild(deleteButtonCell);
-                // tbody.appendChild(deleteButtonRow);
-
-                
-                // const editReviewButtonRow = document.createElement('tr');
-                // const editReviewButtonCell = document.createElement('td');
-                // const editButton = document.createElement('button');
-                // editButton.id = 'get-review-id'
-                // editButton.textContent = 'Editar';
-                // editButton.addEventListener('click', () => {
-                //     localStorage.setItem('reviewId', review.id);
-                //     window.location.href = '/updateReview';
-                // });
-                // editReviewButtonCell.appendChild(editButton);
-                // editReviewButtonRow.appendChild(editReviewButtonCell);
-                // tbody.appendChild(editReviewButtonRow);
+                if (review.specialrating !== null) {
+                    const specialRatingRow = document.createElement('tr');
+                    const specialRatingCell = document.createElement('td');
+                    specialRatingCell.textContent = `${movieGenreMapped}: ${review.specialrating}`;
+                    specialRatingRow.appendChild(specialRatingCell);
+                    tbody.appendChild(specialRatingRow);
+                }
 
                 table.appendChild(tbody);
                 reviewsContainer.appendChild(table);

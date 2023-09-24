@@ -1,6 +1,7 @@
 const token = localStorage.getItem('token');
 
 document.addEventListener('DOMContentLoaded', async () => {
+
   try {
     const response = await fetch('/api/allReviews', {
       headers: {
@@ -13,9 +14,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     const reviewsData = await response.json();
 
+
     const reviewsContainer = document.getElementById('reviews');
 
     reviewsData.forEach((review) => {
+      const movieGenre = `${review.genre}`;
+
+      const specialRatingMap = new Map([
+        ['Horror', 'Nivel de Medo'],
+        ['Comedy', 'Nivel de Diversão'],
+        ['Action', 'Nivel de Adrenalina'],
+        ['Romance', 'Nivel de Amor'],
+        ['Drama', 'Nivel de Drama'],
+      ]);
+
+      const getSpecialRating = (genre) => {
+        const genreArray = genre.split(',');
+        const firstGenre = genreArray[0];
+        return specialRatingMap.get(firstGenre.trim());
+      }
+
+      const movieGenreMapped = getSpecialRating(movieGenre);
+
       const table = document.createElement('table');
       table.classList.add('table');
 
@@ -26,6 +46,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       titleCell.textContent = `Título: ${review.title}`;
       titleRow.appendChild(titleCell);
       tbody.appendChild(titleRow);
+
+
+      const genreRow = document.createElement('tr');
+      const genreCell = document.createElement('td');
+      genreCell.textContent = `Genero: ${review.genre}`;
+      genreRow.appendChild(genreCell);
+      tbody.appendChild(genreRow);
 
       const ratingRow = document.createElement('tr');
       const ratingCell = document.createElement('td');
@@ -38,6 +65,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       commentCell.textContent = `Comentário: ${review.review}`;
       commentRow.appendChild(commentCell);
       tbody.appendChild(commentRow);
+
+
+      if (review.specialrating !== null) {
+        const specialRatingRow = document.createElement('tr');
+        const specialRatingCell = document.createElement('td');
+        specialRatingCell.textContent = `${movieGenreMapped}: ${review.specialrating}`;
+        specialRatingRow.appendChild(specialRatingCell);
+        tbody.appendChild(specialRatingRow);
+      }
 
       table.appendChild(tbody);
       reviewsContainer.appendChild(table);
@@ -63,6 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       editButton.textContent = 'Editar';
       editButton.addEventListener('click', () => {
         localStorage.setItem('reviewId', review.id);
+        localStorage.setItem('genre', review.genre);
         window.location.href = '/updateReview';
       });
       editReviewButtonCell.appendChild(editButton);
