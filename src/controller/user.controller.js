@@ -3,6 +3,18 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require("../config/db");
+const multer = require('multer');
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'E:\\Programação\\Projetos em Node\\Movie review API\\public\\uploads');
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage: storage });
+
 
 exports.signup = async (req, res) => {
   try {
@@ -101,32 +113,40 @@ exports.logout = (req, res) => {
   }
 };
 
-
 exports.createUserProfile = async (req, res) => {
-  const {name, familyName, bio} = req.body;
-  const userId = req.user.id;
+  upload.single('icon')(req, res, async function(err) {
+    if (err instanceof multer.MulterError) {
+      console.log(err);
+    } else if (err) {
+      console.log(err);
+    }
 
-  try{
-    const { rows: [userProfile]} = await db.query(
-      `INSERT INTO user_profile(name, familyName, bio, userId) 
-      VALUES ($1, $2, $3, $4) 
-      RETURNING *`,
-      [name, familyName, bio, userId]
-    );
+    const {name, familyName, bio} = req.body;
+    const icon = req.file;
+    const userId = req.user.id;
 
-    res.status(201).json({
-      message: 'Perfil criado com sucesso',
-      body: {
-        profile: userProfile
-      }
-    });
-  } catch (error){
-    console.log(error);
-    res.status(400).json({
-      message: 'Um erro aconteceu enquanto o perfil de usuario era criado',
-      error
-    });
-  }
+    try{
+      const { rows: [userProfile]} = await db.query(
+        `INSERT INTO user_profile(name, familyName, bio, userId, icon) 
+        VALUES ($1, $2, $3, $4, $5) 
+        RETURNING *`,
+        [name, familyName, bio, userId, icon]
+      );
+
+      res.status(201).json({
+        message: 'Perfil criado com sucesso',
+        body: {
+          profile: userProfile
+        }
+      });
+    } catch (error){
+      console.log(error);
+      res.status(400).json({
+        message: 'Um erro aconteceu enquanto o perfil de usuario era criado',
+        error
+      });
+    }
+  });
 };
 
 exports.getUserProfile = async (req, res) => {
@@ -139,6 +159,11 @@ exports.getUserProfile = async (req, res) => {
        WHERE userId = $1`,
       [userId]
     );
+
+    if (userProfile && userProfile.icon) {
+      const iconBase64 = userProfile.icon.toString('base64');
+      userProfile.iconBase64 = iconBase64;
+    }
 
     res.status(200).json({
       message: 'Perfil encontrado com sucesso!',
@@ -154,6 +179,7 @@ exports.getUserProfile = async (req, res) => {
     });
   }
 };
+
 
 
 exports.updateUserProfile = async (req, res) => {

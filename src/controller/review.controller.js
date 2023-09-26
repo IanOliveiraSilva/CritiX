@@ -94,6 +94,11 @@ exports.createReview = async (req, res) => {
 
     await updateMovieAverageRating(movieId);
 
+    const { rows: [userProfile] } = await db.query(
+      'SELECT "contadorlists" FROM user_profile WHERE userId = $1',
+      [userId]
+    );
+
     if (userProfile) {
       const currentReviewCount = userProfile.contadorreviews || 0;
       let newReviewCount = currentReviewCount + 1;

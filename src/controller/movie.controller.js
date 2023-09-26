@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const axios = require("axios");
 const OMDB_API_KEY = process.env.OMDB_API_KEY;
-const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const db = require("../config/db");
 
 exports.getMovieByTitle = async (req, res) => {
@@ -27,25 +26,34 @@ exports.getMovieByTitle = async (req, res) => {
 };
 
 exports.surpriseMe = async (req, res) => {
+  const TMDB_API_KEY = 'b42f7ed941f9bfa455c43a95f488a734';
   try {
     const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}`);
     
     if (tmdbResponse.status === 200 && tmdbResponse.data && tmdbResponse.data.results.length > 0) {
       const randomIndex = Math.floor(Math.random() * tmdbResponse.data.results.length);
       const movieData = tmdbResponse.data.results[randomIndex];
+      const { title } = movieData;
 
-      res.status(200).json({
-        body: {
-          movie: movieData
-        }
-      });
+      const omdbResponse = await axios.get(`http://www.omdbapi.com/?t=${title}&apikey=${OMDB_API_KEY}`);
+      if (omdbResponse.status === 200 && omdbResponse.data && omdbResponse.data.Response === 'True') {
+        const omdbMovieData = omdbResponse.data;
+        res.status(200).json({
+          body: {
+            omdbMovie: omdbMovieData
+          }
+        });
+      } else {
+        return res.status(404).json({ message: 'Filme não encontrado na OMDB' });
+      }
     } else {
-      return res.status(404).json({ message: 'Nenhum filme encontrado' });
+      return res.status(404).json({ message: 'Nenhum filme encontrado na TMDB' });
     }
   } catch (error) {
     return res.status(500).json({ message: 'Erro ao pesquisar filme' });
   }
 };
+
 
 
 
