@@ -101,9 +101,6 @@ Para executar os testes, utilize o seguinte comando:
 
 
 ## Roadmap
-
-Aqui estão algumas possíveis melhorias e recursos futuros para o projeto:
-
 - Implementar pesquisa avançada: permitir que os usuários realizem pesquisas mais complexas por filmes, como por gênero, diretor, ator, ano de lançamento, etc.
 - Adicionar integração com redes sociais: permitir que os usuários compartilhem avaliações e recomendações de filmes em suas redes sociais, como Twitter e Facebook.
 - Implementar um sistema de recomendação de filmes: utilizar algoritmos de machine learning para recomendar filmes com base nas preferências de cada usuário.
