@@ -34,12 +34,12 @@ Agora você pode prosseguir com as etapas de instalação local.
 ```
 ### Configure o banco de dados:
 - Certifique-se de ter o PostgreSQL instalado e configurado corretamente em sua máquina.
-- Crie um banco de dados chamado movie_review_db
-- Execute o script SQL fornecido abaixo para criar as tabelas necessárias:
+- Execute o script SQL fornecido abaixo para criar o banco de dados e as tabelas necessárias:
 ```bash
-psql -U seu-usuario -d movie_review_db -f caminho/do/script.sql
+psql -U seu-usuario -c "CREATE DATABASE movie_review_db"
+psql -U seu-usuario -d movie_review_db -f scripts/scriptPostgres.sql
 ```
-Certifique-se de substituir `seu-usuario` pelo seu nome de usuário do PostgreSQL e `caminho/do/script.sql` pelo caminho do arquivo que contém o script SQL mencionado anteriormente.
+Certifique-se de substituir `seu-usuario` pelo seu nome de usuário do PostgresSQL.
 
 ### Instalando as dependências
 ```bash
