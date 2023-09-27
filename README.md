@@ -37,6 +37,8 @@ Agora você pode prosseguir com as etapas de instalação local.
 - Execute o script SQL fornecido abaixo para criar o banco de dados e as tabelas necessárias:
 ```bash
 psql -U seu-usuario -c "CREATE DATABASE movie_review_db"
+```
+```bash
 psql -U seu-usuario -d movie_review_db -f scripts/scriptPostgres.sql
 ```
 Certifique-se de substituir `seu-usuario` pelo seu nome de usuário do PostgresSQL.
