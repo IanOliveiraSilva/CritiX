@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const swaggerSpec = require('../swagger');
+const swaggerUi = require('swagger-ui-express');
 
 
 const app = express();
@@ -26,6 +28,8 @@ app.use('/api/', userRoute);
 app.use('/api/', movieRoute);
 app.use('/api/', listRoute);
 app.use('/api/', commentRoute);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 
 module.exports = app;

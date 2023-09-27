@@ -8,7 +8,7 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Criação da tabela 'users'
+-- Criação da tabela 'user_profile'
 CREATE TABLE user_profile (
   id SERIAL PRIMARY KEY,
   userid integer NOT NULL,

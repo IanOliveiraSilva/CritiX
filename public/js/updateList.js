@@ -20,7 +20,6 @@ updateListForm.addEventListener('submit', async (event) => {
   const movieTitlesInput = document.getElementById('movieTitles');
   const isPublic = document.getElementById('isPublic').checked;
 
-  // Verifique se o campo movieTitles foi alterado pelo usuário
   const movieTitles = movieTitlesInput.dataset.modified === 'true' ? movieTitlesInput.value.split(',') : undefined;
 
   const requestBody = {
@@ -29,7 +28,6 @@ updateListForm.addEventListener('submit', async (event) => {
     isPublic,
   };
 
-  // Adicione movieTitles ao requestBody apenas se ele foi modificado
   if (movieTitles !== undefined) {
     requestBody.movieTitles = movieTitles;
   }

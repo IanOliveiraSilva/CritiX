@@ -84,7 +84,6 @@ exports.getReviewComments = async (req, res) => {
   }
 };
 
-
 exports.deleteComment = async (req, res) => {
   try {
     const { id } = req.query;
