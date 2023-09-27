@@ -11,10 +11,18 @@ exports.getMovieByTitle = async (req, res) => {
     if (omdbResponse.status === 200 && omdbResponse.data && omdbResponse.data.Response === 'True') {
       const movieData = omdbResponse.data;
       const { rows: [movie] } = await db.query('SELECT medianotas FROM movies WHERE title = $1', [title]);
+      const { rows: [reviewCount] } = await db.query(`
+      SELECT COUNT(*) AS review_count 
+      FROM reviews 
+      INNER JOIN movies ON reviews.movieId = movies.id 
+      WHERE movies.title = $1 AND reviews.ispublic = true`, 
+      [title]);
+
       res.status(200).json({
         body: {
           movieData,
-          movie
+          movie,
+          reviewCount: reviewCount.review_count
         }
       });
     } else {
