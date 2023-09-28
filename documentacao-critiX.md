@@ -27,6 +27,8 @@
   - [POST /api/list](#post-list)
   - [GET /api/allLists](#get-lists)
   - [GET /api/listById:id](#get-lists-by-id)
+  - [GET /api/list/movie:movie_titles](#get-lists-by-movie)
+  - [GET /api/list/user:user](#get-lists-by-user)
   - [DELETE /api/list:id](#delete-list)
   - [PUT /api/list:id](#put-list)
   - [PATCH /api/list:id](#patch-list)
@@ -1020,6 +1022,104 @@ Exemplo de resposta:
 Código: 400
 - Conteúdo: objeto JSON com a mensagem de erro correspondente a um dos seguintes casos:
 - Não foi possível encontrar a lista com o ID fornecido: Quando o banco de dados não retorna nenhuma lista.
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+------------------
+
+### GET /api/list/movie:movie_titles
+Essa função é responsável por retornar uma lista específica do banco de dados, com base no filme fornecido.
+
+#### Parâmetros
+
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:movie_titles (obrigatório): titulo do filme que se deseja buscar.
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: Lista encontrada com sucesso!
+- list: objeto json contendo todos dados da lista.
+
+Exemplo de resposta:
+```json
+{
+    "message": "Listas encontrada com sucesso!",
+    "body": {
+        "Lista": [
+            {
+                "user": "testandoweb3",
+                "list_name": "Minha Lista de Filmes Atualizada",
+                "movie_titles": [
+                    "Inception",
+                    "The Dark Knight",
+                    "Interstellar",
+                    "Dunkirk"
+                ],
+                "list_description": "Uma descrição atualizada da minha lista de filmes.",
+                "created_at": "2023-09-16T18:50:20.271Z"
+        }],
+    }
+}
+```
+
+### Erros
+
+Código: 400
+- Conteúdo: objeto JSON com a mensagem de erro correspondente a um dos seguintes casos:
+- Não foi possível encontrar a lista com o titulo fornecido: Quando o banco de dados não retorna nenhuma lista.
+
+Código: 500
+- objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
+
+------------------
+
+### GET /api/list/user:user
+Essa função é responsável por retornar uma lista específica do banco de dados, com base no usuario fornecido.
+
+#### Parâmetros
+
+O seguinte parâmetro deve ser enviado na URL da requisição:
+
+:user (obrigatório): usuario que se deseja buscar.
+
+#### Resposta
+Sucesso
+- Código: 201
+- Conteúdo: objeto JSON com os seguintes campos:
+- message: Lista encontrada com sucesso!
+- list: objeto json contendo todos dados da lista.
+
+Exemplo de resposta:
+```json
+{
+    "message": "Listas encontrada com sucesso!",
+    "body": {
+        "Lista": [
+            {
+                "user": "testandoweb3",
+                "list_name": "Minha Lista de Filmes Atualizada",
+                "movie_titles": [
+                    "Inception",
+                    "The Dark Knight",
+                    "Interstellar",
+                    "Dunkirk"
+                ],
+                "list_description": "Uma descrição atualizada da minha lista de filmes.",
+                "created_at": "2023-09-16T18:50:20.271Z"
+        }],
+    }
+}
+```
+
+### Erros
+
+Código: 400
+- Conteúdo: objeto JSON com a mensagem de erro correspondente a um dos seguintes casos:
+- Não foi possível encontrar a lista com o usuario fornecido: Quando o banco de dados não retorna nenhuma lista.
 
 Código: 500
 - objeto JSON com a mensagem de erro Internal server error. Isso pode ocorrer em caso de falha ao executar alguma operação no banco de dados ou ao gerar o token de autenticação.
