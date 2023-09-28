@@ -10,13 +10,20 @@ exports.getMovieByTitle = async (req, res) => {
     const omdbResponse = await axios.get(`http://www.omdbapi.com/?t=${title}&apikey=${OMDB_API_KEY}`);
     if (omdbResponse.status === 200 && omdbResponse.data && omdbResponse.data.Response === 'True') {
       const movieData = omdbResponse.data;
-      const { rows: [movie] } = await db.query('SELECT medianotas FROM movies WHERE title = $1', [title]);
-      const { rows: [reviewCount] } = await db.query(`
+      const { rows: [movie] } = await db.query(
+        `
+      SELECT medianotas 
+      FROM movies WHERE title = $1
+      `,
+        [title]);
+      const { rows: [reviewCount] } = await db.query(
+        `
       SELECT COUNT(*) AS review_count 
       FROM reviews 
       INNER JOIN movies ON reviews.movieId = movies.id 
-      WHERE movies.title = $1 AND reviews.ispublic = true`, 
-      [title]);
+      WHERE movies.title = $1 AND reviews.ispublic = true
+      `,
+        [title]);
 
       res.status(200).json({
         body: {
@@ -37,7 +44,7 @@ exports.surpriseMe = async (req, res) => {
   const TMDB_API_KEY = 'b42f7ed941f9bfa455c43a95f488a734';
   try {
     const tmdbResponse = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}`);
-    
+
     if (tmdbResponse.status === 200 && tmdbResponse.data && tmdbResponse.data.results.length > 0) {
       const randomIndex = Math.floor(Math.random() * tmdbResponse.data.results.length);
       const movieData = tmdbResponse.data.results[randomIndex];

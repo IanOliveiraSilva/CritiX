@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   <li><strong>Metascore Rating:</strong> ${detailsData.Metascore}</li>
                   <li><strong><button id="create-review-button">Criar Review</button></strong></li>
                   <li><strong><button id="get-review-button">Ver Review</button></strong></li>
+                  <li><strong><button id="get-list-button">Ver Listas</button></strong></li>
                 </ul>
                 <a href="" class="btn-back">Voltar</a>
               `;
@@ -59,6 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
             getReviewButton.addEventListener('click', () => {
               localStorage.setItem('movieTitle', movie.Title);
               window.location.href = '/getAllMovieReviews';
+            });
+
+            const getListButton = document.getElementById('get-list-button');
+            getListButton.addEventListener('click', () => {
+              localStorage.setItem('movieTitle', movie.Title);
+              window.location.href = '/getAllMovieLists';
             });
           });
           resultsList.appendChild(li);

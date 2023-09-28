@@ -166,6 +166,130 @@ router.get('/listById', userController.AuthMiddleware, listController.getListByI
 
 /**
  * @swagger
+ * /api/list/movie:
+ *   get:
+ *     summary: Obter listas de filmes por título.
+ *     description: Obtém listas de filmes que contenham um título específico.
+ *     tags:
+ *       - Lista
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: movie_titles
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: O título do filme a ser usado para buscar listas.
+ *     responses:
+ *       '200':
+ *         description: Listas de filmes encontradas com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensagem de sucesso.
+ *                 body:
+ *                   type: object
+ *                   properties:
+ *                     Lista:
+ *                       type: array
+ *                       description: Lista de listas de filmes correspondentes ao título fornecido.
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           user:
+ *                             type: string
+ *                             description: Nome de usuário do proprietário da lista.
+ *                           list_name:
+ *                             type: string
+ *                             description: Nome da lista de filmes.
+ *                           movie_titles:
+ *                             type: array
+ *                             description: Títulos dos filmes na lista.
+ *                             items:
+ *                               type: string
+ *                           list_description:
+ *                             type: string
+ *                             description: Descrição da lista de filmes.
+ *                           Created_At:
+ *                             type: string
+ *                             format: date-time
+ *                             description: Data e hora de criação da lista.
+ *       '404':
+ *         description: Não foi possível encontrar nenhuma lista com o título do filme fornecido.
+ *       '500':
+ *         description: Erro interno do servidor.
+ */
+router.get('/list/movie', userController.AuthMiddleware, listController.getListByMovie);
+
+/**
+ * @swagger
+ * /api/list/user:
+ *   get:
+ *     summary: Obter listas de filmes por usuario.
+ *     description: Obtém listas de filmes que contenham um usuario específico.
+ *     tags:
+ *       - Lista
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: user
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: O usuario a ser usado para buscar listas.
+ *     responses:
+ *       '200':
+ *         description: Listas de filmes encontradas com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensagem de sucesso.
+ *                 body:
+ *                   type: object
+ *                   properties:
+ *                     Lista:
+ *                       type: array
+ *                       description: Lista de listas de filmes correspondentes ao título fornecido.
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           user:
+ *                             type: string
+ *                             description: Nome de usuário do proprietário da lista.
+ *                           list_name:
+ *                             type: string
+ *                             description: Nome da lista de filmes.
+ *                           movie_titles:
+ *                             type: array
+ *                             description: Títulos dos filmes na lista.
+ *                             items:
+ *                               type: string
+ *                           list_description:
+ *                             type: string
+ *                             description: Descrição da lista de filmes.
+ *                           Created_At:
+ *                             type: string
+ *                             format: date-time
+ *                             description: Data e hora de criação da lista.
+ *       '404':
+ *         description: Não foi possível encontrar nenhuma lista com o título do filme fornecido.
+ *       '500':
+ *         description: Erro interno do servidor.
+ */
+router.get('/list/user', userController.AuthMiddleware, listController.getListByUser);
+
+/**
+ * @swagger
  * /api/list:
  *   delete:
  *     summary: Apagar lista de filmes.

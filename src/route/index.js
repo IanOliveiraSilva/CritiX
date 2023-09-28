@@ -7,6 +7,7 @@ const routes = [
   { path: '/login2', title: 'Login page' },
   { path: '/createList', title: 'Create List page' },
   { path: '/getAllLists', title: 'Get All Lists page' },
+  { path: '/getAllMovieLists', title: 'Get All Movie Lists page' },
   { path: '/updateList', title: 'Update List page' },
   { path: '/deleteList', title: 'Delete List page' },
   { path: '/createReview', title: 'Create Review page' },

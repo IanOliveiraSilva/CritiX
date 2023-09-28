@@ -133,6 +133,80 @@ exports.getListById = async (req, res) => {
     }
 };
 
+exports.getListByMovie = async (req, res) => {
+    try {
+        const { movie_titles } = req.query;
+
+        const lists = await db.query(
+            `SELECT u.username AS user,
+            l.name AS list_name,
+            l.movies AS movie_titles,
+            l.description AS list_description,
+            l.created_at AS Created_At
+            FROM lists l
+            JOIN users u ON l.userid = u.id
+            WHERE $1 = ANY(l.movies)`,
+            [movie_titles]
+        );
+
+        if (lists.rows.length === 0) {
+            return res.status(404).json({
+                message: 'Não foi possível encontrar a lista com o título do filme fornecido.'
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Listas encontrada com sucesso!',
+            body: {
+                Lista: lists.rows
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: 'Ocorreu um erro ao buscar a lista.',
+            error
+        });
+    }
+};
+
+exports.getListByUser = async (req, res) => {
+    try {
+        const { user } = req.query;
+
+        const lists = await db.query(
+            `SELECT u.username AS user,
+            l.name AS list_name,
+            l.movies AS movie_titles,
+            l.description AS list_description,
+            l.created_at AS Created_At
+            FROM lists l
+            JOIN users u ON l.userid = u.id
+            WHERE u.username = $1`,
+            [user]
+        );
+
+        if (lists.rows.length === 0) {
+            return res.status(404).json({
+                message: 'Não foi possível encontrar a lista com o título do filme fornecido.'
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Listas encontrada com sucesso!',
+            body: {
+                Lista: lists.rows
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: 'Ocorreu um erro ao buscar a lista.',
+            error
+        });
+    }
+};
+
 exports.deleteList = async (req, res) => {
     try {
         const { id } = req.query;

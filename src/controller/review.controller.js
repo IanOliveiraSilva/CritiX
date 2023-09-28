@@ -103,7 +103,7 @@ exports.createReview = async (req, res) => {
       const currentReviewCount = userProfile.contadorreviews || 0;
       let newReviewCount = currentReviewCount + 1;
 
-      if(newReviewCount < 0 ){
+      if (newReviewCount < 0) {
         newReviewCount = 0
       }
 
@@ -157,11 +157,13 @@ exports.getAllReviewsFromMovie = async (req, res) => {
     const title = req.query.title;
 
     const reviews = await db.query(
-      `SELECT users.username, movies.title , movies.genre, reviews.rating, reviews.specialrating, reviews.review, reviews.created_at 
+      `
+      SELECT users.username, movies.title , movies.genre, reviews.rating, reviews.specialrating, reviews.review, reviews.created_at 
       FROM reviews 
       INNER JOIN movies ON reviews.movieId = movies.id 
       INNER JOIN users ON reviews.userId = users.id 
-      WHERE movies.title = $1 AND reviews.ispublic = true`,
+      WHERE movies.title = $1 AND reviews.ispublic = true
+      `,
       [title]
     );
 
@@ -260,7 +262,7 @@ exports.deleteReview = async (req, res) => {
       const currentReviewCount = userProfile.contadorreviews || 0;
       let newReviewCount = currentReviewCount - 1;
 
-      if(newReviewCount < 0){
+      if (newReviewCount < 0) {
         newReviewCount = 0;
       }
 
@@ -269,7 +271,7 @@ exports.deleteReview = async (req, res) => {
         [newReviewCount, userId]
       );
     }
-  
+
     return res.status(200).json({
       message: "Review deletada com sucesso!",
       review: rows[0]
