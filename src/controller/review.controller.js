@@ -26,6 +26,19 @@ const updateMovieAverageRating = async (movieId) => {
   return averageRating;
 };
 
+const updateMovieAverageSpecialRating = async (movieId) => {
+  const { rows: [movie] } = await db.query(
+    `SELECT AVG(specialrating) AS average_specialrating FROM reviews WHERE movieId = $1`,
+    [movieId]
+  );
+  const average_specialrating = movie.average_specialrating || 0;
+  await db.query(
+    `UPDATE movies SET mediaspecialrating = $1 WHERE id = $2`,
+    [average_specialrating, movieId]
+  );
+  return average_specialrating;
+};
+
 const getSpecialRating = (genre) => {
   const genreArray = genre.split(',');
   const firstGenre = genreArray[0];
@@ -93,6 +106,7 @@ exports.createReview = async (req, res) => {
     );
 
     await updateMovieAverageRating(movieId);
+    await updateMovieAverageSpecialRating(movieId);
 
     const { rows: [userProfile] } = await db.query(
       'SELECT "contadorlists" FROM user_profile WHERE userId = $1',

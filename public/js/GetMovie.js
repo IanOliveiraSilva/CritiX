@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('#search-form');
   const input = document.querySelector('#search-input');
   const resultsList = document.querySelector('#results');
+  const token = localStorage.getItem('token');
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -19,27 +20,51 @@ document.addEventListener('DOMContentLoaded', () => {
           const li = document.createElement('li');
           li.textContent = `${movie.Title} (${movie.Year})`;
           li.addEventListener('click', async () => {
-            const detailsUrl = `https://www.omdbapi.com/?i=${movie.imdbID}&apikey=${omdbApiKey}`;
-            const detailsResponse = await fetch(detailsUrl);
+            const detailsResponse = await fetch(`/api/movie/title?title=${encodeURIComponent(movie.Title)}`, {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            });
             const detailsData = await detailsResponse.json();
+
+            const specialRatingMap = new Map([
+              ['Horror', 'Nivel de Horror'],
+              ['Comedy', 'Nivel de Diversão'],
+              ['Action', 'Nivel de Adrenalina'],
+              ['Romance', 'Nivel de Amor'],
+              ['Drama', 'Nivel de Drama'],
+            ]);
+          
+            const getSpecialRating = (genre) => {
+              const genreArray = genre.split(',');
+              const firstGenre = genreArray[0];
+              return specialRatingMap.get(firstGenre.trim());
+            }
+          
+            const movieGenreMapped = getSpecialRating(detailsData.body.movieData.Genre);
+
             const details = document.createElement('div');
             details.innerHTML = `
-                <h2>${detailsData.Title} (${detailsData.Year})</h2>
-                <img src="${detailsData.Poster}" alt="${detailsData.Title} poster">
-                <p>${detailsData.Plot}</p>
+                <h2>${detailsData.body.movieData.Title} (${detailsData.body.movieData.Year})</h2>
+                <img src="${detailsData.body.movieData.Poster}" alt="${detailsData.body.movieData.Title} poster">
+                <p>Plot: ${detailsData.body.movieData.Plot}</p>
                 <ul>
-                  <li><strong>Director:</strong> ${detailsData.Director}</li>
-                  <li><strong>Released:</strong> ${detailsData.Released}</li>
-                  <li><strong>Writer:</strong> ${detailsData.Writer}</li>
-                  <li><strong>Country:</strong> ${detailsData.Country}</li>
-                  <li><strong>Box Office:</strong> ${detailsData.BoxOffice}</li>
-                  <li><strong>Awards:</strong> ${detailsData.Awards}</li>
-                  <li><strong>Actors:</strong> ${detailsData.Actors}</li>
-                  <li><strong>Genre:</strong> ${detailsData.Genre}</li>
-                  <li><strong>Runtime:</strong> ${detailsData.Runtime}</li>
-                  <li><strong>Rated:</strong> ${detailsData.Rated}</li>
-                  <li><strong>IMDb Rating:</strong> ${detailsData.imdbRating}</li>
-                  <li><strong>Metascore Rating:</strong> ${detailsData.Metascore}</li>
+                  <li><strong>Director:</strong> ${detailsData.body.movieData.Director}</li>
+                  <li><strong>Released:</strong> ${detailsData.body.movieData.Released}</li>
+                  <li><strong>Writer:</strong> ${detailsData.body.movieData.Writer}</li>
+                  <li><strong>Country:</strong> ${detailsData.body.movieData.Country}</li>
+                  <li><strong>Box Office:</strong> ${detailsData.body.movieData.BoxOffice}</li>
+                  <li><strong>Awards:</strong> ${detailsData.body.movieData.Awards}</li>
+                  <li><strong>Actors:</strong> ${detailsData.body.movieData.Actors}</li>
+                  <li><strong>Genre:</strong> ${detailsData.body.movieData.Genre}</li>
+                  <li><strong>Runtime:</strong> ${detailsData.body.movieData.Runtime}</li>
+                  <li><strong>Rated:</strong> ${detailsData.body.movieData.Rated}</li>
+                  <li><strong>IMDb Rating:</strong> ${detailsData.body.movieData.imdbRating}</li>
+                  <li><strong>Metascore Rating:</strong> ${detailsData.body.movieData.Metascore}</li>
+                  <li><strong>Review Count:</strong> ${detailsData.body.reviewCount}</li>
+                  <li><strong>Media de Notas:</strong> ${detailsData.body.movie.medianotas}</li>
+                  <li><strong>${movieGenreMapped}:</strong> ${detailsData.body.movie.mediaspecialrating}</li>
                   <li><strong><button id="create-review-button">Criar Review</button></strong></li>
                   <li><strong><button id="get-review-button">Ver Review</button></strong></li>
                   <li><strong><button id="get-list-button">Ver Listas</button></strong></li>
@@ -52,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const reviewButton = document.getElementById('create-review-button');
             reviewButton.addEventListener('click', () => {
               localStorage.setItem('movieTitle', movie.Title);
-              localStorage.setItem('movieGenre', detailsData.Genre);
+              localStorage.setItem('movieGenre', detailsData.body.movieData.Genre);
               window.location.href = '/createReview';
             });
 

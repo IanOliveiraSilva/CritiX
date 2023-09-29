@@ -12,7 +12,7 @@ exports.getMovieByTitle = async (req, res) => {
       const movieData = omdbResponse.data;
       const { rows: [movie] } = await db.query(
         `
-      SELECT medianotas 
+      SELECT medianotas, mediaspecialrating
       FROM movies WHERE title = $1
       `,
         [title]);
