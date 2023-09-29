@@ -1,43 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>CritiX - Avaliação de Filmes</title>
+    <title>CritiX</title>
+    <link rel="stylesheet" href="../css/authForm.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/style3.css">
-    <style>
-        .login-form {
-            padding: 20px;
-            border-radius: 0 0 5px 5px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            font-weight: bold;
-        }
-
-        .btn-primary {
-            background-color: #ffc107;
-            border-color: #ffc107;
-            color: #343a40;
-            font-weight: bold;
-        }
-
-        .btn-primary:hover {
-            background-color: #e0a800;
-            border-color: #e0a800;
-        }
-    </style>
 </head>
 
 <body>
+
     <header class="bg-dark text-warning text-center py-5">
         <img src="../images/logo.png" alt="Logo do CritiX" width="100" height="100">
         <h1>Bem-vindo ao CritiX!</h1>
@@ -45,7 +19,11 @@
     </header>
 
     <main class="container">
-        <form id="login-form" class="login-form">
+        <form id="register-form" class="login-form">
+            <div class="form-group">
+                <label for="username">Nome de usuário:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" name="email" required>
@@ -54,9 +32,9 @@
                 <label for="password">Senha:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+            <button type="submit" class="btn btn-warning btn-block">Registrar</button>
         </form>
-        <a href="/" class="btn btn-link mt-3 d-block text-center">Voltar para a página inicial</a>
+        <a href="/" class="btn btn-warning text-dark btn-link mt-3">Voltar para a página inicial</a>
     </main>
 
     <footer class="bg-dark text-warning text-center py-3">
@@ -66,25 +44,27 @@
     </footer>
 
 
+
     <script>
-        const loginForm = document.getElementById('login-form');
-        loginForm.addEventListener('submit', async (event) => {
+        const registerForm = document.getElementById('register-form');
+        registerForm.addEventListener('submit', async (event) => {
             event.preventDefault();
+            const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const response = await fetch('/api/user/login', {
+            const response = await fetch('/api/user/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ username, email, password })
             });
             const data = await response.json();
             if (response.ok) {
+                alert(`Usuário ${data.user.username} criado com sucesso!`);
+                window.location.href = '/createProfile';
                 localStorage.setItem('token', data.token);
-                localStorage.setItem('username', data.user.username);
-                alert(`Usuário ${data.user.username} logado com sucesso!`);
-                window.location.href = '/';
+                localStorage.setItem('username', data.user.username)
             } else {
                 alert(data.message);
             }

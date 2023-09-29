@@ -48,7 +48,7 @@ const userController = require('../controller/user.controller');
  *       '500':
  *         description: Erro interno do servidor.
  */
-router.post('/api/user/signup', userController.signup);
+router.post('/user/signup', userController.signup);
 
 /**
  * @swagger

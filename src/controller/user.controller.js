@@ -53,7 +53,7 @@ exports.signup = async (req, res) => {
     const token = jwt.sign(
       { id: newUser.rows[0].id, username: newUser.rows[0].username },
       process.env.JWT_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '10d' }
     );
 
     return res.status(201).json({ user: newUser.rows[0], token });
@@ -96,17 +96,6 @@ exports.login = async (req, res) => {
     );
 
     return res.status(200).json({ user: user.rows[0], token });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-exports.logout = (req, res) => {
-  try {
-    localStorage.clear();
-
-    return res.status(200).json({ message: 'Logout successful' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });

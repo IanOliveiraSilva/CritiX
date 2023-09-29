@@ -1,3 +1,25 @@
+function generateStarRating(rating) {
+  const maxRating = 5;
+  const roundedRating = Math.round(rating * 2) / 2;
+  const fullStars = Math.floor(roundedRating);
+  const halfStar = roundedRating % 1 !== 0;
+  const emptyStars = maxRating - fullStars - (halfStar ? 1 : 0);
+
+  let stars = '';
+  for (let i = 0; i < fullStars; i++) {
+    stars += '<i class="fas fa-star"></i>';
+  }
+  if (halfStar) {
+    stars += '<i class="fas fa-star-half-alt"></i>';
+  }
+  for (let i = 0; i < emptyStars; i++) {
+    stars += '<i class="far fa-star"></i>';
+  }
+
+  return stars;
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('#search-form');
   const input = document.querySelector('#search-input');
@@ -35,13 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
               ['Romance', 'Nivel de Amor'],
               ['Drama', 'Nivel de Drama'],
             ]);
-          
+
             const getSpecialRating = (genre) => {
               const genreArray = genre.split(',');
               const firstGenre = genreArray[0];
               return specialRatingMap.get(firstGenre.trim());
             }
-          
+
             const movieGenreMapped = getSpecialRating(detailsData.body.movieData.Genre);
 
             const details = document.createElement('div');
@@ -62,9 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   <li><strong>Rated:</strong> ${detailsData.body.movieData.Rated}</li>
                   <li><strong>IMDb Rating:</strong> ${detailsData.body.movieData.imdbRating}</li>
                   <li><strong>Metascore Rating:</strong> ${detailsData.body.movieData.Metascore}</li>
-                  <li><strong>Review Count:</strong> ${detailsData.body.reviewCount}</li>
-                  <li><strong>Media de Notas:</strong> ${detailsData.body.movie.medianotas}</li>
-                  <li><strong>${movieGenreMapped}:</strong> ${detailsData.body.movie.mediaspecialrating}</li>
+                  <li><strong>Review Count:</strong> ${detailsData.body.reviewCount !== '0' ? detailsData.body.reviewCount : 'Esse filme ainda não possui review'}</li>
+                  <li><strong>Media de Notas:</strong> ${detailsData.body.movie.medianotas !== 0 ? generateStarRating(detailsData.body.movie.medianotas) : 'Esse filme ainda não possui nota'}</li>
+                  <li><strong>${movieGenreMapped}:</strong> ${detailsData.body.movie.mediaspecialrating !== 0 ? generateStarRating(detailsData.body.movie.mediaspecialrating) : 'Esse filme ainda não possui nota'}</li>
                   <li><strong><button id="create-review-button">Criar Review</button></strong></li>
                   <li><strong><button id="get-review-button">Ver Review</button></strong></li>
                   <li><strong><button id="get-list-button">Ver Listas</button></strong></li>
@@ -104,3 +126,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+

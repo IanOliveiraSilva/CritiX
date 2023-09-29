@@ -3,8 +3,8 @@ const router = require('express').Router();
 const routes = [
   { path: '/profile', title: 'Profile page' },
   { path: '/createProfile', title: 'Create Profile page' },
-  { path: '/register2', title: 'Register page' },
-  { path: '/login2', title: 'Login page' },
+  { path: '/register', title: 'Register page' },
+  { path: '/login', title: 'Login page' },
   { path: '/createList', title: 'Create List page' },
   { path: '/getAllLists', title: 'Get All Lists page' },
   { path: '/getAllMovieLists', title: 'Get All Movie Lists page' },

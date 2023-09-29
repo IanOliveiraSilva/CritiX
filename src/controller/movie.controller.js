@@ -10,12 +10,13 @@ exports.getMovieByTitle = async (req, res) => {
     const omdbResponse = await axios.get(`http://www.omdbapi.com/?t=${title}&apikey=${OMDB_API_KEY}`);
     if (omdbResponse.status === 200 && omdbResponse.data && omdbResponse.data.Response === 'True') {
       const movieData = omdbResponse.data;
-      const { rows: [movie] } = await db.query(
+      let { rows: [movie] } = await db.query(
         `
       SELECT medianotas, mediaspecialrating
       FROM movies WHERE title = $1
       `,
         [title]);
+        
       const { rows: [reviewCount] } = await db.query(
         `
       SELECT COUNT(*) AS review_count 
@@ -25,6 +26,12 @@ exports.getMovieByTitle = async (req, res) => {
       `,
         [title]);
 
+        if(!movie){
+          movie = {
+            medianotas: 0,
+            mediaspecialrating: 0,
+          };
+        }
       res.status(200).json({
         body: {
           movieData,
