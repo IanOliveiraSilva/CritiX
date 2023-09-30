@@ -30,6 +30,11 @@ h1 {
   margin: 0;
 }
 
+.star-rating {
+  color: #FFD700;
+}
+
+
 form {
   display: flex;
   margin-top: 30px;

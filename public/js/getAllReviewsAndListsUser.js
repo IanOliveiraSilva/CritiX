@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     commentReviewButtonCell.appendChild(commentButton);
                     commentReviewButtonRow.appendChild(commentReviewButtonCell);
                     tbody.appendChild(commentReviewButtonRow);
+                    commentButton.classList.add('btn', 'btn-warning', 'text-dark', 'btn-link', 'mt-3');
 
                     const getcommentReviewButtonRow = document.createElement('tr');
                     const getcommentReviewButtonCell = document.createElement('td');
@@ -112,7 +113,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     tbody.appendChild(getcommentReviewButtonRow);
 
                     table.appendChild(tbody);
+                    getcommentButton.classList.add('btn', 'btn-warning', 'text-dark', 'btn-link', 'mt-3');
                     reviewsContainer.appendChild(table);
+                    
                 });
             }
 

@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <li><strong>Rated:</strong> ${omdbMovie.Rated}</li>
           <li><strong>IMDb Rating:</strong> ${omdbMovie.imdbRating}</li>
           <li><strong>Metascore Rating:</strong> ${omdbMovie.Metascore}</li>
-          <li><strong><button id="create-review-button">Criar Review</button></strong></li>
-          <li><strong><button id="get-review-button">Ver Review</button></strong></li>
+          <li><strong><button id="create-review-button" class="btn btn-warning text-dark btn-link mt-3">Criar Review</button></strong></li>
+          <li><strong><button id="get-review-button" class="btn btn-warning text-dark btn-link mt-3">Ver Review</button></strong></li>
         </ul>
         <a href="" class="btn-back">Voltar</a>
       `;

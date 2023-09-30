@@ -56,6 +56,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       editListButtonCell.appendChild(editButton);
       editListButtonRow.appendChild(editListButtonCell);
       tbody.appendChild(editListButtonRow);
+      editButton.classList.add('btn', 'btn-warning', 'text-dark', 'btn-link', 'mt-3');
+
+      
 
       table.appendChild(tbody);
       listContainer.appendChild(table);
@@ -72,6 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       deleteButtonCell.appendChild(deleteButton);
       deleteButtonRow.appendChild(deleteButtonCell);
       tbody.appendChild(deleteButtonRow);
+      deleteButton.classList.add('btn', 'btn-warning', 'text-dark', 'btn-link', 'mt-3');
 
     });
 

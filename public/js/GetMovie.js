@@ -7,13 +7,13 @@ function generateStarRating(rating) {
 
   let stars = '';
   for (let i = 0; i < fullStars; i++) {
-    stars += '<i class="fas fa-star"></i>';
+    stars += '<i class="fas fa-star star-rating"></i>';
   }
   if (halfStar) {
-    stars += '<i class="fas fa-star-half-alt"></i>';
+    stars += '<i class="fas fa-star-half-alt star-rating"></i>';
   }
   for (let i = 0; i < emptyStars; i++) {
-    stars += '<i class="far fa-star"></i>';
+    stars += '<i class="far fa-star star-rating"></i>';
   }
 
   return stars;
@@ -87,9 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   <li><strong>Review Count:</strong> ${detailsData.body.reviewCount !== '0' ? detailsData.body.reviewCount : 'Esse filme ainda não possui review'}</li>
                   <li><strong>Media de Notas:</strong> ${detailsData.body.movie.medianotas !== 0 ? generateStarRating(detailsData.body.movie.medianotas) : 'Esse filme ainda não possui nota'}</li>
                   <li><strong>${movieGenreMapped}:</strong> ${detailsData.body.movie.mediaspecialrating !== 0 ? generateStarRating(detailsData.body.movie.mediaspecialrating) : 'Esse filme ainda não possui nota'}</li>
-                  <li><strong><button id="create-review-button">Criar Review</button></strong></li>
-                  <li><strong><button id="get-review-button">Ver Review</button></strong></li>
-                  <li><strong><button id="get-list-button">Ver Listas</button></strong></li>
+                  <li><strong><button id="create-review-button" class="btn btn-warning text-dark btn-link mt-3">Criar Review</button></strong></li>
+                  <li><strong><button id="get-review-button" class="btn btn-warning text-dark btn-link mt-3">Ver Review</button></strong></li>
+                  <li><strong><button id="get-list-button" class="btn btn-warning text-dark btn-link mt-3">Ver Listas</button></strong></li>
                 </ul>
                 <a href="" class="btn-back">Voltar</a>
               `;
