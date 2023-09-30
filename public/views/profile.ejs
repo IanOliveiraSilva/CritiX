@@ -1,42 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search'}) %>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>CritiX</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/authForm.css">
-</head>
+<link rel="stylesheet" href="../css/authForm.css">
 
-<body>
-  
-  <header class="bg-dark text-warning text-center py-5">
-    <div class="container">
-      <img src="../images/logo.png" alt="Logo do CritiX" width="100" height="100">
-      <h1 style="font-size: 3rem;">Welcome to CritiX!</h1>
-      <p class="lead">A platform for reviewing movies.</p>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="reviews bg-light p-4">
-        <h1>Meu perfil</h1>
-        <div id="results"></div>
-        <a href="/" class="back-link d-block mt-4 text-center">Página Inicial</a>
-    </section>
+<main class="container">
+  <section class="reviews bg-light p-4">
+      <h1>Meu perfil</h1>
+      <div id="results"></div>
+      <a href="/" class="back-link d-block mt-4 text-center">Página Inicial</a>
+  </section>
 </main>
 
-  <footer class="bg-dark text-light text-center py-3">
-    <div class="container">
-      <p>&copy; 2023 CritiX</p>
-    </div>
-  </footer>
+<%- include('partials/footer') %>
 
-  <script src="../js/profile.js"></script>
-</body>
-
-</html>
+<script src="../js/profile.js"></script>

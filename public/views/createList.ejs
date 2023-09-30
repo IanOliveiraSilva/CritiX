@@ -1,53 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search'}) %>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>CritiX - Avaliação de Filmes</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/createAndUpdate.css">
-</head>
+<link rel="stylesheet" href="../css/createAndUpdate.css">
 
-<body>
-  <header class="bg-dark text-warning text-center py-5">
-    <img src="../images/logo.png" alt="Logo do CritiX" width="100" height="100">
-    <h1>Bem-vindo ao CritiX!</h1>
-    <p class="lead">Uma plataforma para avaliar filmes.</p>
-  </header>
+<main>
+  <div class="container background-container">
 
-  <main>
-    <div class="container background-container">
+    <form class="review-form bg-warning text-dark" id="create-list-form">
+      <h1 class="text-dark">Criar Lista</h1>
+      <label for="name">Nome da Lista:</label>
+      <input type="text" id="name" name="name" required><br><br>
 
-      <form class="review-form bg-warning text-dark" id="create-list-form">
-        <h1 class="text-dark">Criar Lista</h1>
-        <label for="name">Nome da Lista:</label>
-        <input type="text" id="name" name="name" required><br><br>
+      <label for="description">Descrição:</label>
+      <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
 
-        <label for="description">Descrição:</label>
-        <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+      <label for="movieTitles">Títulos dos Filmes (separados por vírgula):</label>
+      <input type="text" id="movieTitles" name="movieTitles" required><br><br>
 
-        <label for="movieTitles">Títulos dos Filmes (separados por vírgula):</label>
-        <input type="text" id="movieTitles" name="movieTitles" required><br><br>
+      <label for="isPublic">Público:</label>
+      <input type="checkbox" id="isPublic" name="isPublic"><br><br>
 
-        <label for="isPublic">Público:</label>
-        <input type="checkbox" id="isPublic" name="isPublic"><br><br>
+      <button class="submit-button bg-dark text-warning" type="submit">Criar Lista</button>
+      <a href="/" class="back-link">Voltar para a página inicial</a>
+    </form>
+  </div>
+</main>
 
-        <button class="submit-button bg-dark text-warning" type="submit">Criar Lista</button>
-        <a href="/" class="back-link">Voltar para a página inicial</a>
-      </form>
-    </div>
-  </main>
+<%- include('partials/footer') %>
 
-  <footer class="bg-dark text-warning text-center py-3">
-    <div class="container">
-      <p>&copy; 2023 CritiX</p>
-    </div>
-  </footer>
-
-  <script src="../js/createList.js"></script>
-</body>
-
-</html>
+<script src="../js/createList.js"></script>

@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap');
 
-/* Estilos gerais */
 body {
   font-family: 'Montserrat', sans-serif;
   background-color: #f0f0f0;
@@ -16,20 +15,18 @@ main {
   flex: 1;
 }
 
-/* Cabeçalho */
 header {
   color: #e4d50c;
   text-align: center;
   padding: 20px 0;
 }
 
-/* Título */
 h1 {
+  font-weight: 700;
   font-size: 36px;
-  margin: 10px 0;
+  margin: 0;
 }
 
-/* Formulário */
 form {
   background-color: #ffffff;
   padding: 20px;
@@ -37,7 +34,6 @@ form {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Botão */
 button {
   background-color: #ffe600;
   color: #000000;
@@ -53,7 +49,6 @@ button:hover {
   color: #ffffff;
 }
 
-/* Texto do centro */
 .text-center {
   text-align: center;
 }

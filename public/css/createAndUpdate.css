@@ -27,12 +27,6 @@ body {
   background-position: center;
 }
 
-header {
-  background-color: #000000;
-  color: #e4d50c;
-  text-align: center;
-  padding: 20px 0;
-}
 
 main {
   flex: 1;
@@ -50,12 +44,10 @@ footer {
 }
 
 h1 {
-  text-align: center;
-  color: #e4d50c;
+  font-weight: 700;
   font-size: 36px;
-  padding: 20px 0;
+  margin: 0;
 }
-
 
 .review-form {
   background-color: #fff;
