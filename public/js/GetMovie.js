@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <strong><button id="get-list-button" class="btn-back">Ver Listas</button></strong>
               </ul>
        
-            <button href="" class="btn-back">Voltar</button>
+            <a href="/" class="btn-back">Voltar</a>
               `;
             resultsList.innerHTML = '';
             resultsList.appendChild(details);

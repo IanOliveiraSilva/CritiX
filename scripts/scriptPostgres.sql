@@ -55,28 +55,6 @@ CREATE TABLE reviews (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Criação da tabela 'Movie'
-
-CREATE TABLE IF NOT EXISTS movies (
-    id SERIAL PRIMARY KEY,
-    imdbid VARCHAR(255) NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    year VARCHAR(255) NOT NULL,
-    runtime VARCHAR(255) NOT NULL,
-    released VARCHAR(255) NOT NULL,
-    genre VARCHAR(255) NOT NULL,
-    director VARCHAR(255) NOT NULL,
-    writer VARCHAR(255) NOT NULL,
-    actors VARCHAR(255) NOT NULL,
-    plot TEXT NOT NULL,
-    country VARCHAR(255) NOT NULL,
-    awards VARCHAR(255) NOT NULL,
-    poster VARCHAR(255) NOT NULL,
-    imdbrating VARCHAR(255) NOT NULL,
-    metascore VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    medianotas NUMERIC(10,2)
-);
 
 -- Criação da tabela 'Lists'
 CREATE TABLE IF NOT EXISTS lists (

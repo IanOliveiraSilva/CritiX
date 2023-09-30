@@ -28,14 +28,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="profile-info">
                 <br>
                     <ul class="list-group">
-                    <li class="list-group-item"><p><strong>Email:</strong> teste@gmail.com</p></li>
+                    <li class="list-group-item"><p><strong>Email:</strong> srvesper@gmail.com</p></li>
                     <li class="list-group-item"><p><strong>Cidade:</strong> João Pessoa</p></li>
                     <li class="list-group-item"><p><strong>País:</strong> Brasil</p></li>
                     <li class="list-group-item"><p><strong>Data de Nascimento:</strong> 31/12/2003</p></li><br>
                     <p><strong>Filmes Favoritos:</strong></p>
                     <li class="list-group-item">Interstellar</li>
-                    <li class="list-group-item">Fight Club</li>
-                    <li class="list-group-item">American Psycho</li><br>
+                    <li class="list-group-item">Elite Squad</li>
+                    <li class="list-group-item">Halloween</li><br>
 
                     <p><strong>Watchlist:</strong></p>
                     <li class="list-group-item">The Nun II</li>
