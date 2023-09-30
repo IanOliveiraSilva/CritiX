@@ -68,30 +68,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const details = document.createElement('div');
             details.innerHTML = `
-                <h2>${detailsData.body.movieData.Title} (${detailsData.body.movieData.Year})</h2>
-                <img src="${detailsData.body.movieData.Poster}" alt="${detailsData.body.movieData.Title} poster">
-                <p>Plot: ${detailsData.body.movieData.Plot}</p>
-                <ul>
-                  <li><strong>Director:</strong> ${detailsData.body.movieData.Director}</li>
-                  <li><strong>Released:</strong> ${detailsData.body.movieData.Released}</li>
-                  <li><strong>Writer:</strong> ${detailsData.body.movieData.Writer}</li>
-                  <li><strong>Country:</strong> ${detailsData.body.movieData.Country}</li>
-                  <li><strong>Box Office:</strong> ${detailsData.body.movieData.BoxOffice}</li>
-                  <li><strong>Awards:</strong> ${detailsData.body.movieData.Awards}</li>
-                  <li><strong>Actors:</strong> ${detailsData.body.movieData.Actors}</li>
-                  <li><strong>Genre:</strong> ${detailsData.body.movieData.Genre}</li>
-                  <li><strong>Runtime:</strong> ${detailsData.body.movieData.Runtime}</li>
-                  <li><strong>Rated:</strong> ${detailsData.body.movieData.Rated}</li>
-                  <li><strong>IMDb Rating:</strong> ${detailsData.body.movieData.imdbRating}</li>
-                  <li><strong>Metascore Rating:</strong> ${detailsData.body.movieData.Metascore}</li>
-                  <li><strong>Review Count:</strong> ${detailsData.body.reviewCount !== '0' ? detailsData.body.reviewCount : 'Esse filme ainda não possui review'}</li>
-                  <li><strong>Media de Notas:</strong> ${detailsData.body.movie.medianotas !== 0 ? generateStarRating(detailsData.body.movie.medianotas) : 'Esse filme ainda não possui nota'}</li>
-                  <li><strong>${movieGenreMapped}:</strong> ${detailsData.body.movie.mediaspecialrating !== 0 ? generateStarRating(detailsData.body.movie.mediaspecialrating) : 'Esse filme ainda não possui nota'}</li>
-                  <li><strong><button id="create-review-button" class="btn btn-warning text-dark btn-link mt-3">Criar Review</button></strong></li>
-                  <li><strong><button id="get-review-button" class="btn btn-warning text-dark btn-link mt-3">Ver Review</button></strong></li>
-                  <li><strong><button id="get-list-button" class="btn btn-warning text-dark btn-link mt-3">Ver Listas</button></strong></li>
-                </ul>
-                <a href="" class="btn-back">Voltar</a>
+            <div class="d-flex flex-column align-items-center text-justify">
+            <h2>${detailsData.body.movieData.Title} (${detailsData.body.movieData.Year})</h2>
+            <img class="img-poster img-poster-hover" src="${detailsData.body.movieData.Poster}" alt="${detailsData.body.movieData.Title} poster" class="mt-3">
+            <p>${detailsData.body.movieData.Plot}</p>
+            </div>
+    
+            <ul>
+              <li><strong>Released:</strong> ${detailsData.body.movieData.Released}</li>
+              <li><strong>Writer:</strong> ${detailsData.body.movieData.Writer}</li>
+              <li><strong>Country:</strong> ${detailsData.body.movieData.Country}</li>
+              <li><strong>Box Office:</strong> ${detailsData.body.movieData.BoxOffice}</li>
+              <li><strong>Awards:</strong> ${detailsData.body.movieData.Awards}</li>
+              <li><strong>Actors:</strong> ${detailsData.body.movieData.Actors}</li>
+              <li><strong>Genre:</strong> ${detailsData.body.movieData.Genre}</li>
+              <li><strong>Runtime:</strong> ${detailsData.body.movieData.Runtime}</li>
+              <li><strong>Rated:</strong> ${detailsData.body.movieData.Rated}</li>
+              <li><strong>IMDb Rating:</strong> ${detailsData.body.movieData.imdbRating}</li>
+              <li><strong>Metascore Rating:</strong> ${detailsData.body.movieData.Metascore}</li>
+              <li><strong>Review Count:</strong> ${detailsData.body.reviewCount !== '0' ? detailsData.body.reviewCount : 'Esse filme ainda não possui review'}</li>
+              <li><strong>Media de Notas:</strong> ${detailsData.body.movie.medianotas !== 0 ? generateStarRating(detailsData.body.movie.medianotas) : 'Esse filme ainda não possui nota'}</li>
+              <li><strong>${movieGenreMapped}:</strong> ${detailsData.body.movie.mediaspecialrating !== 0 ? generateStarRating(detailsData.body.movie.mediaspecialrating) : 'Esse filme ainda não possui nota'}</li>
+              <strong><button id="create-review-button" class="btn-back">Criar Review</button></strong>
+              <strong><button id="get-review-button" class="btn-back">Ver Review</button></strong>
+              <strong><button id="get-list-button" class="btn-back">Ver Listas</button></strong>
+              </ul>
+       
+            <button href="" class="btn-back">Voltar</button>
               `;
             resultsList.innerHTML = '';
             resultsList.appendChild(details);

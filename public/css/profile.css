@@ -3,7 +3,7 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #ffffff;
+  background-color: #646161;
   margin: 0;
   padding: 0;
   display: flex;
@@ -12,7 +12,11 @@ body {
   margin: 0;
   font-weight: 600;
   margin: 0;
-  
+  background-image: url('../images/movietheater.webp');
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 main {
@@ -88,7 +92,7 @@ label {
   padding: 20px;
   background-color: #ffbb00;
   border: 2px solid #000000;
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -127,19 +131,40 @@ label {
 }
 
 .profile-stat {
-  font-size: 16px;
-  color: #000000;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
+  font-size: 18px;
+  color: #000000; /* Cor azul atraente */
+  transition: all 0.3s ease; /* Adiciona um efeito de transição suave */
 }
+
+.profile-stat:hover {
+  color: #4d0240; /* Altera a cor ao passar o mouse para um tom mais escuro de azul */
+}
+
+.profile-stat .stat-count {
+  margin-left: 5px; /* Adiciona um espaço entre o texto e o número de contagem */
+  font-weight: bold; /* Faz o número de contagem parecer mais destacado */
+}
+
 
 .stat-count {
   margin-left: 5px;
   font-weight: bold;
 }
 
+li {
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease-in-out;
+  list-style-type: none;
+}
 
+li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
 
 
 

@@ -8,6 +8,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
+  
 }
 
 main {
@@ -24,7 +25,7 @@ footer {
   padding: 40px;
 }
 
-h1 {
+h1,h2 {
   font-weight: 700;
   font-size: 36px;
   margin: 0;
@@ -87,12 +88,30 @@ button[type="submit"]:hover {
   padding: 20px;
   margin-bottom: 10px;
   transition: transform 0.2s ease-in-out;
+  list-style-type: none;
 }
 
 #results li:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
+
+.img-poster{
+  cursor: pointer;
+  background-color: #000000;
+  border: .2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  transition: transform 0.2s ease-in-out;
+  list-style-type: none;
+}
+
+.img-poster-hover{
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
 
 #results li h3 {
   font-weight: 700;
@@ -182,8 +201,8 @@ button[type="submit"]:hover {
 
     .btn-back {
         display: inline-block;
-        background-color: #2196F3;
-        color: #fff;
+        background-color: #f7bd00;
+        color: #000000;
         font-size: 18px;
         font-weight: 500;
         text-decoration: none;
@@ -194,6 +213,6 @@ button[type="submit"]:hover {
       }
       
       .btn-back:hover {
-        background-color: #0d8edf;
+        background-color: #b69b00;
       }
       
