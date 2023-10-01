@@ -71,15 +71,12 @@ reviewForm.addEventListener('submit', async (event) => {
   }
 });
 
-// Código JavaScript para o sistema de classificação de estrelas
 document.querySelectorAll('#stars1 .star').forEach(star => {
   star.addEventListener('click', function() {
     var value = this.dataset.value;
     
-    // Atualiza o valor do campo de entrada 'rating'
     document.getElementById('rating').value = value;
     
-    // Preenche as estrelas até a estrela clicada
     let currentStar = this;
     
     while(currentStar) {
@@ -87,7 +84,6 @@ document.querySelectorAll('#stars1 .star').forEach(star => {
       currentStar = currentStar.previousElementSibling;
     }
     
-    // Esvazia as estrelas após a estrela clicada
     currentStar = this.nextElementSibling;
     
     while(currentStar) {
@@ -101,10 +97,8 @@ document.querySelectorAll('#stars2 .star').forEach(star => {
   star.addEventListener('click', function() {
     var value = this.dataset.value;
     
-    // Atualiza o valor do campo de entrada 'specialrating'
     document.getElementById('specialRating').value = value;
     
-    // Preenche as estrelas até a estrela clicada
     let currentStar = this;
     
     while(currentStar) {
@@ -112,7 +106,6 @@ document.querySelectorAll('#stars2 .star').forEach(star => {
       currentStar = currentStar.previousElementSibling;
     }
     
-    // Esvazia as estrelas após a estrela clicada
     currentStar = this.nextElementSibling;
     
     while(currentStar) {

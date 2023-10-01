@@ -130,6 +130,6 @@ input[type="checkbox"] {
 
 #comment:focus {
   outline: none;
-  border-color: #000000; /* Adiciona uma borda azul quando o campo está em foco */
+  border-color: #000000;
 }
 
