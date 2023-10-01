@@ -3,6 +3,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   const listId = localStorage.getItem('listId');
   const idElement = document.getElementById('listId');
 
+  const actualName = localStorage.getItem('name');
+  const nameElement = document.getElementById('name');
+  nameElement.value = actualName;
+
+  const actualDescription = localStorage.getItem('description');
+  const descriptionElement = document.getElementById('description');
+  descriptionElement.value = actualDescription;
+
+  const actualMovieTitles = localStorage.getItem('movie_titles');
+  const movieTitlesElement = document.getElementById('movieTitles');
+  movieTitlesElement.value = actualMovieTitles;
+
   if (listId) {
     idInput.value = listId;
     idElement.textContent = listId;
@@ -44,7 +56,7 @@ updateListForm.addEventListener('submit', async (event) => {
   const data = await response.json();
   if (response.ok) {
     alert(`Lista Atualizada com sucesso!`);
-    window.location.href = '/profile';
+    window.location.href = '/getAllLists';
   } else {
     alert(data.message);
   }

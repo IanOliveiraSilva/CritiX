@@ -51,6 +51,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       editButton.textContent = 'Editar';
       editButton.addEventListener('click', () => {
         localStorage.setItem('listId', list.id);
+        localStorage.setItem('name', list.list_name);
+        localStorage.setItem('description', list.list_description);
+        localStorage.setItem('movie_titles', list.movie_titles);
         window.location.href = '/updateList';
       });
       editListButtonCell.appendChild(editButton);

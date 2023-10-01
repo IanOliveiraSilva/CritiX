@@ -86,6 +86,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       editButton.addEventListener('click', () => {
         localStorage.setItem('reviewId', review.id);
         localStorage.setItem('genre', review.genre);
+        localStorage.setItem('rating', review.rating);
+        localStorage.setItem('review', review.review);
+        localStorage.setItem('specialRating', review.specialrating);
         window.location.href = '/updateReview';
       });
       editReviewButtonCell.appendChild(editButton);

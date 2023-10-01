@@ -23,15 +23,40 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="profile-details">
             <img class="profile-image" src="../uploads/icon-1696055357956.jpeg" alt="Ícone do perfil do usuário"/>
                 <h1 class="profile-name">${profileData.body.profile.name} ${profileData.body.profile.familyname}</h1> 
-                <p class="profile-bio">${profileData.body.profile.bio}</p>
+                <p class="profile-bio">@${profileData.body.profile.userprofile}</p>
                 
                 <div class="profile-info">
                 <br>
                     <ul class="list-group">
-                    <li class="list-group-item"><p><strong>Email:</strong> srvesper@gmail.com</p></li>
-                    <li class="list-group-item"><p><strong>Cidade:</strong> João Pessoa</p></li>
-                    <li class="list-group-item"><p><strong>País:</strong> Brasil</p></li>
-                    <li class="list-group-item"><p><strong>Data de Nascimento:</strong> 31/12/2003</p></li><br>
+                    <li class="list-group-item">
+                    <p><strong><i class="fas fa-pencil-alt"></i> </strong>${profileData.body.profile.bio}
+                    </p>
+                    </li>
+
+                    <li class="list-group-item">
+                    <p><strong><i class="fas fa-map-marker-alt"></i> </strong>${profileData.body.profile.country}, ${profileData.body.profile.city}
+                    </p>
+                    </li>
+                    
+                    <li class="list-group-item">
+                   <p><strong><i class="fas fa-calendar-alt"></i></strong> ${profileData.body.profile.birthday}
+                    </p>
+                    </li><br>
+
+                    <p><strong>Redes Sociais:</strong></p><br>
+
+                    <li class="list-group-item">
+                        <i class="fab fa-twitter"></i> <a href="https://www.twitter.com/${profileData.body.profile.socialmediax}">${profileData.body.profile.socialmediax}</a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}">${profileData.body.profile.socialmediainstagram}</a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <i class="fab fa-tiktok"></i> <a href="https://www.tiktok.com/${profileData.body.profile.socialmediatiktok}">${profileData.body.profile.socialmediatiktok}</a>
+                    </li><br>
+
                     <p><strong>Filmes Favoritos:</strong></p>
                     <li class="list-group-item">Interstellar</li>
                     <li class="list-group-item">Elite Squad</li>

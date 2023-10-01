@@ -15,6 +15,14 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+function formatarDataParaString(data) {
+  const dia = String(data.getDate()).padStart(2, '0');
+  const mes = String(data.getMonth() + 1).padStart(2, '0');
+  const ano = data.getFullYear();
+
+  return `${dia}/${mes}/${ano}`;
+}
+
 
 exports.signup = async (req, res) => {
   try {
@@ -110,16 +118,16 @@ exports.createUserProfile = async (req, res) => {
       console.log(err);
     }
 
-    const { name, familyName, bio } = req.body;
+    const { name, familyName, bio, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfileTag } = req.body;
     const icon = req.file;
     const userId = req.user.id;
 
     try {
       const { rows: [userProfile] } = await db.query(
-        `INSERT INTO user_profile(name, familyName, bio, userId, icon) 
-        VALUES ($1, $2, $3, $4, $5) 
+        `INSERT INTO user_profile(name, familyName, bio, userId, icon, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfile) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) 
         RETURNING *`,
-        [name, familyName, bio, userId, icon]
+        [name, familyName, bio, userId, icon, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfileTag]
       );
 
       res.status(201).json({
@@ -152,6 +160,11 @@ exports.getUserProfile = async (req, res) => {
     if (userProfile && userProfile.icon) {
       const iconBase64 = userProfile.icon.toString('base64');
       userProfile.iconBase64 = iconBase64;
+    }
+
+    if (userProfile && userProfile.birthday) {
+      const dataFormatada = formatarDataParaString(new Date(userProfile.birthday));
+      userProfile.birthday = dataFormatada;
     }
 
     res.status(200).json({

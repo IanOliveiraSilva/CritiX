@@ -5,6 +5,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   const specialRatingInputTitle = document.getElementById('specialRatingTitle');
   const movieGenre = localStorage.getItem('genre');
 
+  const actualRating = localStorage.getItem('rating');
+  const ratingElement = document.getElementById('rating');
+  ratingElement.value = actualRating;
+
+  const actualReview = localStorage.getItem('review');
+  const reviewElement = document.getElementById('review');
+  reviewElement.value = actualReview;
+
+  const actualSpecialRating = localStorage.getItem('specialRating');
+  const specialRatingElement = document.getElementById('specialrating');
+  specialRatingElement.value = actualSpecialRating;
+
   const specialRatingMap = new Map([
     ['Horror', 'Nivel de Horror'],
     ['Comedy', 'Nivel de Diversão'],
@@ -59,7 +71,7 @@ updateReviewForm.addEventListener('submit', async (event) => {
     const data = await response.json();
     if (response.ok) {
       alert(`Review Atualizada com sucesso!`);
-      window.location.href = '/profile';
+      window.location.href = '/getAllReviews';
     } else {
       alert(data.message);
     }
