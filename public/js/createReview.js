@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     specialRatingInputTitle.textContent = `${movieGenreMapped}: `;
   }
 
-
   if (movieTitle) {
     titleInput.value = movieTitle;
     titleElement.textContent = movieTitle;
@@ -35,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const reviewForm = document.getElementById('review-form');
 reviewForm.addEventListener('submit', async (event) => {
   event.preventDefault();
+  
   const rating = document.getElementById('rating').value;
   const comment = document.getElementById('comment').value;
   const isPublic = document.getElementById('isPublic').checked;
@@ -60,11 +60,65 @@ reviewForm.addEventListener('submit', async (event) => {
       specialRating
     })
   });
+  
   const data = await response.json();
+  
   if (response.ok) {
     alert(`Review criada com sucesso!`);
-    window.location.href = '/';
+    window.location.href = '/getAllReviews';
   } else {
     alert(data.message);
   }
 });
+
+// Código JavaScript para o sistema de classificação de estrelas
+document.querySelectorAll('#stars1 .star').forEach(star => {
+  star.addEventListener('click', function() {
+    var value = this.dataset.value;
+    
+    // Atualiza o valor do campo de entrada 'rating'
+    document.getElementById('rating').value = value;
+    
+    // Preenche as estrelas até a estrela clicada
+    let currentStar = this;
+    
+    while(currentStar) {
+      currentStar.textContent = '★';
+      currentStar = currentStar.previousElementSibling;
+    }
+    
+    // Esvazia as estrelas após a estrela clicada
+    currentStar = this.nextElementSibling;
+    
+    while(currentStar) {
+      currentStar.textContent = '☆';
+      currentStar = currentStar.nextElementSibling;
+    }
+  });
+});
+
+document.querySelectorAll('#stars2 .star').forEach(star => {
+  star.addEventListener('click', function() {
+    var value = this.dataset.value;
+    
+    // Atualiza o valor do campo de entrada 'specialrating'
+    document.getElementById('specialRating').value = value;
+    
+    // Preenche as estrelas até a estrela clicada
+    let currentStar = this;
+    
+    while(currentStar) {
+      currentStar.textContent = '★';
+      currentStar = currentStar.previousElementSibling;
+    }
+    
+    // Esvazia as estrelas após a estrela clicada
+    currentStar = this.nextElementSibling;
+    
+    while(currentStar) {
+      currentStar.textContent = '☆';
+      currentStar = currentStar.nextElementSibling;
+    }
+  });
+});
+

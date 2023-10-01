@@ -105,3 +105,31 @@ input[type="checkbox"] {
 .back-link:hover {
   text-decoration: underline;
 }
+
+.star {
+  font-size: 2em;
+  cursor: pointer;
+  color: grey;
+}
+
+.star.selected {
+  color: rgb(221, 0, 0);
+}
+
+
+#comment {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ffc400;
+  border-radius: 15px;
+  font-size: 16px;
+  resize: vertical;
+  transition: border-color 0.5s;
+}
+
+
+#comment:focus {
+  outline: none;
+  border-color: #000000; /* Adiciona uma borda azul quando o campo está em foco */
+}
+
