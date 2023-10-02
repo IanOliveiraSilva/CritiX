@@ -18,6 +18,13 @@ CREATE TABLE user_profile (
   bio character varying(30) NOT NULL,
   contadorreviews integer,
   contadorlists integer,
+  city varchar(50),
+  country varchar(50),
+  birthday date,
+  socialMediaInstagram varchar(50),
+  socialMediaX varchar(50),
+  socialMediaTikTok varchar(50),
+  userProfile varchar(50),
   FOREIGN KEY (userid) REFERENCES users(id),
 );
 
