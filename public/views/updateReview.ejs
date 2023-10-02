@@ -1,30 +1,45 @@
-<%- include('partials/header', {pageTitle: 'Critix - Movie Search'}) %>
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
 
-<link rel="stylesheet" href="../css/createAndUpdate.css">
+    <link rel="stylesheet" href="../css/createAndUpdate.css">
 
-<main>
-    <div class="container background-container">
-        <form class="review-form bg-warning text-dark" id="update-review-form">
+    <main>
+        <div class="container background-container">
+            <form class="review-form bg-warning text-dark" id="update-review-form">
 
-            <label for="rating">Avaliação (0 a 5):</label>
-            <input type="number" id="rating" name="rating" min="0" max="5"><br><br>
+                <label for="rating">De 1 a 5, como você classificaria esse filme?</label>
+                <input type="hidden" id="rating" name="rating" required>
+                <div id="stars1">
+                    <span class="star" data-value="1">☆</span>
+                    <span class="star" data-value="2">☆</span>
+                    <span class="star" data-value="3">☆</span>
+                    <span class="star" data-value="4">☆</span>
+                    <span class="star" data-value="5">☆</span>
+                </div><br>
 
-            <label for="review">Review:</label><br>
-            <textarea id="review" name="review" rows="2" cols="10"></textarea><br><br>
+                <label for="review">Compartilhe sua Experiência: </label><br>
+                <textarea id="review" name="review" rows="2" cols="10"></textarea><br><br>
 
-            <label for="ispublic">Público:</label>
-            <input type="checkbox" id="ispublic" name="ispublic"><br><br>
+                <label for="ispublic">Deseja que os outros vejam sua avaliação? </label>
+                <input type="checkbox" id="ispublic" name="ispublic" checked><br><br>
 
-            <label for="specialrating" id="specialRatingTitle"></label>
-            <input type="number" id="specialrating" name="specialrating"><br><br>
+                <label>De 1 a 5, diga o</label> <label class="specialratingColor" for="specialrating"
+                    id="specialRatingTitle"></label>
+                <input type="hidden" id="specialRating" name="specialRating" required>
+                <div id="stars2">
+                    <span class="star" data-value="1">☆</span>
+                    <span class="star" data-value="2">☆</span>
+                    <span class="star" data-value="3">☆</span>
+                    <span class="star" data-value="4">☆</span>
+                    <span class="star" data-value="5">☆</span>
+                </div><br>
 
-            <input class="submit-button bg-dark text-warning" type="submit" value="Enviar">
+                <input class="submit-button bg-dark text-warning" type="submit" value="Enviar">
 
-            <a href="/" class="back-link">Voltar para a página inicial</a>
-        </form>
-    </div>
-</main>
+                <a href="/" class="back-link">Voltar para a página inicial</a>
+            </form>
+        </div>
+    </main>
 
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>
 
-<script src="../js/updateReview.js"></script>
+        <script src="../js/updateReview.js"></script>
