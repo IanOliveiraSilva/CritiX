@@ -70,7 +70,6 @@ main {
 }
 
 
-/* Estilos específicos para a página de avaliações do usuário */
 #usernameForm {
   margin-bottom: 20px;
 }
@@ -79,7 +78,6 @@ main {
   margin-top: 20px;
 }
 
-/* Estilos para os botões */
 .btn {
   font-weight: bold;
 }

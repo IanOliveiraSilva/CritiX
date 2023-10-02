@@ -52,7 +52,7 @@ a {
 }
 
 a:hover {
-  color: #7a7979;
+  color: #000000;
 }
 
 .login-form {
@@ -126,17 +126,17 @@ label {
 
 .profile-stat {
   font-size: 18px;
-  color: #000000; /* Cor azul atraente */
-  transition: all 0.3s ease; /* Adiciona um efeito de transição suave */
+  color: #000000;
+  transition: all 0.3s ease;
 }
 
 .profile-stat:hover {
-  color: #4d0240; /* Altera a cor ao passar o mouse para um tom mais escuro de azul */
+  color: #4d0240;
 }
 
 .profile-stat .stat-count {
-  margin-left: 5px; /* Adiciona um espaço entre o texto e o número de contagem */
-  font-weight: bold; /* Faz o número de contagem parecer mais destacado */
+  margin-left: 5px;
+  font-weight: bold;
 }
 
 
@@ -145,7 +145,7 @@ label {
   font-weight: bold;
 }
 
-li {
+.li-profile {
   cursor: pointer;
   background-color: #fff;
   border: 1px solid #ccc;

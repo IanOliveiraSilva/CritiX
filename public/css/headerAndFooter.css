@@ -5,8 +5,14 @@ header, footer {
     padding: 20px 0;
   }
 
- h1, h2 {
+ h1, h2, h4 {
     font-weight: 700;
     font-size: 36px;
     margin: 0;
+}
+
+p, a {
+  font-weight: 350;
+  font-size: 20px;
+  margin: 0;
 }

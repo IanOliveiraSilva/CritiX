@@ -28,47 +28,47 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="profile-info">
                 <br>
                     <ul class="list-group">
-                    <li class="list-group-item">
+                    <li class="list-group-item li-profile">
                     <p><strong><i class="fas fa-pencil-alt"></i> </strong>${profileData.body.profile.bio}
                     </p>
                     </li>
 
-                    <li class="list-group-item">
+                    <li class="list-group-item li-profile">
                     <p><strong><i class="fas fa-map-marker-alt"></i> </strong>${profileData.body.profile.country}, ${profileData.body.profile.city}
                     </p>
                     </li>
                     
-                    <li class="list-group-item">
+                    <li class="list-group-item li-profile">
                    <p><strong><i class="fas fa-calendar-alt"></i></strong> ${profileData.body.profile.birthday}
                     </p>
                     </li><br>
 
                     <p><strong>Redes Sociais:</strong></p><br>
 
-                    <li class="list-group-item">
+                    <li class="list-group-item li-profile">
                         <i class="fab fa-twitter"></i> <a href="https://www.twitter.com/${profileData.body.profile.socialmediax}">${profileData.body.profile.socialmediax}</a>
                     </li>
 
-                    <li class="list-group-item">
+                    <li class="list-group-item li-profile">
                         <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}">${profileData.body.profile.socialmediainstagram}</a>
                     </li>
 
-                    <li class="list-group-item">
+                    <li class="list-group-item li-profile">
                         <i class="fab fa-tiktok"></i> <a href="https://www.tiktok.com/${profileData.body.profile.socialmediatiktok}">${profileData.body.profile.socialmediatiktok}</a>
                     </li><br>
 
                     <p><strong>Filmes Favoritos:</strong></p>
-                    <li class="list-group-item">Interstellar</li>
-                    <li class="list-group-item">Elite Squad</li>
-                    <li class="list-group-item">Halloween</li><br>
+                    <li class="list-group-item li-profile">Interstellar</li>
+                    <li class="list-group-item li-profile">Elite Squad</li>
+                    <li class="list-group-item li-profile">Halloween</li><br>
 
                     <p><strong>Watchlist:</strong></p>
-                    <li class="list-group-item">The Nun II</li>
-                    <li class="list-group-item">Five Night At Freddys</li>
-                    <li class="list-group-item">Saw X</li>
-                    <li class="list-group-item">Elemental</li>
-                    <li class="list-group-item">Titanic</li>
-                    <li class="list-group-item">Insidious</li><br>
+                    <li class="list-group-item li-profile">The Nun II</li>
+                    <li class="list-group-item li-profile">Five Night At Freddys</li>
+                    <li class="list-group-item li-profile">Saw X</li>
+                    <li class="list-group-item li-profile">Elemental</li>
+                    <li class="list-group-item li-profile">Titanic</li>
+                    <li class="list-group-item li-profile">Insidious</li><br>
             </ul>
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat">Minhas listas: <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a><br><br>
