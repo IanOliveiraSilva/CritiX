@@ -109,11 +109,11 @@ input[type="checkbox"] {
 .star {
   font-size: 2em;
   cursor: pointer;
-  color: grey;
+  color: rgb(0, 0, 0);
 }
 
 .star.selected {
-  color: rgb(221, 0, 0);
+  color: rgb(4, 12, 85);
 }
 
 
@@ -131,5 +131,36 @@ input[type="checkbox"] {
 #comment:focus {
   outline: none;
   border-color: #000000;
+}
+
+#isPublic {
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+  cursor: pointer;
+  position: relative;
+}
+
+#isPublic:checked {
+  background-color: #535353;
+  border-color: #000000;
+}
+
+#isPublic:checked::before {
+  content: "\2713"; 
+  font-size: 20px;
+  color: #ffd000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.specialratingColor{
+  color: rgb(47, 0, 85);
 }
 

@@ -5,34 +5,33 @@
 <main>
   <div class="container background-container">
     <form class="review-form bg-warning text-dark" id="review-form">
-      <h2 id="movieTitle">Título do Filme</h2>
+      <h1 id="movieTitle">Título do Filme</h1><br>
 
-      <label for="comment">Nota:</label><br>
-      <input type="hidden" id="rating" name="rating">
+      <label for="comment">De 1 a 5, como você classificaria esse filme?</label><br>
+      <input type="hidden" id="rating" name="rating" required>
       <div id="stars1">
         <span class="star" data-value="1">☆</span>
         <span class="star" data-value="2">☆</span>
         <span class="star" data-value="3">☆</span>
         <span class="star" data-value="4">☆</span>
         <span class="star" data-value="5">☆</span>
-      </div>
+      </div><br>
       
+      <label for="comment">Compartilhe sua Experiência: </label><br>
+      <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br>
 
-      <label for="comment">Comentário:</label><br>
-      <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br><br>
-
-      <label for="isPublic">Público:</label>
+      <label for="isPublic">Deseja que os outros vejam sua avaliação?</label><br>
       <input type="checkbox" id="isPublic" name="isPublic" checked><br><br>
 
-      <label for="specialrating" id="specialRatingTitle"></label>
-      <input type="hidden" id="specialRating" name="specialRating">
+      <label>De 1 a 5, diga o</label> <label class="specialratingColor" for="specialrating" id="specialRatingTitle"></label>
+      <input type="hidden" id="specialRating" name="specialRating" required>
       <div id="stars2">
         <span class="star" data-value="1">☆</span>
         <span class="star" data-value="2">☆</span>
         <span class="star" data-value="3">☆</span>
         <span class="star" data-value="4">☆</span>
         <span class="star" data-value="5">☆</span>
-      </div>
+      </div><br>
 
       <input class="submit-button bg-dark text-warning" type="submit" value="Enviar">
       

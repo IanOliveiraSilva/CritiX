@@ -81,6 +81,7 @@ document.querySelectorAll('#stars1 .star').forEach(star => {
     
     while(currentStar) {
       currentStar.textContent = '★';
+      currentStar.classList.add('selected');
       currentStar = currentStar.previousElementSibling;
     }
     
@@ -88,10 +89,12 @@ document.querySelectorAll('#stars1 .star').forEach(star => {
     
     while(currentStar) {
       currentStar.textContent = '☆';
+      currentStar.classList.remove('selected');
       currentStar = currentStar.nextElementSibling;
     }
   });
 });
+
 
 document.querySelectorAll('#stars2 .star').forEach(star => {
   star.addEventListener('click', function() {
@@ -103,6 +106,7 @@ document.querySelectorAll('#stars2 .star').forEach(star => {
     
     while(currentStar) {
       currentStar.textContent = '★';
+      currentStar.classList.add('selected');
       currentStar = currentStar.previousElementSibling;
     }
     
@@ -110,6 +114,7 @@ document.querySelectorAll('#stars2 .star').forEach(star => {
     
     while(currentStar) {
       currentStar.textContent = '☆';
+      currentStar.classList.remove('selected');
       currentStar = currentStar.nextElementSibling;
     }
   });
