@@ -15,11 +15,6 @@ main {
   flex: 1;
 }
 
-header {
-  color: #e4d50c;
-  text-align: center;
-  padding: 20px 0;
-}
 
 h1 {
   font-weight: 700;

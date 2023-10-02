@@ -5,21 +5,21 @@
 <main>
   <div class="container background-container">
 
-    <form class="review-form bg-warning text-dark" id="create-list-form">
-      <h1 class="text-dark">Criar Lista</h1>
-      <label for="name">Nome da Lista:</label>
+    <form class="review-form bg-warning text-black" id="create-list-form">
+      <h1 class="text-black">Crie a sua lista</h1><br>
+      <label for="name">Nome da Sua Lista de Filmes:</label>
       <input type="text" id="name" name="name" required><br><br>
 
-      <label for="description">Descrição:</label>
+      <label for="description">Adicione uma Descrição para a Lista:</label>
       <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
 
       <label for="movieTitles">Títulos dos Filmes (separados por vírgula):</label>
       <input type="text" id="movieTitles" name="movieTitles" required><br><br>
 
-      <label for="isPublic">Público:</label>
+      <label for="isPublic">Deseja que os outros vejam sua lista?</label><br>
       <input type="checkbox" id="isPublic" name="isPublic" checked><br><br>
 
-      <button class="submit-button bg-dark text-warning" type="submit">Criar Lista</button>
+      <button class="submit-button btn-primary text-warning" type="submit">Criar Lista</button>
       <a href="/" class="back-link">Voltar para a página inicial</a>
     </form>
   </div>

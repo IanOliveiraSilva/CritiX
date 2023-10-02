@@ -19,12 +19,6 @@ main {
   flex: 1;
 }
 
-header {
-  background-color: #000000;
-  color: #e4d50c;
-  text-align: center;
-  padding: 20px 0;
-}
 
 h1, h2 {
   font-weight: 700;

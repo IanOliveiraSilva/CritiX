@@ -70,9 +70,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <li class="list-group-item">Titanic</li>
                     <li class="list-group-item">Insidious</li><br>
             </ul>
-                    <a href="/createList" class="btn btn-dark text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
-                    <a href="/getAllLists" class="btn btn-dark text-warning btn-link profile-stat">Minhas listas: <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a><br>
-                    <a href="/getAllReviews" class="btn btn-dark text-warning btn-link mt-3 profile-stat">Minhas avaliações: <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}</span></a>
+                    <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
+                    <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat">Minhas listas: <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a><br><br>
+                    <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">Minhas avaliações: <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}</span></a>
             </div>
                 </div>
             </div>

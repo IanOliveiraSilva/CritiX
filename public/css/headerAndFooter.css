@@ -1,0 +1,12 @@
+header, footer {
+    background-color: #000000;
+    color: #e4d50c;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+ h1, h2 {
+    font-weight: 700;
+    font-size: 36px;
+    margin: 0;
+}

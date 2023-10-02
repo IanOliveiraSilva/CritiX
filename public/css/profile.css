@@ -23,12 +23,6 @@ main {
   flex: 1;
 }
 
-header {
-  background-color: #000000;
-  color: #e4d50c;
-  text-align: center;
-  padding: 20px 0;
-}
 
 h1 {
   font-weight: 700;
@@ -75,9 +69,9 @@ label {
 }
 
 .btn-primary {
-  background-color: #ffc107;
-  border-color: #ffc107;
-  color: #343a40;
+  background-color: #000000;
+  border-color: #ffd900;
+  color: #000000;
   font-weight: bold;
 }
 

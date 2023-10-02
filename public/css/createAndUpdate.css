@@ -113,7 +113,7 @@ input[type="checkbox"] {
 }
 
 .star.selected {
-  color: rgb(4, 12, 85);
+  color: rgb(0, 0, 0);
 }
 
 
@@ -146,7 +146,7 @@ input[type="checkbox"] {
 }
 
 #isPublic:checked {
-  background-color: #535353;
+  background-color: #000000;
   border-color: #000000;
 }
 
@@ -161,6 +161,21 @@ input[type="checkbox"] {
 }
 
 .specialratingColor{
-  color: rgb(47, 0, 85);
+  color: rgb(95, 7, 129);
 }
 
+.btn-primary {
+  background-color: #000000;
+  border-color: #ffd900;
+  color: #000000;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: #e0a800;
+  border-color: #e0a800;
+}
+
+.text-black{
+  color:#000000;
+}
