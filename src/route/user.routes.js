@@ -196,6 +196,62 @@ router.get('/user/profile', userController.AuthMiddleware, userController.getUse
 /**
  * @swagger
  * /api/user/profile:
+ *   get:
+ *     summary: Obter perfil de usuário.
+ *     description: Obtém o perfil de um usuário autenticado.
+ *     tags:
+ *       - Usuário
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Perfil de usuário encontrado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensagem de sucesso.
+ *                 body:
+ *                   type: object
+ *                   properties:
+ *                     profile:
+ *                       type: object
+ *                       description: Dados do perfil do usuário.
+ *                       properties:
+ *                         name:
+ *                           type: string
+ *                           description: Nome do usuário.
+ *                         familyName:
+ *                           type: string
+ *                           description: Sobrenome do usuário.
+ *                         bio:
+ *                           type: string
+ *                           description: Biografia do usuário.
+ *                         contadorreviews:
+ *                           type: integer
+ *                           description: Número de revisões do usuário.
+ *                         contadorlists:
+ *                           type: integer
+ *                           description: Número de listas do usuário.
+ *                         iconBase64:
+ *                           type: string
+ *                           description: Ícone do perfil do usuário em formato Base64.
+ *       '500':
+ *         description: Erro interno do servidor.
+ *     securitySchemes:
+ *       bearerAuth:
+ *         type: http
+ *         scheme: bearer
+ *         bearerFormat: JWT
+ */
+router.get('/profile/userProfile', userController.AuthMiddleware, userController.getProfileByUser);
+
+/**
+ * @swagger
+ * /api/user/profile:
  *   put:
  *     summary: Atualizar perfil de usuário.
  *     description: Atualiza o perfil de um usuário autenticado.

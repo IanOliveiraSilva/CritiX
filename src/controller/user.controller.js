@@ -182,19 +182,72 @@ exports.getUserProfile = async (req, res) => {
   }
 };
 
+exports.getProfileByUser = async (req, res) => {
+  const userProfileQuery = req.query.userProfile;
+
+  const userIdQuery = await db.query('SELECT * FROM user_profile WHERE userProfile = $1', [userProfileQuery]);
+
+  if (userIdQuery.rows.length === 0) {
+    return res.status(400).json({
+      message: 'O usuário não foi encontrado'
+    });
+  }
+
+  const userId = userIdQuery.rows[0].userid;
+
+  try {
+    const { rows: [userProfile] } = await db.query(
+      `SELECT *, (SELECT COUNT(*) FROM reviews WHERE userId = $1) AS contadorreviews, (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists
+       FROM user_profile
+       WHERE userId = $1`,
+      [userId]
+    );
+
+    if (userProfile && userProfile.icon) {
+      const iconBase64 = userProfile.icon.toString('base64');
+      userProfile.iconBase64 = iconBase64;
+    }
+
+    if (userProfile && userProfile.birthday) {
+      const dataFormatada = formatarDataParaString(new Date(userProfile.birthday));
+      userProfile.birthday = dataFormatada;
+    }
+
+    res.status(200).json({
+      message: 'Perfil encontrado com sucesso!',
+      body: {
+        profile: userProfile,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Um erro aconteceu enquanto o perfil era buscado',
+      error,
+    });
+  }
+};
+
 exports.updateUserProfile = async (req, res) => {
-  const { name, familyName, bio } = req.body;
-  const userId = req.user.id;
+  const { name, familyName, bio, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfileTag } = req.body;
+  const userId= req.user.id;
 
   try {
     const { rows: [newProfile] } = await db.query(
       `UPDATE user_profile
-       SET name = $1, 
-       familyName = $2,
-       bio = $3
-       WHERE userId = $4 
+       SET name = $1,
+        familyName = $2,
+        bio = $3,
+        city = $4,
+        country = $5,
+        birthday = $6,
+        socialmediaInstagram = $7, 
+        socialMediaX = $8,
+        socialMediaTikTok = $9, 
+        userProfile = $10
+       WHERE userId = $11
        RETURNING *`,
-      [name, familyName, bio, userId]
+      [name, familyName, bio, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfileTag, userId]
     );
 
     return res.status(200).json({
@@ -212,7 +265,7 @@ exports.updateUserProfile = async (req, res) => {
 };
 
 exports.updateUserProfilePartially = async (req, res) => {
-  const { name, familyName, bio } = req.body;
+  const { name, familyName, bio, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfileTag } = req.body;
   const userId = req.user.id;
 
   try {
@@ -225,28 +278,45 @@ exports.updateUserProfilePartially = async (req, res) => {
       name: name || existingProfile.rows[0].name,
       familyName: familyName || existingProfile.rows[0].familyname,
       bio: bio || existingProfile.rows[0].bio,
+      city: city || existingProfile.rows[0].city,
+      country: country || existingProfile.rows[0].country,
+      birthday: birthday || existingProfile.rows[0].birthday,
+      socialmediaInstagram: socialmediaInstagram || existingProfile.rows[0].socialmediainstagram,
+      socialMediaX: socialMediaX || existingProfile.rows[0].socialMediax,
+      socialMediaTikTok: socialMediaTikTok || existingProfile.rows[0].socialMediatiktok,
+      userProfile: userProfileTag || existingProfile.rows[0].userprofile
     };
 
     const { rows: [newProfile] } = await db.query(
       `UPDATE user_profile 
-      SET name = $1, familyName = $2, bio = $3 
-      WHERE userId = $4 
-      RETURNING *`,
-      [updatedProfile.name, updatedProfile.familyName, updatedProfile.bio, userId]
+       SET name = $1, 
+           familyName = $2, 
+           bio = $3, 
+           city = $4, 
+           country = $5, 
+           birthday = $6, 
+           socialmediaInstagram = $7, 
+           socialMediaX = $8, 
+           socialMediaTikTok = $9, 
+           userProfile = $10
+       WHERE userId = $11 
+       RETURNING *`,
+      [updatedProfile.name, updatedProfile.familyName, updatedProfile.bio, updatedProfile.city, updatedProfile.country, updatedProfile.birthday, updatedProfile.socialmediaInstagram, updatedProfile.socialMediaX, updatedProfile.socialMediaTikTok, updatedProfile.userProfile, userId]
     );
 
     return res.status(200).json({
       message: "Perfil atualizado com sucesso!",
-      review: newProfile
+      profile: newProfile
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
-      message: "Ocorreu um erro ao atualizar a review.",
+      message: "Ocorreu um erro ao atualizar o perfil.",
       error,
     });
   }
 };
+
 
 exports.AuthMiddleware = async (req, res, next) => {
   try {

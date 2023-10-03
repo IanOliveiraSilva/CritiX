@@ -11,7 +11,7 @@ CREATE TABLE users (
 -- Criação da tabela 'user_profile'
 CREATE TABLE user_profile (
   id SERIAL PRIMARY KEY,
-  userid integer NOT NULL,
+  userid integer UNIQUE NOT NULL,
   name character varying(30) NOT NULL,
   familyName character varying(30) NOT NULL,
   icon bytea,
@@ -25,7 +25,7 @@ CREATE TABLE user_profile (
   socialMediaX varchar(50),
   socialMediaTikTok varchar(50),
   userProfile varchar(50),
-  FOREIGN KEY (userid) REFERENCES users(id),
+  FOREIGN KEY (userid) REFERENCES users(id)
 );
 
 -- Criação da tabela 'movies'

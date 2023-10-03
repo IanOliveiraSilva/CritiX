@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         try {
-            const reviewResponse = await fetch(`/api/allReviews/user/?user=${encodeURIComponent(username)}`, {
+            const reviewResponse = await fetch(`/api/allReviews/user/?userProfile=${encodeURIComponent(username)}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
 
-            const listResponse = await fetch(`/api/list/user?user=${encodeURIComponent(username)}`, {
+            const listResponse = await fetch(`/api/list/user?userProfile=${encodeURIComponent(username)}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`

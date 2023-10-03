@@ -172,9 +172,9 @@ exports.getListByMovie = async (req, res) => {
 
 exports.getListByUser = async (req, res) => {
     try {
-        const user = req.query.userProfile;
+        const userProfile = req.query.userProfile;
 
-        const userIdQuery = await db.query('SELECT id FROM user_profile WHERE userProfile = $1', [user]);
+        const userIdQuery = await db.query('SELECT userId FROM user_profile WHERE userProfile = $1', [userProfile]);
 
         if (userIdQuery.rows.length === 0) {
             return res.status(400).json({
@@ -182,7 +182,7 @@ exports.getListByUser = async (req, res) => {
             });
           }
       
-        const userId = userIdQuery.rows[0].id;
+        const userId = userIdQuery.rows[0].userid;
       
         const lists = await db.query(
             `SELECT u.username AS user,
@@ -193,12 +193,12 @@ exports.getListByUser = async (req, res) => {
             FROM lists l
             INNER JOIN users u ON l.userid = u.id
             WHERE l.userId = $1 AND l.isPublic = true`,
-            [user]
+            [userId]
         );
 
         if (lists.rows.length === 0) {
             return res.status(404).json({
-                message: 'Não foi possível encontrar a lista com o título do filme fornecido.'
+                message: 'Não foi possível encontrar a lista com o usuario fornecido.'
             });
         }
 

@@ -190,9 +190,9 @@ exports.getAllReviewsFromMovie = async (req, res) => {
 
 exports.getAllReviewsFromUser = async (req, res) => {
   try {
-    const user = req.query.userProfile;
+    const userProfile = req.query.userProfile;
 
-    const userIdQuery = await db.query('SELECT id FROM user_profile WHERE userProfile = $1', [user]);
+    const userIdQuery = await db.query('SELECT userId FROM user_profile WHERE userProfile = $1', [userProfile]);
 
     if (userIdQuery.rows.length === 0) {
       return res.status(400).json({
@@ -200,7 +200,7 @@ exports.getAllReviewsFromUser = async (req, res) => {
       });
     }
 
-    const userId = userIdQuery.rows[0].id;
+    const userId = userIdQuery.rows[0].userid;
 
     const reviews = await db.query(
       `SELECT users.username, movies.title, movies.genre, reviews.rating, reviews.id, reviews.specialRating, reviews.review, reviews.created_at
@@ -223,6 +223,7 @@ exports.getAllReviewsFromUser = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 
 exports.getReviewById = async (req, res) => {
