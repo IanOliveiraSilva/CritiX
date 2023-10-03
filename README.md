@@ -49,7 +49,7 @@ npm install
 ```
 
 ## Variáveis de Ambiente
-Para executar este projeto, você precisará adicionar as seguintes variáveis de ambiente ao seu arquivo `.env`:
+Para executar este projeto, você precisará criar um arquivo `.env` na raiz do projeto e adicionar as seguintes variáveis de ambiente ao seu arquivo `.env`:
 
 `DATABASE_URL`: URL de conexão com o banco de dados Postgresql.
 
@@ -72,15 +72,14 @@ Para executar este projeto, você precisará adicionar as seguintes variáveis d
   4 - no arquivo ".env" altere a {Api Key} para sua chave
 ```
 
-### Configurando as variáveis de ambiente
-Crie um arquivo .env na raiz do projeto
-
 Certifique-se de ter as seguintes variáveis de ambiente configuradas:
 ```bash
 DATABASE_URL=minha-url-do-banco-de-dados
 JWT_SECRET=sua-secret-key
 OMDB_API_KEY=minha-chave-de-api-da-omdb
 ```
+
+
 ### Iniciando o servidor local
 Certifique-se de que o banco de dados esteja em execução e, em seguida, inicie o servidor local:
 ```bash
