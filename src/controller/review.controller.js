@@ -190,15 +190,25 @@ exports.getAllReviewsFromMovie = async (req, res) => {
 
 exports.getAllReviewsFromUser = async (req, res) => {
   try {
-    const user = req.query.user;
+    const user = req.query.userProfile;
+
+    const userIdQuery = await db.query('SELECT id FROM user_profile WHERE userProfile = $1', [user]);
+
+    if (userIdQuery.rows.length === 0) {
+      return res.status(400).json({
+        message: 'O usuário não foi encontrado'
+      });
+    }
+
+    const userId = userIdQuery.rows[0].id;
 
     const reviews = await db.query(
-      `SELECT users.username, movies.title, movies.genre , reviews.rating, reviews.id, reviews.specialrating, reviews.review, reviews.created_at 
-      FROM reviews 
-      INNER JOIN movies ON reviews.movieId = movies.id 
-      INNER JOIN users ON reviews.userId = users.id 
-      WHERE users.username = $1 AND reviews.ispublic = true`,
-      [user]
+      `SELECT users.username, movies.title, movies.genre, reviews.rating, reviews.id, reviews.specialRating, reviews.review, reviews.created_at
+      FROM reviews
+      INNER JOIN movies ON reviews.movieId = movies.id
+      INNER JOIN users ON reviews.userId = users.id
+      WHERE reviews.userId = $1 AND reviews.isPublic = true`,
+      [userId]
     );
 
     if (reviews.rows.length === 0) {
@@ -213,6 +223,7 @@ exports.getAllReviewsFromUser = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 exports.getReviewById = async (req, res) => {
   try {

@@ -172,8 +172,18 @@ exports.getListByMovie = async (req, res) => {
 
 exports.getListByUser = async (req, res) => {
     try {
-        const { user } = req.query;
+        const user = req.query.userProfile;
 
+        const userIdQuery = await db.query('SELECT id FROM user_profile WHERE userProfile = $1', [user]);
+
+        if (userIdQuery.rows.length === 0) {
+            return res.status(400).json({
+              message: 'O usuário não foi encontrado'
+            });
+          }
+      
+        const userId = userIdQuery.rows[0].id;
+      
         const lists = await db.query(
             `SELECT u.username AS user,
             l.name AS list_name,
@@ -181,8 +191,8 @@ exports.getListByUser = async (req, res) => {
             l.description AS list_description,
             l.created_at AS Created_At
             FROM lists l
-            JOIN users u ON l.userid = u.id
-            WHERE u.username = $1`,
+            INNER JOIN users u ON l.userid = u.id
+            WHERE l.userId = $1 AND l.isPublic = true`,
             [user]
         );
 
