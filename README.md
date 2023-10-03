@@ -79,6 +79,7 @@ JWT_SECRET=sua-secret-key
 OMDB_API_KEY=minha-chave-de-api-da-omdb
 ```
 
+
 ### Iniciando o servidor local
 Certifique-se de que o banco de dados esteja em execução e, em seguida, inicie o servidor local:
 ```bash
