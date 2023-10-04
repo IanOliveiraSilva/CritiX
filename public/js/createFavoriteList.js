@@ -3,17 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     createListForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        var movieTitlesInput = document.getElementById("movieTitles");
-        var movieTitles = movieTitlesInput.value.split(",").map(function (title) {
-            return title.trim();
-        });
-
-        if (movieTitles.length > 3) {
-            alert("Você só pode adicionar até 3 filmes à lista.");
-        } else {
-            this.submit();
-        }
-
         const name = 'Meus filmes favoritos';
         const description = 'Uma lista com os melhores filmes';
         const movieTitles = document.getElementById('movieTitles').value;
@@ -38,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 const data = await response.json();
                 alert('Lista criada com sucesso!');
-                window.location.href = '/getAllLists';
+                window.location.href = '/profile';
             } else {
                 const data = await response.json();
                 alert(`Erro: ${data.message}`);
