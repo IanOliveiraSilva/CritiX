@@ -1,0 +1,22 @@
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
+
+    <link rel="stylesheet" href="../css/GetForm.css">
+
+    <main class="container">
+        <section class="reviews bg-light p-4">
+            <form id="search-form">
+                <div class="form-group">
+                    <label for="usernameInput" class="h4">Digite o Nome de Usuário:</label>
+                    <input type="search" class="form-control" name="search" id="search-input" placeholder="Search for a user...">
+                </div>
+                <button class="btn btn-warning btn-lg" type="submit">Obter perfil</button>
+            </form>
+            <div id="results">
+                <a class="back-link d-block mt-4 text-center" href="/">Voltar para a página inicial</a>
+            </div>
+            </section>
+    </main>
+
+    <%- include('partials/footer') %>
+
+        <script src="../js/getProfileByUserProfile.js"></script>

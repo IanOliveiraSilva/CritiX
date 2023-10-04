@@ -20,6 +20,7 @@ const routes = [
   { path: '/getAllReviewsComments', title: 'getAllReviewsComments Page' },
   { path: '/getMovie', title: 'Get a Movie' },
   { path: '/getMovieSurprise', title: 'Get a Surprise Movie' },
+  { path: '/getProfileByUserProfile', title: 'Get a user Profile'},
   { path: '/', title: 'CritiX' }
 ];
 
