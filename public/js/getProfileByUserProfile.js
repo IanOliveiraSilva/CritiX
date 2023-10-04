@@ -70,13 +70,34 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <li class="list-group-item li-profile">Titanic</li>
                     <li class="list-group-item li-profile">Insidious</li><br>
             </ul>
-                    <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat">Listas: <span class="stat-count">${detailsData.body.profile.contadorlists !== null ? detailsData.body.profile.contadorlists : 0}</span></a><br><br>
-                    <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">Avaliações: <span class="stat-count">${detailsData.body.profile.contadorreviews !== null ? detailsData.body.profile.contadorreviews : 0}</span></a>
+                    <a href="/getAllUserLists" id="list-link" class="btn btn-primary text-warning btn-link profile-stat">Listas: <span class="stat-count">
+                    ${detailsData.body.profile.contadorlists !== null ? detailsData.body.profile.contadorlists : 0}
+                    </span>
+                    </a><br><br>
+
+                    <a href="/getAllUserReviews" id="review-link" class="btn btn-primary text-warning btn-link profile-stat">Avaliações: <span class="stat-count">
+                    ${detailsData.body.profile.contadorreviews !== null ? detailsData.body.profile.contadorreviews : 0}
+                    </span>
+                    </a>
             </div>
                 </div>
             </div>
             <a href="/" class="btn btn-warning text-dark btn-link mt-3">Página Inicial</a>
             `;
+
+            resultContainer.addEventListener('click', (event) => {
+                if (event.target.id === 'list-link') {
+                    if (detailsData.body.profile.userprofile) {
+                        localStorage.setItem('userprofile', detailsData.body.profile.userprofile);
+                    }
+                }
+                else if (event.target.id === 'review-link') {
+                    if (detailsData.body.profile.userprofile) {
+                        localStorage.setItem('userprofile', detailsData.body.profile.userprofile);
+                    }
+                }
+            });
+
             resultContainer.innerHTML = '';
             resultContainer.appendChild(resultProfile);
             console.log(detailsData.body.profile.name);

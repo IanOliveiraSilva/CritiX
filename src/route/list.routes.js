@@ -238,7 +238,7 @@ router.get('/list/movie', userController.AuthMiddleware, listController.getListB
  *       - bearerAuth: []
  *     parameters:
  *       - in: query
- *         name: user
+ *         name: userProfile
  *         schema:
  *           type: string
  *         required: true

@@ -253,7 +253,7 @@ router.get('/allReviews/movies', userController.AuthMiddleware, reviewController
  *       - bearerAuth: []
  *     parameters:
  *       - in: query
- *         name: user
+ *         name: userProfile
  *         schema:
  *           type: string
  *         description: O nome de usuário do usuário cujas avaliações serão obtidas.

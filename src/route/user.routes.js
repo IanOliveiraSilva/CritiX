@@ -136,7 +136,6 @@ router.post('/user/login', userController.login);
  */
 router.post('/user/profile', userController.AuthMiddleware, userController.createUserProfile);
 
-
 /**
  * @swagger
  * /api/user/profile:
@@ -195,14 +194,21 @@ router.get('/user/profile', userController.AuthMiddleware, userController.getUse
 
 /**
  * @swagger
- * /api/user/profile:
+ * /api/user/profile/:
  *   get:
- *     summary: Obter perfil de usuário.
- *     description: Obtém o perfil de um usuário autenticado.
+ *     summary: Obter perfil de usuário pelo ID.
+ *     description: Obtém o perfil de um usuário pelo ID.
  *     tags:
  *       - Usuário
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userProfile
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID do perfil do usuário.
  *     responses:
  *       '200':
  *         description: Perfil de usuário encontrado com sucesso.
@@ -239,6 +245,8 @@ router.get('/user/profile', userController.AuthMiddleware, userController.getUse
  *                         iconBase64:
  *                           type: string
  *                           description: Ícone do perfil do usuário em formato Base64.
+ *       '400':
+ *         description: Usuário não encontrado.
  *       '500':
  *         description: Erro interno do servidor.
  *     securitySchemes:

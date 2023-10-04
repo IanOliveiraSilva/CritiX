@@ -22,6 +22,7 @@ const routes = [
   { path: '/getMovieSurprise', title: 'Get a Surprise Movie' },
   { path: '/getProfileByUserProfile', title: 'Get a user Profile'},
   { path: '/updateProfile', title: 'Update user Profile'},
+  { path: '/getAllUserLists', title: 'Get all User Lists'},
   { path: '/', title: 'CritiX' }
 ];
 
