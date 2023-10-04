@@ -28,7 +28,7 @@ registerForm.addEventListener('submit', async (event) => {
     console.log(response);
     if (response.ok) {
         alert(`Usuário ${username} criado com sucesso!`);
-        window.location.href = '/';
+        window.location.href = '/createFavoriteList';
     } else {
         alert(data.message);
     }

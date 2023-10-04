@@ -164,6 +164,8 @@ router.get('/allLists', userController.AuthMiddleware, listController.getAllList
  */
 router.get('/listById', userController.AuthMiddleware, listController.getListById);
 
+router.get('/listByName', userController.AuthMiddleware, listController.getListByName);
+
 /**
  * @swagger
  * /api/list/movie:

@@ -152,8 +152,9 @@ exports.getUserProfile = async (req, res) => {
   try {
     const { rows: [userProfile] } = await db.query(
       `SELECT *, (SELECT COUNT(*) FROM reviews WHERE userId = $1) AS contadorreviews, (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists
-       FROM user_profile
-       WHERE userId = $1`,
+      FROM user_profile u
+      INNER JOIN lists l ON u.userid = l.userid
+      WHERE u.userId = $1 AND l.name = 'Meus filmes favoritos'`,
       [userId]
     );
 

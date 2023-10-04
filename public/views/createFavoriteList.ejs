@@ -1,0 +1,22 @@
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search'}) %>
+
+<link rel="stylesheet" href="../css/createAndUpdate.css">
+
+<main>
+  <div class="container background-container">
+
+    <form class="review-form bg-warning text-black" id="create-list-form">
+      <h1 class="text-black">Meus Filmes favoritos</h1><br>
+
+      <label for="movieTitles">Títulos dos Filmes (separados por vírgula):</label>
+      <input type="text" id="movieTitles" name="movieTitles" required placeholder="Elite Squad, Halloween, Interstellar"><br><br>
+
+      <button class="submit-button btn-primary text-warning" type="submit">Criar Lista</button>
+      <a href="/" class="back-link">Voltar para a página inicial</a>
+    </form>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
+
+<script src="../js/createFavoriteList.js"></script>

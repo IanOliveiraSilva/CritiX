@@ -133,6 +133,41 @@ exports.getListById = async (req, res) => {
     }
 };
 
+exports.getListByName = async (req, res) => {
+    try {
+        const name = 'Meus filmes favoritos';
+        const userId = req.user.id;
+
+        const lists = await db.query(
+            `SELECT u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
+            FROM lists l
+            JOIN users u ON l.userId = u.id
+            WHERE l.name = $1 and u.id = $2;
+            `,
+            [name, userId]
+        );
+
+        if (lists.rows.length === 0) {
+            return res.status(404).json({
+                message: 'Não foi possível encontrar a lista com o ID fornecido.'
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Lista encontrada com sucesso!',
+            body: {
+                Lista: lists.rows[0]
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: 'Ocorreu um erro ao buscar a lista.',
+            error
+        });
+    }
+};
+
 exports.getListByMovie = async (req, res) => {
     try {
         const { movie_titles } = req.query;

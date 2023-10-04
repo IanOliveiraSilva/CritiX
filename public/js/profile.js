@@ -27,7 +27,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 
                 <div class="profile-info">
                 <br>
+                    <p><strong>Informações gerais:</strong></p><br>
+                    
                     <ul class="list-group">
+                    <ul>
                     <li class="list-group-item li-profile">
                     <p><strong><i class="fas fa-pencil-alt"></i> </strong>${profileData.body.profile.bio}
                     </p>
@@ -39,12 +42,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </li>
                     
                     <li class="list-group-item li-profile">
-                   <p><strong><i class="fas fa-calendar-alt"></i></strong> ${profileData.body.profile.birthday}
+                    <p><strong><i class="fas fa-calendar-alt"></i></strong> ${profileData.body.profile.birthday}
                     </p>
                     </li><br>
-
+                    </ul>
                     <p><strong>Redes Sociais:</strong></p><br>
-
+                    <ul>
                     <li class="list-group-item li-profile">
                         <i class="fab fa-twitter"></i> <a href="https://www.twitter.com/${profileData.body.profile.socialmediax}">${profileData.body.profile.socialmediax}</a>
                     </li>
@@ -56,19 +59,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <li class="list-group-item li-profile">
                         <i class="fab fa-tiktok"></i> <a href="https://www.tiktok.com/${profileData.body.profile.socialmediatiktok}">${profileData.body.profile.socialmediatiktok}</a>
                     </li><br>
+                    </ul>
 
-                    <p><strong>Filmes Favoritos:</strong></p>
-                    <li class="list-group-item li-profile">Interstellar</li>
-                    <li class="list-group-item li-profile">Elite Squad</li>
-                    <li class="list-group-item li-profile">Halloween</li><br>
-
-                    <p><strong>Watchlist:</strong></p>
-                    <li class="list-group-item li-profile">The Nun II</li>
-                    <li class="list-group-item li-profile">Five Night At Freddys</li>
-                    <li class="list-group-item li-profile">Saw X</li>
-                    <li class="list-group-item li-profile">Elemental</li>
-                    <li class="list-group-item li-profile">Titanic</li>
-                    <li class="list-group-item li-profile">Insidious</li><br>
+                    <p><strong>Filmes Favoritos:</strong></p><br>
+                    <ul id="list-group"><li class="list-group-item li-profile">
+                        ${profileData.body.profile.movies}
+                    </li><br></ul>
             </ul>
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
                 
@@ -81,6 +77,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             <br>
             <a href="/" class="btn btn-primary text-warning btn-link profile-stat">Página Inicial</a>
         `
+
+        resultProfile.addEventListener('click', (event) => {
+            if (event.target.id === 'list-group') {
+                if (detailsData.body.profile.movies) {
+                    profileData.body.profile.movies.forEach(movie => {
+                        const liElement = document.createElement('li');
+                        liElement.className = 'list-group-item li-profile';
+                        liElement.textContent = movie;
+                        ulElement.appendChild(liElement);
+                    });
+
+                }
+            }
+        });
 
         const editProfileLink = document.querySelector('#edit-profile-link');
 
