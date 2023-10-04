@@ -50,7 +50,7 @@ updateProfileForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
 
-    const name = document.getElementById('name').value;
+    const givenName = document.getElementById('name').value;
     const familyName = document.getElementById('familyName').value;
     const bio = document.getElementById('bio').value;
     const city = document.getElementById('city').value;
@@ -68,7 +68,7 @@ updateProfileForm.addEventListener('submit', async (event) => {
             'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-            name,
+            name: givenName,
             familyName,
             bio,
             city,

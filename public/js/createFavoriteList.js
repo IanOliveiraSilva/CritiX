@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createListForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        const name = 'Meus filmes favoritos';
+        const listName = 'Meus filmes favoritos';
         const description = 'Uma lista com os melhores filmes';
         const movieTitles = document.getElementById('movieTitles').value;
         const isPublic = true;
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    name,
+                    name: listName,
                     description,
                     movieTitles: movieTitles.split(','),
                     isPublic,

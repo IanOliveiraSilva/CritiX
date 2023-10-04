@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="profile-container">
             <div class="profile-details">
             <img class="profile-image" src="../uploads/icon-1696055357956.jpeg" alt="Ícone do perfil do usuário"/>
-                <h1 class="profile-name">${profileData.body.profile.name} ${profileData.body.profile.familyname}</h1> 
+                <h1 class="profile-name">${profileData.body.profile.givenname} ${profileData.body.profile.familyname}</h1> 
                 <p class="profile-bio">@${profileData.body.profile.userprofile}</p>
                 
                 <div class="profile-info">
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(editProfileLink);
 
         editProfileLink.addEventListener('click', () => {
-            localStorage.setItem('ProfileName', profileData.body.profile.name);
+            localStorage.setItem('ProfileName', profileData.body.profile.givenname);
             localStorage.setItem('familyname', profileData.body.profile.familyname);
             localStorage.setItem('bio', profileData.body.profile.bio);
             localStorage.setItem('city', profileData.body.profile.city);
