@@ -71,13 +71,33 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <li class="list-group-item li-profile">Insidious</li><br>
             </ul>
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
+                
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat">Minhas listas: <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a><br><br>
                     <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">Minhas avaliações: <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}</span></a>
             </div>
                 </div>
+                
             </div>
-            <a href="/" class="btn btn-warning text-dark btn-link mt-3">Página Inicial</a>
+            <br>
+            <a href="/" class="btn btn-primary text-warning btn-link profile-stat">Página Inicial</a>
         `
+
+        const editProfileLink = document.querySelector('#edit-profile-link');
+
+        console.log(editProfileLink);
+
+        editProfileLink.addEventListener('click', () => {
+            localStorage.setItem('ProfileName', profileData.body.profile.name);
+            localStorage.setItem('familyname', profileData.body.profile.familyname);
+            localStorage.setItem('bio', profileData.body.profile.bio);
+            localStorage.setItem('city', profileData.body.profile.city);
+            localStorage.setItem('country', profileData.body.profile.country);
+            localStorage.setItem('socialmediainstagram', profileData.body.profile.socialmediainstagram);
+            localStorage.setItem('socialmediatiktok', profileData.body.profile.socialmediatiktok);
+            localStorage.setItem('socialmediax', profileData.body.profile.socialmediax);
+            localStorage.setItem('birthday', profileData.body.profile.birthday);
+            localStorage.setItem('userprofile', profileData.body.profile.userprofile);
+        });
 
         resultProfile.innerHTML = '';
         resultProfile.appendChild(details);

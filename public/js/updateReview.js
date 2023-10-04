@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     specialRatingInputTitle.textContent = `${movieGenreMapped}: `;
   }
 
-  // Preenche as estrelas de rating com base no valor armazenado no localStorage
   if (actualRating) {
     const ratingStars = document.querySelectorAll('#stars1 .star');
     ratingStars.forEach(star => {
@@ -51,7 +50,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Preenche as estrelas de specialRating com base no valor armazenado no localStorage
   if (actualSpecialRating) {
     const specialRatingStars = document.querySelectorAll('#stars2 .star');
     specialRatingStars.forEach(star => {

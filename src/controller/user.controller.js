@@ -290,15 +290,15 @@ exports.updateUserProfilePartially = async (req, res) => {
     const { rows: [newProfile] } = await db.query(
       `UPDATE user_profile 
        SET name = $1, 
-           familyName = $2, 
-           bio = $3, 
-           city = $4, 
-           country = $5, 
-           birthday = $6, 
-           socialmediaInstagram = $7, 
-           socialMediaX = $8, 
-           socialMediaTikTok = $9, 
-           userProfile = $10
+        familyName = $2, 
+        bio = $3, 
+        city = $4, 
+        country = $5, 
+        birthday = $6, 
+        socialmediaInstagram = $7, 
+        socialMediaX = $8, 
+        socialMediaTikTok = $9, 
+        userProfile = $10
        WHERE userId = $11 
        RETURNING *`,
       [updatedProfile.name, updatedProfile.familyName, updatedProfile.bio, updatedProfile.city, updatedProfile.country, updatedProfile.birthday, updatedProfile.socialmediaInstagram, updatedProfile.socialMediaX, updatedProfile.socialMediaTikTok, updatedProfile.userProfile, userId]
