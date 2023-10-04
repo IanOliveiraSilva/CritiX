@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </p>
                     </li><br>
                     </ul>
+
                     <p><strong>Redes Sociais:</strong></p><br>
                     <ul>
                     <li class="list-group-item li-profile">
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         ${profileData.body.profile.movies}
                     </li><br></ul>
             </ul>
+            
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
                 
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat">Minhas listas: <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a><br><br>

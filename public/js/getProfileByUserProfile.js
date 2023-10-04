@@ -22,29 +22,33 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="profile-details">
             <br>
             <img class="profile-image" src="../uploads/icon-1696055357956.jpeg" alt="Ícone do perfil do usuário"/>
-                <h1 class="profile-name">${detailsData.body.profile.name} ${detailsData.body.profile.familyname}</h1> 
+                <h1 class="profile-name">${detailsData.body.profile.givenname} ${detailsData.body.profile.familyname}</h1> 
                 <p class="profile-bio">@${detailsData.body.profile.userprofile}</p>
                 
                 <div class="profile-info">
                 <br>
-                    <ul class="list-group">
-                    <li class="list-group-item li-profile">
-                    <p><strong><i class="fas fa-pencil-alt"></i> </strong>${detailsData.body.profile.bio}
-                    </p>
-                    </li>
-
-                    <li class="list-group-item li-profile">
-                    <p><strong><i class="fas fa-map-marker-alt"></i> </strong>${detailsData.body.profile.country}, ${detailsData.body.profile.city}
-                    </p>
-                    </li>
+                <p><strong>Informações gerais:</strong></p><br>
                     
-                    <li class="list-group-item li-profile">
-                   <p><strong><i class="fas fa-calendar-alt"></i></strong> ${detailsData.body.profile.birthday}
-                    </p>
-                    </li><br>
+                <ul class="list-group">
+                <ul>
+                <li class="list-group-item li-profile">
+                <p><strong><i class="fas fa-pencil-alt"></i> </strong>${detailsData.body.profile.bio}
+                </p>
+                </li>
+
+                <li class="list-group-item li-profile">
+                <p><strong><i class="fas fa-map-marker-alt"></i> </strong>${detailsData.body.profile.country}, ${detailsData.body.profile.city}
+                </p>
+                </li>
+                
+                <li class="list-group-item li-profile">
+                <p><strong><i class="fas fa-calendar-alt"></i></strong> ${detailsData.body.profile.birthday}
+                </p>
+                </li><br>
+                </ul>
 
                     <p><strong>Redes Sociais:</strong></p><br>
-
+                    <ul>
                     <li class="list-group-item li-profile">
                         <i class="fab fa-twitter"></i> <a href="https://www.twitter.com/${detailsData.body.profile.socialmediax}">${detailsData.body.profile.socialmediax}</a>
                     </li>
@@ -56,19 +60,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <li class="list-group-item li-profile">
                         <i class="fab fa-tiktok"></i> <a href="https://www.tiktok.com/${detailsData.body.profile.socialmediatiktok}">${detailsData.body.profile.socialmediatiktok}</a>
                     </li><br>
+                    </ul>
 
-                    <p><strong>Filmes Favoritos:</strong></p>
-                    <li class="list-group-item li-profile">Interstellar</li>
-                    <li class="list-group-item li-profile">Elite Squad</li>
-                    <li class="list-group-item li-profile">Halloween</li><br>
-
-                    <p><strong>Watchlist:</strong></p>
-                    <li class="list-group-item li-profile">The Nun II</li>
-                    <li class="list-group-item li-profile">Five Night At Freddys</li>
-                    <li class="list-group-item li-profile">Saw X</li>
-                    <li class="list-group-item li-profile">Elemental</li>
-                    <li class="list-group-item li-profile">Titanic</li>
-                    <li class="list-group-item li-profile">Insidious</li><br>
+                    <p><strong>Filmes Favoritos:</strong></p><br>
+                    <ul id="list-group"><li class="list-group-item li-profile">
+                        ${detailsData.body.profile.movies}
+                    </li><br></ul>
             </ul>
                     <a href="/getAllUserLists" id="list-link" class="btn btn-primary text-warning btn-link profile-stat">Listas: <span class="stat-count">
                     ${detailsData.body.profile.contadorlists !== null ? detailsData.body.profile.contadorlists : 0}
