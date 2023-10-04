@@ -10,7 +10,7 @@
                 <li class="nav-item"><a class="nav-link" id="username-display"></a></li>
                 <li class="nav-item"><a class="nav-link" href="/register" id="signup-display">Registrar</a></li>
                 <li class="nav-item"><a class="nav-link" href="/login" id="login-display">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="/" id="logout">Sair</a></li>
+                <li class="nav-item"><a class="nav-link" href="/" id="logout"></a></li>
                 <li class="nav-item"><a class="nav-link" href="/getMovie">Veja todos os filmes</a></li>
                 <li class="nav-item"><a class="nav-link" href="/profile" id="profile">Perfil</a></li>
                 <li class="nav-item"><a class="nav-link" href="/createList">Criar lista</a></li>
@@ -92,6 +92,7 @@
           document.getElementById('username-display').textContent = `Olá, ${username}!`;
           document.getElementById('logout').textContent = `Logout`;
           document.getElementById('profile').textContent = `Meu Perfil`;
+          
 
           document.getElementById('login-display').style.display = 'none';
           document.getElementById('signup-display').style.display = 'none';

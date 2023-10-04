@@ -30,22 +30,10 @@ p {
   font-size: 18px;
 }
 
-nav {
+.navbar {
   background-color: #ff8800;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 10px 0;
-}
-
-.navbar-nav {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  list-style: none;
-  padding: 0;
-}
-
-.nav-item {
-  margin: 0;
 }
 
 .nav-link {
@@ -59,15 +47,19 @@ nav {
   color: #ff6600;
 }
 
+.navbar-toggler-icon {
+  background-color: #333;
+}
 
 @media (max-width: 768px) {
   .navbar-nav {
-    flex-direction: column;
-    align-items: center;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10px;
   }
 
-  .nav-item {
-    margin: 10px 0;
+  .navbar-toggler {
+      margin-bottom: 10px;
   }
 }
 
@@ -75,6 +67,7 @@ a {
   text-decoration: none;
   color: #000000;
   transition: color 0.3s;
+  font-size: 15px;
 }
 
 a:hover {
