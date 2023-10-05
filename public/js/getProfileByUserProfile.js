@@ -32,35 +32,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <ul class="list-group">
                 <ul>
                 <li class="list-group-item li-profile">
-                <p><strong><i class="fas fa-pencil-alt"></i> </strong>${detailsData.body.profile.bio}
-                </p>
+                <strong><i class="fas fa-pencil-alt"></i> </strong>${detailsData.body.profile.bio}
                 </li>
 
                 <li class="list-group-item li-profile">
-                <p><strong><i class="fas fa-map-marker-alt"></i> </strong>${detailsData.body.profile.country}, ${detailsData.body.profile.city}
-                </p>
+                <strong><i class="fas fa-map-marker-alt"></i> </strong>${detailsData.body.profile.country}, ${detailsData.body.profile.city}
                 </li>
                 
                 <li class="list-group-item li-profile">
-                <p><strong><i class="fas fa-calendar-alt"></i></strong> ${detailsData.body.profile.birthday}
-                </p>
+                <strong><i class="fas fa-calendar-alt"></i></strong> ${detailsData.body.profile.birthday}
                 </li><br>
                 </ul>
 
-                    <p><strong>Redes Sociais:</strong></p><br>
-                    <ul>
-                    <li class="list-group-item li-profile">
-                        <i class="fab fa-twitter"></i> <a href="https://www.twitter.com/${detailsData.body.profile.socialmediax}">${detailsData.body.profile.socialmediax}</a>
-                    </li>
+                <p><strong>Redes Sociais:</strong></p><br>
+                <ul>
+                <li class="list-group-item li-profile">
+               <i class="fab fa-twitter"></i> <strong><a href="https://www.twitter.com/${detailsData.body.profile.socialmediax}">${detailsData.body.profile.socialmediax}</a></strong>
+                </li>
 
-                    <li class="list-group-item li-profile">
-                        <i class="fab fa-instagram"></i> <a href="https://www.instagram.com/${detailsData.body.profile.socialmediainstagram}">${detailsData.body.profile.socialmediainstagram}</a>
-                    </li>
+                <li class="list-group-item li-profile">
+                <i class="fab fa-instagram"></i> <strong><a href="https://www.instagram.com/${detailsData.body.profile.socialmediainstagram}">${detailsData.body.profile.socialmediainstagram}</a></strong>
+                </li>
 
-                    <li class="list-group-item li-profile">
-                        <i class="fab fa-tiktok"></i> <a href="https://www.tiktok.com/${detailsData.body.profile.socialmediatiktok}">${detailsData.body.profile.socialmediatiktok}</a>
-                    </li><br>
-                    </ul>
+                <li class="list-group-item li-profile">
+                <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/${detailsData.body.profile.socialmediatiktok}">${detailsData.body.profile.socialmediatiktok}</a></strong>
+                </li><br>
+                </ul>
 
                     <p><strong>Filmes Favoritos:</strong></p><br>
                     <ul id="list-group"><li class="list-group-item li-profile">
