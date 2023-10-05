@@ -90,8 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
               <li><strong>Media de Notas:</strong> ${detailsData.body.movie.medianotas !== 0 ? generateStarRating(detailsData.body.movie.medianotas) : 'Esse filme ainda não possui nota'}</li>
               <li><strong>${movieGenreMapped}:</strong> ${detailsData.body.movie.mediaspecialrating !== 0 ? generateStarRating(detailsData.body.movie.mediaspecialrating) : 'Esse filme ainda não possui nota'}</li>
               <strong><button id="create-review-button" class="btn-back">Criar Review</button></strong>
-              <strong><button id="get-review-button" class="btn-back">Ver Review</button></strong>
+              <strong><button id="get-review-button" class="btn-back">Ver Review</button></strong><br>
+              <strong><button id="add-watchlist-button" class="btn-back"></button></strong><br>
               <strong><button id="get-list-button" class="btn-back">Ver Listas</button></strong>
+
               </ul>
        
             <a href="/" class="btn-back">Voltar</a>
@@ -117,7 +119,52 @@ document.addEventListener('DOMContentLoaded', () => {
               localStorage.setItem('movieTitle', movie.Title);
               window.location.href = '/getAllMovieLists';
             });
+
+            const addWatchlistButton = document.getElementById('add-watchlist-button');
+          
+            addWatchlistButton.addEventListener('click', async () => {
+              try {
+                const watchlistResponse = await fetch(`/api/watchlist/`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (watchlistResponse.ok) {
+                    const currentWatchlist = await watchlistResponse.json();
+                    const movieTitle = movie.Title;
+                    if (currentWatchlist.body.Lista.movie_titles.includes(movieTitle)) {
+                        alert('Este filme já está na sua watchlist.');
+                    } else {
+                        const updatedWatchlist = [...currentWatchlist.body.Lista.movie_titles, movieTitle];
+                        const updateResponse = await fetch(`/api/watchlist/`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify({
+                                movieTitles: updatedWatchlist
+                            })
+                        });
+
+                        if (updateResponse.ok) {
+                            alert('Filme adicionado à watchlist com sucesso');
+                        } else {
+                            const errorData = await updateResponse.json();
+                            console.error(errorData.message);
+                        }
+                    }
+                } else {
+                    const errorData = await watchlistResponse.json();
+                    console.error(errorData.message);
+                }
+            } catch (error) {
+                console.error('Erro ao fazer a solicitação:', error);
+            }
           });
+          });
+
           resultsList.appendChild(li);
         });
       } else {
@@ -129,4 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+
+
 

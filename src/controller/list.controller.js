@@ -352,6 +352,7 @@ exports.updateListPartially = async (req, res) => {
                 message: "Não foi possível encontrar a lista com o id fornecido.",
             });
         }
+        
 
         const updatedList = {
             name: name || existingList.rows[0].name,
@@ -365,6 +366,75 @@ exports.updateListPartially = async (req, res) => {
             [updatedList.name, updatedList.description, updatedList.isPublic, updatedList.movies, userId, id]
         );
 
+        return res.status(200).json({
+            message: "Lista atualizada com sucesso!",
+            list: rows[0],
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Ocorreu um erro ao atualizar a lista.",
+            error,
+        });
+    }
+};
+
+exports.getWatchlist = async (req, res) => {
+    try {
+        const name = 'Watchlist';
+        const userId = req.user.id;
+
+        const lists = await db.query(
+            `SELECT u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
+            FROM lists l
+            JOIN users u ON l.userId = u.id
+            WHERE l.name = $1 and u.id = $2;
+            `,
+            [name, userId]
+        );
+
+        return res.status(200).json({
+            message: 'Lista encontrada com sucesso!',
+            body: {
+                Lista: lists.rows[0]
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: 'Ocorreu um erro ao buscar a lista.',
+            error
+        });
+    }
+};
+
+exports.updateWatchlist = async (req, res) => {
+    const watchlistName = 'Watchlist';
+    const userId = req.user.id;
+    const { name, description, isPublic, movieTitle } = req.body;
+
+    try {
+        const existingList = await db.query(
+            "SELECT * FROM lists WHERE name = $1 AND userId = $2",
+            [watchlistName, userId]
+        );
+
+        if (existingList.rows.length === 0) {
+            return res.status(404).json({
+                message: "Não foi possível encontrar a lista com o id fornecido.",
+            });
+        }
+        const existingMovies = existingList.rows[0].movies;
+        if (existingMovies.includes(movieTitle)) {
+            return res.status(400).json({
+                message: "O filme já está na lista.",
+            });
+        }
+        const updatedMovies = [...existingMovies, movieTitle];
+        const { rows } = await db.query(
+            "UPDATE lists SET name = $1, description = $2, isPublic = $3, movies = $4 WHERE userId = $5 AND name = $6 RETURNING *",
+            [name || existingList.rows[0].name, description || existingList.rows[0].description, isPublic !== undefined ? isPublic : existingList.rows[0].ispublic, updatedMovies, userId, watchlistName]
+        );
         return res.status(200).json({
             message: "Lista atualizada com sucesso!",
             list: rows[0],

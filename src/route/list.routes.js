@@ -452,5 +452,9 @@ router.put('/list', userController.AuthMiddleware, listController.updateList);
  */
 router.patch('/list', userController.AuthMiddleware, listController.updateListPartially);
 
+router.patch('/watchlist', userController.AuthMiddleware, listController.updateWatchlist);
+
+router.get('/watchlist', userController.AuthMiddleware, listController.getWatchlist);
+
 
 module.exports = router;
