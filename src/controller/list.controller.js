@@ -430,7 +430,7 @@ exports.updateWatchlist = async (req, res) => {
                 message: "O filme já está na lista.",
             });
         }
-        const updatedMovies = [...existingMovies, movieTitle];
+        const updatedMovies = [...existingMovies, movieTitle].map(movie => movie.toString());
         const { rows } = await db.query(
             "UPDATE lists SET name = $1, description = $2, isPublic = $3, movies = $4 WHERE userId = $5 AND name = $6 RETURNING *",
             [name || existingList.rows[0].name, description || existingList.rows[0].description, isPublic !== undefined ? isPublic : existingList.rows[0].ispublic, updatedMovies, userId, watchlistName]
