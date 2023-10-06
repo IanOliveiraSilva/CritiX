@@ -41,9 +41,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const tbody = document.createElement('tbody');
 
+      const titleLink = document.createElement('a');
+      titleLink.textContent = `Titulo: ${review.title}`;
+      titleLink.href = '/getMovieByTitle'
+      titleLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        const movieTitle = review.title;
+        localStorage.setItem('movieTitle', movieTitle);
+        window.location.href = titleLink.href;
+      });
       const titleRow = document.createElement('tr');
       const titleCell = document.createElement('td');
-      titleCell.textContent = `Título: ${review.title}`;
+      titleCell.appendChild(titleLink);
       titleRow.appendChild(titleCell);
       tbody.appendChild(titleRow);
 

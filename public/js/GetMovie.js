@@ -209,15 +209,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Erro ao fazer a solicitação:', error);
               }
             });
-
           });
-
           resultsList.appendChild(li);
         });
       } else {
         resultsList.innerHTML = 'No results found.';
       }
-
     } catch (error) {
       console.log(error);
     }
