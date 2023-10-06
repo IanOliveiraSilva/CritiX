@@ -408,6 +408,42 @@ exports.getWatchlist = async (req, res) => {
     }
 };
 
+exports.getUserWatchlist = async (req, res) => {
+    try {
+        const name = 'Watchlist';
+        const userId = req.user.id;
+        const {userprofile} = req.body;
+
+        const lists = await db.query(
+            `SELECT up.userprofile AS user_profile, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
+            FROM lists l
+            INNER JOIN user_profile up ON l.userid = up.userid
+            WHERE l.name = $1 AND up.userid = $2 AND up.userprofile = $3;
+            `,
+            [name, userId, userprofile]
+        );
+
+        if (lists.rows.length === 0) {
+            return res.status(404).json({
+                message: "Erro",
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Lista encontrada com sucesso!',
+            body: {
+                Lista: lists.rows[0]
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: 'Ocorreu um erro ao buscar a lista.',
+            error
+        });
+    }
+};
+
 exports.updateWatchlist = async (req, res) => {
     const watchlistName = 'Watchlist';
     const userId = req.user.id;

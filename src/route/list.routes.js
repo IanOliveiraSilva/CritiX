@@ -452,10 +452,236 @@ router.put('/list', userController.AuthMiddleware, listController.updateList);
  */
 router.patch('/list', userController.AuthMiddleware, listController.updateListPartially);
 
+/**
+ * @swagger
+ * /api/watchlist:
+ *   patch:
+ *     summary: Atualizar a watchlist.
+ *     description: Atualiza parcialmente uma lista de filmes com base no ID da lista.
+ *     tags:
+ *       - Lista
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Novo nome para a lista de filmes (opcional).
+ *               description:
+ *                 type: string
+ *                 description: Nova descrição para a lista de filmes (opcional).
+ *               isPublic:
+ *                 type: boolean
+ *                 description: Define se a lista de filmes será pública ou privada (opcional).
+ *               movieTitle:
+ *                 type: string
+ *                 description: Título do filme a ser adicionado à lista (opcional).
+ *     responses:
+ *       '200':
+ *         description: Lista de filmes atualizada com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensagem de sucesso.
+ *                 list:
+ *                   type: object
+ *                   description: Dados da lista de filmes atualizada.
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       description: O ID da lista de filmes atualizada.
+ *                     name:
+ *                       type: string
+ *                       description: Nome da lista de filmes.
+ *                     description:
+ *                       type: string
+ *                       description: Descrição da lista de filmes.
+ *                     isPublic:
+ *                       type: boolean
+ *                       description: Define se a lista de filmes é pública ou privada.
+ *                     movies:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                       description: Títulos dos filmes na lista.
+ *       '400':
+ *         description: O filme já está na lista ou requisição inválida.
+ *       '404':
+ *         description: Não foi possível encontrar a lista de filmes com o ID fornecido.
+ *       '500':
+ *         description: Erro interno do servidor.
+ */
 router.patch('/watchlist', userController.AuthMiddleware, listController.updateWatchlist);
 
+/**
+ * @swagger
+ * /api/watchlist:
+ *   get:
+ *     summary: Obter a watchlist do usuario autenticado.
+ *     description: Obtém a lista de filmes do usuário baseado no nome da lista e no ID do usuário.
+ *     tags:
+ *       - Lista
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Lista de filmes encontrada com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensagem de sucesso.
+ *                 body:
+ *                   type: object
+ *                   description: Dados da lista de filmes encontrada.
+ *                   properties:
+ *                     Lista:
+ *                       type: object
+ *                       description: Informações da lista de filmes.
+ *                       properties:
+ *                         user:
+ *                           type: string
+ *                           description: Nome de usuário associado à lista de filmes.
+ *                         list_name:
+ *                           type: string
+ *                           description: Nome da lista de filmes.
+ *                         movie_titles:
+ *                           type: array
+ *                           items:
+ *                             type: string
+ *                           description: Títulos dos filmes na lista.
+ *                         list_description:
+ *                           type: string
+ *                           description: Descrição da lista de filmes.
+ *                         Created_At:
+ *                           type: string
+ *                           format: date-time
+ *                           description: Data de criação da lista de filmes.
+ *       '404':
+ *         description: Não foi possível encontrar a lista de filmes para o usuário.
+ *       '500':
+ *         description: Erro interno do servidor ao buscar a lista de filmes.
+ */
 router.get('/watchlist', userController.AuthMiddleware, listController.getWatchlist);
 
-router.delete('/watchlist', userController.AuthMiddleware, listController.removeFromWatchlist);
+/**
+ * @swagger
+ * /api/user/watchlist:
+ *   get:
+ *     summary: Obter a watchlist de um usuário específico.
+ *     description: Obtém a lista de filmes de um usuário específico com base no nome da lista, no ID do usuário e no perfil do usuário.
+ *     tags:
+ *       - Lista
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: userprofile
+ *         schema:
+ *           type: string
+ *         description: Perfil do usuário para filtrar a lista (opcional).
+ *     responses:
+ *       '200':
+ *         description: Lista de filmes encontrada com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensagem de sucesso.
+ *                 body:
+ *                   type: object
+ *                   description: Dados da lista de filmes encontrada.
+ *                   properties:
+ *                     Lista:
+ *                       type: object
+ *                       description: Informações da lista de filmes.
+ *                       properties:
+ *                         user_profile:
+ *                           type: string
+ *                           description: Perfil do usuário associado à lista de filmes.
+ *                         list_name:
+ *                           type: string
+ *                           description: Nome da lista de filmes.
+ *                         movie_titles:
+ *                           type: array
+ *                           items:
+ *                             type: string
+ *                           description: Títulos dos filmes na lista.
+ *                         list_description:
+ *                           type: string
+ *                           description: Descrição da lista de filmes.
+ *                         Created_At:
+ *                           type: string
+ *                           format: date-time
+ *                           description: Data de criação da lista de filmes.
+ *       '404':
+ *         description: Não foi possível encontrar a lista de filmes para o usuário com o perfil fornecido.
+ *       '500':
+ *         description: Erro interno do servidor ao buscar a lista de filmes.
+ */
+router.get('/user/watchlist', userController.AuthMiddleware, listController.getUserWatchlist);
+
+/**
+ * @swagger
+ * /api/watchlist/remove:
+ *   delete:
+ *     summary: Remover um filme da watchlist.
+ *     description: Remove um filme da lista de filmes do usuário com base no nome da lista e no ID do usuário.
+ *     tags:
+ *       - Lista
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               movieTitle:
+ *                 type: string
+ *                 description: Título do filme a ser removido da lista.
+ *     responses:
+ *       '200':
+ *         description: Filme removido da lista com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensagem de sucesso.
+ *                 list:
+ *                   type: object
+ *                   description: Dados da lista de filmes atualizada após a remoção do filme.
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       description: O ID da lista de filmes atualizada.
+ *       '400':
+ *         description: O filme não está na lista ou requisição inválida.
+ *       '404':
+ *         description: Não foi possível encontrar a lista de filmes com o ID fornecido.
+ *       '500':
+ *         description: Erro interno do servidor ao remover o filme da lista.
+ */
+router.delete('/watchlist/remove', userController.AuthMiddleware, listController.removeFromWatchlist);
+
 
 module.exports = router;
