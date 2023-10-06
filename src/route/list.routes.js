@@ -456,5 +456,6 @@ router.patch('/watchlist', userController.AuthMiddleware, listController.updateW
 
 router.get('/watchlist', userController.AuthMiddleware, listController.getWatchlist);
 
+router.delete('/watchlist', userController.AuthMiddleware, listController.removeFromWatchlist);
 
 module.exports = router;

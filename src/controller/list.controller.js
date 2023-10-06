@@ -424,7 +424,7 @@ exports.updateWatchlist = async (req, res) => {
                 message: "Não foi possível encontrar a lista com o id fornecido.",
             });
         }
-        const existingMovies = existingList.rows[0].movies;
+        const existingMovies = existingList.rows[0].movies || [];
         if (existingMovies.includes(movieTitle)) {
             return res.status(400).json({
                 message: "O filme já está na lista.",
@@ -443,6 +443,50 @@ exports.updateWatchlist = async (req, res) => {
         console.error(error);
         return res.status(500).json({
             message: "Ocorreu um erro ao atualizar a lista.",
+            error,
+        });
+    }
+};
+
+exports.removeFromWatchlist = async (req, res) => {
+    const watchlistName = 'Watchlist';
+    const userId = req.user.id;
+    const { movieTitle } = req.body;
+
+    try {
+        const existingList = await db.query(
+            "SELECT * FROM lists WHERE name = $1 AND userId = $2",
+            [watchlistName, userId]
+        );
+
+        if (existingList.rows.length === 0) {
+            return res.status(404).json({
+                message: "Não foi possível encontrar a lista com o id fornecido.",
+            });
+        }
+
+        const existingMovies = existingList.rows[0].movies;
+        if (!existingMovies.includes(movieTitle)) {
+            return res.status(400).json({
+                message: "O filme não está na lista.",
+            });
+        }
+
+        const updatedMovies = existingMovies.filter(movie => movie !== movieTitle);
+
+        const { rows } = await db.query(
+            "UPDATE lists SET movies = $1 WHERE userId = $2 AND name = $3 RETURNING *",
+            [updatedMovies, userId, watchlistName]
+        );
+
+        return res.status(200).json({
+            message: "Filme removido da lista com sucesso!",
+            list: rows[0],
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Ocorreu um erro ao remover o filme da lista.",
             error,
         });
     }

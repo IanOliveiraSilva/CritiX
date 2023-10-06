@@ -120,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
               window.location.href = '/getAllMovieLists';
             });
 
-      
             const addWatchlistButton = document.getElementById('add-watchlist-button');
             addWatchlistButton.addEventListener('click', async () => {
             try {
@@ -146,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 console.error('Erro ao fazer a solicitação:', error);
             }
-          });
+            });
 
           });
 
