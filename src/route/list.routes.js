@@ -164,7 +164,57 @@ router.get('/allLists', userController.AuthMiddleware, listController.getAllList
  */
 router.get('/listById', userController.AuthMiddleware, listController.getListById);
 
-router.get('/listByName', userController.AuthMiddleware, listController.getListByName);
+/**
+ * @swagger
+ * /api/list/favoriteMovies:
+ *   get:
+ *     summary: Obter a lista de filmes favoritos do usuario.
+ *     description: Obtém a lista de filmes favoritos do usuario, pertencente a o usuario autenticado.
+ *     tags:
+ *       - Lista
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Lista de filmes encontrada com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensagem de sucesso.
+ *                 body:
+ *                   type: object
+ *                   properties:
+ *                     Lista:
+ *                       type: object
+ *                       properties:
+ *                         user:
+ *                           type: string
+ *                           description: Nome de usuário do proprietário da lista.
+ *                         list_name:
+ *                           type: string
+ *                           description: Nome da lista de filmes.
+ *                         movie_titles:
+ *                           type: array
+ *                           description: Títulos dos filmes na lista.
+ *                           items:
+ *                             type: string
+ *                         list_description:
+ *                           type: string
+ *                           description: Descrição da lista de filmes.
+ *                         Created_At:
+ *                           type: string
+ *                           format: date-time
+ *                           description: Data e hora de criação da lista.
+ *       '404':
+ *         description: Não foi possível encontrar a lista com o ID fornecido.
+ *       '500':
+ *         description: Erro interno do servidor.
+*/
+router.get('/list/favoriteMovies', userController.AuthMiddleware, listController.getListByName);
 
 /**
  * @swagger

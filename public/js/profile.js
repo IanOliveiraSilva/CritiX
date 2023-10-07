@@ -2,6 +2,7 @@ const token = localStorage.getItem('token')
 
 document.addEventListener('DOMContentLoaded', async () => {
     const resultProfile = document.querySelector('#results');
+
     try {
         const response = await fetch('api/user/profile', {
             method: 'GET',
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const details = document.createElement('div');
         details.innerHTML =
-            `
+        `
             <div class="profile-container">
             <div class="profile-details">
             <img class="profile-image" src="../uploads/icon-1696055357956.jpeg" alt="Ícone do perfil do usuário"/>
@@ -61,13 +62,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </ul>
                     
                     <p><strong>Filmes Favoritos:</strong></p><br>
-                    <ul id="list-group"><li class="list-group-item li-profile">
-                    <i class="fas fa-video"></i>  ${profileData.body.profile.movies}
-                    </li><br></ul>
+                    <ul id="list-group"></ul><br>
             </ul>
-            
+    
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
-                
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat">Minhas listas: <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a><br><br>
                     <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">Minhas avaliações: <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}</span></a><br><br>
                     <a href="/getWatchlist" class="btn btn-primary text-warning btn-link profile-stat">Watchlist<span class="stat-count"></span></a>
@@ -79,24 +77,37 @@ document.addEventListener('DOMContentLoaded', async () => {
             <a href="/" class="btn btn-primary text-warning btn-link profile-stat">Página Inicial</a>
         `
 
-        resultProfile.addEventListener('click', (event) => {
-            if (event.target.id === 'list-group') {
-                if (detailsData.body.profile.movies) {
-                    profileData.body.profile.movies.forEach(movie => {
-                        const liElement = document.createElement('li');
-                        liElement.className = 'list-group-item li-profile';
-                        liElement.textContent = movie;
-                        ulElement.appendChild(liElement);
-                    });
+        resultProfile.innerHTML = '';
+        resultProfile.appendChild(details);
 
-                }
-            }
-        });
-
+        const listGroup = document.getElementById('list-group');
+        if (profileData.body.profile.movies && profileData.body.profile.movies.length > 0) {
+            const moviesList = profileData.body.profile.movies;
+            const ulElement = document.createElement('ul');
+            ulElement.className = 'list-group';
+            moviesList.forEach(movie => {
+                const liElement = document.createElement('li');
+                liElement.className = 'list-group-item li-profile';
+        
+                const iconElement = document.createElement('i');
+                iconElement.className = 'fas fa-video'; 
+                liElement.appendChild(iconElement);
+        
+                const movieTitleElement = document.createElement('span');
+                movieTitleElement.textContent = ' ' + movie;
+                liElement.appendChild(movieTitleElement);
+        
+                ulElement.appendChild(liElement);
+            });
+            listGroup.appendChild(ulElement);
+        } else {
+            const noMoviesItem = document.createElement('li');
+            noMoviesItem.className = 'list-group-item li-profile';
+            noMoviesItem.textContent = 'Nenhum filme favorito encontrado.';
+            listGroup.appendChild(noMoviesItem);
+        }
+        
         const editProfileLink = document.querySelector('#edit-profile-link');
-
-        console.log(editProfileLink);
-
         editProfileLink.addEventListener('click', () => {
             localStorage.setItem('ProfileName', profileData.body.profile.givenname);
             localStorage.setItem('familyname', profileData.body.profile.familyname);
@@ -109,11 +120,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             localStorage.setItem('birthday', profileData.body.profile.birthday);
             localStorage.setItem('userprofile', profileData.body.profile.userprofile);
         });
-
-        resultProfile.innerHTML = '';
-        resultProfile.appendChild(details);
-
-
     } catch (error) {
         console.error('Erro:', error);
     }

@@ -462,5 +462,4 @@ router.put('/review', userController.AuthMiddleware, reviewController.updateRevi
  */
 router.patch('/review', userController.AuthMiddleware, reviewController.updateReviewPartionally);
 
-
 module.exports = router;

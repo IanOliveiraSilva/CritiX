@@ -23,7 +23,6 @@ function formatarDataParaString(data) {
   return `${dia}/${mes}/${ano}`;
 }
 
-
 exports.signup = async (req, res) => {
   try {
     const { username, email, password } = req.body;

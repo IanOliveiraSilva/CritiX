@@ -1,7 +1,6 @@
 const router = require('express-promise-router')();
 const userController = require('../controller/user.controller');
 
-
 /**
  * @swagger
  * /api/user/signup:
@@ -376,7 +375,5 @@ router.put('/user/profile', userController.AuthMiddleware, userController.update
  *         bearerFormat: JWT
  */
 router.patch('/user/profile', userController.AuthMiddleware, userController.updateUserProfilePartially);
-
-
 
 module.exports = router;

@@ -1,6 +1,5 @@
 const router = require('express-promise-router')();
 const movieController = require('../controller/movie.controller');
-const userController = require('../controller/user.controller');
 
 /**
  * @swagger
@@ -66,6 +65,5 @@ router.get('/movie/title', movieController.getMovieByTitle);
  *         description: Erro interno do servidor.
  */
 router.get('/movie/surpriseMe', movieController.surpriseMe);
-
 
 module.exports = router;

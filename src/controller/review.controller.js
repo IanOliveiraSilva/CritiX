@@ -224,8 +224,6 @@ exports.getAllReviewsFromUser = async (req, res) => {
   }
 };
 
-
-
 exports.getReviewById = async (req, res) => {
   try {
     const { id } = req.query;
@@ -310,7 +308,6 @@ exports.deleteReview = async (req, res) => {
     });
   }
 };
-
 
 exports.updateReview = async (req, res) => {
   const { id } = req.query;
