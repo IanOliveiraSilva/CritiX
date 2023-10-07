@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap');
-/* Estilos gerais */
+
 body {
   font-family: 'Montserrat', sans-serif;
   background-color: #f0f0f0;
@@ -109,3 +109,36 @@ td.custom-class {
   background-color: #ffd700;
   color: #fff;
 }
+
+.movie-poster {
+  width: 200px;
+  height: 300px;
+  cursor: pointer;
+  background-color: #000000;
+  border: .2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  transition: transform 0.2s ease-in-out;
+  list-style-type: none;
+}
+
+
+.movie-title {
+  display: block; /* Faz com que o título fique em uma nova linha (abaixo do poster) */
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center; /* Opcional: centraliza o texto horizontalmente */
+  color: black; /* Define a cor do texto como preto */
+  text-decoration: none; /* Remove o sublinhado padrão dos links */
+}
+
+
+#lists {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+

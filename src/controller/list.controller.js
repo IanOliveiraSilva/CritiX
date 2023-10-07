@@ -392,7 +392,7 @@ exports.getWatchlist = async (req, res) => {
             JOIN users u ON l.userId = u.id,
             LATERAL unnest(l.movies) AS movie
             WHERE l.name = $1 and u.id = $2
-            GROUP BY u.username, l.name, l.movies, l.description, l.created_at;;
+            GROUP BY u.username, l.name, l.movies, l.description, l.created_at;
             `,
             [name, userId]
         );
