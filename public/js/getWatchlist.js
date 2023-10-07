@@ -17,19 +17,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const listContainer = document.getElementById('lists');
 
-      const table = document.createElement('table');
-      table.classList.add('table');
+    const ulElement = document.createElement('ul');
+    ulElement.classList.add('list-group');
 
-      const tbody = document.createElement('tbody');
+    listData.body.Lista.movie_titles.forEach(movieTitle => {
+      const liElement = document.createElement('li');
+      liElement.classList.add('list-group-item');
+      liElement.textContent = movieTitle;
+      ulElement.appendChild(liElement);
+    });
 
-      const moviesRow = document.createElement('tr');
-      const moviesCell = document.createElement('td');
-      moviesCell.textContent = `Filmes: ${listData.body.Lista.movie_titles}`;
-      moviesRow.appendChild(moviesCell);
-      tbody.appendChild(moviesRow);
-
-      table.appendChild(tbody);
-      listContainer.appendChild(table);
+    listContainer.appendChild(ulElement);
 
   } catch (error) {
     console.error('Erro ao buscar listas:', error);
