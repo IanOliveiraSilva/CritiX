@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </ul>
                     
                     <p><strong>Filmes Favoritos:</strong></p><br>
-                    <ul id="list-group"></ul><br>
+                    <ul id="filmes-favoritos"></ul><br>
             </ul>
     
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
@@ -79,34 +79,51 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         resultProfile.innerHTML = '';
         resultProfile.appendChild(details);
+        
+        const filmsContainer = document.createElement('div');
+        filmsContainer.classList.add('films-container');
+        for (const movieTitle of profileData.body.profile.movies) {
+            try {
+              const movieResponse = await fetch(`/api/movie/title?title=${encodeURIComponent(movieTitle)}`, {
+                method: 'GET',
+                headers: {
+                  'Authorization': `Bearer ${token}`
+                }
+              });
+      
+              if (movieResponse.ok) {
+                const movieData = await movieResponse.json();
 
-        const listGroup = document.getElementById('list-group');
-        if (profileData.body.profile.movies && profileData.body.profile.movies.length > 0) {
-            const moviesList = profileData.body.profile.movies;
-            const ulElement = document.createElement('ul');
-            ulElement.className = 'list-group';
-            moviesList.forEach(movie => {
-                const liElement = document.createElement('li');
-                liElement.className = 'list-group-item li-profile';
-        
-                const iconElement = document.createElement('i');
-                iconElement.className = 'fas fa-video'; 
-                liElement.appendChild(iconElement);
-        
-                const movieTitleElement = document.createElement('span');
-                movieTitleElement.textContent = ' ' + movie;
-                liElement.appendChild(movieTitleElement);
-        
-                ulElement.appendChild(liElement);
-            });
-            listGroup.appendChild(ulElement);
-        } else {
-            const noMoviesItem = document.createElement('li');
-            noMoviesItem.className = 'list-group-item li-profile';
-            noMoviesItem.textContent = 'Nenhum filme favorito encontrado.';
-            listGroup.appendChild(noMoviesItem);
-        }
-        
+                const movieContainer = document.createElement('div');
+                movieContainer.classList.add('movie-container');
+
+                const posterImage = document.createElement('img');
+                posterImage.src = movieData.body.movieData.Poster;
+                posterImage.alt = 'Poster do Filme';
+                posterImage.classList.add('movie-poster');
+
+                const titleElement = document.createElement('a');
+                titleElement.href = '/getMovieByTitle';
+                titleElement.textContent = movieTitle;
+                titleElement.classList.add('movie-title');
+
+                titleElement.addEventListener('click', function() {
+                    localStorage.setItem('movieTitle', movieTitle);
+                });
+
+                movieContainer.appendChild(posterImage);
+                movieContainer.appendChild(titleElement);
+                filmsContainer.appendChild(movieContainer);
+              } else {
+                console.error('Erro ao obter detalhes do filme:', movieResponse.statusText);
+              }
+            } catch (error) {
+              console.error('Erro ao buscar detalhes do filme:', error);
+            }
+          }
+        const favoritesSection = document.querySelector('#filmes-favoritos');
+        favoritesSection.appendChild(filmsContainer);
+
         const editProfileLink = document.querySelector('#edit-profile-link');
         editProfileLink.addEventListener('click', () => {
             localStorage.setItem('ProfileName', profileData.body.profile.givenname);
@@ -120,6 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             localStorage.setItem('birthday', profileData.body.profile.birthday);
             localStorage.setItem('userprofile', profileData.body.profile.userprofile);
         });
+        
     } catch (error) {
         console.error('Erro:', error);
     }

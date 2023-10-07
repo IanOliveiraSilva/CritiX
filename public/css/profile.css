@@ -161,5 +161,48 @@ li:hover {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
+.movie-poster {
+  width: 200px;
+  height: 300px;
+  cursor: pointer;
+  background-color: #000000;
+  border: .2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  transition: transform 0.2s ease-in-out;
+  list-style-type: none;
+}
+
+
+.movie-title {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  color: black;
+  text-decoration: none;
+}
+
+
+#filmes-favoritos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.films-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.movie-container {
+  width: 200px;
+  margin: 10px;
+  text-align: center;
+}
+
 
 
