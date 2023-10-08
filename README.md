@@ -18,7 +18,6 @@ Este projeto é uma plataforma para avaliação de filmes, permitindo que os usu
 Antes de executar este projeto, verifique se o seu ambiente atende aos seguintes requisitos:
 
 - [Node.js (versão 12 ou superior)](https://nodejs.org/en/download)
-- [Banco de dados Postgresql](https://www.postgresql.org/download/)
 
 Agora você pode prosseguir com as etapas de instalação local.
 
@@ -27,17 +26,6 @@ Agora você pode prosseguir com as etapas de instalação local.
   git clone https://github.com/IanOliveiraSilva/CritiX
 ```
 
-### Configure o banco de dados:
-- Certifique-se de ter o PostgreSQL instalado e configurado corretamente em sua máquina.
-- Execute o script SQL fornecido abaixo para criar o banco de dados e as tabelas necessárias:
-```bash
-psql -U seu-usuario -c "CREATE DATABASE movie_review_db"
-```
-```bash
-psql -U seu-usuario -d movie_review_db -f scripts/scriptPostgres.sql
-```
-Certifique-se de substituir `seu-usuario` pelo seu nome de usuário do PostgresSQL.
-
 ### Instalando as dependências
 ```bash
 npm install
@@ -45,8 +33,6 @@ npm install
 
 ## Variáveis de Ambiente
 Para executar este projeto, você precisará criar um arquivo `.env` na raiz do projeto e adicionar as seguintes variáveis de ambiente ao seu arquivo `.env`:
-
-`DATABASE_URL`: URL de conexão com o banco de dados Postgresql.
 
 `JWT_SECRET`: Chave secreta usada para assinar e verificar tokens JWT.
 
@@ -69,7 +55,6 @@ Para executar este projeto, você precisará criar um arquivo `.env` na raiz do 
 
 Certifique-se de ter as seguintes variáveis de ambiente configuradas:
 ```bash
-DATABASE_URL=minha-url-do-banco-de-dados
 JWT_SECRET=sua-secret-key
 OMDB_API_KEY=minha-chave-de-api-da-omdb
 ```
