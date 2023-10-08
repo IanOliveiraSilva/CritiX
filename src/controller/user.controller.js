@@ -156,7 +156,8 @@ exports.getUserProfile = async (req, res) => {
       (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists
       FROM user_profile u
       INNER JOIN lists l ON u.userid = l.userid
-      WHERE u.userId = $1 AND l.name = 'Meus filmes favoritos'`,
+      WHERE u.userId = $1 AND l.name = 'Meus filmes favoritos'
+      `,
       [userId]
     );
 

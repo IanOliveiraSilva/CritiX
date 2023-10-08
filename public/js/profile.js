@@ -97,22 +97,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const movieContainer = document.createElement('div');
                 movieContainer.classList.add('movie-container');
 
+                const movieLink = document.createElement('a');
+                movieLink.href = '/getMovieByTitle';
+
                 const posterImage = document.createElement('img');
                 posterImage.src = movieData.body.movieData.Poster;
                 posterImage.alt = 'Poster do Filme';
                 posterImage.classList.add('movie-poster');
 
-                const titleElement = document.createElement('a');
-                titleElement.href = '/getMovieByTitle';
-                titleElement.textContent = movieTitle;
-                titleElement.classList.add('movie-title');
-
-                titleElement.addEventListener('click', function() {
-                    localStorage.setItem('movieTitle', movieTitle);
+                movieLink.addEventListener('click', function() {
+                  localStorage.setItem('movieTitle', movieTitle);
                 });
 
-                movieContainer.appendChild(posterImage);
-                movieContainer.appendChild(titleElement);
+                movieLink.appendChild(posterImage);
+                movieContainer.appendChild(movieLink);
                 filmsContainer.appendChild(movieContainer);
               } else {
                 console.error('Erro ao obter detalhes do filme:', movieResponse.statusText);
