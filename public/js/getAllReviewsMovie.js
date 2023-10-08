@@ -4,11 +4,6 @@ let movieTitle;
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     movieTitle = localStorage.getItem('movieTitle');
-    const titleInput = document.getElementById('movieTitle');
-
-    if (movieTitle && titleInput) {
-      titleInput.value = movieTitle;
-    }
 
     if (movieTitle) {
       const response = await fetch(`/api/allReviews/movies/?title=${encodeURIComponent(movieTitle)}`, {
