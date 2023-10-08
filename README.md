@@ -66,6 +66,11 @@ npm start
 ```
 Acesse o servidor local em http://localhost:3000.
 
+### Remoto
+Para usar remotamente, basta acessar o link:
+- [CritiX](https://critix-402174fcc250.herokuapp.com/)
+
+
 ## Executando os Testes
 
 Para executar os testes, utilize o seguinte comando:
