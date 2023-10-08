@@ -175,14 +175,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const watchlistData = await getWatchlist(token);
                 const movieTitle = movieData.body.movieData.Title;
 
-                if (watchlistData.body.Lista.movie_titles.includes(movieTitle)) {
-                    await removeFromWatchlist(token, movieTitle);
-                    alert('Filme removido da watchlist.');
-                    addWatchlistButton.textContent = 'Adicionar à Watchlist';
+                if (watchlistData.body && 
+                  watchlistData.body.Lista && 
+                  watchlistData.body.Lista.movie_titles !== undefined && 
+                  watchlistData.body.Lista.movie_titles.includes(movieTitle)) {
+                  await removeFromWatchlist(token, movieTitle);
+                  alert('Filme removido da watchlist.');
+                  addWatchlistButton.textContent = 'Adicionar à Watchlist';
                 } else {
-                    await addToWatchlist(token, movieTitle);
-                    alert('Filme adicionado à watchlist com sucesso.');
-                    addWatchlistButton.textContent = 'Remover da Watchlist';
+                  await addToWatchlist(token, movieTitle);
+                  alert('Filme adicionado à watchlist com sucesso.');
+                  addWatchlistButton.textContent = 'Remover da Watchlist';
                 }
             } catch (error) {
                 console.error('Erro ao fazer a solicitação:', error);

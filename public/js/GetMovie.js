@@ -196,7 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const watchlistData = await getWatchlist(token);
                 const movieTitle = movie.Title;
 
-                if (watchlistData.body.Lista.movie_titles.includes(movieTitle)) {
+                if (watchlistData.body && 
+                  watchlistData.body.Lista && 
+                  watchlistData.body.Lista.movie_titles !== undefined && 
+                  watchlistData.body.Lista.movie_titles.includes(movieTitle)) {
                   await removeFromWatchlist(token, movieTitle);
                   alert('Filme removido da watchlist.');
                   addWatchlistButton.textContent = 'Adicionar à Watchlist';

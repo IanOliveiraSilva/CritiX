@@ -47,7 +47,8 @@ CREATE TABLE movies (
   imdbRating VARCHAR(255) NOT NULL,
   metascore VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  mediaNotas DECIMAL(10,2) 	
+  mediaNotas DECIMAL(10,2),
+  mediaspecialrating DOUBLE PRECISION 	
 );
 
 -- Criação da tabela 'reviews'
