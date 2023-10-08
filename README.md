@@ -22,8 +22,10 @@ Este projeto é uma plataforma para avaliação de filmes, permitindo que os usu
 Antes de executar este projeto, verifique se o seu ambiente atende aos seguintes requisitos:
 
 ```Node.js (versão 12 ou superior)```
+Link para download: https://nodejs.org/en/download
 
 ```Banco de dados Postgresql```
+Link para download: https://www.postgresql.org/download/
 
 Agora você pode prosseguir com as etapas de instalação local.
 
