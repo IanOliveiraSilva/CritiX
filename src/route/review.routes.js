@@ -466,8 +466,8 @@ router.patch('/review', userController.AuthMiddleware, reviewController.updateRe
  * @swagger
  * /api/lastActivity:
  *   get:
- *     summary: Obter as ultimas 4 avaliações.
- *     description: Obtém as ultimas 4 avaliações disponíveis.
+ *     summary: Obter as ultimas avaliações.
+ *     description: Obtém as ultimas avaliações disponíveis.
  *     tags:
  *       - Avaliação
  *     security:
@@ -516,6 +516,58 @@ router.patch('/review', userController.AuthMiddleware, reviewController.updateRe
  */
 router.get('/lastActivity', userController.AuthMiddleware, reviewController.getLastActivity);
 
+/**
+ * @swagger
+ * /api/reviewsThisYear:
+ *   get:
+ *     summary: Obter todas avaliações do ano atual.
+ *     description: Obtém todas avaliações do ano atual disponíveis.
+ *     tags:
+ *       - Avaliação
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Avaliações encontradas com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensagem de sucesso.
+ *                 body:
+ *                   type: object
+ *                   properties:
+ *                     reviews:
+ *                       type: array
+ *                       description: Lista de avaliações.
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           username:
+ *                             type: string
+ *                             description: Nome do usuário que fez a avaliação.
+ *                           title:
+ *                             type: string
+ *                             description: Título do filme avaliado.
+ *                           rating:
+ *                             type: integer
+ *                             description: Nota dada ao filme.
+ *                           specialrating:
+ *                             type: integer
+ *                             description: Avaliação especial do filme.
+ *                           review:
+ *                             type: string
+ *                             description: Comentário sobre o filme.
+ *                           created_at:
+ *                             type: string
+ *                             format: date-time
+ *                             description: Data e hora da criação da avaliação.
+ *       '500':
+ *         description: Erro interno do servidor.
+ */
 router.get('/reviewsThisYear', userController.AuthMiddleware, reviewController.getThisYearReview);
 
 module.exports = router;
