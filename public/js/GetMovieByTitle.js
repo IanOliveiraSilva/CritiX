@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const details = document.createElement('div');
         details.innerHTML = `
         <div class="d-flex flex-column align-items-center text-justify">
-                <h2>${movieData.body.movieData.Title} (${movieData.body.movieData.Year})</h2>
+                <h2>${movieData.body.movieData.Title}</h2><br>
                 <img class="img-poster img-poster-hover" src="${movieData.body.movieData.Poster}" alt="${movieData.body.movieData.Title} poster" class="mt-3">
                 <p>${movieData.body.movieData.Plot}</p>
                 </div>

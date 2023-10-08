@@ -78,8 +78,11 @@ exports.createReview = async (req, res) => {
       movieId = existingMovie.id;
     } else {
       const { rows: [newMovie] } = await db.query(
-        `INSERT INTO movies (imdbID, title, year, runtime, released, genre, director, writer, actors, plot, country, awards, poster, imdbRating, metascore)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *`,
+        `
+        INSERT INTO movies (imdbID, title, year, runtime, released, genre, director, writer, actors, plot, country, awards, poster, imdbRating, metascore)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) 
+        RETURNING *
+        `,
         [imdbID, Title, Year, Runtime, Released, Genre, Director, Writer, Actors, Plot, Country, Awards, Poster, imdbRating, Metascore]
       );
       movieId = newMovie.id;
@@ -109,7 +112,9 @@ exports.createReview = async (req, res) => {
     await updateMovieAverageSpecialRating(movieId);
 
     const { rows: [userProfile] } = await db.query(
-      'SELECT "contadorlists" FROM user_profile WHERE userId = $1',
+      `SELECT "contadorlists" 
+      FROM user_profile WHERE userId = $1
+      `,
       [userId]
     );
 
@@ -122,7 +127,10 @@ exports.createReview = async (req, res) => {
       }
 
       await db.query(
-        'UPDATE user_profile SET "contadorreviews" = $1 WHERE userId = $2',
+        `UPDATE user_profile 
+        SET "contadorreviews" = $1
+        WHERE userId = $2
+        `,
         [newReviewCount, userId]
       );
     }
@@ -149,7 +157,11 @@ exports.getAllReviews = async (req, res) => {
     const userId = req.user.id;
 
     const reviews = await db.query(
-      'SELECT r.id, r.userid, r.movieid, m.title, m.genre, r.specialrating, r.rating, r.review, r.ispublic, r.created_at FROM reviews r JOIN movies m ON r.movieid = m.id WHERE r.userId = $1',
+      `SELECT r.id, r.userid, r.movieid, m.title, m.genre, r.specialrating, r.rating, r.review, r.ispublic, r.created_at 
+      FROM reviews r 
+      JOIN movies m ON r.movieid = m.id 
+      WHERE r.userId = $1
+      `,
       [userId]
     );
 
@@ -391,6 +403,78 @@ exports.updateReviewPartionally = async (req, res) => {
     return res.status(500).json({
       message: "Ocorreu um erro ao atualizar a review.",
       error,
+    });
+  }
+};
+
+exports.getLastActivity = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const review = await db.query(
+      `
+      SELECT users.username, movies.title, reviews.rating, reviews.specialrating, reviews.review, reviews.created_at 
+      FROM reviews
+      INNER JOIN movies ON reviews.movieId = movies.id
+      INNER JOIN users ON reviews.userId = users.id
+      WHERE userId = $1
+      ORDER BY created_at DESC
+      `,
+      [userId]
+    );
+
+    if (!review) {
+      return res.status(404).json({
+        message: 'Não foi possível encontrar a review com o ID fornecido.'
+      });
+    }
+
+    return res.status(200).json(review.rows);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: 'Ocorreu um erro ao buscar a review.',
+      error
+    });
+  }
+};
+
+exports.getThisYearReview = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const reviewResult = await db.query(
+      `
+      SELECT users.username, movies.title, r.rating, r.specialrating, r.review, r.created_at
+      FROM reviews r
+      INNER JOIN users ON r.userid = users.id
+      INNER JOIN movies ON r.movieId = movies.id
+      WHERE r.userId = $1 AND EXTRACT(YEAR FROM r.created_at) = EXTRACT(YEAR FROM CURRENT_DATE)
+      `,
+      [userId]
+    );
+    const reviewCountResult = await db.query(
+      `
+      SELECT COUNT(r.id) as total_reviews
+      FROM reviews r
+      WHERE r.userId = $1 AND EXTRACT(YEAR FROM r.created_at) = EXTRACT(YEAR FROM CURRENT_DATE);
+      `,
+      [userId]
+    );
+    const reviews = reviewResult.rows;
+    const reviewCount = reviewCountResult.rows[0].total_reviews;
+    if (!reviews || reviews.length === 0) {
+      return res.status(404).json({
+        message: 'Não foram encontradas revisões para o usuário no ano atual.'
+      });
+    }
+    return res.status(200).json({
+      reviews: reviews,
+      total_reviews: reviewCount
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: 'Ocorreu um erro ao buscar as revisões.',
+      error: error.message
     });
   }
 };

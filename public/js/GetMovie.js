@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const details = document.createElement('div');
             details.innerHTML = `
             <div class="d-flex flex-column align-items-center text-justify">
-            <h2>${detailsData.body.movieData.Title} (${detailsData.body.movieData.Year})</h2>
+            <h2>${detailsData.body.movieData.Title}</h2><br>
             <img class="img-poster img-poster-hover" src="${detailsData.body.movieData.Poster}" alt="${detailsData.body.movieData.Title} poster" class="mt-3">
             <p>${detailsData.body.movieData.Plot}</p>
             </div>
