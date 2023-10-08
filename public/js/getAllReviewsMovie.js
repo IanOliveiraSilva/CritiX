@@ -4,7 +4,6 @@ let movieTitle;
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     movieTitle = localStorage.getItem('movieTitle');
-
     const titleInput = document.getElementById('movieTitle');
 
     if (movieTitle && titleInput) {
@@ -27,9 +26,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const reviewsContainer = document.getElementById('reviews');
 
-      // const titleHeader = document.createElement('h1');
-      // titleHeader.textContent = `Avaliações para o Filme: ${movieTitle}`;
-      // reviewsContainer.appendChild(titleHeader);
+      const titleHeader = document.createElement('h1');
+      titleHeader.textContent = `Avaliações para o Filme: ${movieTitle}`;
+      reviewsContainer.appendChild(titleHeader);
 
       reviewsData.forEach((review) => {
         const movieGenre = `${review.genre}`;
