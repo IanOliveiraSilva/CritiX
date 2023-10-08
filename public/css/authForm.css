@@ -173,6 +173,9 @@ label {
   color: #555;
 }
 
+.row{
+  justify-content: center;
+}
 
 
 
