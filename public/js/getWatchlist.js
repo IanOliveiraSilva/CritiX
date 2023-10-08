@@ -18,9 +18,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const listData = await response.json();
 
     const movieCount = document.createElement('p');
-    movieCount.textContent = listData.body.Lista.name + ' POSSUI '+ listData.body.Lista.movies_count + ' FILMES NA WATCHLIST ';
+    movieCount.textContent = listData.body.Lista.name + ' POSSUI ' + listData.body.Lista.movies_count + ' FILMES NA WATCHLIST ';
     const hr = document.createElement('hr');
     movieCount.classList.add('title', 'uppercase-text');
+
+    const randomMovieButton = document.createElement('a');
 
     titleContainer.appendChild(movieCount);
     titleContainer.appendChild(hr);
@@ -36,27 +38,40 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (movieResponse.ok) {
           const movieData = await movieResponse.json();
-        
+
           const movieContainer = document.createElement('div');
 
           const movieLink = document.createElement('a');
           movieLink.href = '/getMovieByTitle';
-        
+
           const posterImage = document.createElement('img');
           posterImage.src = movieData.body.movieData.Poster;
           posterImage.alt = 'Poster do Filme';
           posterImage.classList.add('movie-poster');
 
-          movieLink.addEventListener('click', function() {
+          movieLink.addEventListener('click', function () {
             localStorage.setItem('movieTitle', movieTitle);
           });
-        
+
           movieLink.appendChild(posterImage);
           movieContainer.appendChild(movieLink);
           listContainer.appendChild(movieContainer);
+
+          randomMovieButton.textContent = 'Aperte aqui para uma surpresa!'
+          randomMovieButton.classList.add('btn-primary', 'btn', 'text-warning')
+          randomMovieButton.href = '/getMovieByTitle'
+          randomMovieButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            localStorage.setItem('movieTitle', movieTitle);
+            window.location.href = randomMovieButton.href;
+          });
+
         } else {
           console.error('Erro ao obter detalhes do filme:', movieResponse.statusText);
         }
+
+        titleContainer.appendChild(randomMovieButton);
+
       } catch (error) {
         console.error('Erro ao buscar detalhes do filme:', error);
       }
