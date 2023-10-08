@@ -7,14 +7,10 @@ Este projeto é uma plataforma para avaliação de filmes, permitindo que os usu
 - Framework web: Express.js
 - Banco de dados: Postgresql
 - Linguagem de consulta ao banco de dados: Structured Query Language (SQL)
-- Biblioteca ORM: Mongoose
+- Biblioteca ORM: PG
 - Autenticação: JSON Web Token (JWT)
 - Testes de unidade: Jest
 - Gerenciador de pacotes: npm
-
-
-
-
 
 ## Instalação local
 
@@ -26,11 +22,11 @@ Antes de executar este projeto, verifique se o seu ambiente atende aos seguintes
 
 Agora você pode prosseguir com as etapas de instalação local.
 
-
 ### Clonando o projeto
 ```bash
   git clone https://github.com/IanOliveiraSilva/CritiX
 ```
+
 ### Configure o banco de dados:
 - Certifique-se de ter o PostgreSQL instalado e configurado corretamente em sua máquina.
 - Execute o script SQL fornecido abaixo para criar o banco de dados e as tabelas necessárias:
@@ -78,14 +74,12 @@ JWT_SECRET=sua-secret-key
 OMDB_API_KEY=minha-chave-de-api-da-omdb
 ```
 
-
 ### Iniciando o servidor local
 Certifique-se de que o banco de dados esteja em execução e, em seguida, inicie o servidor local:
 ```bash
 npm start
 ```
 Acesse o servidor local em http://localhost:3000.
-
 
 ## Executando os Testes
 
@@ -98,8 +92,6 @@ Para executar os testes, utilize o seguinte comando:
 
 ![App Screenshot](databasediagram1.png)
 
-
-
 ## Roadmap
 - Implementar pesquisa avançada: permitir que os usuários realizem pesquisas mais complexas por filmes, como por gênero, diretor, ator, ano de lançamento, etc.
 - Adicionar integração com redes sociais: permitir que os usuários compartilhem avaliações e recomendações de filmes em suas redes sociais, como Twitter e Facebook.
@@ -107,12 +99,9 @@ Para executar os testes, utilize o seguinte comando:
 - Adicionar uma seção de notícias: oferecer conteúdo relacionado ao cinema, como notícias sobre lançamentos de filmes, entrevistas com atores e diretores, etc.
 - Implementar uma seção de fórum: permitir que os usuários discutam filmes e compartilhem opiniões e recomendações.
 
-
-
 ## Feedback
 
 Se você tem algum feedback, por favor me contate: ianoliveira.tec@gmail.com
-
 
 ## Autor
 
