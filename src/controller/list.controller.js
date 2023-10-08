@@ -534,6 +534,39 @@ exports.removeFromWatchlist = async (req, res) => {
     }
 };
 
+exports.getRandomMovieFromWatchlist = async (req, res) => {
+    try {
+        const name = 'Watchlist';
+        const userId = req.user.id;
+
+        const lists = await db.query(
+            `
+            SELECT l.movies AS movie_titles
+            FROM lists l
+            JOIN users u ON l.userId = u.id
+            WHERE l.name = $1 and u.id = $2
+            `,
+            [name, userId]
+        );
+
+        const movieTitles = lists.rows[0].movie_titles;
+        const randomIndex = Math.floor(Math.random() * movieTitles.length);
+        const randomMovie = movieTitles[randomIndex];
+
+        return res.status(200).json({
+            message: 'O filme escolhido foi: ' + randomMovie,
+            body: {
+                Filme: randomMovie
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: 'Ocorreu um erro ao escolher um filme aleatório.',
+            error
+        });
+    }
+};
 
 
 

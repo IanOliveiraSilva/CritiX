@@ -733,5 +733,46 @@ router.get('/user/watchlist', userController.AuthMiddleware, listController.getU
  */
 router.delete('/watchlist/remove', userController.AuthMiddleware, listController.removeFromWatchlist);
 
+/**
+ * @swagger
+ * /api/watchlist/random:
+ *   get:
+ *     summary: Obter um filme aleatorio da watchlist do usuario autenticado.
+ *     description: Obtém um filme aleatorio da watchlist do usuario.
+ *     tags:
+ *       - Lista
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Lista de filmes encontrada com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Mensagem de sucesso.
+ *                 body:
+ *                   type: object
+ *                   description: Dados da lista de filmes encontrada.
+ *                   properties:
+ *                     Lista:
+ *                       type: object
+ *                       description: Informações da lista de filmes.
+ *                       properties:
+ *                         movie_titles:
+ *                           type: array
+ *                           items:
+ *                             type: string
+ *                           description: Títulos dos filmes na lista.
+ *       '404':
+ *         description: Não foi possível encontrar a lista de filmes para o usuário.
+ *       '500':
+ *         description: Erro interno do servidor ao buscar a lista de filmes.
+ */
+router.get('/watchlist/random', userController.AuthMiddleware, listController.getRandomMovieFromWatchlist);
+
 
 module.exports = router;
