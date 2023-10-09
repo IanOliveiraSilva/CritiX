@@ -1,0 +1,16 @@
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
+
+<link rel="stylesheet" href="../css/GetForm.css">
+
+<main class="container">
+        <section class="reviews p-4 profile-container">
+            <h1 id ="pageTitle"></h1>
+            <div id="lists"></div>
+            <a href="/profile" class="btn btn-primary text-warning btn-link profile-stat">Voltar para o perfil<span class="stat-count"></span></a>
+            <a href="/" class="back-link d-block mt-4 text-center">Página Inicial</a>
+        </section>
+</main>
+
+<%- include('partials/footer') %>
+
+<script src="../js/getUserWatchlist.js"></script>

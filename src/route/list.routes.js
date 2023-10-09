@@ -809,7 +809,7 @@ router.get('/watchlist', userController.AuthMiddleware, listController.getWatchl
  *       '500':
  *         description: Erro interno do servidor ao buscar a lista de filmes.
  */
-router.get('/user/watchlist', userController.AuthMiddleware, listController.getUserWatchlist);
+router.post('/user/watchlist', userController.AuthMiddleware, listController.getUserWatchlist);
 
 /**
  * @swagger

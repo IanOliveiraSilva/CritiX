@@ -49,15 +49,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <p><strong>Redes Sociais:</strong></p><br>
                     <ul>
                     <li class="list-group-item li-profile">
-                   <i class="fab fa-twitter"></i> <strong><a href="https://www.twitter.com/${profileData.body.profile.socialmediax}">${profileData.body.profile.socialmediax}</a></strong>
+                   <i class="fab fa-twitter"></i> <strong><a href="https://www.twitter.com/${profileData.body.profile.socialmediax}" target="_blank">${profileData.body.profile.socialmediax}</a></strong>
                     </li>
 
                     <li class="list-group-item li-profile">
-                    <i class="fab fa-instagram"></i> <strong><a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}">${profileData.body.profile.socialmediainstagram}</a></strong>
+                    <i class="fab fa-instagram"></i> <strong><a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}" target="_blank">${profileData.body.profile.socialmediainstagram}</a></strong>
                     </li>
 
                     <li class="list-group-item li-profile">
-                    <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/${profileData.body.profile.socialmediatiktok}">${profileData.body.profile.socialmediatiktok}</a></strong>
+                    <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/${profileData.body.profile.socialmediatiktok}" target="_blank">${profileData.body.profile.socialmediatiktok}</a></strong>
                     </li><br>
                     </ul>
                     
@@ -76,10 +76,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             <br>
             <a href="/" class="btn btn-primary text-warning btn-link profile-stat">Página Inicial</a>
         `
-
         resultProfile.innerHTML = '';
         resultProfile.appendChild(details);
         
+        // mostrar filmes favoritos
         const filmsContainer = document.createElement('div');
         filmsContainer.classList.add('films-container');
         for (const movieTitle of profileData.body.profile.movies) {
@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const favoritesSection = document.querySelector('#filmes-favoritos');
         favoritesSection.appendChild(filmsContainer);
 
+        // editar perfil
         const editProfileLink = document.querySelector('#edit-profile-link');
         editProfileLink.addEventListener('click', () => {
             localStorage.setItem('ProfileName', profileData.body.profile.givenname);

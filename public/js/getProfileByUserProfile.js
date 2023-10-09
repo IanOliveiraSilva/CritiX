@@ -60,9 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </ul>
 
                     <p><strong>Filmes Favoritos:</strong></p><br>
-                    <ul id="list-group"><li class="list-group-item li-profile">
-                        ${detailsData.body.profile.movies}
-                    </li><br></ul>
+                    <ul id="filmes-favoritos"></ul><br>
             </ul>
                     <a href="/getAllUserLists" id="list-link" class="btn btn-primary text-warning btn-link profile-stat">Listas: <span class="stat-count">
                     ${detailsData.body.profile.contadorlists !== null ? detailsData.body.profile.contadorlists : 0}
@@ -72,7 +70,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <a href="/getAllUserReviews" id="review-link" class="btn btn-primary text-warning btn-link profile-stat">Avaliações: <span class="stat-count">
                     ${detailsData.body.profile.contadorreviews !== null ? detailsData.body.profile.contadorreviews : 0}
                     </span>
-                    </a>
+                    </a><br><br>
+                    <a id="get-user-watchlist" href="/getUserWatchlist" class="btn btn-primary text-warning btn-link profile-stat">Watchlist<span class="stat-count"></span></a>
             </div>
                 </div>
             </div>
@@ -91,10 +90,62 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 }
             });
-
             resultContainer.innerHTML = '';
             resultContainer.appendChild(resultProfile);
-            console.log(detailsData.body.profile.name);
+
+            // mostrar filmes favoritos
+            const filmsContainer = document.createElement('div');
+            filmsContainer.classList.add('films-container');
+            for (const movieTitle of detailsData.body.profile.movies) {
+                try {
+                    const movieResponse = await fetch(`/api/movie/title?title=${encodeURIComponent(movieTitle)}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (movieResponse.ok) {
+                        const movieData = await movieResponse.json();
+
+                        const movieContainer = document.createElement('div');
+                        movieContainer.classList.add('movie-container');
+
+                        const movieLink = document.createElement('a');
+                        movieLink.href = '/getMovieByTitle';
+
+                        const posterImage = document.createElement('img');
+                        posterImage.src = movieData.body.movieData.Poster;
+                        posterImage.alt = 'Poster do Filme';
+                        posterImage.classList.add('movie-poster');
+
+                        movieLink.addEventListener('click', function () {
+                            localStorage.setItem('movieTitle', movieTitle);
+                        });
+
+                        movieLink.appendChild(posterImage);
+                        movieContainer.appendChild(movieLink);
+                        filmsContainer.appendChild(movieContainer);
+                    } else {
+                        console.error('Erro ao obter detalhes do filme:', movieResponse.statusText);
+                    }
+                } catch (error) {
+                    console.error('Erro ao buscar detalhes do filme:', error);
+                }
+            }
+            const favoritesSection = document.querySelector('#filmes-favoritos');
+            favoritesSection.appendChild(filmsContainer);
+
+            // mostrar watchlist
+            const watchlistSection = document.querySelector('#get-user-watchlist');
+            watchlistSection.addEventListener('click', (event) => {
+                localStorage.setItem('userprofile', detailsData.body.profile.userprofile);
+            });
+
+
+
+
+
         } catch (error) {
             console.log(error);
         }
