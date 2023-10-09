@@ -216,6 +216,10 @@ router.get('/listById', userController.AuthMiddleware, listController.getListByI
 */
 router.get('/list/favoriteMovies', userController.AuthMiddleware, listController.getListByName);
 
+router.patch('/list/favoriteMovies', userController.AuthMiddleware, listController.updateFavoriteList);
+
+router.delete('/favoriteMovies/remove', userController.AuthMiddleware, listController.removeFromFavoriteList);
+
 /**
  * @swagger
  * /api/list/movie:

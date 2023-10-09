@@ -490,8 +490,92 @@ exports.updateWatchlist = async (req, res) => {
     }
 };
 
+exports.updateFavoriteList = async (req, res) => {
+    const watchlistName = 'Meus filmes favoritos';
+    const userId = req.user.id;
+    const { name, description, isPublic, movieTitle } = req.body;
+
+    try {
+        const existingList = await db.query(
+            "SELECT * FROM lists WHERE name = $1 AND userId = $2",
+            [watchlistName, userId]
+        );
+
+        if (existingList.rows.length === 0) {
+            return res.status(404).json({
+                message: "Não foi possível encontrar a lista com o id fornecido.",
+            });
+        }
+        const existingMovies = existingList.rows[0].movies || [];
+        if (existingMovies.includes(movieTitle)) {
+            return res.status(400).json({
+                message: "O filme já está na lista.",
+            });
+        }
+        const updatedMovies = [...existingMovies, movieTitle].map(movie => movie.toString());
+        const { rows } = await db.query(
+            "UPDATE lists SET name = $1, description = $2, isPublic = $3, movies = $4 WHERE userId = $5 AND name = $6 RETURNING *",
+            [name || existingList.rows[0].name, description || existingList.rows[0].description, isPublic !== undefined ? isPublic : existingList.rows[0].ispublic, updatedMovies, userId, watchlistName]
+        );
+        return res.status(200).json({
+            message: "Lista atualizada com sucesso!",
+            list: rows[0],
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Ocorreu um erro ao atualizar a lista.",
+            error,
+        });
+    }
+};
+
 exports.removeFromWatchlist = async (req, res) => {
     const watchlistName = 'Watchlist';
+    const userId = req.user.id;
+    const { movieTitle } = req.body;
+
+    try {
+        const existingList = await db.query(
+            "SELECT * FROM lists WHERE name = $1 AND userId = $2",
+            [watchlistName, userId]
+        );
+
+        if (existingList.rows.length === 0) {
+            return res.status(404).json({
+                message: "Não foi possível encontrar a lista com o id fornecido.",
+            });
+        }
+
+        const existingMovies = existingList.rows[0].movies;
+        if (!existingMovies.includes(movieTitle)) {
+            return res.status(400).json({
+                message: "O filme não está na lista.",
+            });
+        }
+
+        const updatedMovies = existingMovies.filter(movie => movie !== movieTitle);
+
+        const { rows } = await db.query(
+            "UPDATE lists SET movies = $1 WHERE userId = $2 AND name = $3 RETURNING *",
+            [updatedMovies, userId, watchlistName]
+        );
+
+        return res.status(200).json({
+            message: "Filme removido da lista com sucesso!",
+            list: rows[0],
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Ocorreu um erro ao remover o filme da lista.",
+            error,
+        });
+    }
+};
+
+exports.removeFromFavoriteList = async (req, res) => {
+    const watchlistName = 'Meus filmes favoritos';
     const userId = req.user.id;
     const { movieTitle } = req.body;
 
