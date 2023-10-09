@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </li>
 
                 <li class="list-group-item li-profile">
-                <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/${detailsData.body.profile.socialmediatiktok}">${detailsData.body.profile.socialmediatiktok}</a></strong>
+                <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/@${detailsData.body.profile.socialmediatiktok}">${detailsData.body.profile.socialmediatiktok}</a></strong>
                 </li><br>
                 </ul>
 

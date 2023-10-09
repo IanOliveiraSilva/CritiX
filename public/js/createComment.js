@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 const data = await response.json();
-                alert('Comentario criada com sucesso!');
+                alert('Comentario criado com sucesso!');
                 window.location.href = '/';
             } else {
                 const data = await response.json();

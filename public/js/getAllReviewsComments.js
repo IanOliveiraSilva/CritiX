@@ -19,20 +19,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const commentsData = await response.json();
 
-        commentsContainer.innerHTML = '';
-
         commentsData.forEach((comment) => {
-            const commentElement = document.createElement('div');
-            commentElement.classList.add('comment');
+            const table = document.createElement('table');
+            table.classList.add('table');
 
-            const usernameElement = document.createElement('p');
-            usernameElement.textContent = `Usuário: ${comment.username}`;
+            const tbody = document.createElement('tbody');
 
-            const commentTextElement = document.createElement('p');
-            commentTextElement.textContent = `Comentário: ${comment.comment}`;
-            commentElement.appendChild(usernameElement);
-            commentElement.appendChild(commentTextElement);
-            commentsContainer.appendChild(commentElement);
+            const userRow = document.createElement('tr');
+            const userCell = document.createElement('td');
+            userCell.textContent = `Usuario: ${comment.username}`;
+            userRow.appendChild(userCell);
+            tbody.appendChild(userRow);
+
+            const commentTextRow = document.createElement('tr');
+            const commentTextCell = document.createElement('td');
+            commentTextCell.textContent = `Comentário: ${comment.comment}`;
+            commentTextRow.appendChild(commentTextCell);
+            tbody.appendChild(commentTextRow);
+            table.appendChild(tbody);
+            commentsContainer.appendChild(table);
+
+
         });
     } catch (error) {
         console.error('Erro ao buscar comentários:', error);
