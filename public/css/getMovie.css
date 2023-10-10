@@ -235,6 +235,7 @@ button[type="submit"]:hover {
   cursor: grab;
   outline: inherit;
   font-size: 40px;
+  color: #ff0000;
   transition: color 0.3s;
 
 }
@@ -243,3 +244,27 @@ button[type="submit"]:hover {
   color: #ff0000;
 }
 
+.btn-unstyled:focus { 
+  outline: none; 
+}
+
+.btn-unstyled-clock {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: grab;
+  outline: inherit;
+  font-size: 40px;
+  color: #000000;
+  transition: color 0.3s;
+}
+
+.btn-unstyled-clock:hover {
+  color: #1d0780;
+}
+
+.btn-unstyled-clock:focus { 
+  outline: none; 
+}

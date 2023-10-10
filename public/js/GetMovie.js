@@ -211,8 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             <img class="img-poster img-poster-hover" src="${detailsData.body.movieData.Poster}" alt="${detailsData.body.movieData.Title} poster" class="mt-3">
             <div class="button-container">
-            <strong><button id="add-favorite-button" draggable="true" class="btn-unstyled"><i id="favorite-icon" class="far fa-heart"></i></button></strong><p>&emsp;</p>
-            <strong><button id="add-watchlist-button" draggable="true" class="btn-unstyled"><i id="watchlist-icon" class="far fa-clock"></i></button></strong>
+            <strong><button id="add-favorite-button" class="btn-unstyled"><i id="favorite-icon" class="far fa-heart"></i></button></strong><p>&emsp;</p>
+            <strong><button id="add-watchlist-button" class="btn-unstyled-clock"><i id="watchlist-icon" class="far fa-clock"></i></button></strong>
             </div>
 
             <p>${detailsData.body.movieData.Plot}</p><br>
