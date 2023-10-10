@@ -1,52 +1,58 @@
-<%- include('partials/header', {pageTitle: 'Critix - Movie Search'}) %>
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
 
-<link rel="stylesheet" href="../css/authForm.css">
+    <link rel="stylesheet" href="../css/authForm.css">
 
-<main class="container">
-    <form id="register-form" class="login-form">
-        <div class="form-group">
-            <h2>Registro</h2>
-            <label for="username">Nome de usuário:</label>
-            <input type="text" class="form-control" id="username" name="username" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Senha:</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-warning btn-block">Registrar</button>
-        <a href="/" class="btn btn-warning text-dark btn-link mt-3">Voltar para a página inicial</a><br>
-        <a href="/login" class="btn btn-warning text-dark btn-link mt-3">Já tem uma conta? Entre aqui!</a>
-    </form>
-</main>
+    <main class="container">
+        <form id="register-form" class="login-form">
+            <div class="form-group">
+                <h2>Registro</h2><br>
+                <label for="username">Nome de usuário:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-warning btn-block">Registrar</button><br>
+            <div class="row">
+                <a href="/login" class="btn btn-warning text-dark btn-link">Já tem uma conta? Entre aqui!</a><p>&emsp;</p>
+                <a href="/" class="btn btn-warning text-dark btn-link">Voltar para a página inicial</a>
+            </div>
 
-<%- include('partials/footer') %>
 
-<script>
-    const registerForm = document.getElementById('register-form');
-    registerForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const response = await fetch('/api/user/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, email, password })
-        });
-        const data = await response.json();
-        if (response.ok) {
-            alert(`Usuário ${data.user.username} criado com sucesso!`);
-            window.location.href = '/createProfile';
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('username', data.user.username)
-        } else {
-            alert(data.message);
-        }
-    });
-</script>
+
+
+        </form>
+    </main>
+
+    <%- include('partials/footer') %>
+
+        <script>
+            const registerForm = document.getElementById('register-form');
+            registerForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const response = await fetch('/api/user/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, password })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    alert(`Usuário ${data.user.username} criado com sucesso!`);
+                    window.location.href = '/createProfile';
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('username', data.user.username)
+                } else {
+                    alert(data.message);
+                }
+            });
+        </script>

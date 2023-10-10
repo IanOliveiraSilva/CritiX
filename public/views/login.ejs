@@ -4,7 +4,7 @@
 <main class="container">
     <form id="login-form" class="login-form">
         <div class="form-group">
-            <h2>Login</h2>
+            <h2>Login</h2><br>
             <label for="email">Email:</label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
@@ -14,8 +14,10 @@
         </div>
         <button type="submit" class="btn btn-warning btn-block">Entrar</button>
     </form>
-    <a href="/" class="btn btn-warning text-dark btn-link mt-3">Voltar para a página inicial</a><br>
-    <a href="/register" class="btn btn-warning text-dark btn-link mt-3">Não tem uma conta? Crie aqui!</a>
+    <div class="row">
+        <a href="/register" class="btn btn-warning text-dark btn-link mt-3">Não tem uma conta? Crie aqui!</a><p>&emsp;</p>
+        <a href="/" class="btn btn-warning text-dark btn-link mt-3">Voltar para a página inicial</a>
+    </div>
 </main>
 
 <%- include('partials/footer') %>

@@ -208,8 +208,14 @@ document.addEventListener('DOMContentLoaded', () => {
             details.innerHTML = `
             <div class="d-flex flex-column align-items-center text-justify">
             <h2>${detailsData.body.movieData.Title}</h2><br>
+            
             <img class="img-poster img-poster-hover" src="${detailsData.body.movieData.Poster}" alt="${detailsData.body.movieData.Title} poster" class="mt-3">
-            <p>${detailsData.body.movieData.Plot}</p>
+            <div class="button-container">
+            <strong><button id="add-favorite-button" draggable="true" class="btn-unstyled"><i id="favorite-icon" class="far fa-heart"></i></button></strong><p>&emsp;</p>
+            <strong><button id="add-watchlist-button" draggable="true" class="btn-unstyled"><i id="watchlist-icon" class="far fa-clock"></i></button></strong>
+            </div>
+
+            <p>${detailsData.body.movieData.Plot}</p><br>
             </div>
   
             <ul>
@@ -228,16 +234,13 @@ document.addEventListener('DOMContentLoaded', () => {
               <li><strong>Media de Notas:</strong> ${detailsData.body.movie.medianotas !== 0 ? generateStarRating(detailsData.body.movie.medianotas) : 'Esse filme ainda não possui nota'}</li>
               <li><strong>${movieGenreMapped}:</strong> ${detailsData.body.movie.mediaspecialrating !== 0 ? generateStarRating(detailsData.body.movie.mediaspecialrating) : 'Esse filme ainda não possui nota'}</li>
               <strong><button id="create-review-button" class="btn-back">Criar Review</button></strong>
-              <strong><button id="get-review-button" class="btn-back">Ver Review</button></strong><br>
-              <strong><button id="add-watchlist-button" class="btn-back">Adicionar à Watchlist</button></strong><br>
-              <strong><button id="add-favorite-button" class="btn-back">Adicionar à lista de favoritos</button></strong><br>
-              <strong><button id="get-list-button" class="btn-back">Ver Listas</button></strong>
+              <strong><button id="get-review-button" class="btn-back">Ver Review</button></strong>
+              <strong><button id="get-list-button" class="btn-back">Ver Listas</button></strong><br>
               </ul>
-       
-            <a href="/" class="btn-back">Voltar</a>
               `;
             resultsList.innerHTML = '';
             resultsList.appendChild(details);
+
 
             // Botões
             const reviewButton = document.getElementById('create-review-button');
@@ -262,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const addWatchlistButton = document.getElementById('add-watchlist-button');
             addWatchlistButton.addEventListener('click', async () => {
               try {
+                const watchlistIcon = document.getElementById('watchlist-icon')
                 const watchlistData = await getWatchlist(token);
                 const movieTitle = movie.Title;
 
@@ -271,11 +275,12 @@ document.addEventListener('DOMContentLoaded', () => {
                   watchlistData.body.Lista.movie_titles.includes(movieTitle)) {
                   await removeFromWatchlist(token, movieTitle);
                   alert('Filme removido da watchlist.');
-                  addWatchlistButton.textContent = 'Adicionar à Watchlist';
+                  watchlistIcon.classList.remove('fas', 'fa-clock');
+                  watchlistIcon.classList.add('far', 'fa-clock');
                 } else {
                   await addToWatchlist(token, movieTitle);
                   alert('Filme adicionado à watchlist com sucesso.');
-                  addWatchlistButton.textContent = 'Remover da Watchlist';
+                  watchlistIcon.classList.add('fas', 'fa-clock');
                 }
               } catch (error) {
                 console.error('Erro ao fazer a solicitação:', error);
@@ -285,6 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const addFavoriteButton = document.getElementById('add-favorite-button');
             addFavoriteButton.addEventListener('click', async () => {
               try {
+                const favoriteIcon = document.getElementById('favorite-icon')
                 const favoriteData = await getFavoriteList(token);
                 const movieTitle = movie.Title;
 
@@ -294,11 +300,13 @@ document.addEventListener('DOMContentLoaded', () => {
                   favoriteData.body.Lista.movie_titles.includes(movieTitle)) {
                   await removeFromFavoriteList(token, movieTitle);
                   alert('Filme removido da lista de favoritos.');
-                  addFavoriteButton.textContent = 'Adicionar a os favoritos';
+                  favoriteIcon.classList.remove('fas', 'fa-heart');
+                  favoriteIcon.classList.add('far', 'fa-heart');
+
                 } else {
                   await addToFavoriteList(token, movieTitle);
                   alert('Filme adicionado à lista de favoritos.');
-                  addFavoriteButton.textContent = 'Remover da lista de favoritos';
+                  favoriteIcon.classList.add('fas', 'fa-heart');
                 }
               } catch (error) {
                 console.error('Erro ao fazer a solicitação:', error);

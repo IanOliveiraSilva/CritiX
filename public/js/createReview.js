@@ -75,7 +75,7 @@ document.querySelectorAll('#stars1 .star').forEach(star => {
   star.addEventListener('click', function() {
     var value = this.dataset.value;
     
-    document.getElementById('rating').value = value;
+    document.getElementById('favorite').value = value;
     
     let currentStar = this;
     
