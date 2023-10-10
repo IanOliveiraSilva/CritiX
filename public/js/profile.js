@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <br>
                     <p><strong>Informações gerais:</strong></p><br>
                     
-                    <ul class="list-group">
+                    <ul class="list-group ">
                     <ul>
                     <li class="list-group-item li-profile">
                     <strong><i class="fas fa-pencil-alt"></i> </strong>${profileData.body.profile.bio}
@@ -64,17 +64,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <p><strong>Filmes Favoritos:</strong></p><br>
                     <ul id="filmes-favoritos"></ul><br>
             </ul>
-    
-                    <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
+                    <div class="text-center">
+                    <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">Minhas avaliações: <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}</span></a>
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat">Minhas listas: <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a><br><br>
-                    <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">Minhas avaliações: <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}</span></a><br><br>
+                    <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
                     <a href="/getWatchlist" class="btn btn-primary text-warning btn-link profile-stat">Watchlist<span class="stat-count"></span></a>
+                    </div>
+   
             </div>
                 </div>
                 
             </div>
-            <br>
-            <a href="/" class="btn btn-primary text-warning btn-link profile-stat">Página Inicial</a>
         `
         resultProfile.innerHTML = '';
         resultProfile.appendChild(details);

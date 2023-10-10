@@ -69,6 +69,44 @@ label {
   font-weight: bold;
 }
 
+input[type="search"] {
+  width: 100%;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+input[type="search"]:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+button[type="submit"] {
+  background-color: #2196F3;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px 20px;
+  margin-left: -50px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button[type="submit"]:hover {
+  background-color: #0d8edf;
+}
+
+form {
+  display: flex;
+  margin-top: 30px;
+  position: relative;
+}
+
 .btn-primary {
   background-color: #000000;
   border-color: #ffd900;
@@ -154,6 +192,7 @@ label {
   margin-bottom: 10px;
   transition: transform 0.2s ease-in-out;
   list-style-type: none;
+  
 }
 
 li:hover {
@@ -210,5 +249,9 @@ li:hover {
   text-align: center;
 }
 
-
+#filmes-favoritos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 

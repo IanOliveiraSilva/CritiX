@@ -61,7 +61,7 @@ input[type="search"]:focus {
 }
 
 button[type="submit"] {
-  background-color: #2196F3;
+  background-color: #eed600;
   border: none;
   border-radius: 10px;
   color: #fff;

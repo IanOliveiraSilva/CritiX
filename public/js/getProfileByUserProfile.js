@@ -62,20 +62,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <p><strong>Filmes Favoritos:</strong></p><br>
                     <ul id="filmes-favoritos"></ul><br>
             </ul>
+            <div class="text-center">
                     <a href="/getAllUserLists" id="list-link" class="btn btn-primary text-warning btn-link profile-stat">Listas: <span class="stat-count">
                     ${detailsData.body.profile.contadorlists !== null ? detailsData.body.profile.contadorlists : 0}
                     </span>
-                    </a><br><br>
+                    </a>
 
                     <a href="/getAllUserReviews" id="review-link" class="btn btn-primary text-warning btn-link profile-stat">Avaliações: <span class="stat-count">
                     ${detailsData.body.profile.contadorreviews !== null ? detailsData.body.profile.contadorreviews : 0}
                     </span>
+
                     </a><br><br>
                     <a id="get-user-watchlist" href="/getUserWatchlist" class="btn btn-primary text-warning btn-link profile-stat">Watchlist<span class="stat-count"></span></a>
+                    </div>
             </div>
                 </div>
             </div>
-            <a href="/" class="btn btn-warning text-dark btn-link mt-3">Página Inicial</a>
             `;
 
             resultContainer.addEventListener('click', (event) => {
