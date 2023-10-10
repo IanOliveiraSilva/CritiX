@@ -60,9 +60,30 @@ exports.surpriseMe = async (req, res) => {
       const omdbResponse = await axios.get(`http://www.omdbapi.com/?t=${title}&apikey=${OMDB_API_KEY}`);
       if (omdbResponse.status === 200 && omdbResponse.data && omdbResponse.data.Response === 'True') {
         const omdbMovieData = omdbResponse.data;
+
+        let { rows: [movie] } = await db.query(
+          `
+        SELECT medianotas, mediaspecialrating
+        FROM movies WHERE title = $1
+        `,
+          [omdbMovieData.Title]);
+
+
+        const { rows: [reviewCount] } = await db.query(
+          `
+      SELECT COUNT(*) AS review_count 
+      FROM reviews 
+      INNER JOIN movies ON reviews.movieId = movies.id 
+      WHERE movies.title = $1 AND reviews.ispublic = true
+      `,
+          [omdbMovieData.Title]);
+
+
         res.status(200).json({
           body: {
-            omdbMovie: omdbMovieData
+            omdbMovie: omdbMovieData,
+            movie,
+            reviewCount: reviewCount.review_count
           }
         });
       } else {

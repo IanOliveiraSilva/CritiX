@@ -19,6 +19,11 @@ body {
   background-position: center;
 }
 
+
+.blur{
+  filter: blur(10px); /* Valor do desfoque em pixels */
+}
+
 main {
   flex: 1;
 }
@@ -89,7 +94,7 @@ button[type="submit"] {
   border: none;
   border-radius: 10px;
   color: #fff;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: 500;
   padding: 10px 20px;
   margin-left: -50px;
