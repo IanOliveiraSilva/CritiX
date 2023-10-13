@@ -47,6 +47,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       titleLink.addEventListener('click', function(event) {
         event.preventDefault();
         const movieTitle = review.title;
+        const movieimdbId = review.imdbid;
+        localStorage.setItem('movieimbdId', movieimdbId);
         localStorage.setItem('movieTitle', movieTitle);
         window.location.href = titleLink.href;
       });

@@ -3,17 +3,6 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require("../config/db");
-const multer = require('multer');
-const path = require('path');
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'E:\\Programação\\Projetos em Node\\Movie review API\\public\\uploads');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
-});
-const upload = multer({ storage: storage });
 
 function formatarDataParaString(data) {
   const dia = String(data.getDate()).padStart(2, '0');
@@ -25,31 +14,21 @@ function formatarDataParaString(data) {
 
 exports.signup = async (req, res) => {
   try {
+    //Requisição do body
     const { username, email, password } = req.body;
 
-    if (!email) {
-      return res.status(400).json({
-        message: 'Email is required'
-      });
+    // Validação dos campos de entrada
+    if (!email || !username || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
     }
 
-    if (!username) {
-      return res.status(400).json({
-        message: 'Username is required'
-      });
-    }
-
-    if (!password) {
-      return res.status(400).json({
-        message: 'Password is required'
-      });
-    }
-
+    // Validação para saber se o email já está em uso
     const userExists = await db.query('SELECT * FROM users WHERE email = $1', [email]);
     if (userExists.rows.length > 0) {
       return res.status(400).json({ message: 'Email already taken' });
     }
 
+    // Hash da senha antes de salvar no banco de dados
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await db.query(
@@ -57,6 +36,7 @@ exports.signup = async (req, res) => {
       [username, email, hashedPassword]
     );
 
+    // Gera um token de autenticação
     const token = jwt.sign(
       { id: newUser.rows[0].id, username: newUser.rows[0].username },
       process.env.JWT_SECRET,
@@ -72,30 +52,27 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+    // Requisição do body
     const { email, password } = req.body;
 
-    if (!email) {
-      return res.status(400).json({
-        message: 'Email is required'
-      });
+    // Validação dos campos de entrada
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required' });
     }
 
-    if (!password) {
-      return res.status(400).json({
-        message: 'Password is required'
-      });
-    }
-
+    // Consulta o usuário no banco de dados pelo email
     const user = await db.query('SELECT * FROM users WHERE email = $1', [email]);
     if (user.rows.length === 0) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
+    // Verifica se a senha fornecida corresponde à senha no banco de dados
     const isPasswordCorrect = await bcrypt.compare(password, user.rows[0].password);
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
+    // Gera um token de autenticação
     const token = jwt.sign(
       { id: user.rows[0].id, username: user.rows[0].username },
       process.env.JWT_SECRET,
@@ -110,45 +87,60 @@ exports.login = async (req, res) => {
 };
 
 exports.createUserProfile = async (req, res) => {
-  upload.single('icon')(req, res, async function (err) {
-    if (err instanceof multer.MulterError) {
-      console.log(err);
-    } else if (err) {
-      console.log(err);
-    }
+  try {
+    // Requisição do body e do usuario autenticado
+    const {
+      name,
+      familyName,
+      bio,
+      city,
+      country,
+      birthday,
+      socialmediaInstagram,
+      socialMediaX,
+      socialMediaTikTok,
+      userProfileTag
+    } = req.body;
 
-    const { name, familyName, bio, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfileTag } = req.body;
-    const icon = req.file;
     const userId = req.user.id;
 
-    try {
-      const { rows: [userProfile] } = await db.query(
-        `INSERT INTO user_profile(name, familyName, bio, userId, icon, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfile) 
+    const { rows: [userProfile] } = await db.query(
+      `INSERT INTO user_profile(name, familyName, bio, userId, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfile) 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) 
         RETURNING *`,
-        [name, familyName, bio, userId, icon, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfileTag]
-      );
-
-      res.status(201).json({
-        message: 'Perfil criado com sucesso',
-        body: {
-          profile: userProfile
-        }
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(400).json({
-        message: 'Um erro aconteceu enquanto o perfil de usuario era criado',
-        error
-      });
-    }
-  });
+      [
+        name,
+        familyName,
+        bio,
+        userId,
+        city,
+        country,
+        birthday,
+        socialmediaInstagram,
+        socialMediaX,
+        socialMediaTikTok,
+        userProfileTag]
+    );
+    res.status(201).json({
+      message: 'Perfil criado com sucesso',
+      body: {
+        profile: userProfile
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      message: 'Um erro aconteceu enquanto o perfil de usuario era criado',
+      error
+    });
+  }
 };
 
 exports.getUserProfile = async (req, res) => {
-  const userId = req.user.id;
-
   try {
+    // Requisição do usuario autenticado
+    const userId = req.user.id;
+
     const { rows: [userProfile] } = await db.query(
       `SELECT u.id, u.userid, u.name as givenName, u.familyname, u.bio, u.city, u.country, u.birthday, u.socialmediainstagram, u.socialmediax, u.socialmediatiktok, u.userprofile, 
       l.id, l.name AS list_name, l.description, l.movies, l.ispublic, l.userid, 
@@ -161,11 +153,7 @@ exports.getUserProfile = async (req, res) => {
       [userId]
     );
 
-    if (userProfile && userProfile.icon) {
-      const iconBase64 = userProfile.icon.toString('base64');
-      userProfile.iconBase64 = iconBase64;
-    }
-
+    // Formata a data de nascimento para o formato 'DD/MM/AAAA'
     if (userProfile && userProfile.birthday) {
       const dataFormatada = formatarDataParaString(new Date(userProfile.birthday));
       userProfile.birthday = dataFormatada;
@@ -187,19 +175,21 @@ exports.getUserProfile = async (req, res) => {
 };
 
 exports.getProfileByUser = async (req, res) => {
-  const userProfileQuery = req.query.userProfile;
-
-  const userIdQuery = await db.query('SELECT * FROM user_profile WHERE userProfile = $1', [userProfileQuery]);
-
-  if (userIdQuery.rows.length === 0) {
-    return res.status(400).json({
-      message: 'O usuário não foi encontrado'
-    });
-  }
-
-  const userId = userIdQuery.rows[0].userid;
-
   try {
+    const userProfileQuery = req.query.userProfile;
+
+    // Consulta o userId baseado no userProfile
+    const userIdQuery = await db.query('SELECT * FROM user_profile WHERE userProfile = $1', [userProfileQuery]);
+
+    if (userIdQuery.rows.length === 0) {
+      return res.status(400).json({
+        message: 'O usuário não foi encontrado'
+      });
+    }
+
+    const userId = userIdQuery.rows[0].userid;
+
+    // Consulta o perfil do usuário
     const { rows: [userProfile] } = await db.query(
       `SELECT u.id, u.userid, u.name as givenName, u.familyname, u.bio, u.city, u.country, u.birthday, u.socialmediainstagram, u.socialmediax, u.socialmediatiktok, u.userprofile, 
       l.id, l.name AS list_name, l.description, l.movies, l.ispublic, l.userid, 
@@ -211,11 +201,7 @@ exports.getProfileByUser = async (req, res) => {
       [userId]
     );
 
-    if (userProfile && userProfile.icon) {
-      const iconBase64 = userProfile.icon.toString('base64');
-      userProfile.iconBase64 = iconBase64;
-    }
-
+    // Formata a data de nascimento para o formato 'DD/MM/AAAA'
     if (userProfile && userProfile.birthday) {
       const dataFormatada = formatarDataParaString(new Date(userProfile.birthday));
       userProfile.birthday = dataFormatada;
@@ -237,10 +223,23 @@ exports.getProfileByUser = async (req, res) => {
 };
 
 exports.updateUserProfile = async (req, res) => {
-  const { name, familyName, bio, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfileTag } = req.body;
-  const userId= req.user.id;
-
   try {
+    // Requisição do body e do usuario autenticado
+    const { 
+      name, 
+      familyName, 
+      bio, 
+      city, 
+      country, 
+      birthday, 
+      socialmediaInstagram, 
+      socialMediaX, 
+      socialMediaTikTok, 
+      userProfileTag 
+    } = req.body;
+    const userId = req.user.id;
+
+    // Atualiza o perfil do usuário no banco de dados
     const { rows: [newProfile] } = await db.query(
       `UPDATE user_profile
        SET name = $1,
@@ -255,7 +254,18 @@ exports.updateUserProfile = async (req, res) => {
         userProfile = $10
        WHERE userId = $11
        RETURNING *`,
-      [name, familyName, bio, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfileTag, userId]
+      [
+        name, 
+        familyName, 
+        bio, 
+        city, 
+        country, 
+        birthday, 
+        socialmediaInstagram, 
+        socialMediaX, 
+        socialMediaTikTok, 
+        userProfileTag, 
+        userId]
     );
 
     return res.status(200).json({
@@ -273,15 +283,29 @@ exports.updateUserProfile = async (req, res) => {
 };
 
 exports.updateUserProfilePartially = async (req, res) => {
-  const { name, familyName, bio, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfileTag } = req.body;
-  const userId = req.user.id;
-
   try {
+    //Requisição do body e do usuario autenticado
+    const { 
+      name, 
+      familyName, 
+      bio, 
+      city, 
+      country, 
+      birthday, 
+      socialmediaInstagram, 
+      socialMediaX, 
+      socialMediaTikTok, 
+      userProfileTag 
+    } = req.body;
+    const userId = req.user.id;
+
+    // Consulta o perfil existente do usuário
     const existingProfile = await db.query(
       "SELECT * FROM user_profile WHERE userId = $1",
       [userId]
     );
 
+    // Atualiza apenas os campos fornecidos no corpo da requisição, mantendo os valores existentes se não forem fornecidos
     const updatedProfile = {
       name: name || existingProfile.rows[0].name,
       familyName: familyName || existingProfile.rows[0].familyname,
@@ -295,6 +319,7 @@ exports.updateUserProfilePartially = async (req, res) => {
       userProfile: userProfileTag || existingProfile.rows[0].userprofile
     };
 
+    // Atualiza o perfil no banco de dados
     const { rows: [newProfile] } = await db.query(
       `UPDATE user_profile 
        SET name = $1, 
@@ -309,9 +334,20 @@ exports.updateUserProfilePartially = async (req, res) => {
         userProfile = $10
        WHERE userId = $11 
        RETURNING *`,
-      [updatedProfile.name, updatedProfile.familyName, updatedProfile.bio, updatedProfile.city, updatedProfile.country, updatedProfile.birthday, updatedProfile.socialmediaInstagram, updatedProfile.socialMediaX, updatedProfile.socialMediaTikTok, updatedProfile.userProfile, userId]
+      [
+        updatedProfile.name, 
+        updatedProfile.familyName, 
+        updatedProfile.bio, 
+        updatedProfile.city, 
+        updatedProfile.country, 
+        updatedProfile.birthday, 
+        updatedProfile.socialmediaInstagram, 
+        updatedProfile.socialMediaX, 
+        updatedProfile.socialMediaTikTok, 
+        updatedProfile.userProfile, 
+        userId
+      ]
     );
-
     return res.status(200).json({
       message: "Perfil atualizado com sucesso!",
       profile: newProfile
@@ -327,18 +363,28 @@ exports.updateUserProfilePartially = async (req, res) => {
 
 exports.AuthMiddleware = async (req, res, next) => {
   try {
+
+    // Verifica se o token está no header
     const token = req.headers.authorization.split(' ')[1];
 
+    if (!token) {
+      return res.status(401).json({ message: 'Token de autorização não fornecido' });
+    }
+
+    // Verifica se o token é válido
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
+    // Consulta o usuário no banco de dados com base no ID do token decodificado
     const user = await db.query('SELECT * FROM users WHERE id = $1', [decodedToken.id]);
 
     if (!user) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
+    // Define o objeto do usuário na requisição para uso nas rotas protegidas
     req.user = user.rows[0];
 
+    // Continua com a execução das rotas protegidas
     next();
   } catch (error) {
     console.error(error);

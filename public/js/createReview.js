@@ -43,6 +43,7 @@ reviewForm.addEventListener('submit', async (event) => {
   const token = localStorage.getItem('token');
 
   const movieTitle = localStorage.getItem('movieTitle');
+  const movieimdbId = localStorage.getItem('movieimbdId');
 
   console.log(movieTitle);
 
@@ -54,6 +55,7 @@ reviewForm.addEventListener('submit', async (event) => {
     },
     body: JSON.stringify({
       title: movieTitle,
+      imdbID: movieimdbId,
       rating,
       comment,
       isPublic,

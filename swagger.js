@@ -19,13 +19,14 @@ const options = {
     },
     security: [
       {
-        bearerAuth: [],
+        bearerAuth: [], // Para rotas que precisam de autenticação
       },
     ],
   },
-  apis: ['src/route/*.js'],
+  apis: ['src/route/*.js'], // Caminho para as rotas
 };
 
+// Gera o swagger com as opções fornecidas
 const swaggerSpec = swaggerJSDoc(options);
 
 module.exports = swaggerSpec;

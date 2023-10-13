@@ -21,6 +21,7 @@ function generateStarRating(rating) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   const title = localStorage.getItem('movieTitle');
+  const movieimdbId = localStorage.getItem('movieimbdId');
   const resultsList = document.querySelector('#results');
   const token = localStorage.getItem('token')
 
@@ -163,7 +164,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   try {
-    const movieResponse = await fetch(`/api/movie/title?title=${encodeURIComponent(title)}`, {
+    const movieResponse = await fetch(`/api/movie/id?title=${encodeURIComponent(title)}&imdbID=${encodeURIComponent(movieimdbId)}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`

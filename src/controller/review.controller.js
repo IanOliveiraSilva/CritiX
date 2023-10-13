@@ -46,7 +46,7 @@ const getSpecialRating = (genre) => {
 }
 
 exports.createReview = async (req, res) => {
-  const { title, rating, comment, isPublic, specialRating } = req.body;
+  const { title, imdbID, rating, comment, isPublic, specialRating } = req.body;
   const userId = req.user.id;
 
 
@@ -69,7 +69,7 @@ exports.createReview = async (req, res) => {
       return res.status(400).json({ message: 'Filme não encontrado no OMDB' });
     }
 
-    const { imdbID, Title, Year, Runtime, Released, Genre, Director, Writer, Actors, Plot, Country, Awards, Poster, imdbRating, Metascore } = omdbResponse.data;
+    const { Title, Year, Runtime, Released, Genre, Director, Writer, Actors, Plot, Country, Awards, Poster, imdbRating, Metascore } = omdbResponse.data;
 
     let movieId;
     const { rows: [existingMovie] } = await db.query('SELECT * FROM movies WHERE imdbId = $1', [imdbID]);
@@ -89,7 +89,7 @@ exports.createReview = async (req, res) => {
     }
 
     const { rows: [review] } = await db.query(
-      `INSERT INTO reviews (userId, movieId, rating,
+      `INSERT INTO reviews (userId, imdbid,movieId, rating,
         review,
         isPublic,
         specialRating)
@@ -98,9 +98,11 @@ exports.createReview = async (req, res) => {
         $3,
         $4,
         $5,
-        $6)
+        $6,
+        $7)
       RETURNING *`,
       [userId,
+        imdbID,
         movieId,
         rating,
         comment,
@@ -157,7 +159,7 @@ exports.getAllReviews = async (req, res) => {
     const userId = req.user.id;
 
     const reviews = await db.query(
-      `SELECT r.id, r.userid, r.movieid, m.title, m.genre, r.specialrating, r.rating, r.review, r.ispublic, r.created_at 
+      `SELECT r.id, r.userid, r.movieid, m.title, m.genre, m.imdbid,r.specialrating, r.rating, r.review, r.ispublic, r.created_at 
       FROM reviews r 
       JOIN movies m ON r.movieid = m.id 
       WHERE r.userId = $1

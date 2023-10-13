@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const li = document.createElement('li');
           li.textContent = `${movie.Title} (${movie.Year})`;
           li.addEventListener('click', async () => {
-            const detailsResponse = await fetch(`/api/movie/title?title=${encodeURIComponent(movie.Title)}`, {
+            const detailsResponse = await fetch(`/api/movie/id?title=${encodeURIComponent(movie.Title)}&imdbID=${encodeURIComponent(movie.imdbID)}`, {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`
@@ -246,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const reviewButton = document.getElementById('create-review-button');
             reviewButton.addEventListener('click', () => {
               localStorage.setItem('movieTitle', movie.Title);
+              localStorage.setItem('movieimbdId', movie.imdbID);
               localStorage.setItem('movieGenre', detailsData.body.movieData.Genre);
               window.location.href = '/createReview';
             });

@@ -1,9 +1,11 @@
 const token = localStorage.getItem('token');
 let movieTitle;
+let movieimdbId;
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     movieTitle = localStorage.getItem('movieTitle');
+    movieimdbId = localStorage.getItem('movieimbdId');
     const titleInput = document.getElementById('movieTitle');
 
     if (movieTitle && titleInput) {
