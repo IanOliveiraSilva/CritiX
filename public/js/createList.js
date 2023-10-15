@@ -59,9 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${movie.Title} (${movie.Year})
                     `;
                     li.addEventListener('click', async () => {
-                        // Limpa a lista de resultados
                         resultsList.innerHTML = '';
-                        
                         selectedMovies.push(movie.Title);
                         updateSelectedMovies();
                         input.value = '';
@@ -77,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-  
     function updateSelectedMovies() {
       selectedMoviesHtml.textContent = selectedMovies.join(',');
     }
