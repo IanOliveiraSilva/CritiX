@@ -81,17 +81,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}" target="_blank">${profileData.body.profile.socialmediatiktok}</a></strong>
                     </li><br>
                     </ul>
+
                     
                     <p><strong>Filmes Favoritos:</strong></p><br>
-                    <ul id="filmes-favoritos"></ul><br>
+                    <ul id="filmes-favoritos"></ul><hr><br>
+                    <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">
+
+                    Avaliações: 
+                    <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}
+                    </span>
+                    </a>
+                    <canvas id="myChart"></canvas><br>
+                    
+
             </ul>
+            <hr>
                     <div class="text-center">
-                    <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">Minhas avaliações: <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}</span></a>
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat">Minhas listas: <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a><br><br>
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
                     <a href="/getWatchlist" class="btn btn-primary text-warning btn-link profile-stat">Watchlist<span class="stat-count"></span></a>
                     </div>
-   
+                    
             </div>
                 </div>
                 
@@ -180,17 +190,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       ratings[rating.rating.toString()] = rating.count;
     }
 
+    const starLabels = {
+      '5': '★★★★★',
+      '4': '★★★★☆',
+      '3': '★★★☆☆',
+      '2': '★★☆☆☆',
+      '1': '★☆☆☆☆'
+    };
+
     let chartData = {
       type: 'bar',
       data: {
-        labels: Object.keys(ratings),
+        labels: Object.keys(ratings).map(rating => starLabels[rating]),
         datasets: [{
-          label: 'reviews',
+          label: 'REVIEWS',
           data: Object.values(ratings),
-          backgroundColor: 'rgb(255, 165, 0)',
-          borderColor: 'rgb(0, 0, 0)',
+          backgroundColor: 'rgb(10, 25, 49)',
+          borderColor: 'rgba(0, 0, 0, 0.8)',
           borderWidth: 1,
-          hoverBackgroundColor: 'rgb(255,140,0)',
+          hoverBackgroundColor: 'rgba(0, 0, 0, 0.9)',
           hoverBorderColor: 'rgb(0,0,0)'
         }]
       },
@@ -198,50 +216,55 @@ document.addEventListener('DOMContentLoaded', async () => {
         scales: {
           y: {
             beginAtZero: true,
+            display: false,
+            grid: {
+              display: false,
+            },
             ticks: {
               callback: function (value, index, values) {
-                return value + '%';
+                return '';
               }
             }
+          },
+          x: {
+            display: false,
+            grid: {
+              display: false,
+            },
+            barPercentage: .1,
+            categoryPercentage: .1, 
           }
         },
-        legend: {
-          labels: {
-            boxWidth: 20,
-            padding: 15
-          }
-        },
-        title: {
-          display: true,
-          text: 'Distribuição das Estrelas',
-          fontSize: 20,
-          padding: 20
-        },
-        animation: {
-          duration: 1000,
-          easing: 'easeOutBounce'
-        },
-        layout: {
-          padding: {
-            left: 10,
-            right: 10,
-            top: 10,
-            bottom: 10
-          }
-        },
-        tooltips: {
-          backgroundColor: 'rgba(0,0,0,0.7)',
-          titleFontSize: 14,
-          titleSpacing: 6,
-          bodyFontSize: 12,
-          bodySpacing: 6,
-          xPadding: 12,
-          yPadding: 12,
-          cornerRadius: 6
+        plugins: {
+          legend: {
+            display: true,
+          },
+          animation: {
+            duration: 1000,
+            easing: 'easeOutBounce'
+          },
+          layout: {
+            padding: {
+              left: 10,
+              right: 10,
+              top: 10,
+              bottom: 10
+            }
+          },
+          tooltips: {
+            enabled: false,
+          },
+          shadow: {
+            enabled: true,
+            color: 'rgba(0, 0, 0, 0.2)',
+            blur: 10,
+            offsetY: 5,
+            offsetX: 5,
+          },    
         }
       }
     };
-
+    
     var ctx = document.getElementById('myChart');
     new Chart(ctx, chartData);
 

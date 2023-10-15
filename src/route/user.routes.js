@@ -376,6 +376,44 @@ router.put('/user/profile', userController.AuthMiddleware, userController.update
  */
 router.patch('/user/profile', userController.AuthMiddleware, userController.updateUserProfilePartially);
 
+/**
+ * @swagger
+ * /api/user/rating/:
+ *   get:
+ *     summary: Obter contagem de avaliações do usuário logado.
+ *     description: Obtém a contagem de avaliações de um usuário logado.
+ *     tags:
+ *       - Usuário
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Contagem de avaliações do usuário encontrada com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 rating:
+ *                   type: array
+ *                   description: Lista de contagens de avaliações.
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       rating:
+ *                         type: integer
+ *                         description: Valor da avaliação.
+ *                       count:
+ *                         type: integer
+ *                         description: Número de avaliações com esse valor.
+ *       '500':
+ *         description: Erro interno do servidor.
+ *     securitySchemes:
+ *       bearerAuth:
+ *         type: http
+ *         scheme: bearer
+ *         bearerFormat: JWT
+ */
 router.get('/user/rating', userController.AuthMiddleware, userController.GetRatingCount);
 
 module.exports = router;

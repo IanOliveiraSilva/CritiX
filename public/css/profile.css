@@ -113,7 +113,7 @@ form {
 }
 
 .btn-primary {
-  background-color: #000000;
+  background-color: #0F0F0F;
   border-color: #ffd900;
   color: #000000;
   font-weight: bold;
@@ -128,7 +128,7 @@ form {
   display: flex;
   align-items: center;
   padding: 20px;
-  background-color: #ffbb00;
+  background-color: #EAAA00;
   border: 2px solid #000000;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -260,3 +260,9 @@ li:hover {
   align-items: center;
 }
 
+hr {
+  border: none;
+  height: 2px;
+  background-color: #000000;
+  margin: 20px 0;
+}
