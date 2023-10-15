@@ -179,3 +179,53 @@ input[type="checkbox"] {
 .text-black{
   color:#000000;
 }
+
+.results {
+  margin-top: 30px;
+  list-style: none;
+  padding: 0;
+}
+
+.results li {
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease-in-out;
+  list-style-type: none;
+}
+
+.selected-movies {
+  margin-top: 30px;
+  list-style: none;
+  padding: 0;
+}
+
+.selected-movies li {
+  cursor: pointer;
+  background-color: #424242;
+  border: 1px solid #111111;
+  color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease-in-out;
+  list-style-type: none;
+}
+
+input[type="search"] {
+  width: 100%;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+input[type="search"]:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}

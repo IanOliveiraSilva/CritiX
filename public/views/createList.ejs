@@ -13,8 +13,14 @@
       <label for="description">Adicione uma Descrição para a Lista:</label>
       <textarea id="description" name="description" rows="4" cols="50" placeholder="Uma lista dos melhores filmes que já assisti"></textarea><br><br>
 
-      <label for="movieTitles">Títulos dos Filmes (separados por vírgula):</label>
-      <input type="text" id="movieTitles" name="movieTitles" required placeholder="Elite Squad, Halloween, Interstellar"><br><br>
+      <label for="movieTitles">Títulos dos Filmes</label><br>
+      <input type="search" name="search" id="search-input" placeholder="Titanic"><br>
+      <ul class="results" id="results"></ul>
+
+      <label for="movieTitles">Filmes escolhidos</label>
+      <ul class="selected-movies">
+        <li id="selected-movies"></li>
+      </ul><br>
 
       <label for="isPublic">Deseja que os outros vejam sua lista?</label><br>
       <input type="checkbox" id="isPublic" name="isPublic" checked><br><br>
