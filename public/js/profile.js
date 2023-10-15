@@ -90,7 +90,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat">Minhas listas: <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a><br><br>
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
                     <a href="/getWatchlist" class="btn btn-primary text-warning btn-link profile-stat">Watchlist<span class="stat-count"></span></a>
-                    <p id="rating-count"> Rating </p>
                     </div>
    
             </div>
@@ -168,22 +167,83 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     const ratingData = await ratingCountResponse.json();
-    const ratingCount = document.querySelector('#rating-count');
+
+    let ratings = {
+      '5': 0,
+      '4': 0,
+      '3': 0,
+      '2': 0,
+      '1': 0
+    };
 
     for (const rating of ratingData.rating) {
-      const ratingTeste = document.createElement('p');
-      ratingTeste.classList.add('profile-stat');
-
-      const starRating = generateStarRating(rating.rating);
-      ratingTeste.innerHTML = 
-      `
-      ${rating.count} ${starRating}  
-      `;
-
-      ratingCount.appendChild(ratingTeste);
+      ratings[rating.rating.toString()] = rating.count;
     }
 
+    let chartData = {
+      type: 'bar',
+      data: {
+        labels: Object.keys(ratings),
+        datasets: [{
+          label: 'reviews',
+          data: Object.values(ratings),
+          backgroundColor: 'rgb(255, 165, 0)',
+          borderColor: 'rgb(0, 0, 0)',
+          borderWidth: 1,
+          hoverBackgroundColor: 'rgb(255,140,0)',
+          hoverBorderColor: 'rgb(0,0,0)'
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function (value, index, values) {
+                return value + '%';
+              }
+            }
+          }
+        },
+        legend: {
+          labels: {
+            boxWidth: 20,
+            padding: 15
+          }
+        },
+        title: {
+          display: true,
+          text: 'Distribuição das Estrelas',
+          fontSize: 20,
+          padding: 20
+        },
+        animation: {
+          duration: 1000,
+          easing: 'easeOutBounce'
+        },
+        layout: {
+          padding: {
+            left: 10,
+            right: 10,
+            top: 10,
+            bottom: 10
+          }
+        },
+        tooltips: {
+          backgroundColor: 'rgba(0,0,0,0.7)',
+          titleFontSize: 14,
+          titleSpacing: 6,
+          bodyFontSize: 12,
+          bodySpacing: 6,
+          xPadding: 12,
+          yPadding: 12,
+          cornerRadius: 6
+        }
+      }
+    };
 
+    var ctx = document.getElementById('myChart');
+    new Chart(ctx, chartData);
 
   } catch (error) {
     console.error('Erro:', error);
