@@ -376,4 +376,6 @@ router.put('/user/profile', userController.AuthMiddleware, userController.update
  */
 router.patch('/user/profile', userController.AuthMiddleware, userController.updateUserProfilePartially);
 
+router.get('/user/rating', userController.AuthMiddleware, userController.GetRatingCount);
+
 module.exports = router;

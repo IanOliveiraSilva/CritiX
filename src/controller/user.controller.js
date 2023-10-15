@@ -392,6 +392,35 @@ exports.AuthMiddleware = async (req, res, next) => {
   }
 };
 
+exports.GetRatingCount = async (req, res, next) =>{
+  try {
+    const userId = req.user.id;
+
+    const ratingCount = await db.query(
+      `
+      SELECT rating, COUNT(*) 
+      FROM reviews r
+      JOIN users u ON r.userId = u.id
+      WHERE userId = $1
+      GROUP BY rating
+      ORDER BY rating DESC;      
+      `,
+      [userId]
+    );
+
+    const ratings = ratingCount.rows;
+
+    res.status(200).json({
+        rating: ratings
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Um erro aconteceu enquanto o perfil era buscado',
+      error,
+    });
+  }
+}
 
 
 

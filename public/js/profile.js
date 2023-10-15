@@ -1,25 +1,46 @@
 const token = localStorage.getItem('token')
 
+function generateStarRating(rating) {
+  const maxRating = 5;
+  const roundedRating = Math.round(rating * 2) / 2;
+  const fullStars = Math.floor(roundedRating);
+  const halfStar = roundedRating % 1 !== 0;
+  const emptyStars = maxRating - fullStars - (halfStar ? 1 : 0);
+
+  let stars = '';
+  for (let i = 0; i < fullStars; i++) {
+    stars += '<i class="fas fa-star star-rating"></i>';
+  }
+  if (halfStar) {
+    stars += '<i class="fas fa-star-half-alt star-rating"></i>';
+  }
+  for (let i = 0; i < emptyStars; i++) {
+    stars += '<i class="far fa-star star-rating"></i>';
+  }
+
+  return stars;
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
-    const resultProfile = document.querySelector('#results');
+  const resultProfile = document.querySelector('#results');
 
-    try {
-        const response = await fetch('api/user/profile', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+  try {
+    const response = await fetch('api/user/profile', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
 
-        if (!response.ok) {
-            throw new Error('Erro ao obter perfil');
-        }
+    if (!response.ok) {
+      throw new Error('Erro ao obter perfil');
+    }
 
-        const profileData = await response.json();
+    const profileData = await response.json();
 
-        const details = document.createElement('div');
-        details.innerHTML =
-        `
+    const details = document.createElement('div');
+    details.innerHTML =
+      `
             <div class="profile-container">
             <div class="profile-details">
             <img class="profile-image" src="../uploads/icon-1696055357956.jpeg" alt="Ícone do perfil do usuário"/>
@@ -69,6 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat">Minhas listas: <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a><br><br>
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
                     <a href="/getWatchlist" class="btn btn-primary text-warning btn-link profile-stat">Watchlist<span class="stat-count"></span></a>
+                    <p id="rating-count"> Rating </p>
                     </div>
    
             </div>
@@ -76,70 +98,94 @@ document.addEventListener('DOMContentLoaded', async () => {
                 
             </div>
         `
-        resultProfile.innerHTML = '';
-        resultProfile.appendChild(details);
-        
-        // mostrar filmes favoritos
-        const filmsContainer = document.createElement('div');
-        filmsContainer.classList.add('films-container');
-        for (const movieTitle of profileData.body.profile.movies) {
-            try {
-              const movieResponse = await fetch(`/api/movie/title?title=${encodeURIComponent(movieTitle)}`, {
-                method: 'GET',
-                headers: {
-                  'Authorization': `Bearer ${token}`
-                }
-              });
-      
-              if (movieResponse.ok) {
-                const movieData = await movieResponse.json();
+    resultProfile.innerHTML = '';
+    resultProfile.appendChild(details);
 
-                const movieContainer = document.createElement('div');
-                movieContainer.classList.add('movie-container');
-
-                const movieLink = document.createElement('a');
-                movieLink.href = '/getMovieByTitle';
-
-                const posterImage = document.createElement('img');
-                posterImage.src = movieData.body.movieData.Poster;
-                posterImage.alt = 'Poster do Filme';
-                posterImage.classList.add('movie-poster');
-
-                movieLink.addEventListener('click', function() {
-                  localStorage.setItem('movieTitle', movieTitle);
-                });
-
-                movieLink.appendChild(posterImage);
-                movieContainer.appendChild(movieLink);
-                filmsContainer.appendChild(movieContainer);
-              } else {
-                console.error('Erro ao obter detalhes do filme:', movieResponse.statusText);
-              }
-            } catch (error) {
-              console.error('Erro ao buscar detalhes do filme:', error);
-            }
+    // mostrar filmes favoritos
+    const filmsContainer = document.createElement('div');
+    filmsContainer.classList.add('films-container');
+    for (const movieTitle of profileData.body.profile.movies) {
+      try {
+        const movieResponse = await fetch(`/api/movie/title?title=${encodeURIComponent(movieTitle)}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
           }
-        const favoritesSection = document.querySelector('#filmes-favoritos');
-        favoritesSection.appendChild(filmsContainer);
-
-        // editar perfil
-        const editProfileLink = document.querySelector('#edit-profile-link');
-        editProfileLink.addEventListener('click', () => {
-            localStorage.setItem('ProfileName', profileData.body.profile.givenname);
-            localStorage.setItem('familyname', profileData.body.profile.familyname);
-            localStorage.setItem('bio', profileData.body.profile.bio);
-            localStorage.setItem('city', profileData.body.profile.city);
-            localStorage.setItem('country', profileData.body.profile.country);
-            localStorage.setItem('socialmediainstagram', profileData.body.profile.socialmediainstagram);
-            localStorage.setItem('socialmediatiktok', profileData.body.profile.socialmediatiktok);
-            localStorage.setItem('socialmediax', profileData.body.profile.socialmediax);
-            localStorage.setItem('birthday', profileData.body.profile.birthday);
-            localStorage.setItem('userprofile', profileData.body.profile.userprofile);
         });
 
-        
-        
-    } catch (error) {
-        console.error('Erro:', error);
+        if (movieResponse.ok) {
+          const movieData = await movieResponse.json();
+
+          const movieContainer = document.createElement('div');
+          movieContainer.classList.add('movie-container');
+
+          const movieLink = document.createElement('a');
+          movieLink.href = '/getMovieByTitle';
+
+          const posterImage = document.createElement('img');
+          posterImage.src = movieData.body.movieData.Poster;
+          posterImage.alt = 'Poster do Filme';
+          posterImage.classList.add('movie-poster');
+
+          movieLink.addEventListener('click', function () {
+            localStorage.setItem('movieTitle', movieTitle);
+          });
+
+          movieLink.appendChild(posterImage);
+          movieContainer.appendChild(movieLink);
+          filmsContainer.appendChild(movieContainer);
+        } else {
+          console.error('Erro ao obter detalhes do filme:', movieResponse.statusText);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar detalhes do filme:', error);
+      }
     }
+    const favoritesSection = document.querySelector('#filmes-favoritos');
+    favoritesSection.appendChild(filmsContainer);
+
+    // editar perfil
+    const editProfileLink = document.querySelector('#edit-profile-link');
+    editProfileLink.addEventListener('click', () => {
+      localStorage.setItem('ProfileName', profileData.body.profile.givenname);
+      localStorage.setItem('familyname', profileData.body.profile.familyname);
+      localStorage.setItem('bio', profileData.body.profile.bio);
+      localStorage.setItem('city', profileData.body.profile.city);
+      localStorage.setItem('country', profileData.body.profile.country);
+      localStorage.setItem('socialmediainstagram', profileData.body.profile.socialmediainstagram);
+      localStorage.setItem('socialmediatiktok', profileData.body.profile.socialmediatiktok);
+      localStorage.setItem('socialmediax', profileData.body.profile.socialmediax);
+      localStorage.setItem('birthday', profileData.body.profile.birthday);
+      localStorage.setItem('userprofile', profileData.body.profile.userprofile);
+    });
+
+    // Rating count
+    const ratingCountResponse = await fetch('api/user/rating', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const ratingData = await ratingCountResponse.json();
+    const ratingCount = document.querySelector('#rating-count');
+
+    for (const rating of ratingData.rating) {
+      const ratingTeste = document.createElement('p');
+      ratingTeste.classList.add('profile-stat');
+
+      const starRating = generateStarRating(rating.rating);
+      ratingTeste.innerHTML = 
+      `
+      ${rating.count} ${starRating}  
+      `;
+
+      ratingCount.appendChild(ratingTeste);
+    }
+
+
+
+  } catch (error) {
+    console.error('Erro:', error);
+  }
 });

@@ -453,6 +453,7 @@ exports.getThisYearReview = async (req, res) => {
       `,
       [userId]
     );
+    
     const reviewCountResult = await db.query(
       `
       SELECT COUNT(r.id) as total_reviews
@@ -461,6 +462,7 @@ exports.getThisYearReview = async (req, res) => {
       `,
       [userId]
     );
+
     const reviews = reviewResult.rows;
     const reviewCount = reviewCountResult.rows[0].total_reviews;
     if (!reviews || reviews.length === 0) {
@@ -468,6 +470,7 @@ exports.getThisYearReview = async (req, res) => {
         message: 'Não foram encontradas revisões para o usuário no ano atual.'
       });
     }
+
     return res.status(200).json({
       reviews: reviews,
       total_reviews: reviewCount
