@@ -136,6 +136,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             localStorage.setItem('birthday', profileData.body.profile.birthday);
             localStorage.setItem('userprofile', profileData.body.profile.userprofile);
         });
+
+        
         
     } catch (error) {
         console.error('Erro:', error);

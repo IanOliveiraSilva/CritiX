@@ -1,7 +1,8 @@
 const token = localStorage.getItem('token');
 
 document.addEventListener('DOMContentLoaded', async () => {
-
+  const genreFilter = document.getElementById('genre-filter');
+  
   try {
     const response = await fetch('/api/allReviews', {
       headers: {
