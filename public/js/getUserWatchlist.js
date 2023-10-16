@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const hr = document.createElement('hr');
     movieCount.classList.add('title', 'uppercase-text');
 
-    const randomMovieButton = document.createElement('a');
 
     titleContainer.appendChild(movieCount);
     titleContainer.appendChild(hr);

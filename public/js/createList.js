@@ -3,8 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.querySelector('#search-input');
     const resultsList = document.querySelector('#results');
     const apiKey = '41459cb7';
+
     const selectedMovies = [];
     const selectedMoviesHtml = document.getElementById('selected-movies');
+
+    const imdbIdMovies = [];
   
     createListForm.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -24,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name,
             description,
             movieTitles: selectedMovies,
+            moviesId: imdbIdMovies,
             isPublic,
           }),
         });
@@ -61,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     li.addEventListener('click', async () => {
                         resultsList.innerHTML = '';
                         selectedMovies.push(movie.Title);
+                        imdbIdMovies.push(movie.imdbID);
                         updateSelectedMovies();
                         input.value = '';
                         alert(`Filme "${movie.Title}" adicionado à lista!`);
@@ -76,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateSelectedMovies() {
-      selectedMoviesHtml.textContent = selectedMovies.join(',');
+      selectedMoviesHtml.textContent = selectedMovies.join(' ,');
     }
   });
   

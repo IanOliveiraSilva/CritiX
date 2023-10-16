@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           const posterImage = document.createElement('img');
           posterImage.src = movieData.body.movieData.Poster;
-          posterImage.alt = 'Poster do Filme';
+          posterImage.alt = 'Poster do Filme' + movieData.body.movieData.Title;
           posterImage.classList.add('movie-poster');
 
           movieLink.addEventListener('click', function () {

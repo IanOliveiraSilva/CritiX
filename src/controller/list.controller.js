@@ -5,7 +5,7 @@ const db = require("../config/db");
 const OMDB_API_KEY = process.env.OMDB_API_KEY;
 
 exports.createList = async (req, res) => {
-    const { name, description, movieTitles, isPublic } = req.body;
+    const { name, description, movieTitles, moviesId, isPublic } = req.body;
     const userId = req.user.id;
 
     try {
@@ -14,10 +14,10 @@ exports.createList = async (req, res) => {
         }
 
         const { rows: [list] } = await db.query(
-            `INSERT INTO lists (name, description, movies ,isPublic ,userId)
-            VALUES ($1,$2,$3,$4,$5)
+            `INSERT INTO lists (name, description, movies, moviesId, isPublic ,userId)
+            VALUES ($1,$2,$3,$4,$5,$6)
             RETURNING *`,
-            [name, description, movieTitles, isPublic, userId]
+            [name, description, movieTitles, moviesId, isPublic, userId]
         );
 
         for (const title of movieTitles) {
@@ -77,7 +77,7 @@ exports.getAllLists = async (req, res) => {
         const userId = req.user.id;
 
         const lists = await db.query(
-            `SELECT l.id, u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
+            `SELECT l.id, l.moviesid, u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
             FROM lists l
             JOIN users u ON l.userId = u.id
             WHERE u.id = $1;

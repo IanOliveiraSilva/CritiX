@@ -49,7 +49,6 @@ exports.getMovieByTitle = async (req, res) => {
 
 exports.getMovieById = async (req, res) => {
   const { imdbID } = req.query;
-  const { title } = req.query; 
   
   try {
     const omdbResponse = await axios.get(`http://www.omdbapi.com/?i=${imdbID}&apikey=${OMDB_API_KEY}`);
@@ -61,7 +60,7 @@ exports.getMovieById = async (req, res) => {
       SELECT medianotas, mediaspecialrating
       FROM movies WHERE title = $1
       `,
-        [title]);
+        [imdbID]);
 
       const { rows: [reviewCount] } = await db.query(
         `
@@ -70,7 +69,7 @@ exports.getMovieById = async (req, res) => {
       INNER JOIN movies ON reviews.movieId = movies.id 
       WHERE movies.title = $1 AND reviews.ispublic = true
       `,
-        [title]);
+        [imdbID]);
 
       if (!movie) {
         movie = {
