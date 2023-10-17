@@ -14,7 +14,13 @@ exports.createList = async (req, res) => {
         }
 
         const { rows: [list] } = await db.query(
-            `INSERT INTO lists (name, description, movies, moviesId, isPublic ,userId)
+            `INSERT INTO lists 
+            (name, 
+            description, 
+            movies, 
+            moviesId, 
+            isPublic,
+            userId)
             VALUES ($1,$2,$3,$4,$5,$6)
             RETURNING *`,
             [name, description, movieTitles, moviesId, isPublic, userId]
@@ -104,7 +110,7 @@ exports.getListById = async (req, res) => {
         const userId = req.user.id;
 
         const lists = await db.query(
-            `SELECT u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
+            `SELECT l.id, l.moviesid, u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
             FROM lists l
             JOIN users u ON l.userId = u.id
             WHERE u.id = $1 and l.id = $2;
@@ -118,12 +124,7 @@ exports.getListById = async (req, res) => {
             });
         }
 
-        return res.status(200).json({
-            message: 'Lista encontrada com sucesso!',
-            body: {
-                Lista: lists.rows[0]
-            }
-        });
+        return res.status(200).json(lists.rows);
     } catch (error) {
         console.error(error);
         return res.status(500).json({
@@ -220,11 +221,7 @@ exports.getListByUser = async (req, res) => {
         const userId = userIdQuery.rows[0].userid;
       
         const lists = await db.query(
-            `SELECT u.username AS user,
-            l.name AS list_name,
-            l.movies AS movie_titles,
-            l.description AS list_description,
-            l.created_at AS Created_At
+            `SELECT l.id, l.moviesid, u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
             FROM lists l
             INNER JOIN users u ON l.userid = u.id
             WHERE l.userId = $1 AND l.isPublic = true`,
@@ -237,12 +234,7 @@ exports.getListByUser = async (req, res) => {
             });
         }
 
-        return res.status(200).json({
-            message: 'Listas encontrada com sucesso!',
-            body: {
-                Lista: lists.rows
-            }
-        });
+        return res.status(200).json(lists.rows);
     } catch (error) {
         console.error(error);
         return res.status(500).json({

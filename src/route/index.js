@@ -26,6 +26,7 @@ const routes = [
   { path: '/getWatchlist', title: 'Get Watchlist'},
   { path: '/getMovieByTitle', title: 'Get Movie By Title'},
   { path: '/getUserWatchlist', title: 'Get a user watchlist'},
+  { path: '/getListById', title: 'Get List By ID'},
   { path: '/', title: 'CritiX' }
 ];
 

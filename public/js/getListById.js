@@ -1,16 +1,17 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     const listContainer = document.getElementById('lists');
-    const username = localStorage.getItem('userprofile');
+    const username = 'gabi';
+    const id = 41;
 
     try {
-        const listResponse = await fetch(`/api/list/user?userProfile=${encodeURIComponent(username)}`, {
+        const listResponse = await fetch(`/api/listById/?id=${encodeURIComponent(id)}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         });
-        if (listResponse.ok) {
+    
             const listsData = await listResponse.json();
 
             const titleHeader = document.createElement('h1');
@@ -115,7 +116,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 table.appendChild(tbody);
                 listContainer.appendChild(table);
             };
-        }
     } catch (error) {
         console.error('Erro ao buscar revisões do usuário:', error);
     }
