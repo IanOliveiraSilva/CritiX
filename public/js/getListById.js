@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     const listContainer = document.getElementById('lists');
-    const username = 'gabi';
-    const id = 41;
+    const username = localStorage.getItem('username');
+    const id = localStorage.getItem('listId');
 
     try {
         const listResponse = await fetch(`/api/listById/?id=${encodeURIComponent(id)}`, {
