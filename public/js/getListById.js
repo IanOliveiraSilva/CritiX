@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const id = localStorage.getItem('listId');
 
   try {
+    // Requests
     const listResponse = await fetch(`/api/listById/?id=${encodeURIComponent(id)}`, {
       method: 'GET',
       headers: {
@@ -17,19 +18,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const listsData = await listResponse.json();
 
+    // Title
     const listName = document.createElement('p');
     listName.textContent = listsData[0].list_name;
     listName.classList.add('title', 'uppercase-text');
 
     const hr = document.createElement('hr');
     
-
+    // Body
     const movieCount = document.createElement('p');
     movieCount.textContent = 'Filmes: ' + listsData[0].movies_count;
     movieCount.classList.add('title', 'uppercase-text');
-
-
-    const randomMovieButton = document.createElement('a');
 
     titleContainer.appendChild(listName);
     titleContainer.appendChild(hr);
@@ -93,9 +92,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
       deleteButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
 
-      listContainer.appendChild(deleteButton);
-      listContainer.insertAdjacentHTML('beforeend', '&emsp;');
       listContainer.appendChild(editButton);
+      listContainer.insertAdjacentHTML('beforeend', '&emsp;');
+      listContainer.appendChild(deleteButton);
+      
 
     };
   } catch (error) {

@@ -241,12 +241,12 @@ exports.getAllReviewsFromUser = async (req, res) => {
 exports.getReviewById = async (req, res) => {
   try {
     const { id } = req.query;
-    const { rows: [review] } = await db.query(
-      `SELECT users.username, movies.title, reviews.rating, reviews.specialrating, reviews.review, reviews.created_at 
-      FROM reviews 
-      INNER JOIN movies ON reviews.movieId = movies.id
-      INNER JOIN users ON reviews.userId = users.id
-      WHERE reviews.id = $1 and ispublic = true`,
+    const review = await db.query(
+      `SELECT r.id, r.userid, r.movieid, m.year, m.title, m.genre, m.imdbid,r.specialrating, r.rating, r.review, r.ispublic, r.created_at 
+      FROM reviews r 
+      INNER JOIN movies m ON r.movieId = m.id
+      INNER JOIN users u ON r.userId = u.id
+      WHERE r.id = $1 and r.ispublic = true`,
       [id]
     );
 
@@ -256,12 +256,7 @@ exports.getReviewById = async (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      message: 'Review encontrada com sucesso!',
-      body: {
-        review
-      }
-    });
+    return res.status(200).json(review.rows);
   } catch (error) {
     console.error(error);
     return res.status(500).json({

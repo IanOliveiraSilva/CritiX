@@ -127,8 +127,12 @@ td.custom-class {
   margin-bottom: 5px;
   transition: transform 0.2s ease-in-out;
   list-style-type: none;
-  flex: 0 0 calc(20% - 20px);
-  margin: 10px;
+}
+
+#poster-centralize{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .movie-poster:hover{
@@ -141,9 +145,8 @@ td.custom-class {
   display: block;
   margin-top: 10px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
   text-align: center;
-  color: black;
   text-decoration: none;
 }
 

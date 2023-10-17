@@ -19,11 +19,6 @@ body {
   background-position: center;
 }
 
-
-.blur{
-  filter: blur(10px); /* Valor do desfoque em pixels */
-}
-
 main {
   flex: 1;
 }
@@ -223,8 +218,6 @@ li:hover {
   transform: scale(1.05);
 }
 
-
-
 .movie-title {
   display: block;
   margin-top: 10px;
@@ -234,7 +227,6 @@ li:hover {
   color: black;
   text-decoration: none;
 }
-
 
 #filmes-favoritos {
   display: left;
