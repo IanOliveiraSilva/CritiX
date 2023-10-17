@@ -110,10 +110,22 @@ exports.getListById = async (req, res) => {
         const userId = req.user.id;
 
         const lists = await db.query(
-            `SELECT l.id, l.moviesid, u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
+            `
+            SELECT 
+            u.username AS user, 
+            l.id,
+            l.moviesid,
+            l.name AS list_name, 
+            l.movies AS movie_titles, 
+            l.description AS list_description, 
+            l.created_at AS Created_At,
+            COUNT(DISTINCT movie) AS movies_count
             FROM lists l
             JOIN users u ON l.userId = u.id
-            WHERE u.id = $1 and l.id = $2;
+            JOIN user_profile up ON u.id = up.userid,
+            LATERAL unnest(l.movies) AS movie
+            WHERE u.id = $1 and l.id = $2
+            GROUP BY u.username, l.id,l.moviesid ,l.name, l.movies, l.description, l.created_at;
             `,
             [userId, id]
         );
