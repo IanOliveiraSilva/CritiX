@@ -11,9 +11,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const descriptionElement = document.getElementById('description');
   descriptionElement.value = actualDescription;
 
-  const actualMovieTitles = localStorage.getItem('movie_titles');
-  const movieTitlesElement = document.getElementById('movieTitles');
-  movieTitlesElement.value = actualMovieTitles;
 
   if (listId) {
     idInput.value = listId;
@@ -29,20 +26,13 @@ updateListForm.addEventListener('submit', async (event) => {
 
   const name = document.getElementById('name').value;
   const description = document.getElementById('description').value;
-  const movieTitlesInput = document.getElementById('movieTitles');
   const isPublic = document.getElementById('isPublic').checked;
-
-  const movieTitles = movieTitlesInput.dataset.modified === 'true' ? movieTitlesInput.value.split(',') : undefined;
 
   const requestBody = {
     name,
     description,
     isPublic,
   };
-
-  if (movieTitles !== undefined) {
-    requestBody.movieTitles = movieTitles;
-  }
 
   const response = await fetch(`/api/list/?id=${encodeURIComponent(listId)}`, {
     method: 'PATCH',
