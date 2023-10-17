@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const tbody = document.createElement('tbody');
 
       const titleLink = document.createElement('a');
-      titleLink.textContent = `Titulo: ${review.title}`;
+      titleLink.textContent = `${review.title}`;
       titleLink.href = '/getMovieByTitle'
       titleLink.addEventListener('click', function(event) {
         event.preventDefault();
@@ -62,19 +62,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const genreRow = document.createElement('tr');
       const genreCell = document.createElement('td');
-      genreCell.textContent = `Genero: ${review.genre}`;
+      genreCell.textContent = `${review.genre}`;
       genreRow.appendChild(genreCell);
       tbody.appendChild(genreRow);
 
       const ratingRow = document.createElement('tr');
       const ratingCell = document.createElement('td');
-      ratingCell.textContent = `Avaliação: ${review.rating}`;
+      ratingCell.textContent = `Nota: ${review.rating}`;
       ratingRow.appendChild(ratingCell);
       tbody.appendChild(ratingRow);
 
       const commentRow = document.createElement('tr');
       const commentCell = document.createElement('td');
-      commentCell.textContent = `Comentário: ${review.review}`;
+      commentCell.textContent = `Review: ${review.review}`;
       commentRow.appendChild(commentCell);
       tbody.appendChild(commentRow);
 

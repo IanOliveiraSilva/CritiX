@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const nameRow = document.createElement('tr');
       const nameCell = document.createElement('td');
-      nameCell.textContent = `Nome da lista: ${list.list_name}`;
+      nameCell.textContent = `${list.list_name}`;
       nameRow.appendChild(nameCell);
       tbody.appendChild(nameRow);
 
       const descriptionRow = document.createElement('tr');
       const descriptionCell = document.createElement('td');
-      descriptionCell.textContent = `Descrição: ${list.list_description}`;
+      descriptionCell.textContent = `${list.list_description}`;
       descriptionRow.appendChild(descriptionCell);
       tbody.appendChild(descriptionRow);
 

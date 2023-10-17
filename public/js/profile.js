@@ -1,5 +1,6 @@
 const token = localStorage.getItem('token')
 
+
 function generateStarRating(rating) {
   const maxRating = 5;
   const roundedRating = Math.round(rating * 2) / 2;
@@ -232,39 +233,60 @@ document.addEventListener('DOMContentLoaded', async () => {
               display: false,
             },
             barPercentage: .1,
-            categoryPercentage: .1, 
+            categoryPercentage: .1,
+          },
+          x2: {
+            display: true,
+            position: 'bottom',
+            labels: Object.keys(ratings).map(rating => starLabels[rating]),
+            grid: {
+              display: false,
+            },
+            ticks: {
+              autoSkip: false
+            }
           }
         },
         plugins: {
-          legend: {
-            display: true,
-          },
-          animation: {
-            duration: 1000,
-            easing: 'easeOutBounce'
-          },
-          layout: {
-            padding: {
-              left: 10,
-              right: 10,
-              top: 10,
-              bottom: 10
+          datalabels: {
+            color: '#fff',
+            align: 'end',
+            formatter: function (value, context) {
+              const index = context.dataIndex;
+              const starCount = Object.keys(starLabels)[index];
+              return starCount + ' (' + value + ')';
             }
-          },
-          tooltips: {
-            enabled: false,
-          },
-          shadow: {
-            enabled: true,
-            color: 'rgba(0, 0, 0, 0.2)',
-            blur: 10,
-            offsetY: 5,
-            offsetX: 5,
-          },    
+          }
+        },
+        legend: {
+          display: true,
+        },
+        animation: {
+          duration: 1000,
+          easing: 'easeOutBounce'
+        },
+        layout: {
+          padding: {
+            left: 10,
+            right: 10,
+            top: 10,
+            bottom: 10
+          }
+        },
+        tooltips: {
+          enabled: false,
+        },
+        shadow: {
+          enabled: true,
+          color: 'rgba(0, 0, 0, 0.2)',
+          blur: 10,
+          offsetY: 5,
+          offsetX: 5,
         }
       }
     };
-    
+
+
     var ctx = document.getElementById('myChart');
     new Chart(ctx, chartData);
 
