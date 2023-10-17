@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           randomMovieButton.addEventListener('click', function (event) {
             event.preventDefault();
             localStorage.setItem('movieTitle', movieTitle);
+            localStorage.setItem('movieimbdId', movieData.body.movieData.imdbID);
             window.location.href = randomMovieButton.href;
           });
 

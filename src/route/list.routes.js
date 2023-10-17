@@ -899,5 +899,6 @@ router.delete('/watchlist/remove', userController.AuthMiddleware, listController
  */
 router.get('/watchlist/random', userController.AuthMiddleware, listController.getRandomMovieFromWatchlist);
 
+router.get('/list/random', userController.AuthMiddleware, listController.getRandomMovieFromList);
 
 module.exports = router;

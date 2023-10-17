@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   try {
-    const movieResponse = await fetch(`/api/movie/id?title=${encodeURIComponent(title)}&imdbID=${encodeURIComponent(movieimdbId)}`, {
+    const movieResponse = await fetch(`/api/movie/id?imdbID=${encodeURIComponent(movieimdbId)}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`

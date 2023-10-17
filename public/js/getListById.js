@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           movieLink.appendChild(posterImg);
           movieContainer.appendChild(movieLink);
           listContainer.appendChild(movieContainer);
-
         }
       } else if (list.movie_titles) {
         const moviesCell = document.createElement('p');
@@ -97,6 +96,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       listContainer.appendChild(deleteButton);
       listContainer.insertAdjacentHTML('beforeend', '&emsp;');
       listContainer.appendChild(editButton);
+
     };
   } catch (error) {
     console.error('Erro ao buscar revisões do usuário:', error);
