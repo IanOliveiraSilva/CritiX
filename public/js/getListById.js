@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       const listName = list.list_name;
+      const buttonContainer = document.getElementById('button');
 
       if (listName !== 'Watchlist' && listName !== 'Meus filmes favoritos') {
         const editButton = document.createElement('a');
@@ -94,9 +95,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
         deleteButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
 
-        listContainer.appendChild(editButton);
-        listContainer.insertAdjacentHTML('beforeend', '&emsp;');
-        listContainer.appendChild(deleteButton);
+        buttonContainer.appendChild(editButton);
+        buttonContainer.insertAdjacentHTML('beforeend', '&emsp;');
+        buttonContainer.appendChild(deleteButton);
+
       }
     };
   } catch (error) {
