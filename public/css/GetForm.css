@@ -101,20 +101,41 @@ main {
 }
 
 
-tr {
-  background-color: #f2f2f2;
-  transition: background-color 0.3s ease;
+.table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-td {
+.table td.title-cell {
+  font-weight: bold;
+  font-size: 18px;
   padding: 15px;
-  border: 1px solid #ccc;
 }
 
-td.custom-class {
-  background-color: #ffd700;
-  color: #fff;
+.table td.rating-cell {
+  font-size: 16px;
+  padding: 15px;
+  border-top: 1px solid #ccc;
 }
+
+.table td.edit-cell {
+  padding: 15px;
+  text-align: center;
+}
+
+.table a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.table tr:hover {
+  background-color: #f0f0f0;
+}
+
 
 .movie-poster {
   width: 200px;
@@ -127,6 +148,8 @@ td.custom-class {
   margin-bottom: 5px;
   transition: transform 0.2s ease-in-out;
   list-style-type: none;
+  flex: 0 0 calc(20% - 20px);
+  margin: 10px;
 }
 
 #poster-centralize{

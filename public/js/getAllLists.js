@@ -2,6 +2,8 @@ const token = localStorage.getItem('token');
 const listContainer = document.getElementById('lists');
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const titleContainer = document.getElementById('pageTitle');
+  
   try {
     const response = await fetch(`/api/allLists/`, {
       method: 'GET',
@@ -16,6 +18,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const listData = await response.json();
 
+    
+    const movieCount = document.createElement('p');
+    movieCount.textContent = 'MINHAS LISTAS';
+    movieCount.classList.add('title', 'uppercase-text');
+
+    const hr = document.createElement('hr');
+    
+    titleContainer.appendChild(movieCount);
+    titleContainer.appendChild(hr);
+
     for (const list of listData) {
       const table = document.createElement('table');
       table.classList.add('table');
@@ -24,15 +36,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const nameRow = document.createElement('tr');
       const nameCell = document.createElement('td');
-      nameCell.textContent = `${list.list_name}`;
+      
+      const nameText = document.createElement('span');
+      nameText.textContent = list.list_name;
+      
+      const descriptionText = document.createElement('span');
+      descriptionText.textContent = list.list_description;
+      
+      nameCell.appendChild(nameText);
+      nameCell.appendChild(document.createElement('br'));
+      nameCell.appendChild(descriptionText);
+      
       nameRow.appendChild(nameCell);
       tbody.appendChild(nameRow);
-
-      const descriptionRow = document.createElement('tr');
-      const descriptionCell = document.createElement('td');
-      descriptionCell.textContent = `${list.list_description}`;
-      descriptionRow.appendChild(descriptionCell);
-      tbody.appendChild(descriptionRow);
+      
 
       const getListButtonRow = document.createElement('tr');
       const getListButtonCell = document.createElement('td');

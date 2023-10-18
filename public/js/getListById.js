@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     listName.classList.add('title', 'uppercase-text');
 
     const hr = document.createElement('hr');
-    
+
     // Body
     const movieCount = document.createElement('p');
     movieCount.textContent = 'Filmes: ' + listsData[0].movies_count;
@@ -66,37 +66,38 @@ document.addEventListener('DOMContentLoaded', async () => {
         const moviesCell = document.createElement('p');
         moviesCell.textContent = `${list.movie_titles}`;
         listContainer.appendChild(moviesCell);
-  
+
       } else {
         const noMoviesCell = document.createElement('p');
         noMoviesCell.textContent = 'Esta lista não possui filmes.';
         listContainer.appendChild(noMoviesCell);
       }
 
+      const listName = list.list_name;
 
-      const editButton = document.createElement('a');
-      editButton.textContent = 'Editar';
-      editButton.href = '/updateList'
-      editButton.addEventListener('click', () => {
-        localStorage.setItem('listId', list.id);
-        localStorage.setItem('name', list.list_name);
-        localStorage.setItem('description', list.list_description);
-      });
-      editButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
+      if (listName !== 'Watchlist' && listName !== 'Meus filmes favoritos') {
+        const editButton = document.createElement('a');
+        editButton.textContent = 'Editar';
+        editButton.href = '/updateList';
+        editButton.addEventListener('click', () => {
+          localStorage.setItem('listId', list.id);
+          localStorage.setItem('name', list.list_name);
+          localStorage.setItem('description', list.list_description);
+        });
+        editButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
 
-      const deleteButton = document.createElement('a');
-      deleteButton.textContent = 'Apagar lista';
-      deleteButton.href = '/deleteList'
-      deleteButton.addEventListener('click', () => {
-        localStorage.setItem('listId', list.id);
-      });
-      deleteButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
+        const deleteButton = document.createElement('a');
+        deleteButton.textContent = 'Apagar lista';
+        deleteButton.href = '/deleteList';
+        deleteButton.addEventListener('click', () => {
+          localStorage.setItem('listId', list.id);
+        });
+        deleteButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
 
-      listContainer.appendChild(editButton);
-      listContainer.insertAdjacentHTML('beforeend', '&emsp;');
-      listContainer.appendChild(deleteButton);
-      
-
+        listContainer.appendChild(deleteButton);
+        listContainer.insertAdjacentHTML('beforeend', '&emsp;');
+        listContainer.appendChild(editButton);
+      }
     };
   } catch (error) {
     console.error('Erro ao buscar revisões do usuário:', error);
