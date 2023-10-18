@@ -27,15 +27,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const userRow = document.createElement('tr');
             const userCell = document.createElement('td');
-            userCell.textContent = `Usuario: ${comment.username}`;
+
+            const userText = document.createElement('p');
+            userText.textContent = `${comment.username}`;
+
+            const commentTextCell = document.createElement('span');
+            commentTextCell.textContent = `${comment.comment}`;
+
+            userCell.appendChild(userText);
+            userCell.appendChild(commentTextCell);
             userRow.appendChild(userCell);
             tbody.appendChild(userRow);
 
-            const commentTextRow = document.createElement('tr');
-            const commentTextCell = document.createElement('td');
-            commentTextCell.textContent = `Comentário: ${comment.comment}`;
-            commentTextRow.appendChild(commentTextCell);
-            tbody.appendChild(commentTextRow);
             table.appendChild(tbody);
             commentsContainer.appendChild(table);
 

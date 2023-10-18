@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         buttonContainer.appendChild(editButton);
         buttonContainer.insertAdjacentHTML('beforeend', '&emsp;');
         buttonContainer.appendChild(deleteButton);
-
       }
     };
   } catch (error) {

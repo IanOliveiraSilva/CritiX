@@ -16,7 +16,6 @@ const routes = [
   { path: '/getAllMovieReviews', title: 'Get All Review from a Movie Page' },
   { path: '/deleteReview', title: 'Delete Review' },
   { path: '/updateReview', title: 'Update Review' },
-  { path: '/createComment', title: 'Create Comment Page' },
   { path: '/getAllReviewsComments', title: 'getAllReviewsComments Page' },
   { path: '/getMovie', title: 'Get a Movie' },
   { path: '/getMovieSurprise', title: 'Get a Surprise Movie' },

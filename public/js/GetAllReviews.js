@@ -67,8 +67,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const titleCell = document.createElement('td');
 
-      
-
       const titleLink = document.createElement('a');
       titleLink.textContent = `${review.title}`;
       titleLink.href = '/getMovieByTitle'
@@ -91,18 +89,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       table.appendChild(tbody);
       reviewsContainer.appendChild(table);
 
-      const editReviewButtonRow = document.createElement('tr');
-      const editReviewButtonCell = document.createElement('td');
-      const editButton = document.createElement('a');
-      editButton.href = '/getReviewById'
-      editButton.textContent = 'Ver Review';
-      editButton.addEventListener('click', () => {
+      const getReviewButtonRow = document.createElement('tr');
+      const getReviewButtonCell = document.createElement('td');
+      const getReviewButton = document.createElement('a');
+      getReviewButton.href = '/getReviewById'
+      getReviewButton.textContent = 'Ver Review';
+      getReviewButton.addEventListener('click', () => {
         localStorage.setItem('reviewId', review.id);
       });
-      editReviewButtonCell.appendChild(editButton);
-      editReviewButtonRow.appendChild(editReviewButtonCell);
-      tbody.appendChild(editReviewButtonRow);
-      editButton.classList.add('btn', 'btn-warning', 'text-dark', 'btn-link', 'mt-3');
+      getReviewButtonCell.appendChild(getReviewButton);
+      getReviewButtonRow.appendChild(getReviewButtonCell);
+      tbody.appendChild(getReviewButtonRow);
+      getReviewButton.classList.add('btn', 'btn-warning', 'text-dark', 'btn-link', 'mt-3');
     });
   } catch (error) {
     console.error('Erro ao buscar revisões:', error);

@@ -18,6 +18,14 @@ body {
   background-position: center;
 }
 
+span { 
+  font-weight: 300;
+}
+
+p { 
+  font-weight: 600;
+}
+
 main {
   flex: 1;
 }

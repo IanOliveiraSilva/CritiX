@@ -33,6 +33,7 @@ function generateStarRating(rating, additionalClass = '') {
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('reviewId');
+    const username = localStorage.getItem('username');
 
     const reviewsContainer = document.getElementById('reviews');
     const titleContainer = document.getElementById('pageTitle')
@@ -102,20 +103,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         movieContainer.appendChild(movieLink);
         reviewsContainer.appendChild(movieContainer);
 
-        
-
-
         const ratingCell = document.createElement('p');
         ratingCell.textContent = `Nota: `;
         ratingCell.classList.add('movie-title');
-
 
         const commentCell = document.createElement('p');
         commentCell.textContent = `${reviewsData[0].review}`;
         commentCell.classList.add('movie-title');
         reviewsContainer.appendChild(commentCell);
-
-
 
         if (reviewsData[0].specialrating !== null) {
             const specialRatingCell = document.createElement('p');
@@ -133,38 +128,99 @@ document.addEventListener('DOMContentLoaded', async () => {
         const buttonsContainer = document.createElement('div');
         buttonsContainer.classList.add('text-center');
 
-        const editButton = document.createElement('a');
-        editButton.textContent = 'Editar';
-        editButton.href = '/updateReview';
-        editButton.addEventListener('click', () => {
-            localStorage.setItem('reviewId', reviewsData[0].id);
-            localStorage.setItem('rating', reviewsData[0].rating);
-            localStorage.setItem('review', reviewsData[0].review);
-            localStorage.setItem('specialRating', reviewsData[0].specialrating);
-        });
-        editButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
+        if (username == reviewsData[0].username) {
+            const editButton = document.createElement('a');
+            editButton.textContent = 'Editar';
+            editButton.href = '/updateReview';
+            editButton.addEventListener('click', () => {
+                localStorage.setItem('reviewId', reviewsData[0].id);
+                localStorage.setItem('rating', reviewsData[0].rating);
+                localStorage.setItem('review', reviewsData[0].review);
+                localStorage.setItem('specialRating', reviewsData[0].specialrating);
+            });
+            editButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
 
-        const deleteButton = document.createElement('a');
-        deleteButton.textContent = 'Apagar';
-        deleteButton.href = '/deleteReview'
-        deleteButton.addEventListener('click', () => {
-            localStorage.setItem('reviewId', reviewsData[0].id);
-        });
-        deleteButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
-        
-        const profileButton = document.createElement('a');
-        profileButton.textContent = 'Voltar ao perfil';
-        profileButton.href = '/profile'
-        profileButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
+            const deleteButton = document.createElement('a');
+            deleteButton.textContent = 'Apagar';
+            deleteButton.href = '/deleteReview'
+            deleteButton.addEventListener('click', () => {
+                localStorage.setItem('reviewId', reviewsData[0].id);
+            });
+            deleteButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
 
-        buttonsContainer.appendChild(editButton);
-        buttonsContainer.insertAdjacentHTML('beforeend', '&emsp;');
-        buttonsContainer.appendChild(deleteButton);
-        buttonsContainer.insertAdjacentHTML('beforeend', '<br>');
-        buttonsContainer.insertAdjacentHTML('beforeend', '<br>');
-        buttonsContainer.appendChild(profileButton);
-        reviewsContainer.appendChild(buttonsContainer);
+            const profileButton = document.createElement('a');
+            profileButton.textContent = 'Voltar ao perfil';
+            profileButton.href = '/profile'
+            profileButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
 
+            buttonsContainer.appendChild(editButton);
+            buttonsContainer.insertAdjacentHTML('beforeend', '&emsp;');
+            buttonsContainer.appendChild(deleteButton);
+            buttonsContainer.insertAdjacentHTML('beforeend', '<br>');
+            buttonsContainer.insertAdjacentHTML('beforeend', '<br>');
+            buttonsContainer.appendChild(profileButton);
+            reviewsContainer.appendChild(buttonsContainer);
+        }
+
+        if (username != reviewsData[0].username) {
+            // FORM COMENTARIO
+            const form = document.createElement('form');
+
+            const comentarioLabel = document.createElement('label');
+            const comentarioInput = document.createElement('input');
+            comentarioInput.type = 'text';
+            comentarioInput.name = 'comment';
+            comentarioLabel.appendChild(comentarioInput);
+
+            form.appendChild(comentarioLabel);
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                const reviewId = localStorage.getItem('reviewId');
+                const comment = comentarioInput.value;
+                const token = localStorage.getItem('token');
+
+                try {
+                    const response = await fetch('/api/comment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            reviewId: reviewId,
+                            comment: comment
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        alert('Comentário criado com sucesso!');
+                        window.location.href = '/getAllReviewsComments';
+                    } else {
+                        const data = await response.json();
+                        alert(`Erro: ${data.message}`);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert('Um erro aconteceu ao criar o comentário');
+                }
+            });
+
+            const commentButton = document.createElement('button');
+            commentButton.id = 'get-review-id';
+            commentButton.textContent = 'Comentar';
+            commentButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
+            commentButton.addEventListener('click', function (event) {
+                form.dispatchEvent(new Event('submit'));
+            });
+
+            reviewsContainer.appendChild(form);
+            reviewsContainer.appendChild(commentButton);
+
+
+
+        }
     } catch (error) {
         console.error('Erro ao buscar revisões:', error);
     }

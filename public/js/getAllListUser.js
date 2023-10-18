@@ -25,15 +25,19 @@ document.addEventListener('DOMContentLoaded', async () => {
           
                 const nameRow = document.createElement('tr');
                 const nameCell = document.createElement('td');
-                nameCell.textContent = `Nome da lista: ${list.list_name}`;
+                
+                const nameText = document.createElement('span');
+                nameText.textContent = list.list_name;
+                
+                const descriptionText = document.createElement('span');
+                descriptionText.textContent = list.list_description;
+                
+                nameCell.appendChild(nameText);
+                nameCell.appendChild(document.createElement('br'));
+                nameCell.appendChild(descriptionText);
+                
                 nameRow.appendChild(nameCell);
                 tbody.appendChild(nameRow);
-          
-                const descriptionRow = document.createElement('tr');
-                const descriptionCell = document.createElement('td');
-                descriptionCell.textContent = `Descrição: ${list.list_description}`;
-                descriptionRow.appendChild(descriptionCell);
-                tbody.appendChild(descriptionRow);
 
                 const getListButtonRow = document.createElement('tr');
                 const getListButtonCell = document.createElement('td');

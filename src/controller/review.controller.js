@@ -242,7 +242,7 @@ exports.getReviewById = async (req, res) => {
   try {
     const { id } = req.query;
     const review = await db.query(
-      `SELECT r.id, r.userid, r.movieid, m.year, m.title, m.genre, m.imdbid,r.specialrating, r.rating, r.review, r.ispublic, r.created_at 
+      `SELECT r.id, r.userid, u.username,r.movieid, m.year, m.title, m.genre, m.imdbid,r.specialrating, r.rating, r.review, r.ispublic, r.created_at 
       FROM reviews r 
       INNER JOIN movies m ON r.movieId = m.id
       INNER JOIN users u ON r.userId = u.id

@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const nameRow = document.createElement('tr');
       const nameCell = document.createElement('td');
       
-      const nameText = document.createElement('span');
+      const nameText = document.createElement('p');
       nameText.textContent = list.list_name;
       
       const descriptionText = document.createElement('span');
