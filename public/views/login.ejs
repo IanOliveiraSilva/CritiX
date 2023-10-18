@@ -1,48 +1,26 @@
-<%- include('partials/header', {pageTitle: 'Critix - Movie Search'}) %>
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
 
-<link rel="stylesheet" href="../css/authForm.css">
-<main class="container">
-    <form id="login-form" class="login-form">
-        <div class="form-group">
-            <h2>Login</h2><br>
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+    <link rel="stylesheet" href="../css/authForm.css">
+    <main class="container">
+        <form id="login-form" class="login-form">
+            <div class="form-group">
+                <h2>Login</h2><br>
+                <label for="text">Email ou nome de usuário:</label>
+                <input type="text" class="form-control" id="email_or_username" name="email_or_username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-warning btn-block">Entrar</button>
+        </form>
+        <div class="row">
+            <a href="/register" class="btn btn-warning text-dark btn-link mt-3">Não tem uma conta? Crie aqui!</a>
+            <p>&emsp;</p>
+            <a href="/" class="btn btn-warning text-dark btn-link mt-3">Voltar para a página inicial</a>
         </div>
-        <div class="form-group">
-            <label for="password">Senha:</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-warning btn-block">Entrar</button>
-    </form>
-    <div class="row">
-        <a href="/register" class="btn btn-warning text-dark btn-link mt-3">Não tem uma conta? Crie aqui!</a><p>&emsp;</p>
-        <a href="/" class="btn btn-warning text-dark btn-link mt-3">Voltar para a página inicial</a>
-    </div>
-</main>
+    </main>
 
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>
 
-<script>
-    const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const response = await fetch('/api/user/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-        const data = await response.json();
-        if (response.ok) {
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('username', data.user.username);
-            alert(`Usuário ${data.user.username} logado com sucesso!`);
-            window.location.href = '/';
-        } else {
-            alert(data.message);
-        }
-    });
-</script>
+        <script src="../js/login.js"></script>

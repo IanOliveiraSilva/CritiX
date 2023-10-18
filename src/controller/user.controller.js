@@ -28,6 +28,7 @@ exports.signup = async (req, res) => {
       return res.status(400).json({ message: 'Email already taken' });
     }
 
+    // Validação para saber se o usaurio já está em uso
     const userExists = await db.query('SELECT * FROM users WHERE username = $1', [username]);
     if (userExists.rows.length > 0) {
       return res.status(400).json({ message: 'User already taken' });
@@ -49,6 +50,7 @@ exports.signup = async (req, res) => {
       { expiresIn: '10d' }
     );
 
+    // Retorna o novo usuario criado
     return res.status(201).json({ user: newUser.rows[0], token });
   } catch (error) {
     console.error(error);
@@ -59,23 +61,23 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     // Requisição do body
-    const { email, password } = req.body;
+    const { email_or_username, password } = req.body;
 
     // Validação dos campos de entrada
-    if (!email || !password) {
-      return res.status(400).json({ message: 'Email and password are required' });
+    if (!email_or_username || !password) {
+      return res.status(400).json({ message: 'Email or username and password are required' });
     }
 
-    // Consulta o usuário no banco de dados pelo email
-    const user = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    // Consulta o usuário no banco de dados pelo email ou nome de usuário
+    const user = await db.query('SELECT * FROM users WHERE username  = $1 OR email  = $1', [email_or_username]);
     if (user.rows.length === 0) {
-      return res.status(400).json({ message: 'Invalid email or password' });
+      return res.status(400).json({ message: 'Invalid email or username or password' });
     }
 
     // Verifica se a senha fornecida corresponde à senha no banco de dados
     const isPasswordCorrect = await bcrypt.compare(password, user.rows[0].password);
     if (!isPasswordCorrect) {
-      return res.status(400).json({ message: 'Invalid email or password' });
+      return res.status(400).json({ message: 'Invalid email or username or password' });
     }
 
     // Gera um token de autenticação
@@ -91,6 +93,7 @@ exports.login = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 exports.createUserProfile = async (req, res) => {
   try {
@@ -231,17 +234,17 @@ exports.getProfileByUser = async (req, res) => {
 exports.updateUserProfile = async (req, res) => {
   try {
     // Requisição do body e do usuario autenticado
-    const { 
-      name, 
-      familyName, 
-      bio, 
-      city, 
-      country, 
-      birthday, 
-      socialmediaInstagram, 
-      socialMediaX, 
-      socialMediaTikTok, 
-      userProfileTag 
+    const {
+      name,
+      familyName,
+      bio,
+      city,
+      country,
+      birthday,
+      socialmediaInstagram,
+      socialMediaX,
+      socialMediaTikTok,
+      userProfileTag
     } = req.body;
     const userId = req.user.id;
 
@@ -261,16 +264,16 @@ exports.updateUserProfile = async (req, res) => {
        WHERE userId = $11
        RETURNING *`,
       [
-        name, 
-        familyName, 
-        bio, 
-        city, 
-        country, 
-        birthday, 
-        socialmediaInstagram, 
-        socialMediaX, 
-        socialMediaTikTok, 
-        userProfileTag, 
+        name,
+        familyName,
+        bio,
+        city,
+        country,
+        birthday,
+        socialmediaInstagram,
+        socialMediaX,
+        socialMediaTikTok,
+        userProfileTag,
         userId]
     );
 
@@ -291,17 +294,17 @@ exports.updateUserProfile = async (req, res) => {
 exports.updateUserProfilePartially = async (req, res) => {
   try {
     //Requisição do body e do usuario autenticado
-    const { 
-      name, 
-      familyName, 
-      bio, 
-      city, 
-      country, 
-      birthday, 
-      socialmediaInstagram, 
-      socialMediaX, 
-      socialMediaTikTok, 
-      userProfileTag 
+    const {
+      name,
+      familyName,
+      bio,
+      city,
+      country,
+      birthday,
+      socialmediaInstagram,
+      socialMediaX,
+      socialMediaTikTok,
+      userProfileTag
     } = req.body;
     const userId = req.user.id;
 
@@ -341,16 +344,16 @@ exports.updateUserProfilePartially = async (req, res) => {
        WHERE userId = $11 
        RETURNING *`,
       [
-        updatedProfile.name, 
-        updatedProfile.familyName, 
-        updatedProfile.bio, 
-        updatedProfile.city, 
-        updatedProfile.country, 
-        updatedProfile.birthday, 
-        updatedProfile.socialmediaInstagram, 
-        updatedProfile.socialMediaX, 
-        updatedProfile.socialMediaTikTok, 
-        updatedProfile.userProfile, 
+        updatedProfile.name,
+        updatedProfile.familyName,
+        updatedProfile.bio,
+        updatedProfile.city,
+        updatedProfile.country,
+        updatedProfile.birthday,
+        updatedProfile.socialmediaInstagram,
+        updatedProfile.socialMediaX,
+        updatedProfile.socialMediaTikTok,
+        updatedProfile.userProfile,
         userId
       ]
     );
@@ -398,7 +401,7 @@ exports.AuthMiddleware = async (req, res, next) => {
   }
 };
 
-exports.GetRatingCount = async (req, res, next) =>{
+exports.GetRatingCount = async (req, res, next) => {
   try {
     const userId = req.user.id;
 
@@ -417,7 +420,7 @@ exports.GetRatingCount = async (req, res, next) =>{
     const ratings = ratingCount.rows;
 
     res.status(200).json({
-        rating: ratings
+      rating: ratings
     });
   } catch (error) {
     console.error(error);
