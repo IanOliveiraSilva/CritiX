@@ -87,16 +87,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         editButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
 
         const deleteButton = document.createElement('a');
-        deleteButton.textContent = 'Apagar lista';
+        deleteButton.textContent = 'Apagar';
         deleteButton.href = '/deleteList';
         deleteButton.addEventListener('click', () => {
           localStorage.setItem('listId', list.id);
         });
         deleteButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
 
-        listContainer.appendChild(deleteButton);
-        listContainer.insertAdjacentHTML('beforeend', '&emsp;');
         listContainer.appendChild(editButton);
+        listContainer.insertAdjacentHTML('beforeend', '&emsp;');
+        listContainer.appendChild(deleteButton);
       }
     };
   } catch (error) {
