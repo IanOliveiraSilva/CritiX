@@ -1,11 +1,42 @@
-const token = localStorage.getItem('token');
-let movieTitle;
-let movieimdbId;
+function generateStarRating(rating) {
+  const maxRating = 5;
+  const roundedRating = Math.round(rating * 2) / 2;
+  const fullStars = Math.floor(roundedRating);
+  const halfStar = roundedRating % 1 !== 0;
+  const emptyStars = maxRating - fullStars - (halfStar ? 1 : 0);
+
+  const ratingContainer = document.createElement('div');
+  ratingContainer.classList.add('star-rating');
+
+  for (let i = 0; i < fullStars; i++) {
+    const star = document.createElement('i');
+    star.classList.add('fas', 'fa-star');
+    ratingContainer.appendChild(star);
+  }
+
+  if (halfStar) {
+    const halfStar = document.createElement('i');
+    halfStar.classList.add('fas', 'fa-star-half-alt');
+    ratingContainer.appendChild(halfStar);
+  }
+
+  for (let i = 0; i < emptyStars; i++) {
+    const star = document.createElement('i');
+    star.classList.add('far', 'fa-star');
+    ratingContainer.appendChild(star);
+  }
+
+  return ratingContainer;
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
+    const token = localStorage.getItem('token');
+    let movieTitle;
+    let movieimdbId;
     movieTitle = localStorage.getItem('movieTitle');
     movieimdbId = localStorage.getItem('movieimbdId');
+    const titleContainer = document.getElementById('pageTitle')
     const titleInput = document.getElementById('movieTitle');
 
     if (movieTitle && titleInput) {
@@ -28,9 +59,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const reviewsContainer = document.getElementById('reviews');
 
-      const titleHeader = document.createElement('h1');
-      titleHeader.textContent = `Avaliações para o Filme: ${movieTitle}`;
-      reviewsContainer.appendChild(titleHeader);
+      // Title
+      const movieCount = document.createElement('p');
+      movieCount.textContent = 'REVIEWS: ' + reviewsData[0].title;
+      movieCount.classList.add('title', 'uppercase-text');
+
+      const hr = document.createElement('hr');
+
+      titleContainer.appendChild(movieCount);
+      titleContainer.appendChild(hr);
 
       reviewsData.forEach((review) => {
         const movieGenre = `${review.genre}`;
@@ -56,32 +93,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const tbody = document.createElement('tbody');
 
-        const userRow = document.createElement('tr');
+  
         const userCell = document.createElement('td');
-        userCell.textContent = `Usuario: ${review.username}`;
-        userRow.appendChild(userCell);
-        tbody.appendChild(userRow);
-
+        userCell.textContent = `${review.username}`;
 
         const ratingRow = document.createElement('tr');
         const ratingCell = document.createElement('td');
-        ratingCell.textContent = `Nota: ${review.rating}`;
+        ratingCell.textContent = `Nota:`;
+        ratingCell.appendChild(generateStarRating(review.rating));
+
+        const specialRatingCell = document.createElement('td');
+        specialRatingCell.textContent = `${movieGenreMapped}:`;
+        specialRatingCell.appendChild(generateStarRating(reviewsData[0].specialrating, 'movie-title'));
+
+        const commentCell = document.createElement('td');
+        commentCell.textContent = `${review.review}`;
+
+        ratingRow.appendChild(userCell);
+        ratingRow.appendChild(commentCell);
+        ratingRow.appendChild(specialRatingCell);
         ratingRow.appendChild(ratingCell);
         tbody.appendChild(ratingRow);
 
-        const commentRow = document.createElement('tr');
-        const commentCell = document.createElement('td');
-        commentCell.textContent = `Comentário: ${review.review}`;
-        commentRow.appendChild(commentCell);
-        tbody.appendChild(commentRow);
 
-        if (review.specialrating !== null) {
-          const specialRatingRow = document.createElement('tr');
-          const specialRatingCell = document.createElement('td');
-          specialRatingCell.textContent = `${movieGenreMapped}: ${review.specialrating}`;
-          specialRatingRow.appendChild(specialRatingCell);
-          tbody.appendChild(specialRatingRow);
-        }
 
         table.appendChild(tbody);
         reviewsContainer.appendChild(table);

@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const listData = await response.json();
 
-    
     const movieCount = document.createElement('p');
     movieCount.textContent = 'MINHAS LISTAS';
     movieCount.classList.add('title', 'uppercase-text');

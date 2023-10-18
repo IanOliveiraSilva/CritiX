@@ -15,15 +15,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            const detailsData = await detailsResponse.json();
+            const profileData = await detailsResponse.json();
             const resultProfile = document.createElement('div');
             resultProfile.innerHTML = `
             <div class="profile-container">
             <div class="profile-details">
             <br>
             <img class="profile-image" src="../uploads/icon-1696055357956.jpeg" alt="Ícone do perfil do usuário"/>
-                <h1 class="profile-name">${detailsData.body.profile.givenname} ${detailsData.body.profile.familyname}</h1> 
-                <p class="profile-bio">@${detailsData.body.profile.userprofile}</p>
+                <h1 class="profile-name">${profileData.body.profile.givenname} ${profileData.body.profile.familyname}</h1> 
+                <p class="profile-bio">@${profileData.body.profile.userprofile}</p>
                 
                 <div class="profile-info">
                 <br>
@@ -32,45 +32,49 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <ul class="list-group">
                 <ul>
                 <li class="list-group-item li-profile">
-                <strong><i class="fas fa-pencil-alt"></i> </strong>${detailsData.body.profile.bio}
+                <strong><i class="fas fa-pencil-alt"></i> </strong>${profileData.body.profile.bio}
                 </li>
 
                 <li class="list-group-item li-profile">
-                <strong><i class="fas fa-map-marker-alt"></i> </strong>${detailsData.body.profile.country}, ${detailsData.body.profile.city}
+                <strong><i class="fas fa-map-marker-alt"></i> </strong>${profileData.body.profile.country}, ${profileData.body.profile.city}
                 </li>
                 
                 <li class="list-group-item li-profile">
-                <strong><i class="fas fa-calendar-alt"></i></strong> ${detailsData.body.profile.birthday}
+                <strong><i class="fas fa-calendar-alt"></i></strong> ${profileData.body.profile.birthday}
                 </li><br>
                 </ul>
 
                 <p><strong>Redes Sociais:</strong></p><br>
                 <ul>
                 <li class="list-group-item li-profile">
-               <i class="fab fa-twitter"></i> <strong><a href="https://www.twitter.com/${detailsData.body.profile.socialmediax}">${detailsData.body.profile.socialmediax}</a></strong>
+               <i class="fab fa-twitter"></i> <strong><a href="https://www.twitter.com/${profileData.body.profile.socialmediax}">${profileData.body.profile.socialmediax}</a></strong>
                 </li>
 
                 <li class="list-group-item li-profile">
-                <i class="fab fa-instagram"></i> <strong><a href="https://www.instagram.com/${detailsData.body.profile.socialmediainstagram}">${detailsData.body.profile.socialmediainstagram}</a></strong>
+                <i class="fab fa-instagram"></i> <strong><a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}">${profileData.body.profile.socialmediainstagram}</a></strong>
                 </li>
 
                 <li class="list-group-item li-profile">
-                <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/@${detailsData.body.profile.socialmediatiktok}">${detailsData.body.profile.socialmediatiktok}</a></strong>
+                <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}">${profileData.body.profile.socialmediatiktok}</a></strong>
                 </li><br>
                 </ul>
 
-                    <p><strong>Filmes Favoritos:</strong></p><br>
-                    <ul id="filmes-favoritos"></ul><br>
+                <p><strong>Filmes Favoritos:</strong></p><br>
+                <ul id="filmes-favoritos"></ul><hr><br>
+                <a href="/getAllUserReviews" class="btn btn-primary text-warning btn-link profile-stat">
+
+                Avaliações: 
+                <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}
+                </span>
+                </a>
+                <canvas id="myChart"></canvas><br>
             </ul>
+            <hr>
             <div class="text-center">
                     <a href="/getAllUserLists" id="list-link" class="btn btn-primary text-warning btn-link profile-stat">Listas: <span class="stat-count">
-                    ${detailsData.body.profile.contadorlists !== null ? detailsData.body.profile.contadorlists : 0}
+                    ${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}
                     </span>
                     </a>
-
-                    <a href="/getAllUserReviews" id="review-link" class="btn btn-primary text-warning btn-link profile-stat">Avaliações: <span class="stat-count">
-                    ${detailsData.body.profile.contadorreviews !== null ? detailsData.body.profile.contadorreviews : 0}
-                    </span>
 
                     </a><br><br>
                     <a id="get-user-watchlist" href="/getUserWatchlist" class="btn btn-primary text-warning btn-link profile-stat">Watchlist<span class="stat-count"></span></a>
@@ -82,13 +86,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             resultContainer.addEventListener('click', (event) => {
                 if (event.target.id === 'list-link') {
-                    if (detailsData.body.profile.userprofile) {
-                        localStorage.setItem('userprofile', detailsData.body.profile.userprofile);
+                    if (profileData.body.profile.userprofile) {
+                        localStorage.setItem('userprofile', profileData.body.profile.userprofile);
                     }
                 }
                 else if (event.target.id === 'review-link') {
-                    if (detailsData.body.profile.userprofile) {
-                        localStorage.setItem('userprofile', detailsData.body.profile.userprofile);
+                    if (profileData.body.profile.userprofile) {
+                        localStorage.setItem('userprofile', profileData.body.profile.userprofile);
                     }
                 }
             });
@@ -98,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // mostrar filmes favoritos
             const filmsContainer = document.createElement('div');
             filmsContainer.classList.add('films-container');
-            for (const movieTitle of detailsData.body.profile.movies) {
+            for (const movieTitle of profileData.body.profile.movies) {
                 try {
                     const movieResponse = await fetch(`/api/movie/title?title=${encodeURIComponent(movieTitle)}`, {
                         method: 'GET',
@@ -141,9 +145,129 @@ document.addEventListener('DOMContentLoaded', async () => {
             // mostrar watchlist
             const watchlistSection = document.querySelector('#get-user-watchlist');
             watchlistSection.addEventListener('click', (event) => {
-                localStorage.setItem('userprofile', detailsData.body.profile.userprofile);
+                localStorage.setItem('userprofile', profileData.body.profile.userprofile);
             });
 
+            // Rating count
+            const ratingCountResponse = await fetch('api/user/rating', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const ratingData = await ratingCountResponse.json();
+
+            let ratings = {
+                '5': 0,
+                '4': 0,
+                '3': 0,
+                '2': 0,
+                '1': 0
+            };
+
+            for (const rating of ratingData.rating) {
+                ratings[rating.rating.toString()] = rating.count;
+            }
+
+            const starLabels = {
+                '5': '★★★★★',
+                '4': '★★★★☆',
+                '3': '★★★☆☆',
+                '2': '★★☆☆☆',
+                '1': '★☆☆☆☆'
+            };
+
+            let chartData = {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(ratings).map(rating => starLabels[rating]),
+                    datasets: [{
+                        label: 'REVIEWS',
+                        data: Object.values(ratings),
+                        backgroundColor: 'rgb(10, 25, 49)',
+                        borderColor: 'rgba(0, 0, 0, 0.8)',
+                        borderWidth: 1,
+                        hoverBackgroundColor: 'rgba(0, 0, 0, 0.9)',
+                        hoverBorderColor: 'rgb(0,0,0)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            display: false,
+                            grid: {
+                                display: false,
+                            },
+                            ticks: {
+                                callback: function (value, index, values) {
+                                    return '';
+                                }
+                            }
+                        },
+                        x: {
+                            display: false,
+                            grid: {
+                                display: false,
+                            },
+                            barPercentage: .1,
+                            categoryPercentage: .1,
+                        },
+                        x2: {
+                            display: true,
+                            position: 'bottom',
+                            labels: Object.keys(ratings).map(rating => starLabels[rating]),
+                            grid: {
+                                display: false,
+                            },
+                            ticks: {
+                                autoSkip: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        datalabels: {
+                            color: '#fff',
+                            align: 'end',
+                            formatter: function (value, context) {
+                                const index = context.dataIndex;
+                                const starCount = Object.keys(starLabels)[index];
+                                return starCount + ' (' + value + ')';
+                            }
+                        }
+                    },
+                    legend: {
+                        display: true,
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutBounce'
+                    },
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
+                    tooltips: {
+                        enabled: false,
+                    },
+                    shadow: {
+                        enabled: true,
+                        color: 'rgba(0, 0, 0, 0.2)',
+                        blur: 10,
+                        offsetY: 5,
+                        offsetX: 5,
+                    }
+                }
+            };
+
+
+            var ctx = document.getElementById('myChart');
+            new Chart(ctx, chartData);
 
 
 

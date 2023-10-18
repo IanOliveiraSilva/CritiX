@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     const reviewsContainer = document.getElementById('reviews');
     const username = localStorage.getItem('userprofile');
+    const titleContainer = document.getElementById('pageTitle');
 
     try {
         const reviewResponse = await fetch(`/api/allReviews/user/?userProfile=${encodeURIComponent(username)}`, {
@@ -44,6 +45,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         const reviewsData = await reviewResponse.json();
+
+        const movieCount = document.createElement('p');
+        movieCount.textContent = 'REVIEWS DE ' + reviewsData[0].username;
+        movieCount.classList.add('title', 'uppercase-text');
+
+        const hr = document.createElement('hr');
+
+        titleContainer.appendChild(movieCount);
+        titleContainer.appendChild(hr);
 
         reviewsData.forEach((review) => {
             const table = document.createElement('table');

@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
       titleCell.appendChild(titleLink);
       titleCell.appendChild(generateStarRating(review.rating));
-
       titleRow.appendChild(titleCell);
       tbody.appendChild(titleRow);
 
@@ -116,6 +115,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       getcommentReviewButtonRow.appendChild(getcommentReviewButtonCell);
       tbody.appendChild(getcommentReviewButtonRow);
       getcommentButton.classList.add('btn', 'btn-warning', 'text-dark', 'btn-link', 'mt-3');
+
     });
   } catch (error) {
     console.error('Erro ao buscar revisões:', error);
