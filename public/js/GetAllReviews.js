@@ -9,21 +9,21 @@ function generateStarRating(rating) {
   ratingContainer.classList.add('star-rating');
 
   for (let i = 0; i < fullStars; i++) {
-      const star = document.createElement('i');
-      star.classList.add('fas', 'fa-star');
-      ratingContainer.appendChild(star);
+    const star = document.createElement('i');
+    star.classList.add('fas', 'fa-star');
+    ratingContainer.appendChild(star);
   }
 
   if (halfStar) {
-      const halfStar = document.createElement('i');
-      halfStar.classList.add('fas', 'fa-star-half-alt');
-      ratingContainer.appendChild(halfStar);
+    const halfStar = document.createElement('i');
+    halfStar.classList.add('fas', 'fa-star-half-alt');
+    ratingContainer.appendChild(halfStar);
   }
 
   for (let i = 0; i < emptyStars; i++) {
-      const star = document.createElement('i');
-      star.classList.add('far', 'fa-star');
-      ratingContainer.appendChild(star);
+    const star = document.createElement('i');
+    star.classList.add('far', 'fa-star');
+    ratingContainer.appendChild(star);
   }
 
   return ratingContainer;
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const reviewsContainer = document.getElementById('reviews');
   const titleContainer = document.getElementById('pageTitle');
-  
+
   try {
     const response = await fetch('/api/allReviews', {
       headers: {
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     movieCount.classList.add('title', 'uppercase-text');
 
     const hr = document.createElement('hr');
-    
+
     titleContainer.appendChild(movieCount);
     titleContainer.appendChild(hr);
 
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const titleLink = document.createElement('a');
       titleLink.textContent = `${review.title}`;
       titleLink.href = '/getMovieByTitle'
-      titleLink.addEventListener('click', function(event) {
+      titleLink.addEventListener('click', function (event) {
         event.preventDefault();
         const movieTitle = review.title;
         const movieimdbId = review.imdbid;
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
       titleCell.appendChild(titleLink);
       titleCell.appendChild(generateStarRating(review.rating));
-      
+
       titleRow.appendChild(titleCell);
       tbody.appendChild(titleRow);
 
@@ -101,6 +101,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       getReviewButtonRow.appendChild(getReviewButtonCell);
       tbody.appendChild(getReviewButtonRow);
       getReviewButton.classList.add('btn', 'btn-warning', 'text-dark', 'btn-link', 'mt-3');
+
+      // VER COMENTARIOS
+      const getcommentReviewButtonRow = document.createElement('tr');
+      const getcommentReviewButtonCell = document.createElement('td');
+      const getcommentButton = document.createElement('button');
+      getcommentButton.id = 'get-review-id'
+      getcommentButton.textContent = 'Comentarios';
+      getcommentButton.addEventListener('click', () => {
+        localStorage.setItem('reviewId', review.id);
+        window.location.href = '/getAllReviewsComments';
+      });
+      getcommentReviewButtonCell.appendChild(getcommentButton);
+      getcommentReviewButtonRow.appendChild(getcommentReviewButtonCell);
+      tbody.appendChild(getcommentReviewButtonRow);
+      getcommentButton.classList.add('btn', 'btn-warning', 'text-dark', 'btn-link', 'mt-3');
     });
   } catch (error) {
     console.error('Erro ao buscar revisões:', error);
