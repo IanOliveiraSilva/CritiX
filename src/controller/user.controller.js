@@ -23,14 +23,20 @@ exports.signup = async (req, res) => {
     }
 
     // Validação para saber se o email já está em uso
-    const userExists = await db.query('SELECT * FROM users WHERE email = $1', [email]);
-    if (userExists.rows.length > 0) {
+    const emailExists = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (emailExists.rows.length > 0) {
       return res.status(400).json({ message: 'Email already taken' });
+    }
+
+    const userExists = await db.query('SELECT * FROM users WHERE username = $1', [username]);
+    if (userExists.rows.length > 0) {
+      return res.status(400).json({ message: 'User already taken' });
     }
 
     // Hash da senha antes de salvar no banco de dados
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Cria novo usuario no banco de dados
     const newUser = await db.query(
       'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id, username, email',
       [username, email, hashedPassword]
