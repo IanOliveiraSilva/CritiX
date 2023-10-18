@@ -107,9 +107,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         ratingCell.textContent = `Nota: `;
         ratingCell.classList.add('movie-title');
 
-        const commentCell = document.createElement('p');
+        const commentCell = document.createElement('span');
         commentCell.textContent = `${reviewsData[0].review}`;
-        commentCell.classList.add('movie-title');
         reviewsContainer.appendChild(commentCell);
 
         if (reviewsData[0].specialrating !== null) {
