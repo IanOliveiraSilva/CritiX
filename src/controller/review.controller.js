@@ -159,10 +159,12 @@ exports.getAllReviews = async (req, res) => {
     const userId = req.user.id;
 
     const reviews = await db.query(
-      `SELECT r.id, r.userid, r.movieid, m.title, m.genre, m.imdbid,r.specialrating, r.rating, r.review, r.ispublic, r.created_at 
-      FROM reviews r 
+      `SELECT r.id, r.userid, r.movieid, m.title, m.genre, m.imdbid,r.specialrating, r.rating, r.review, r.ispublic, r.created_at, COUNT(c.*)
+      FROM reviews r
+      JOIN comments c ON r.id = c.reviewId 
       JOIN movies m ON r.movieid = m.id 
       WHERE r.userId = $1
+      GROUP BY r.id, m.title, m.genre, m.imdbid
       `,
       [userId]
     );
@@ -217,11 +219,14 @@ exports.getAllReviewsFromUser = async (req, res) => {
     const userId = userIdQuery.rows[0].userid;
 
     const reviews = await db.query(
-      `SELECT users.username, movies.title, movies.genre, reviews.rating, reviews.id, reviews.specialRating, reviews.review, reviews.created_at
-      FROM reviews
-      INNER JOIN movies ON reviews.movieId = movies.id
-      INNER JOIN users ON reviews.userId = users.id
-      WHERE reviews.userId = $1 AND reviews.isPublic = true`,
+      `SELECT users.username, movies.title, movies.genre, r.rating, r.id, r.specialRating, r.review, r.created_at, COUNT(c.*)
+      FROM reviews r
+      INNER JOIN movies ON r.movieId = movies.id
+      INNER JOIN comments c ON r.id = c.reviewId 
+      INNER JOIN users ON r.userId = users.id
+      WHERE r.userId = $1 AND r.isPublic = true
+      GROUP BY r.id, users.username, movies.title, movies.genre, movies.imdbid
+      `,
       [userId]
     );
 

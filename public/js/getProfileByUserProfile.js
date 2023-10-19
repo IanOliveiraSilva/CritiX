@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 <p><strong>Filmes Favoritos:</strong></p><br>
                 <ul id="filmes-favoritos"></ul><hr><br>
-                <a href="/getAllUserReviews" class="btn btn-primary text-warning btn-link profile-stat">
 
+                <a href="/getAllUserReviews" id="review-link" class="btn btn-primary text-warning btn-link profile-stat">
                 Avaliações: 
                 <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}
                 </span>

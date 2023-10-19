@@ -86,12 +86,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     
                     <p><strong>Filmes Favoritos:</strong></p><br>
                     <ul id="filmes-favoritos"></ul><hr><br>
-                    <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">
 
+                    <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">
                     Reviews: 
                     <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}
                     </span>
                     </a>
+
                     <canvas id="myChart"></canvas><br>
                     
 
@@ -285,7 +286,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
     };
-
 
     var ctx = document.getElementById('myChart');
     new Chart(ctx, chartData);

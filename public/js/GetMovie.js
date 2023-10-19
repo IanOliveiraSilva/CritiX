@@ -162,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
       throw error;
     }
   };
+  
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();

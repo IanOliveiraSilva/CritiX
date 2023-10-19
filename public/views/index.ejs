@@ -4,23 +4,6 @@
 <link rel="stylesheet" href="../css/authForm.css">
 
     <main>
-      <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-        <div class="container">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item"><a class="nav-link" id="username-display"></a></li>
-                <li class="nav-item"><a class="nav-link" href="/register" id="signup-display"></a></li>
-                <li class="nav-item"><a class="nav-link" href="/login" id="login-display"></a></li>
-                <li class="nav-item"><a class="nav-link" href="/" id="logout"></a></li>
-                <li class="nav-item"><a class="nav-link" href="/profile" id="profile"></a></li>
-                <li class="nav-item"><a class="nav-link" href="/getMovie">Buscar filmes</a></li>
-                <li class="nav-item"><a class="nav-link" href="/getMovieSurprise">Surpreenda-me</a></li>
-                <li class="nav-item"><a class="nav-link" href="/getProfileByUserProfile">Buscar Usuário</a></li>
-                <li class="nav-item"><a class="nav-link" href="/api-docs">Documentação</a></li>
-            </ul>
-        </div>
-    </nav>
-    
-
       <section class="container mt-5">
         <div class="row">
             <div class="col-md-6 text-center section-content">
@@ -77,29 +60,3 @@
 
     <%- include('partials/footer') %>
     
-    <script>
-      document.getElementById('logout').addEventListener('click', function () {
-        localStorage.clear();
-        alert(`Logout bem-sucedido.`);
-      });
-
-      window.onload = function () {
-        const username = localStorage.getItem('username');
-        if (username) {
-          document.getElementById('username-display').textContent = `Olá, ${username}!`;
-          document.getElementById('logout').textContent = `Sair da conta`;
-          document.getElementById('profile').textContent = `Meu Perfil`;
-
-
-          document.getElementById('login-display').style.display = 'none';
-          document.getElementById('signup-display').style.display = 'none';
-        } else {
-          document.getElementById('login-display').textContent = `Entre em sua conta`;
-          document.getElementById('signup-display').textContent = `Crie uma conta`;
-
-          document.getElementById('profile').style.display = 'none';
-          document.getElementById('create-list-display').style.display = 'none';
-        }
-      };
-
-    </script>

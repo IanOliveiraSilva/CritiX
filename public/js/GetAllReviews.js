@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const getcommentReviewButtonCell = document.createElement('td');
       const getcommentButton = document.createElement('button');
       getcommentButton.id = 'get-review-id'
-      getcommentButton.textContent = 'Comentarios';
+      getcommentButton.textContent = `Comentarios: ${review.count}`;
       getcommentButton.addEventListener('click', () => {
         localStorage.setItem('reviewId', review.id);
         window.location.href = '/getAllReviewsComments';
