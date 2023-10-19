@@ -109,7 +109,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const commentCell = document.createElement('span');
         commentCell.textContent = `${reviewsData[0].review}`;
+        commentCell.classList.add('span-text', 'span-text-border');
         reviewsContainer.appendChild(commentCell);
+
 
         if (reviewsData[0].specialrating !== null) {
             const specialRatingCell = document.createElement('p');
