@@ -255,6 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const getReviewButton = document.getElementById('get-review-button');
             getReviewButton.addEventListener('click', () => {
               localStorage.setItem('movieTitle', movie.Title);
+              localStorage.setItem('movieimbdId', movie.imdbID);
               window.location.href = '/getAllMovieReviews';
             });
 

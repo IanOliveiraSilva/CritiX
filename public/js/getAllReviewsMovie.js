@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (movieTitle) {
-      const response = await fetch(`/api/allReviews/movies/?title=${encodeURIComponent(movieTitle)}`, {
+      const response = await fetch(`/api/allReviews/movies/?title=${encodeURIComponent(movieimdbId)}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Title
       const movieCount = document.createElement('p');
-      movieCount.textContent = 'REVIEWS: ' + reviewsData[0].title;
+      movieCount.textContent = reviewsData[0].title;
       movieCount.classList.add('title', 'uppercase-text');
 
       const hr = document.createElement('hr');
@@ -93,7 +93,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const tbody = document.createElement('tbody');
 
-  
         const userCell = document.createElement('td');
         userCell.textContent = `${review.username}`;
 
@@ -106,16 +105,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         specialRatingCell.textContent = `${movieGenreMapped}:`;
         specialRatingCell.appendChild(generateStarRating(reviewsData[0].specialrating, 'movie-title'));
 
-        const commentCell = document.createElement('td');
-        commentCell.textContent = `${review.review}`;
+        const createdDate = new Date(review.created_at);
+        const createDay = createdDate.getDate();
+        const createMonth = createdDate.getMonth();
+        const dateCell = document.createElement('td');
+        if (createDay => 9) {
+          dateCell.textContent = `0${createDay}/0${createMonth}`;
+        } else {
+          dateCell.textContent = `${createDay}/${createMonth}`;
+        }
+
+        const commentButton = document.createElement('a');
+        commentButton.innerHTML = `<i class="fas fa-comment"></i> ${review.count}`;
+        commentButton.classList.add('delete-button');
+        commentButton.href = '/getAllReviewsComments'
+        commentButton.addEventListener('click', () => {
+          localStorage.setItem('reviewId', review.id);
+        });
+
+        const actionsCell = document.createElement('td');
+        actionsCell.appendChild(commentButton);
 
         ratingRow.appendChild(userCell);
-        ratingRow.appendChild(commentCell);
+        ratingRow.appendChild(dateCell);
         ratingRow.appendChild(specialRatingCell);
         ratingRow.appendChild(ratingCell);
+        ratingRow.appendChild(actionsCell);
+
+
         tbody.appendChild(ratingRow);
-
-
 
         table.appendChild(tbody);
         reviewsContainer.appendChild(table);
