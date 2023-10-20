@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const headerRow = document.createElement('tr');
   
         const titleLabel = document.createElement('th');
-        titleLabel.textContent = 'Filme';
+        titleLabel.textContent = 'Usuario';
         headerRow.appendChild(titleLabel);
   
         const dateLabel = document.createElement('th');

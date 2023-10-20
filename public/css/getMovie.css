@@ -12,6 +12,39 @@ body {
 
 }
 
+.navbar {
+  background-color: #ff8800;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #ff6600;
+}
+
+.navbar-toggler-icon {
+  background-color: #333;
+}
+
+@media (max-width: 768px) {
+  .navbar-nav {
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10px;
+  }
+
+  .navbar-toggler {
+      margin-bottom: 10px;
+  }
+}
+
 main {
   flex: 1;
 }

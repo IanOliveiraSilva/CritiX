@@ -23,7 +23,6 @@ main {
   flex: 1;
 }
 
-
 h1 {
   font-weight: 700;
   font-size: 36px;
@@ -35,16 +34,39 @@ p {
   font-size: 25px;
 }
 
-nav ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: center;
+.navbar {
+  background-color: #ff8800;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
 }
 
-nav li {
-  margin: 10px;
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s;
 }
+
+.nav-link:hover {
+  color: #ff6600;
+}
+
+.navbar-toggler-icon {
+  background-color: #333;
+}
+
+@media (max-width: 768px) {
+  .navbar-nav {
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10px;
+  }
+
+  .navbar-toggler {
+      margin-bottom: 10px;
+  }
+}
+
 
 a {
   text-decoration: none;

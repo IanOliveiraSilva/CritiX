@@ -165,7 +165,7 @@ exports.getAllReviews = async (req, res) => {
       JOIN movies m ON r.movieid = m.id 
       WHERE r.userId = $1
       GROUP BY r.id, m.title, m.genre, m.imdbid
-      
+      ORDER BY created_at DESC
       `,
       [userId]
     );
@@ -196,6 +196,7 @@ exports.getAllReviewsFromMovie = async (req, res) => {
       LEFT JOIN comments c ON reviews.id = c.reviewId 
       WHERE movies.imdbid = $1 AND reviews.ispublic = true
       GROUP BY reviews.id, users.username, movies.title, movies.genre
+      ORDER BY created_at DESC
       `,
       [movieimbdId]
     );
@@ -222,13 +223,14 @@ exports.getAllReviewsFromUser = async (req, res) => {
     const userId = userIdQuery.rows[0].userid;
 
     const reviews = await db.query(
-      `SELECT users.username, movies.title, movies.genre, r.rating, r.id, r.specialRating, r.review, r.created_at, COUNT(c.*)
+      `SELECT users.username, movies.title, movies.genre, r.rating, r.id, r.specialRating, r.review, r.created_at, COUNT(c.id)
       FROM reviews r
       INNER JOIN movies ON r.movieId = movies.id
-      INNER JOIN comments c ON r.id = c.reviewId 
+      LEFT JOIN comments c ON r.id = c.reviewId 
       INNER JOIN users ON r.userId = users.id
       WHERE r.userId = $1 AND r.isPublic = true
       GROUP BY r.id, users.username, movies.title, movies.genre, movies.imdbid
+      ORDER BY created_at DESC
       `,
       [userId]
     );
