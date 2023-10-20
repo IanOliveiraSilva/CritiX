@@ -57,8 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           movieContainer.appendChild(movieLink);
           listContainer.appendChild(movieContainer);
 
-          randomMovieButton.textContent = 'Aperte aqui para uma surpresa!'
-          randomMovieButton.classList.add('btn-primary', 'btn', 'text-warning')
+          randomMovieButton.innerHTML = '<i class="fa-solid fa-dice" style="color: #000000;"></i>';
           randomMovieButton.href = '/getMovieByTitle'
           randomMovieButton.addEventListener('click', function (event) {
             event.preventDefault();
