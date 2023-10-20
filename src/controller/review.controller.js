@@ -189,11 +189,11 @@ exports.getAllReviewsFromMovie = async (req, res) => {
 
     const reviews = await db.query(
       `
-      SELECT users.username, reviews.id, movies.title , movies.genre, reviews.rating, reviews.specialrating, reviews.review, reviews.created_at, COUNT(c.*) 
+      SELECT users.username, reviews.id, movies.title , movies.genre, reviews.rating, reviews.specialrating, reviews.review, reviews.created_at, COUNT(c.id) AS comment_count
       FROM reviews 
       INNER JOIN movies ON reviews.movieId = movies.id 
       INNER JOIN users ON reviews.userId = users.id 
-      INNER JOIN comments c ON reviews.id = c.reviewId 
+      LEFT JOIN comments c ON reviews.id = c.reviewId 
       WHERE movies.imdbid = $1 AND reviews.ispublic = true
       GROUP BY reviews.id, users.username, movies.title, movies.genre
       `,

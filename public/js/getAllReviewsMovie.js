@@ -97,6 +97,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         userCell.textContent = `${review.username}`;
 
         const ratingRow = document.createElement('tr');
+        ratingRow.addEventListener('click', function () {
+          localStorage.setItem('reviewId', review.id);
+          window.location.href = `/getReviewById`;
+        });
+        
         const ratingCell = document.createElement('td');
         ratingCell.textContent = `Nota:`;
         ratingCell.appendChild(generateStarRating(review.rating));
@@ -106,22 +111,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         specialRatingCell.appendChild(generateStarRating(reviewsData[0].specialrating, 'movie-title'));
 
         const createdDate = new Date(review.created_at);
-        const createDay = createdDate.getDate();
-        const createMonth = createdDate.getMonth();
+        const day = createdDate.getDate();
+        const month = createdDate.getMonth() + 1;
+        const formattedDay = day < 10 ? `0${day}` : day;
+        const formattedMonth = month < 10 ? `0${month}` : month;
         const dateCell = document.createElement('td');
-        if (createDay => 9) {
-          dateCell.textContent = `0${createDay}/0${createMonth}`;
-        } else {
-          dateCell.textContent = `${createDay}/${createMonth}`;
-        }
+        dateCell.textContent = `${formattedDay}/${formattedMonth}`;
 
         const commentButton = document.createElement('a');
-        commentButton.innerHTML = `<i class="fas fa-comment"></i> ${review.count}`;
+        if (review.comment_count > 0) {
+          commentButton.innerHTML = `<i class="fas fa-comment"></i> ${review.comment_count}`;
+        } else {
+          commentButton.innerHTML = `<i class="fas fa-comment"></i>`;
+        }
         commentButton.classList.add('delete-button');
         commentButton.href = '/getAllReviewsComments'
         commentButton.addEventListener('click', () => {
           localStorage.setItem('reviewId', review.id);
         });
+
 
         const actionsCell = document.createElement('td');
         actionsCell.appendChild(commentButton);

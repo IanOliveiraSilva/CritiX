@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const createdDate = new Date(review.created_at);
       const day = createdDate.getDate();
-      const month = createdDate.getMonth() + 1; // Os meses são indexados de 0 a 11 em JavaScript, então somamos 1
+      const month = createdDate.getMonth() + 1;
       const formattedDay = day < 10 ? `0${day}` : day;
       const formattedMonth = month < 10 ? `0${month}` : month;
       const dateCell = document.createElement('td');
@@ -136,7 +136,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       } else {
         commentButton.innerHTML = `<i class="fas fa-comment"></i>`;
       }
-
       commentButton.classList.add('delete-button');
       commentButton.href = '/getAllReviewsComments'
       commentButton.addEventListener('click', () => {
