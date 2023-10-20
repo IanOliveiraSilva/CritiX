@@ -47,29 +47,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             <img class="profile-image" src="../uploads/icon-1696055357956.jpeg" alt="Ícone do perfil do usuário"/>
                 <h1 class="profile-name">${profileData.body.profile.givenname} ${profileData.body.profile.familyname}</h1> 
                 <p class="profile-bio">@${profileData.body.profile.userprofile}</p>
+                <p class="profile-bio">${profileData.body.profile.bio}</p>
                 
                 <div class="profile-info">
                 <br>
-                    <p><strong>Informações gerais:</strong></p><br>
                     
                     <ul class="list-group ">
                     <ul>
-                    <li class="list-group-item li-profile">
-                    <strong><i class="fas fa-pencil-alt"></i> </strong>${profileData.body.profile.bio}
-                    
-                    </li>
 
                     <li class="list-group-item li-profile">
-                    <strong><i class="fas fa-map-marker-alt"></i> </strong>${profileData.body.profile.country}, ${profileData.body.profile.city}
+                    <strong><i class="fas fa-map-marker-alt"></i> </strong> ${profileData.body.profile.country}, ${profileData.body.profile.city}
                     </li>
                     
                     <li class="list-group-item li-profile">
-                    <strong><i class="fas fa-calendar-alt"></i></strong> ${profileData.body.profile.birthday}
-                    </li><br>
-                    </ul>
+                    <strong><i class="fas fa-calendar-alt"></i></strong>  ${profileData.body.profile.birthday}
+                    </li>
 
-                    <p><strong>Redes Sociais:</strong></p><br>
-                    <ul>
                     <li class="list-group-item li-profile">
                    <i class="fab fa-twitter"></i> <strong><a href="https://www.twitter.com/${profileData.body.profile.socialmediax}" target="_blank">${profileData.body.profile.socialmediax}</a></strong>
                     </li>
@@ -81,10 +74,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <li class="list-group-item li-profile">
                     <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}" target="_blank">${profileData.body.profile.socialmediatiktok}</a></strong>
                     </li><br>
-                    </ul>
-
+                    </ul><hr>
                     
-                    <p><strong>Filmes Favoritos:</strong></p><br>
                     <ul id="filmes-favoritos"></ul><hr><br>
 
                     <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">

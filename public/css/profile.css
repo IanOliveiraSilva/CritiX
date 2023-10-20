@@ -23,6 +23,8 @@ main {
   flex: 1;
 }
 
+
+
 h1 {
   font-weight: 700;
   font-size: 36px;
@@ -208,18 +210,19 @@ form {
 
 .li-profile {
   cursor: pointer;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 20px;
-  margin-bottom: 10px;
-  transition: transform 0.2s ease-in-out;
+  background-color: rgba(211, 211, 211, 0.878);
+  border: 2px solid #000000;
+  padding: 10px;
+  margin-bottom: 5px;
+  transition: transform 0.3s ease-in-out;
   list-style-type: none;
   
 }
 
-li:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+.li-profile:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 10px 15px rgba(255, 0, 0, 0.2);
+  background-color: rgba(155, 155, 155, 0.878);
 }
 
 .movie-poster {
@@ -275,8 +278,23 @@ li:hover {
 }
 
 hr {
+  height: 8px;
+  background: linear-gradient(to right, #000000, #202020, #474747);
   border: none;
-  height: 2px;
-  background-color: #000000;
   margin: 20px 0;
+  border-radius: 20px;
+  animation: gradient-animation 2s ease infinite;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+
+
