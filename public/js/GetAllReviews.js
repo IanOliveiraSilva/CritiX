@@ -35,6 +35,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const reviewsContainer = document.getElementById('reviews');
   const titleContainer = document.getElementById('pageTitle');
 
+  
+
   try {
     const response = await fetch('/api/allReviews', {
       headers: {
@@ -56,57 +58,35 @@ document.addEventListener('DOMContentLoaded', async () => {
     titleContainer.appendChild(movieCount);
     titleContainer.appendChild(hr);
 
+
+    const table = document.createElement('table');
+    table.classList.add('table');
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+
+    const titleLabel = document.createElement('th');
+    titleLabel.textContent = 'Filme';
+    headerRow.appendChild(titleLabel);
+
+    const dateLabel = document.createElement('th');
+    dateLabel.textContent = 'Data';
+    headerRow.appendChild(dateLabel);
+
+
+    const ratingLabel = document.createElement('th');
+    ratingLabel.textContent = 'Nota';
+    headerRow.appendChild(ratingLabel);
+
+    const actionsLabel = document.createElement('th');
+    actionsLabel.textContent = 'Ações';
+    headerRow.appendChild(actionsLabel);
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+
     reviewsData.forEach((review) => {
-      const movieGenre = `${review.genre}`;
-
-      const specialRatingMap = new Map([
-        ['Horror', 'Nivel de Medo'],
-        ['Comedy', 'Nivel de Diversão'],
-        ['Action', 'Nivel de Adrenalina'],
-        ['Romance', 'Nivel de Amor'],
-        ['Drama', 'Nivel de Drama'],
-        ['Animation', 'Nivel de Criatividade'],
-        ['Sci-fi', 'Nivel de Inovação'],
-        ['Crime', 'Nivel de Apreensão'],
-        ['Thriller', 'Nivel de Apreensão']
-      ]);
-
-      const getSpecialRating = (genre) => {
-        const genreArray = genre.split(',');
-        const firstGenre = genreArray[0];
-        return specialRatingMap.get(firstGenre.trim());
-      }
-
-      const movieGenreMapped = getSpecialRating(movieGenre);
-
-      const table = document.createElement('table');
-      table.classList.add('table');
-
-      const thead = document.createElement('thead');
-      const headerRow = document.createElement('tr');
-
-      const titleLabel = document.createElement('th');
-      titleLabel.textContent = 'Filme';
-      headerRow.appendChild(titleLabel);
-
-      const dateLabel = document.createElement('th');
-      dateLabel.textContent = 'Data';
-      headerRow.appendChild(dateLabel);
-
-      const specialRatingLabel = document.createElement('th');
-      specialRatingLabel.textContent = `${movieGenreMapped}`;
-      headerRow.appendChild(specialRatingLabel);
-
-      const ratingLabel = document.createElement('th');
-      ratingLabel.textContent = 'Nota';
-      headerRow.appendChild(ratingLabel);
-
-      const actionsLabel = document.createElement('th');
-      actionsLabel.textContent = 'Ações';
-      headerRow.appendChild(actionsLabel);
-
-      thead.appendChild(headerRow);
-      table.appendChild(thead);
 
       const tbody = document.createElement('tbody');
 
@@ -121,9 +101,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const userCell = document.createElement('td');
       userCell.textContent = `${review.title}`;
-
-      const specialRatingCell = document.createElement('td');
-      specialRatingCell.appendChild(generateStarRating(review.specialrating, 'movie-title'));
 
       const createdDate = new Date(review.created_at);
       const day = createdDate.getDate();
@@ -173,7 +150,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       ratingRow.appendChild(userCell);
       ratingRow.appendChild(dateCell);
-      ratingRow.appendChild(specialRatingCell);
       ratingRow.appendChild(ratingCell);
       ratingRow.appendChild(actionsCell);
 
