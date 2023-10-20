@@ -43,10 +43,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const descriptionText = document.createElement('span');
                 descriptionText.textContent = list.list_description;
 
+                const userText = document.createElement('span');
+                userText.textContent = list.user
+
+                nameCell.appendChild(userText);
+                nameCell.appendChild(document.createElement('br'))
                 nameCell.appendChild(nameText);
                 nameCell.appendChild(document.createElement('br'));
                 nameCell.appendChild(descriptionText);
-
+                
+                
                 nameRow.appendChild(nameCell);
                 tbody.appendChild(nameRow);
 

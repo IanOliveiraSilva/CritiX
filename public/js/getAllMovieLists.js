@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     movieTitle = localStorage.getItem('movieTitle');
     const titleInput = document.getElementById('movieTitle');
+    const listContainer = document.getElementById('lists');
+    const titleContainer = document.getElementById('pageTitle');
 
     if (movieTitle && titleInput) {
       titleInput.value = movieTitle;
@@ -24,11 +26,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const listData = await response.json();
 
-      const listContainer = document.getElementById('lists');
+      const movieCount = document.createElement('p');
+      movieCount.textContent = 'LISTAS DE ' + movieTitle;
+      movieCount.classList.add('title', 'uppercase-text');
 
-      const titleHeader = document.createElement('h1');
-      titleHeader.textContent = `Listas para o Filme: ${movieTitle}`;
-      listContainer.appendChild(titleHeader);
+      const hr = document.createElement('hr');
+
+      titleContainer.appendChild(movieCount);
+      titleContainer.appendChild(hr);
 
       listData.body.Lista.forEach((list) => {
         const table = document.createElement('table');
@@ -36,30 +41,32 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const tbody = document.createElement('tbody');
 
-        const userRow = document.createElement('tr');
-        const userCell = document.createElement('td');
-        userCell.textContent = `Usuario: ${list.user}`;
-        userRow.appendChild(userCell);
-        tbody.appendChild(userRow);
+        const nameRow = document.createElement('tr');
+        nameRow.addEventListener('click', function () {
+          localStorage.setItem('listId', list.id);
+          window.location.href = '/getListById';
+        })
 
+        const nameCell = document.createElement('td');
 
-        const listNameRow = document.createElement('tr');
-        const listNameCell = document.createElement('td');
-        listNameCell.textContent = `Nome da Lista: ${list.list_name}`;
-        listNameRow.appendChild(listNameCell);
-        tbody.appendChild(listNameRow);
+        const nameText = document.createElement('p');
+        nameText.textContent = list.list_name;
 
-        const listDescriptionRow = document.createElement('tr');
-        const listDescriptionCell = document.createElement('td');
-        listDescriptionCell.textContent = `Descrição da lista: ${list.list_description}`;
-        listDescriptionRow.appendChild(listDescriptionCell);
-        tbody.appendChild(listDescriptionRow);
+        const descriptionText = document.createElement('span');
+        descriptionText.textContent = list.list_description;
 
-        const movieTitlesRow = document.createElement('tr');
-        const movieTitlesCell = document.createElement('td');
-        movieTitlesCell.textContent = `Filmes: ${list.movie_titles}`;
-        movieTitlesRow.appendChild(movieTitlesCell);
-        tbody.appendChild(movieTitlesRow);
+        const userText = document.createElement('span');
+        userText.textContent = list.user
+
+        
+        nameCell.appendChild(userText);
+        nameCell.appendChild(document.createElement('br'))
+        nameCell.appendChild(nameText);
+        nameCell.appendChild(document.createElement('br'));
+        nameCell.appendChild(descriptionText);
+
+        nameRow.appendChild(nameCell);
+        tbody.appendChild(nameRow);
 
         table.appendChild(tbody);
         listContainer.appendChild(table);

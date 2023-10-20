@@ -189,6 +189,7 @@ exports.getListByMovie = async (req, res) => {
         const lists = await db.query(
             `SELECT u.username AS user,
             l.name AS list_name,
+            l.id,
             l.movies AS movie_titles,
             l.description AS list_description,
             l.created_at AS Created_At
