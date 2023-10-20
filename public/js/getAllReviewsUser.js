@@ -56,67 +56,109 @@ document.addEventListener('DOMContentLoaded', async () => {
         titleContainer.appendChild(hr);
 
         reviewsData.forEach((review) => {
+            const movieGenre = `${review.genre}`;
+
+            const specialRatingMap = new Map([
+                ['Horror', 'Nivel de Medo'],
+                ['Comedy', 'Nivel de Diversão'],
+                ['Action', 'Nivel de Adrenalina'],
+                ['Romance', 'Nivel de Amor'],
+                ['Drama', 'Nivel de Drama'],
+                ['Animation', 'Nivel de Criatividade'],
+                ['Sci-fi', 'Nivel de Inovação'],
+                ['Crime', 'Nivel de Apreensão'],
+                ['Thriller', 'Nivel de Apreensão']
+            ]);
+
+            const getSpecialRating = (genre) => {
+                const genreArray = genre.split(',');
+                const firstGenre = genreArray[0];
+                return specialRatingMap.get(firstGenre.trim());
+            }
+
+            const movieGenreMapped = getSpecialRating(movieGenre);
+
             const table = document.createElement('table');
             table.classList.add('table');
 
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+
+            const titleLabel = document.createElement('th');
+            titleLabel.textContent = 'Filme';
+            headerRow.appendChild(titleLabel);
+
+            const dateLabel = document.createElement('th');
+            dateLabel.textContent = 'Data';
+            headerRow.appendChild(dateLabel);
+
+            const specialRatingLabel = document.createElement('th');
+            specialRatingLabel.textContent = `${movieGenreMapped}`;
+            headerRow.appendChild(specialRatingLabel);
+
+            const ratingLabel = document.createElement('th');
+            ratingLabel.textContent = 'Nota';
+            headerRow.appendChild(ratingLabel);
+
+            const actionsLabel = document.createElement('th');
+            actionsLabel.textContent = 'Ações';
+            headerRow.appendChild(actionsLabel);
+
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+
             const tbody = document.createElement('tbody');
 
-            // TITULO FILME E RATING
-            const titleRow = document.createElement('tr');
+            const userCell = document.createElement('td');
+            userCell.textContent = `${review.title}`;
 
-            const titleCell = document.createElement('td');
-
-            const titleLink = document.createElement('a');
-            titleLink.textContent = `${review.title}`;
-            titleLink.href = '/getMovieByTitle'
-            titleLink.addEventListener('click', function (event) {
-                event.preventDefault();
-                const movieTitle = review.title;
-                const movieimdbId = review.imdbid;
-                localStorage.setItem('movieimbdId', movieimdbId);
-                localStorage.setItem('movieTitle', movieTitle);
-                window.location.href = titleLink.href;
+            const ratingRow = document.createElement('tr');
+            ratingRow.addEventListener('click', function () {
+                localStorage.setItem('reviewId', review.id);
+                window.location.href = `/getReviewById`;
             });
-            titleCell.appendChild(titleLink);
-            titleCell.appendChild(generateStarRating(review.rating));
 
-            titleRow.appendChild(titleCell);
-            tbody.appendChild(titleRow);
+            const ratingCell = document.createElement('td');
+            ratingCell.appendChild(generateStarRating(review.rating));
 
-            table.appendChild(tbody);
-            reviewsContainer.appendChild(table);
+            const specialRatingCell = document.createElement('td');
+            specialRatingCell.appendChild(generateStarRating(reviewsData[0].specialrating, 'movie-title'));
 
-            // VER REVIEW
-            const getReviewButtonRow = document.createElement('tr');
-            const getReviewButtonCell = document.createElement('td');
-            const getReviewButton = document.createElement('a');
-            getReviewButton.href = '/getReviewById'
-            getReviewButton.textContent = 'Ver Review';
-            getReviewButton.addEventListener('click', () => {
+            const createdDate = new Date(review.created_at);
+            const day = createdDate.getDate();
+            const month = createdDate.getMonth() + 1;
+            const formattedDay = day < 10 ? `0${day}` : day;
+            const formattedMonth = month < 10 ? `0${month}` : month;
+            const dateCell = document.createElement('td');
+            dateCell.textContent = `${formattedDay}/${formattedMonth}`;
+
+            const commentButton = document.createElement('a');
+            if (review.count > 0) {
+                commentButton.innerHTML = `<i class="fas fa-comment"></i> ${review.count}`;
+            } else {
+                commentButton.innerHTML = `<i class="fas fa-comment"></i>`;
+            }
+            commentButton.classList.add('delete-button');
+            commentButton.href = '/getAllReviewsComments'
+            commentButton.addEventListener('click', () => {
                 localStorage.setItem('reviewId', review.id);
             });
-            getReviewButtonCell.appendChild(getReviewButton);
-            getReviewButtonRow.appendChild(getReviewButtonCell);
-            tbody.appendChild(getReviewButtonRow);
-            getReviewButton.classList.add('btn', 'btn-warning', 'text-dark', 'btn-link', 'mt-3');
 
-        
-            // VER COMENTARIOS
-            const getcommentReviewButtonRow = document.createElement('tr');
-            const getcommentReviewButtonCell = document.createElement('td');
-            const getcommentButton = document.createElement('button');
-            getcommentButton.id = 'get-review-id'
-            getcommentButton.textContent = `Comentarios ${review.count}`;
-            getcommentButton.addEventListener('click', () => {
-                localStorage.setItem('reviewId', review.id);
-                window.location.href = '/getAllReviewsComments';
-            });
-            getcommentReviewButtonCell.appendChild(getcommentButton);
-            getcommentReviewButtonRow.appendChild(getcommentReviewButtonCell);
-            tbody.appendChild(getcommentReviewButtonRow);
+
+            const actionsCell = document.createElement('td');
+            actionsCell.appendChild(commentButton);
+
+            ratingRow.appendChild(userCell);
+            ratingRow.appendChild(dateCell);
+            ratingRow.appendChild(specialRatingCell);
+            ratingRow.appendChild(ratingCell);
+            ratingRow.appendChild(actionsCell);
+
+
+            tbody.appendChild(ratingRow);
 
             table.appendChild(tbody);
-            getcommentButton.classList.add('btn', 'btn-warning', 'text-dark', 'btn-link', 'mt-3');
             reviewsContainer.appendChild(table);
         });
     } catch (error) {

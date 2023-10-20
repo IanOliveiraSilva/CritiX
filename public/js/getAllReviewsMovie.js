@@ -78,6 +78,10 @@ document.addEventListener('DOMContentLoaded', async () => {
           ['Action', 'Nivel de Adrenalina'],
           ['Romance', 'Nivel de Amor'],
           ['Drama', 'Nivel de Drama'],
+          ['Animation', 'Nivel de Criatividade'],
+          ['Sci-fi', 'Nivel de Inovação'],
+          ['Crime', 'Nivel de Apreensão'],
+          ['Thriller', 'Nivel de Apreensão']
         ]);
 
         const getSpecialRating = (genre) => {
@@ -91,6 +95,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         const table = document.createElement('table');
         table.classList.add('table');
 
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+  
+        const titleLabel = document.createElement('th');
+        titleLabel.textContent = 'Filme';
+        headerRow.appendChild(titleLabel);
+  
+        const dateLabel = document.createElement('th');
+        dateLabel.textContent = 'Data';
+        headerRow.appendChild(dateLabel);
+  
+        const specialRatingLabel = document.createElement('th');
+        specialRatingLabel.textContent = `${movieGenreMapped}`;
+        headerRow.appendChild(specialRatingLabel);
+  
+        const ratingLabel = document.createElement('th');
+        ratingLabel.textContent = 'Nota';
+        headerRow.appendChild(ratingLabel);
+  
+        const actionsLabel = document.createElement('th');
+        actionsLabel.textContent = 'Ações';
+        headerRow.appendChild(actionsLabel);
+  
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
         const tbody = document.createElement('tbody');
 
         const userCell = document.createElement('td');
@@ -101,13 +131,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           localStorage.setItem('reviewId', review.id);
           window.location.href = `/getReviewById`;
         });
-        
+
         const ratingCell = document.createElement('td');
-        ratingCell.textContent = `Nota:`;
         ratingCell.appendChild(generateStarRating(review.rating));
 
         const specialRatingCell = document.createElement('td');
-        specialRatingCell.textContent = `${movieGenreMapped}:`;
         specialRatingCell.appendChild(generateStarRating(reviewsData[0].specialrating, 'movie-title'));
 
         const createdDate = new Date(review.created_at);

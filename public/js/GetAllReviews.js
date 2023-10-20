@@ -82,6 +82,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       const table = document.createElement('table');
       table.classList.add('table');
 
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+
+      const titleLabel = document.createElement('th');
+      titleLabel.textContent = 'Filme';
+      headerRow.appendChild(titleLabel);
+
+      const dateLabel = document.createElement('th');
+      dateLabel.textContent = 'Data';
+      headerRow.appendChild(dateLabel);
+
+      const specialRatingLabel = document.createElement('th');
+      specialRatingLabel.textContent = `${movieGenreMapped}`;
+      headerRow.appendChild(specialRatingLabel);
+
+      const ratingLabel = document.createElement('th');
+      ratingLabel.textContent = 'Nota';
+      headerRow.appendChild(ratingLabel);
+
+      const actionsLabel = document.createElement('th');
+      actionsLabel.textContent = 'Ações';
+      headerRow.appendChild(actionsLabel);
+
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
       const tbody = document.createElement('tbody');
 
       const ratingRow = document.createElement('tr');
@@ -91,14 +117,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
 
       const ratingCell = document.createElement('td');
-      ratingCell.textContent = `Nota:`;
       ratingCell.appendChild(generateStarRating(review.rating));
 
       const userCell = document.createElement('td');
       userCell.textContent = `${review.title}`;
 
       const specialRatingCell = document.createElement('td');
-      specialRatingCell.textContent = `${movieGenreMapped}:`;
       specialRatingCell.appendChild(generateStarRating(review.specialrating, 'movie-title'));
 
       const createdDate = new Date(review.created_at);
@@ -108,8 +132,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       const formattedMonth = month < 10 ? `0${month}` : month;
       const dateCell = document.createElement('td');
       dateCell.textContent = `${formattedDay}/${formattedMonth}`;
-      
-
 
       const editButton = document.createElement('a');
       editButton.innerHTML = '<i class="fas fa-pencil-alt"></i>';
