@@ -83,8 +83,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       table.classList.add('table');
 
       const tbody = document.createElement('tbody');
-      
+
       const ratingRow = document.createElement('tr');
+      ratingRow.addEventListener('click', function () {
+        localStorage.setItem('reviewId', review.id);
+        window.location.href = `/getReviewById`;
+      });
+
       const ratingCell = document.createElement('td');
       ratingCell.textContent = `Nota:`;
       ratingCell.appendChild(generateStarRating(review.rating));
@@ -98,13 +103,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const createdDate = new Date(review.created_at);
       const day = createdDate.getDate();
-      const month = createdDate.getMonth();
+      const month = createdDate.getMonth() + 1; // Os meses são indexados de 0 a 11 em JavaScript, então somamos 1
+      const formattedDay = day < 10 ? `0${day}` : day;
+      const formattedMonth = month < 10 ? `0${month}` : month;
       const dateCell = document.createElement('td');
-      if(day => 9){
-        dateCell.textContent = `0${day}/0${month}`;
-      } else{
-        dateCell.textContent = `${day}/${month}`;
-      }
+      dateCell.textContent = `${formattedDay}/${formattedMonth}`;
+      
+
 
       const editButton = document.createElement('a');
       editButton.innerHTML = '<i class="fas fa-pencil-alt"></i>';
@@ -126,12 +131,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
 
       const commentButton = document.createElement('a');
-      if(review.comment_count > 0){
+      if (review.comment_count > 0) {
         commentButton.innerHTML = `<i class="fas fa-comment"></i> ${review.comment_count}`;
-      } else{
+      } else {
         commentButton.innerHTML = `<i class="fas fa-comment"></i>`;
       }
-      
+
       commentButton.classList.add('delete-button');
       commentButton.href = '/getAllReviewsComments'
       commentButton.addEventListener('click', () => {
