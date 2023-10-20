@@ -23,8 +23,6 @@ main {
   flex: 1;
 }
 
-
-
 h1 {
   font-weight: 700;
   font-size: 36px;
@@ -68,7 +66,6 @@ p {
       margin-bottom: 10px;
   }
 }
-
 
 a {
   text-decoration: none;
@@ -151,6 +148,7 @@ form {
   border: 2px solid #000000;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .profile-image-container {
@@ -208,6 +206,11 @@ form {
   font-weight: bold;
 }
 
+.ul-profile{
+  text-align: center;
+  padding-right: 5%;
+}
+
 .li-profile {
   cursor: pointer;
   background-color: rgba(211, 211, 211, 0.878);
@@ -216,7 +219,7 @@ form {
   margin-bottom: 5px;
   transition: transform 0.3s ease-in-out;
   list-style-type: none;
-  
+  text-align: center;
 }
 
 .li-profile:hover {
@@ -278,7 +281,18 @@ form {
 }
 
 hr {
-  height: 8px;
+  height: 5px;
+  background: linear-gradient(to right, #000000, #202020, #474747);
+  border: none;
+  margin: 20px 0;
+  margin-left: 41px;
+  border-radius: 20px;
+  animation: gradient-animation 2s ease infinite;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hr-bottom {
+  height: 5px;
   background: linear-gradient(to right, #000000, #202020, #474747);
   border: none;
   margin: 20px 0;
@@ -286,6 +300,7 @@ hr {
   animation: gradient-animation 2s ease infinite;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 
 @keyframes gradient-animation {
   0% {

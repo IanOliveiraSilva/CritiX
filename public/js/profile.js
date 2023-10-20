@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="profile-info">
                 <br>
                     
-                    <ul class="list-group ">
+                    <ul class="list-group ul-profile">
                     <ul>
 
                     <li class="list-group-item li-profile">
@@ -83,12 +83,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}
                     </span>
                     </a>
-
                     <canvas id="myChart"></canvas><br>
-                    
-
-            </ul>
-            <hr>
+                    </ul>
+            <hr class="hr-bottom">
                     <div class="text-center">
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat">Minhas listas: <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a><br><br>
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
