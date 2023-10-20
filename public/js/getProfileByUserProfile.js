@@ -21,16 +21,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="profile-container">
             <div class="profile-details">
             <br>
+            <div class="ul-profile">
             <img class="profile-image" src="../uploads/icon-1696055357956.jpeg" alt="Ícone do perfil do usuário"/>
                 <h1 class="profile-name">${profileData.body.profile.givenname} ${profileData.body.profile.familyname}</h1> 
                 <p class="profile-bio">@${profileData.body.profile.userprofile}</p>
-                
+                </div>
                 <div class="profile-info">
                 <br>
-                <p><strong>Informações gerais:</strong></p><br>
                     
-                <ul class="list-group">
+                <ul class="list-group ul-profile">
                 <ul>
+
                 <li class="list-group-item li-profile">
                 <strong><i class="fas fa-pencil-alt"></i> </strong>${profileData.body.profile.bio}
                 </li>
@@ -41,15 +42,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 
                 <li class="list-group-item li-profile">
                 <strong><i class="fas fa-calendar-alt"></i></strong> ${profileData.body.profile.birthday}
-                </li><br>
-                </ul>
-
-                <p><strong>Redes Sociais:</strong></p><br>
-                <ul>
-                <li class="list-group-item li-profile">
-               <i class="fab fa-twitter"></i> <strong><a href="https://www.twitter.com/${profileData.body.profile.socialmediax}">${profileData.body.profile.socialmediax}</a></strong>
                 </li>
 
+                <li class="list-group-item li-profile">
+                <i class="fab fa-twitter"></i> <strong><a href="https://www.twitter.com/${profileData.body.profile.socialmediax}">${profileData.body.profile.socialmediax}</a></strong>
+                 </li>
+ 
                 <li class="list-group-item li-profile">
                 <i class="fab fa-instagram"></i> <strong><a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}">${profileData.body.profile.socialmediainstagram}</a></strong>
                 </li>
@@ -57,9 +55,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <li class="list-group-item li-profile">
                 <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}">${profileData.body.profile.socialmediatiktok}</a></strong>
                 </li><br>
-                </ul>
+                </ul> <hr>
 
-                <p><strong>Filmes Favoritos:</strong></p><br>
                 <ul id="filmes-favoritos"></ul><hr><br>
 
                 <a href="/getAllUserReviews" id="review-link" class="btn btn-primary text-warning btn-link profile-stat">
@@ -69,7 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </a>
                 <canvas id="myChart"></canvas><br>
             </ul>
-            <hr>
+            <hr class="hr-bottom">
             <div class="text-center">
                     <a href="/getAllUserLists" id="list-link" class="btn btn-primary text-warning btn-link profile-stat">Listas: <span class="stat-count">
                     ${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}
