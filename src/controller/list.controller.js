@@ -86,7 +86,8 @@ exports.getAllLists = async (req, res) => {
             `SELECT l.id, l.moviesid, u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
             FROM lists l
             JOIN users u ON l.userId = u.id
-            WHERE u.id = $1;
+            WHERE u.id = $1
+            ORDER BY Created_at DESC;
             `,
             [userId]
         );
@@ -155,6 +156,7 @@ exports.getListByName = async (req, res) => {
             FROM lists l
             JOIN users u ON l.userId = u.id
             WHERE l.name = $1 and u.id = $2;
+            ORDER BY Created_at DESC;
             `,
             [name, userId]
         );
@@ -192,7 +194,9 @@ exports.getListByMovie = async (req, res) => {
             l.created_at AS Created_At
             FROM lists l
             JOIN users u ON l.userid = u.id
-            WHERE $1 = ANY(l.movies)`,
+            WHERE $1 = ANY(l.movies)
+            ORDER BY Created_at DESC;
+            `,
             [movie_titles]
         );
 
@@ -235,7 +239,9 @@ exports.getListByUser = async (req, res) => {
             `SELECT l.id, l.moviesid, u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
             FROM lists l
             INNER JOIN users u ON l.userid = u.id
-            WHERE l.userId = $1 AND l.isPublic = true`,
+            WHERE l.userId = $1 AND l.isPublic = true
+            ORDER BY Created_at DESC;
+            `,
             [userId]
         );
 
