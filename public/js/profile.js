@@ -44,11 +44,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       `
             <div class="profile-container">
             <div class="profile-details">
+            <div class="ul-profile">
             <img class="profile-image" src="../uploads/icon-1696055357956.jpeg" alt="Ícone do perfil do usuário"/>
                 <h1 class="profile-name">${profileData.body.profile.givenname} ${profileData.body.profile.familyname}</h1> 
                 <p class="profile-bio">@${profileData.body.profile.userprofile}</p>
                 <p class="profile-bio">${profileData.body.profile.bio}</p>
-                
+                </div>
                 <div class="profile-info">
                 <br>
                     
