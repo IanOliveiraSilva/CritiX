@@ -58,7 +58,7 @@ exports.getMovieById = async (req, res) => {
       let { rows: [movie] } = await db.query(
         `
       SELECT medianotas, mediaspecialrating
-      FROM movies WHERE title = $1
+      FROM movies WHERE imdbID = $1
       `,
         [imdbID]);
 
@@ -67,7 +67,7 @@ exports.getMovieById = async (req, res) => {
       SELECT COUNT(*) AS review_count 
       FROM reviews 
       INNER JOIN movies ON reviews.movieId = movies.id 
-      WHERE movies.title = $1 AND reviews.ispublic = true
+      WHERE movies.imdbID = $1 AND reviews.ispublic = true
       `,
         [imdbID]);
 
