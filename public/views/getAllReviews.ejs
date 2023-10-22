@@ -1,20 +1,30 @@
-<%- include('partials/header', {pageTitle: 'Critix - Movie Search'}) %>
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
 
-<link rel="stylesheet" href="../css/GetForm.css"> 
+    <link rel="stylesheet" href="../css/GetForm.css">
 
-<main class="container">
-    <section class="reviews bg-light p-4">
+    <main class="container">
+        <section class="reviews bg-light p-4">
 
-        <h1 id ="pageTitle"></h1>
-        <div id="reviews"></div>
-        <a href="/" class="back-link d-block mt-4 text-center">
-            <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;">
-        </i>
-    </a>
-    </section>
-</main>
+            <h1 id="pageTitle"></h1>
+            <select id="genreFilter">
+                <option value="">Todas</option>
+                <option value="Action">Ação</option>
+                <option value="Comedy">Comédia</option>
+                <option value="Drama">Drama</option>
+                <option value="Fantasy">Fantasia</option>
+                <option value="Thriller">Suspense</option>
+                <option value="Romance">Romance</option>
+                <option value="Horror">Horror</option>
+            </select>
+  
+            <div id="reviews"></div>
+            <a href="/" class="back-link d-block mt-4 text-center">
+                <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;">
+                </i>
+            </a>
+        </section>
+    </main>
 
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>
 
-<script src="../js/GetAllReviews.js"></script>
-
+        <script src="../js/GetAllReviews.js"></script>

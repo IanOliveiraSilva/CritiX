@@ -27,9 +27,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     titleContainer.appendChild(movieCount);
     titleContainer.appendChild(hr);
 
+    const movieIndex = listData.body.Lista.movie_titles;
+    const randomIndex = Math.floor(Math.random() * movieIndex.length);
+    const randomMovie = movieIndex[randomIndex];
+
     for (const movieTitle of listData.body.Lista.movie_titles) {
       try {
-        const movieResponse = await fetch(`/api/movie/title?title=${encodeURIComponent(movieTitle)}`, {
+        const movieResponse = await fetch(`/api/movie/id?imdbID=${encodeURIComponent(movieTitle)}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -56,22 +60,18 @@ document.addEventListener('DOMContentLoaded', async () => {
           movieLink.appendChild(posterImage);
           movieContainer.appendChild(movieLink);
           listContainer.appendChild(movieContainer);
-
+       
           randomMovieButton.innerHTML = '<i class="fa-solid fa-dice" style="color: #000000; font-size:30px"></i>';
           randomMovieButton.href = '/getMovieByTitle'
           randomMovieButton.addEventListener('click', function (event) {
             event.preventDefault();
-            localStorage.setItem('movieTitle', movieTitle);
-            localStorage.setItem('movieimbdId', movieData.body.movieData.imdbID);
+            localStorage.setItem('movieimbdId', randomMovie);
             window.location.href = randomMovieButton.href;
           });
-
         } else {
           console.error('Erro ao obter detalhes do filme:', movieResponse.statusText);
         }
-
         titleContainer.appendChild(randomMovieButton);
-
       } catch (error) {
         console.error('Erro ao buscar detalhes do filme:', error);
       }

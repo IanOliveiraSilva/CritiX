@@ -262,3 +262,33 @@ hr {
   background-color: #000000;
   border-color: #e0a800;
 }
+
+.genre-filter {
+  margin-bottom: 20px;
+}
+
+#genreFilter {
+  width: 200px;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  background-color: #ffbb00;
+  color: #000000; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#genreFilter:hover {
+  background-color: #ffa600;
+}
+
+#genreFilter option {
+  font-size: 16px;
+  background-color: #b9b9b9;
+  color: #000000;
+}
+
+#genreFilter option:hover {
+  background-color: #f2f2f2;
+}

@@ -47,10 +47,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             <div class="ul-profile">
 
-            <a href="/updateProfile" id="edit-profile-link">
-            <i class="fa-solid fa-gear">
-            </i>
-            </a>
 
             <img class="profile-image" src="../uploads/icon-1696055357956.jpeg" alt="Ícone do perfil do usuário"/>
                 <h1 class="profile-name">${profileData.body.profile.givenname} ${profileData.body.profile.familyname}</h1> 
@@ -95,11 +91,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </ul>
             <hr class="hr-bottom">
                     <div class="text-center">
+                    
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat"></i><i class="fas fa-list-ul"></i> <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a>
                     <a href="/getWatchlist" class="btn btn-primary text-warning btn-link profile-stat"><i class="fas fa-bookmark"></i></a><br><br>
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
                     <a href="/" class="back-link d-block mt-4 text-center">
-                    <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;"></i>
+                    <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;"></i> 
+                    <a href="/updateProfile" id="edit-profile-link">
+                    <i class="fas fa-pencil-alt" style="font-size: 30px;"></i>
+                    </a>
                     </div>
             </div>
                 </div>

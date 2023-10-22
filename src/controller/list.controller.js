@@ -397,14 +397,14 @@ exports.getWatchlist = async (req, res) => {
         const lists = await db.query(
             `
             SELECT u.username AS user, 
-            l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At, CONCAT(up.name, ' ', up.familyName) as name,
+            l.name AS list_name, l.movies AS movie_titles, l.moviesid,l.description AS list_description, l.created_at AS Created_At, CONCAT(up.name, ' ', up.familyName) as name,
             COUNT(DISTINCT movie) AS movies_count
             FROM lists l
             JOIN users u ON l.userId = u.id
             JOIN user_profile up ON u.id = up.userid,
             LATERAL unnest(l.movies) AS movie
             WHERE l.name = $1 and u.id = $2
-            GROUP BY u.username, l.name, l.movies, l.description, l.created_at, up.name, up.familyname;
+            GROUP BY u.username, l.name, l.moviesid,l.movies, l.description, l.created_at, up.name, up.familyname;
             `,
             [name, userId]
         );
@@ -432,7 +432,7 @@ exports.getUserWatchlist = async (req, res) => {
         const lists = await db.query(
             `
             SELECT u.username AS user, 
-            l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At, CONCAT(up.name, ' ', up.familyName) as name,
+            l.name AS list_name, l.movies AS movie_titles, l.moviesid,l.description AS list_description, l.created_at AS Created_At, ,CONCAT(up.name, ' ', up.familyName) as name,
             COUNT(DISTINCT movie) AS movies_count
             FROM lists l
             JOIN users u ON l.userId = u.id
@@ -468,7 +468,7 @@ exports.getUserWatchlist = async (req, res) => {
 exports.updateWatchlist = async (req, res) => {
     const watchlistName = 'Watchlist';
     const userId = req.user.id;
-    const { name, description, isPublic, movieTitle } = req.body;
+    const { name, description, isPublic, moviesid} = req.body;
 
     try {
         const existingList = await db.query(
@@ -482,12 +482,12 @@ exports.updateWatchlist = async (req, res) => {
             });
         }
         const existingMovies = existingList.rows[0].movies || [];
-        if (existingMovies.includes(movieTitle)) {
+        if (existingMovies.includes(moviesid)) {
             return res.status(400).json({
                 message: "O filme já está na lista.",
             });
         }
-        const updatedMovies = [...existingMovies, movieTitle].map(movie => movie.toString());
+        const updatedMovies = [...existingMovies, moviesid].map(movie => movie.toString());
         const { rows } = await db.query(
             "UPDATE lists SET name = $1, description = $2, isPublic = $3, movies = $4 WHERE userId = $5 AND name = $6 RETURNING *",
             [name || existingList.rows[0].name, description || existingList.rows[0].description, isPublic !== undefined ? isPublic : existingList.rows[0].ispublic, updatedMovies, userId, watchlistName]

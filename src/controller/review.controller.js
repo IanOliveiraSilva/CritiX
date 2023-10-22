@@ -157,25 +157,33 @@ exports.createReview = async (req, res) => {
 exports.getAllReviews = async (req, res) => {
   try {
     const userId = req.user.id;
+    const { genre} = req.query;
+
+    let queryParams = [userId];
+    let queryConditions = `WHERE r.userId = $1`;
+
+    if (genre) {
+      queryParams.push(`%${genre}%`);
+      queryConditions += ` AND LOWER(m.genre) LIKE LOWER($${queryParams.length})`;
+    }
 
     const reviews = await db.query(
       `SELECT r.id, r.userid, r.movieid, m.title, m.genre, m.imdbid, r.specialrating, r.rating, r.review, r.ispublic, r.created_at, COUNT(c.id) AS comment_count
       FROM reviews r
       LEFT JOIN comments c ON r.id = c.reviewId 
       JOIN movies m ON r.movieid = m.id 
-      WHERE r.userId = $1
+      ${queryConditions}
       GROUP BY r.id, m.title, m.genre, m.imdbid
       ORDER BY created_at DESC
       `,
-      [userId]
+      queryParams
     );
 
     if (reviews.rows.length === 0) {
       return res.status(400).json({
-        message: 'O usuário não possui reviews'
+        message: 'O usuário não possui reviews com os critérios de busca fornecidos.'
       });
     }
-
     return res.status(200).json(reviews.rows);
   } catch (error) {
     console.error(error);
