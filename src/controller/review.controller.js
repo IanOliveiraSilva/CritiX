@@ -157,7 +157,7 @@ exports.createReview = async (req, res) => {
 exports.getAllReviews = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { genre} = req.query;
+    const { genre } = req.query;
 
     let queryParams = [userId];
     let queryConditions = `WHERE r.userId = $1`;
@@ -167,18 +167,18 @@ exports.getAllReviews = async (req, res) => {
       queryConditions += ` AND LOWER(m.genre) LIKE LOWER($${queryParams.length})`;
     }
 
-    let orderBy = 'created_at DESC';
-
     const { sort } = req.query;
-    if (sort === 'rating_desc') {
-      orderBy = 'r.rating DESC';
-    } else if (sort === 'rating_asc') {
-      orderBy = 'r.rating ASC';
-    } else if (sort === 'latest') {
-      orderBy = 'created_at DESC';
-    } else if (sort === 'oldest') {
-      orderBy = 'created_at ASC';
-    }
+
+    const sortOptions = {
+      rating_desc: 'r.rating DESC',
+      rating_asc: 'r.rating ASC',
+      latest: 'created_at DESC',
+      oldest: 'created_at ASC',
+      comment_desc: 'comment_count DESC',
+      comment_asc: 'comment_count ASC'
+    };
+
+    const orderBy = sortOptions[sort] || 'created_at DESC';
 
     const reviews = await db.query(
       `SELECT r.id, r.userid, r.movieid, m.title, m.genre, m.imdbid, r.specialrating, r.rating, r.review, r.ispublic, r.created_at, COUNT(c.id) AS comment_count
@@ -479,7 +479,7 @@ exports.getThisYearReview = async (req, res) => {
       `,
       [userId]
     );
-    
+
     const reviewCountResult = await db.query(
       `
       SELECT COUNT(r.id) as total_reviews
