@@ -109,8 +109,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       thead.appendChild(headerRow);
       table.appendChild(thead);
 
-      table.innerHTML = '';
-
       reviewsData.forEach((review) => {
         const tbody = document.createElement('tbody');
 
@@ -182,6 +180,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         table.appendChild(tbody);
         reviewsContainer.appendChild(table);
       });
+      
       reviewsContainer.appendChild(table);
     } catch (error) {
       console.error('Erro ao buscar revisões:', error);
