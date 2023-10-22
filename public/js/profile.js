@@ -95,11 +95,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat"></i><i class="fas fa-list-ul"></i> <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a>
                     <a href="/getWatchlist" class="btn btn-primary text-warning btn-link profile-stat"><i class="fas fa-bookmark"></i></a><br><br>
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
-                    <a href="/" class="back-link d-block mt-4 text-center">
-                    <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;"></i> 
-                    <a href="/updateProfile" id="edit-profile-link">
+                    <a href="/updateProfile" id="edit-profile-link"><br><br>
                     <i class="fas fa-pencil-alt" style="font-size: 30px;"></i>
                     </a>
+                    <a href="/" class="back-link d-block mt-4 text-center">
+                    <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;"></i> 
+                    
                     </div>
             </div>
                 </div>

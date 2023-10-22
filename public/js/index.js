@@ -1,7 +1,10 @@
 document.getElementById('logout').addEventListener('click', function () {
-    localStorage.clear();
-    alert(`Logout bem-sucedido.`);
-  });
+  const confirmLogout = confirm('Tem certeza que deseja sair da conta?');
+  if (confirmLogout) {
+      localStorage.clear();
+      alert('Logout bem-sucedido.');
+  }
+});
 
   window.onload = function () {
     const username = localStorage.getItem('username');

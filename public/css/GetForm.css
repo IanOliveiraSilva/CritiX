@@ -317,9 +317,9 @@ hr {
   color: #555555;
 }
 
-/* Adicionando uma sombra sutil para dar um efeito de elevação */
+
 #genreFilter option {
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
 }
 
 .star-rating {
