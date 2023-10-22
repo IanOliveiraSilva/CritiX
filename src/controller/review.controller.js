@@ -167,6 +167,19 @@ exports.getAllReviews = async (req, res) => {
       queryConditions += ` AND LOWER(m.genre) LIKE LOWER($${queryParams.length})`;
     }
 
+    let orderBy = 'created_at DESC';
+
+    const { sort } = req.query;
+    if (sort === 'rating_desc') {
+      orderBy = 'r.rating DESC';
+    } else if (sort === 'rating_asc') {
+      orderBy = 'r.rating ASC';
+    } else if (sort === 'latest') {
+      orderBy = 'created_at DESC';
+    } else if (sort === 'oldest') {
+      orderBy = 'created_at ASC';
+    }
+
     const reviews = await db.query(
       `SELECT r.id, r.userid, r.movieid, m.title, m.genre, m.imdbid, r.specialrating, r.rating, r.review, r.ispublic, r.created_at, COUNT(c.id) AS comment_count
       FROM reviews r
@@ -174,7 +187,7 @@ exports.getAllReviews = async (req, res) => {
       JOIN movies m ON r.movieid = m.id 
       ${queryConditions}
       GROUP BY r.id, m.title, m.genre, m.imdbid
-      ORDER BY created_at DESC
+      ORDER BY ${orderBy}
       `,
       queryParams
     );

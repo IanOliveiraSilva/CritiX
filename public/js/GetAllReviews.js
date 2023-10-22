@@ -35,25 +35,41 @@ document.addEventListener('DOMContentLoaded', async () => {
   const reviewsContainer = document.getElementById('reviews');
   const titleContainer = document.getElementById('pageTitle');
   const genreSelect = document.getElementById('genreFilter');
+  const orderBySelect = document.getElementById('sortOptions')
 
   const movieCount = document.createElement('p');
   movieCount.textContent = 'MINHAS REVIEWS';
   movieCount.classList.add('title', 'uppercase-text');
 
+  const orderBy = document.createElement('p');
+  orderBy.textContent = 'Ordenar por: ';
+  orderBy.classList.add('title', 'uppercase-text');
+
+  const SelectGenre = document.createElement('p');
+  SelectGenre.textContent = 'Escolha o genero que deseja ver: ';
+  SelectGenre.classList.add('title', 'uppercase-text');
+
   const hr = document.createElement('hr');
 
   titleContainer.appendChild(movieCount);
+  titleContainer.appendChild(document.createElement('br'));
   titleContainer.appendChild(hr);
+  titleContainer.appendChild(SelectGenre);
   titleContainer.appendChild(genreSelect);
+  titleContainer.appendChild(hr);
+  titleContainer.appendChild(orderBy);
+  titleContainer.appendChild(orderBySelect);
+
 
   let selectedGenre = '';
+  let selectedOrderBy = '';
 
   const loadReviews = async () => {
     try {
       let endpoint = '/api/allReviews';
-      if (selectedGenre) {
-        endpoint = `/api/allReviews?genre=${selectedGenre}`;
-      }
+
+      endpoint += selectedGenre ? `?genre=${selectedGenre}` : '';
+      endpoint += selectedOrderBy ? (selectedGenre ? `&sort=${selectedOrderBy}` : `?sort=${selectedOrderBy}`) : '';
 
       const response = await fetch(endpoint, {
         headers: {
@@ -190,6 +206,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     genreSelect.addEventListener('change', () => {
       selectedGenre = genreSelect.value;
+      loadReviews();
+    });
+
+    orderBySelect.addEventListener('change', () => {
+      selectedOrderBy = orderBySelect.value;
       loadReviews();
     });
   });

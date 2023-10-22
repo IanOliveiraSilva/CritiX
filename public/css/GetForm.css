@@ -267,7 +267,7 @@ hr {
   margin-bottom: 20px;
 }
 
-#genreFilter {
+#genreFilter, #sortOptions {
   width: 200px;
   padding: 12px;
   font-size: 16px;
@@ -281,13 +281,13 @@ hr {
   font-weight: 600;
 }
 
-#genreFilter:hover {
+#genreFilter:hover, #sortOptions:hover {
   transform: scale(1.05);
   background: linear-gradient(to right, #ffcc00, #cfa600);
   color: #000000; 
 }
 
-#genreFilter option {
+#genreFilter option, #sortOptions option {
   font-size: 18px;
   background-color: #FFD700;
   color: #333333;
@@ -297,17 +297,17 @@ hr {
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
-#genreFilter option:hover {
+#genreFilter option:hover, #sortOptions option:hover {
   background-color: #FFA500;
   color: #000000;
   transform: scale(1.05);
 }
 
-#genreFilter::-ms-expand {
+#genreFilter::-ms-expand, #sortOptions::-ms-expand {
   display: none;
 }
 
-#genreFilter::before {
+#genreFilter::before, #sortOptions::before {
   content: '\25BC';
   position: absolute;
   top: 50%;

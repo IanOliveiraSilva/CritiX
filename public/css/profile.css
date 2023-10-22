@@ -311,5 +311,10 @@ hr {
   }
 }
 
+.uppercase-text {
+  text-transform: capitalize;
+}
+
+
 
 
