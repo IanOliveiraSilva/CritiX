@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ratingCell.appendChild(generateStarRating(review.rating));
 
         const specialRatingCell = document.createElement('td');
-        specialRatingCell.appendChild(generateStarRating(reviewsData[0].specialrating, 'movie-title'));
+        specialRatingCell.appendChild(generateStarRating(review.specialrating, 'movie-title'));
 
         const createdDate = new Date(review.created_at);
         const day = createdDate.getDate();
