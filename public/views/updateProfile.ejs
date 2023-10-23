@@ -1,63 +1,69 @@
-<%- include('partials/header', {pageTitle: 'Critix - Movie Search'}) %>
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
 
-<link rel="stylesheet" href="../css/authForm.css">
+    <link rel="stylesheet" href="../css/authForm.css">
 
-<main class="container">
-    <form id="update-profile-form" class="login-form">
-        
-        <div class="form-group">
-            <label for="user">User:</label>
-            <input type="text" class="form-control" id="user" name="user" required>
-        </div>
+    <main class="container">
+        <form id="update-profile-form" class="login-form">
 
-        <div class="form-group">
-            <label for="name">Nome:</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-            <label for="familyName">Sobrenome:</label>
-            <input type="text" class="form-control" id="familyName" name="familyName" required>
-        </div>
-        <div class="form-group">
-            <label for="bio">Bio:</label>
-            <input type="text" class="form-control" id="bio" name="bio" required>
-        </div>
+            <div class="form-group">
+                <label for="user">User:</label>
+                <input type="text" class="form-control" id="user" name="user" required>
+            </div>
 
-        <div class="form-group">
-            <label for="city">Cidade:</label>
-            <input type="text" class="form-control" id="city" name="city" required>
-        </div>
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
 
-        <div class="form-group">
-            <label for="country">Pais:</label>
-            <input type="text" class="form-control" id="country" name="country" required>
-        </div>
+            <div class="form-group">
+                <label for="familyName">Sobrenome:</label>
+                <input type="text" class="form-control" id="familyName" name="familyName" required>
+            </div>
 
-        <div class="form-group">
-            <label for="birthday">Aniversario:</label>
-            <input type="date" class="form-control" id="birthday" name="birthday" required>
-        </div>
+            <div class="form-group">
+                <label for="bio">Bio:</label>
+                <input type="text" class="form-control" id="bio" name="bio" required>
+            </div>
 
-        <div class="form-group">
-            <label for="socialmediax">Twitter:</label>
-            <input type="text" class="form-control" id="socialmediax" name="socialmediax" required>
-        </div>
+            <div class="form-group">
+                <label for="country">País:</label>
+                <select class="form-control" id="country" name="country" required>
+                    <option value="" disabled selected>Selecione seu país</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="socialmediaInstagram">Instagram:</label>
-            <input type="text" class="form-control" id="socialmediaInstagram" name="socialmediaInstagram" required>
-        </div>
+            <div class="form-group">
+                <label for="city">Cidade:</label>
+                <select class="form-control" id="city" name="city" required>
+                    <option value="" disabled selected>Selecione sua cidade</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="socialmediaTikTok">Tik Tok:</label>
-            <input type="text" class="form-control" id="socialmediaTikTok" name="socialmediaTikTok" required>
-        </div>
+            <div class="form-group">
+                <label for="birthday">Aniversario:</label>
+                <input type="date" class="form-control" id="birthday" name="birthday" required>
+            </div>
 
-        <button type="submit" class="btn btn-warning btn-block">Criar Perfil</button>
-        <a href="/" class="btn btn-warning text-dark btn-link mt-3">Voltar para a página inicial</a>
-    </form>
-</main>
+            <div class="form-group">
+                <label for="socialmediax">Twitter:</label>
+                <input type="text" class="form-control" id="socialmediax" name="socialmediax" required>
+            </div>
 
-<%- include('partials/footer') %>
+            <div class="form-group">
+                <label for="socialmediaInstagram">Instagram:</label>
+                <input type="text" class="form-control" id="socialmediaInstagram" name="socialmediaInstagram" required>
+            </div>
 
-<script src="../js/updateProfile.js"></script>
+            <div class="form-group">
+                <label for="socialmediaTikTok">Tik Tok:</label>
+                <input type="text" class="form-control" id="socialmediaTikTok" name="socialmediaTikTok" required>
+            </div>
+
+            <button type="submit" class="btn btn-warning btn-block">Atualizar Perfil</button>
+            <a href="/" class="btn btn-warning text-dark btn-link mt-3">Voltar para a página inicial</a>
+        </form>
+    </main>
+
+    <%- include('partials/footer') %>
+
+        <script src="../js/updateProfile.js"></script>

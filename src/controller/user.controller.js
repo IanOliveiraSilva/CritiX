@@ -108,14 +108,15 @@ exports.createUserProfile = async (req, res) => {
       socialmediaInstagram,
       socialMediaX,
       socialMediaTikTok,
-      userProfileTag
+      userProfileTag,
+      icon
     } = req.body;
 
     const userId = req.user.id;
 
     const { rows: [userProfile] } = await db.query(
-      `INSERT INTO user_profile(name, familyName, bio, userId, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfile) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) 
+      `INSERT INTO user_profile(name, familyName, bio, userId, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfile, icon) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) 
         RETURNING *`,
       [
         name,
@@ -128,7 +129,9 @@ exports.createUserProfile = async (req, res) => {
         socialmediaInstagram,
         socialMediaX,
         socialMediaTikTok,
-        userProfileTag]
+        userProfileTag,
+        icon
+      ]
     );
     res.status(201).json({
       message: 'Perfil criado com sucesso',
@@ -152,7 +155,7 @@ exports.getUserProfile = async (req, res) => {
 
     const { rows: [userProfile] } = await db.query(
       `SELECT u.id, u.userid, u.name as givenName, u.familyname, u.bio, u.city, u.country, u.birthday, u.socialmediainstagram, u.socialmediax, u.socialmediatiktok, u.userprofile, 
-      l.id, l.name AS list_name, l.description, l.movies, l.ispublic, l.userid, 
+      l.id, l.name AS list_name, l.description, l.movies, l.ispublic, l.userid, u.icon, 
       (SELECT COUNT(*) FROM reviews WHERE userId = $1) AS contadorreviews, 
       (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists
       FROM user_profile u

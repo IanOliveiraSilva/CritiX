@@ -178,7 +178,13 @@ label {
   justify-content: center;
 }
 
-
+.cat-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #000000;
+}
 
 
 

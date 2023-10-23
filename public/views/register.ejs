@@ -19,13 +19,10 @@
             </div>
             <button type="submit" class="btn btn-warning btn-block">Registrar</button><br>
             <div class="row">
-                <a href="/login" class="btn btn-warning text-dark btn-link">Já tem uma conta? Entre aqui!</a><p>&emsp;</p>
+                <a href="/login" class="btn btn-warning text-dark btn-link">Já tem uma conta? Entre aqui!</a>
+                <p>&emsp;</p>
                 <a href="/" class="btn btn-warning text-dark btn-link">Voltar para a página inicial</a>
             </div>
-
-
-
-
         </form>
     </main>
 
@@ -38,6 +35,14 @@
                 const username = document.getElementById('username').value;
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
+
+                const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{7,})/;
+
+                if (!passwordRegex.test(password)) {
+                    alert('A senha deve ter pelo menos 7 caracteres, incluindo pelo menos uma letra maiúscula e um símbolo.');
+                    return;
+                }
+                
                 const response = await fetch('/api/user/signup', {
                     method: 'POST',
                     headers: {

@@ -30,6 +30,19 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+const catImages = document.querySelectorAll('.cat-image');
+const selectedCatInput = document.getElementById('selectedCat');
+
+catImages.forEach(catImage => {
+  catImage.addEventListener('click', function () {
+    selectedCatInput.value = this.id;
+    catImages.forEach(image => {
+      image.style.border = 'none';
+    });
+    this.style.border = '3px solid blue';
+  });
+});
+
 
 const registerForm = document.getElementById('register-form');
 registerForm.addEventListener('submit', async (event) => {
@@ -44,6 +57,7 @@ registerForm.addEventListener('submit', async (event) => {
   const socialmediaInstagram = document.getElementById('socialmediaInstagram').value;
   const socialMediaTikTok = document.getElementById('socialmediaTikTok').value;
   const userProfileTag = document.getElementById('user').value;
+  const selectedCatUrl = document.getElementById(selectedCatInput.value).src;
 
   const isValidDate = isValidDateOfBirth(birthday);
 
@@ -60,7 +74,7 @@ registerForm.addEventListener('submit', async (event) => {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-    body: JSON.stringify({ name, familyName, bio, city, country, birthday, socialMediaX, socialmediaInstagram, socialMediaTikTok, userProfileTag })
+    body: JSON.stringify({ name, familyName, bio, city, country, birthday, socialMediaX, socialmediaInstagram, socialMediaTikTok, userProfileTag, icon: selectedCatUrl })
   });
   const data = await response.json();
   console.log(response);
@@ -113,6 +127,6 @@ function isValidDateOfBirth(dateString) {
   const day = parseInt(parts[2], 10);
   const currentDate = new Date();
   const inputDate = new Date(year, month, day);
-  
+
   return inputDate.getFullYear() === year && inputDate.getMonth() === month && inputDate.getDate() === day && inputDate < currentDate;
 }
