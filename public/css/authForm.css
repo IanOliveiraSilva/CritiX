@@ -76,12 +76,49 @@ a:hover {
 }
 
 .login-form {
-  padding: 20px;
-  border-radius: 0 0 5px 5px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.login-form h2 {
+  text-align: center;
+  color: #000000;
 }
 
 .form-group {
   margin-bottom: 20px;
+}
+
+.form-control {
+  border: 2px solid #383838;
+  border-radius: 5px;
+}
+
+.form-control:focus {
+  border-color: #ffc107;
+  box-shadow: 0px 0px 10px rgba(255, 193, 7, 0.5);
+}
+
+.password-requirements {
+  font-size: 12px;
+  color: #000000;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+  background-color: #ff9800;
+}
+
+.btn-link {
+  color: #ffc107;
 }
 
 label {
