@@ -178,13 +178,39 @@ label {
   justify-content: center;
 }
 
-.cat-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid #000000;
+.form-label {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 20px;
+  display: block;
 }
+
+.cat-options {
+  display: flex;
+  justify-content: center;
+}
+
+.cat-option {
+  margin: 0 20px;
+  transition: transform 0.3s;
+}
+
+.cat-option:hover {
+  transform: scale(1.1);
+}
+
+.cat-radio {
+  display: none;
+}
+
+.cat-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
 
 
 

@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
-  const addToWatchlist = async (token, movieTitle) => {
+  const addToWatchlist = async (token, moviesid) => {
     try {
       const response = await fetch(`/api/watchlist/`, {
         method: 'PATCH',
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          movieTitle: movieTitle
+          moviesid: moviesid
         })
       });
 
@@ -250,18 +250,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       try {
         const watchlistIcon = document.getElementById('watchlist-icon')
         const watchlistData = await getWatchlist(token);
-        const movieTitle = movieData.body.movieData.Title;
+        const moviesid = movieData.body.movieData.imdbID;
 
         if (watchlistData.body &&
           watchlistData.body.Lista &&
           watchlistData.body.Lista.movie_titles !== undefined &&
-          watchlistData.body.Lista.movie_titles.includes(movieTitle)) {
-          await removeFromWatchlist(token, movieTitle);
+          watchlistData.body.Lista.movie_titles.includes(moviesid)) {
+          await removeFromWatchlist(token, moviesid);
           alert('Filme removido da watchlist.');
           watchlistIcon.classList.remove('fas', 'fa-clock');
           watchlistIcon.classList.add('far', 'fa-clock');
         } else {
-          await addToWatchlist(token, movieTitle);
+          await addToWatchlist(token, moviesid);
           alert('Filme adicionado à watchlist com sucesso.');
           watchlistIcon.classList.add('fas', 'fa-clock');
         }

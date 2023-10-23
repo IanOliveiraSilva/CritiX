@@ -144,6 +144,7 @@ form {
   display: flex;
   align-items: center;
   padding: 20px;
+  position: relative;
   background-color: #EAAA00;
   border: 2px solid #000000;
   border-radius: 20px;
@@ -164,6 +165,7 @@ form {
 }
 
 .profile-details {
+  position: relative;
   flex: 1;
 }
 
@@ -313,6 +315,12 @@ hr {
 
 .uppercase-text {
   text-transform: capitalize;
+}
+
+#edit-profile-link {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
 

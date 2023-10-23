@@ -44,14 +44,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       `
             <div class="profile-container">
             <div class="profile-details">
-            
             <div class="ul-profile">
-
-
+            <a href="/updateProfile" id="edit-profile-link"><br><br>
+            <i class="fas fa-pencil-alt" style="font-size: 30px;"></i>
+            </a>
             <img class="profile-image" src="${profileData.body.profile.icon ? profileData.body.profile.icon : 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.webp'}" alt="Ícone do perfil do usuário"/>
                 <h1 class="profile-name">${profileData.body.profile.givenname} ${profileData.body.profile.familyname}</h1> 
                 <p class="profile-bio">@${profileData.body.profile.userprofile}</p>
                 <p class="profile-bio">${profileData.body.profile.bio}</p>
+                
                 </div>
                 <div class="profile-info">
                 <br>
@@ -93,11 +94,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="text-center">
                     
                     <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat"></i><i class="fas fa-list-ul"></i> <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a>
-                    <a href="/getWatchlist" class="btn btn-primary text-warning btn-link profile-stat"><i class="fa-solid fa-clock"></i></a><br><br>
+                    <a href="/getWatchlist" class="btn btn-primary text-warning btn-link profile-stat"><i class="fa-solid fa-clock"></i> <span class="stat-count">${profileData.body.profile.movies_count !== null ? profileData.body.profile.movies_count : 0}</span></a><br><br>
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
-                    <a href="/updateProfile" id="edit-profile-link"><br><br>
-                    <i class="fas fa-pencil-alt" style="font-size: 30px;"></i>
-                    </a>
                     <a href="/" class="back-link d-block mt-4 text-center">
                     <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;"></i> 
                     

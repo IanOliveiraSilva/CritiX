@@ -157,10 +157,13 @@ exports.getUserProfile = async (req, res) => {
       `SELECT u.id, u.userid, u.name as givenName, u.familyname, u.bio, u.city, u.country, u.birthday, u.socialmediainstagram, u.socialmediax, u.socialmediatiktok, u.userprofile, 
       l.id, l.name AS list_name, l.description, l.movies, l.ispublic, l.userid, u.icon, 
       (SELECT COUNT(*) FROM reviews WHERE userId = $1) AS contadorreviews, 
-      (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists
+      (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists,
+      COUNT(DISTINCT movie) AS movies_count
       FROM user_profile u
-      INNER JOIN lists l ON u.userid = l.userid
-      WHERE u.userId = $1 AND l.name = 'Meus filmes favoritos'
+      INNER JOIN lists l ON u.userid = l.userid,
+      LATERAL unnest(l.movies) AS movie
+      WHERE u.userId = $1 AND l.name = 'Meus filmes favoritos'\
+      GROUP BY u.id, l.id
       `,
       [userId]
     );
@@ -307,7 +310,8 @@ exports.updateUserProfilePartially = async (req, res) => {
       socialmediaInstagram,
       socialMediaX,
       socialMediaTikTok,
-      userProfileTag
+      userProfileTag,
+      icon
     } = req.body;
     const userId = req.user.id;
 
@@ -328,7 +332,8 @@ exports.updateUserProfilePartially = async (req, res) => {
       socialmediaInstagram: socialmediaInstagram || existingProfile.rows[0].socialmediainstagram,
       socialMediaX: socialMediaX || existingProfile.rows[0].socialMediax,
       socialMediaTikTok: socialMediaTikTok || existingProfile.rows[0].socialMediatiktok,
-      userProfile: userProfileTag || existingProfile.rows[0].userprofile
+      userProfile: userProfileTag || existingProfile.rows[0].userprofile,
+      icon: icon || existingProfile.rows[0].icon
     };
 
     // Atualiza o perfil no banco de dados
@@ -343,8 +348,9 @@ exports.updateUserProfilePartially = async (req, res) => {
         socialmediaInstagram = $7, 
         socialMediaX = $8, 
         socialMediaTikTok = $9, 
-        userProfile = $10
-       WHERE userId = $11 
+        userProfile = $10,
+        icon = $11
+       WHERE userId = $12 
        RETURNING *`,
       [
         updatedProfile.name,
@@ -357,6 +363,7 @@ exports.updateUserProfilePartially = async (req, res) => {
         updatedProfile.socialMediaX,
         updatedProfile.socialMediaTikTok,
         updatedProfile.userProfile,
+        icon,
         userId
       ]
     );

@@ -39,7 +39,7 @@ catImages.forEach(catImage => {
     catImages.forEach(image => {
       image.style.border = 'none';
     });
-    this.style.border = '3px solid blue';
+    this.style.border = '3px solid black';
   });
 });
 

@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const familynameElement = document.getElementById('familyName');
     familynameElement.value = actualfamilyname;
 
+    const actualCountry = localStorage.getItem('country');
+    const countryElement = document.getElementById('country');
+    countryElement.value = actualCountry;
+
     const actualBio = localStorage.getItem('bio');
     const bioElement = document.getElementById('bio');
     bioElement.value = actualBio;
@@ -16,9 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const parts = actualbirthday.split('/');
     const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-
     birthdayElement.value = formattedDate;
-
 
     const actualsocialmediainstagram = localStorage.getItem('socialmediainstagram');
     const socialmediainstagramElement = document.getElementById('socialmediaInstagram');
@@ -65,6 +67,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             });
     });
+})
+
+const catImages = document.querySelectorAll('.cat-image');
+const selectedCatInput = document.getElementById('selectedCat');
+
+catImages.forEach(catImage => {
+    catImage.addEventListener('click', function () {
+        selectedCatInput.value = this.id;
+        catImages.forEach(image => {
+            image.style.border = 'none';
+        });
+        this.style.border = '3px solid black';
+    });
+
+
 });
 
 const updateProfileForm = document.getElementById('update-profile-form');
@@ -82,14 +99,15 @@ updateProfileForm.addEventListener('submit', async (event) => {
     const socialmediaInstagram = document.getElementById('socialmediaInstagram').value;
     const socialMediaTikTok = document.getElementById('socialmediaTikTok').value;
     const userProfileTag = document.getElementById('user').value;
+    const selectedCatUrl = document.getElementById(selectedCatInput.value).src;
 
     const isValidDate = isValidDateOfBirth(birthday);
 
     if (!isValidDate) {
-      alert('Por favor, insira uma data de nascimento válida.');
-      return;
+        alert('Por favor, insira uma data de nascimento válida.');
+        return;
     }
-  
+
 
     const response = await fetch(`/api/user/profile`, {
         method: 'PATCH',
@@ -107,7 +125,8 @@ updateProfileForm.addEventListener('submit', async (event) => {
             socialMediaX,
             socialmediaInstagram,
             socialMediaTikTok,
-            userProfileTag
+            userProfileTag,
+            icon: selectedCatUrl
         })
     });
     const data = await response.json();
@@ -122,13 +141,13 @@ updateProfileForm.addEventListener('submit', async (event) => {
 function isValidDateOfBirth(dateString) {
     const regex = /^\d{4}-\d{2}-\d{2}$/;
     if (!regex.test(dateString)) return false;
-  
+
     const parts = dateString.split("-");
     const year = parseInt(parts[0], 10);
     const month = parseInt(parts[1], 10) - 1;
     const day = parseInt(parts[2], 10);
     const currentDate = new Date();
     const inputDate = new Date(year, month, day);
-    
+
     return inputDate.getFullYear() === year && inputDate.getMonth() === month && inputDate.getDate() === day && inputDate < currentDate;
-  }
+}
