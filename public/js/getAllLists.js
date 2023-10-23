@@ -80,9 +80,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       const deleteButton = document.createElement('a');
       deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
       deleteButton.classList.add('delete-button');
-      deleteButton.href = '/deleteList'
+      deleteButton.href = '/getAllLists'
       deleteButton.addEventListener('click', () => {
-        localStorage.setItem('listId', list.id);
+        const confirmDelete = confirm('Tem certeza que deseja excluir a lista?');
+          if (confirmDelete) {
+            const response = fetch(`/api/list/?id=${encodeURIComponent(list.id)}`, {
+              method: 'DELETE',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            });
+            alert('Lista excluida com sucesso!.');
+          }
       });
 
       const actionsCell = document.createElement('td');

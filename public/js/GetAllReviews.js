@@ -162,9 +162,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         const deleteButton = document.createElement('a');
         deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
         deleteButton.classList.add('delete-button');
-        deleteButton.href = '/deleteReview'
+        deleteButton.href = '/getAllReviews'
         deleteButton.addEventListener('click', () => {
-          localStorage.setItem('reviewId', review.id);
+          const confirmDelete = confirm('Tem certeza que deseja excluir a review?');
+          if (confirmDelete) {
+            const response = fetch(`/api/review/?id=${encodeURIComponent(review.id)}`, {
+              method: 'DELETE',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            });
+            alert('Review excluida com sucesso!.');
+          }
         });
 
         const commentButton = document.createElement('a');
