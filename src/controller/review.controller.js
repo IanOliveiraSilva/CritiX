@@ -175,9 +175,12 @@ exports.getAllReviews = async (req, res) => {
       latest: 'created_at DESC',
       oldest: 'created_at ASC',
       comment_desc: 'comment_count DESC',
-      comment_asc: 'comment_count ASC'
+      comment_asc: 'comment_count ASC',
+      title_desc: 'title ASC',
+      title_asc: 'title DESC'
     };
 
+  
     const orderBy = sortOptions[sort] || 'created_at DESC';
 
     const reviews = await db.query(

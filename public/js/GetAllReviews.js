@@ -42,11 +42,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   movieCount.classList.add('title', 'uppercase-text');
 
   const orderBy = document.createElement('p');
-  orderBy.textContent = 'Ordenar por: ';
+  orderBy.textContent = 'Ordenar por ';
   orderBy.classList.add('title', 'uppercase-text');
 
   const SelectGenre = document.createElement('p');
-  SelectGenre.textContent = 'Escolha o genero que deseja ver: ';
+  SelectGenre.textContent = 'Escolha o genero que deseja ver ';
   SelectGenre.classList.add('title', 'uppercase-text');
 
   const hr = document.createElement('hr');
