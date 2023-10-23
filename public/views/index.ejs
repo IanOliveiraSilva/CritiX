@@ -1,7 +1,6 @@
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
 
-<%- include('partials/header', {pageTitle: 'Critix - Movie Search'}) %>
-
-<link rel="stylesheet" href="../css/authForm.css">
+    <link rel="stylesheet" href="../css/authForm.css">
 
     <main>
         <nav class="navbar navbar-expand-lg navbar-light bg-warning">
@@ -13,67 +12,70 @@
                     <li class="nav-item"><a class="nav-link" href="/" id="logout"></a></li>
                     <li class="nav-item"><a class="nav-link" href="/profile" id="profile"></a></li>
                     <li class="nav-item"><a class="nav-link require-login" href="/getMovie">Buscar filmes</a></li>
-                    <li class="nav-item"><a class="nav-link require-login" href="/getMovieSurprise">Surpreenda-me</a></li>
-                    <li class="nav-item"><a class="nav-link require-login" href="/getProfileByUserProfile">Buscar Usuário</a></li>
+                    <li class="nav-item"><a class="nav-link require-login" href="/getMovieSurprise">Surpreenda-me</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link require-login" href="/getProfileByUserProfile">Buscar
+                            Usuário</a></li>
                 </ul>
             </div>
         </nav>
 
-      <section class="container mt-5">
-        <div class="row">
-            <div class="col-md-6 text-center section-content">
-              
-                <h2 class="section-title">Conheça Nossos Recursos</h2>
-                <p class="section-text text-justify text-secondary">
-                    O CritiX oferece uma plataforma para você avaliar filmes e compartilhar suas opiniões com outros amantes do cinema. Explore nossos recursos e comece a criar suas próprias avaliações hoje mesmo.
-                </p>
-               
-            </div>
-            
-        </div>
-    </section>
-    
-    <section class="bg-light py-5">
-        <div class="container">
+        <section class="container mt-5">
             <div class="row">
+                <div class="col-md-6 text-center">
+                    <img src="../images/foto-section-1.jpg" alt="Cinema"
+                        class="img-fluid animate__animated img-bordered animate__fadeInLeft">
+                </div>
                 <div class="col-md-6 text-center section-content">
-                    <h2 class="section-title ">Por que escolher o CritiX?</h2>
-                    <p class="section-text text-justify">
-                        No CritiX, você pode criar e ler avaliações detalhadas de filmes, encontrar recomendações personalizadas com base em suas preferências e muito mais. Nossa comunidade de cinéfilos está pronta para compartilhar suas opiniões e descobrir filmes incríveis.
+                    <h2 class="section-title animate__animated animate__fadeInUp">Descubra um Mundo de Cinema</h2>
+                    <p class="section-text text-justify text-secondary animate__animated animate__fadeIn">
+                        No CritiX, mergulhe em um universo cinematográfico fascinante. Explore nossos recursos e
+                        apaixone-se por
+                        filmes de uma maneira totalmente nova. Não apenas assista, mas mergulhe nas histórias,
+                        compartilhe suas
+                        opiniões e descubra filmes que vão deslumbrar seus sentidos.
                     </p>
+                    <a href="/register" class="btn btn-primary btn-lg animate__animated animate__fadeInUp">Comece
+                        Agora</a>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <section class="container mt-5">
-        <div class="row">
-            <div class="col-md-6 text-center section-content">
-                <h2 class="section-title">Participe de Discussões</h2>
-                <p class="section-text text-justify text-secondary">
-                    No CritiX, você pode participar de discussões emocionantes sobre seus filmes favoritos. Interaja com outros membros da comunidade, compartilhe teorias, análises e insights sobre filmes que você ama.
-                </p>
-            </div>
-        </div>
-    </section>
-    
-    <section class="bg-light py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 text-center section-content">
-                    <h2 class="section-title">Crie Sua Lista de Favoritos</h2>
-                    <p class="section-text text-justify">
-                        Mantenha uma lista pessoal de seus filmes favoritos. Marque os filmes que você já assistiu, aqueles que deseja assistir e os que deseja revisitar. Organize suas preferências de maneira simples e eficaz.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
+        </section><br>
 
+        <section class="container mt-5">
+            <div class="row">
+                <div class="col-md-6 text-center section-content">
+                    <h2 class="section-title animate__animated animate__fadeInUp">Explore Filmes Incríveis</h2>
+                    <p class="section-text text-justify text-secondary animate__animated animate__fadeIn">
+                        No CritiX, nossa biblioteca de filmes é vasta e diversificada. De clássicos cult a lançamentos
+                        contemporâneos, há algo para todos. Deixe-se levar por histórias emocionantes e personagens
+                        inesquecíveis.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="../images/foto-section-2.jpg" alt="Filmes"
+                        class="img-fluid  animate__animated img-bordered animate__fadeInRight">
+                </div>
+            </div>
+        </section><br>
+        
+        <section class="container mt-5">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <img src="../images/foto-section-3.jpg" alt="Filmes"
+                        class="img-fluid  animate__animated img-bordered animate__fadeInLeft">
+                </div>
+                <div class="col-md-6 text-center section-content">
+                    <h2 class="section-title animate__animated animate__fadeInUp">Conecte-se à Comunidade</h2>
+                    <p class="section-text text-justify text-secondary animate__animated animate__fadeIn">
+                        No CritiX, a experiência vai além de assistir filmes. Comente, discuta e compartilhe suas opiniões
+                        sobre as análises de outros cinéfilos. Explore uma plataforma onde suas ideias ganham vida e onde a
+                        paixão pelo cinema se transforma em diálogo e interação social.
+                    </p>
+                </div>
+            </div>
+        </section><br>
     </main>
 
-    
-<script src="../js/index.js"></script>
+
+    <script src="../js/index.js"></script>
     <%- include('partials/footer') %>
-    
