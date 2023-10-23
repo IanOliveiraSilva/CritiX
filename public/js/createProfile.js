@@ -1,3 +1,36 @@
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("http://api.geonames.org/countryInfoJSON?formatted=true&username=testandoparacritix")
+    .then(response => response.json())
+    .then(data => {
+      const countrySelect = document.getElementById("country");
+      data.geonames.forEach(country => {
+        const option = document.createElement("option");
+        option.value = country.countryCode;
+        option.textContent = country.countryName;
+        countrySelect.appendChild(option);
+      });
+    });
+
+  document.getElementById("country").addEventListener("change", function () {
+    const selectedCountry = this.value;
+    const citySelect = document.getElementById("city");
+    citySelect.innerHTML = "<option value='' disabled selected>Selecione uma cidade</option>";
+
+    fetch(`http://api.geonames.org/searchJSON?formatted=true&country=${selectedCountry}&username=testandoparacritix`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        data.geonames.forEach(city => {
+          const option = document.createElement("option");
+          option.value = city.name;
+          option.textContent = city.name;
+          citySelect.appendChild(option);
+        });
+      });
+  });
+});
+
+
 const registerForm = document.getElementById('register-form');
 registerForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -12,6 +45,12 @@ registerForm.addEventListener('submit', async (event) => {
   const socialMediaTikTok = document.getElementById('socialmediaTikTok').value;
   const userProfileTag = document.getElementById('user').value;
 
+  const isValidDate = isValidDateOfBirth(birthday);
+
+  if (!isValidDate) {
+    alert('Por favor, insira uma data de nascimento válida.');
+    return;
+  }
 
   const token = localStorage.getItem('token');
   const username = localStorage.getItem('username');
@@ -63,3 +102,17 @@ registerForm.addEventListener('submit', async (event) => {
     alert(data.message);
   }
 });
+
+function isValidDateOfBirth(dateString) {
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!regex.test(dateString)) return false;
+
+  const parts = dateString.split("-");
+  const year = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10) - 1;
+  const day = parseInt(parts[2], 10);
+  const currentDate = new Date();
+  const inputDate = new Date(year, month, day);
+  
+  return inputDate.getFullYear() === year && inputDate.getMonth() === month && inputDate.getDate() === day && inputDate < currentDate;
+}
