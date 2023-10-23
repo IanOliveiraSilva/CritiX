@@ -157,16 +157,27 @@ exports.getUserProfile = async (req, res) => {
       `SELECT u.id, u.userid, u.name as givenName, u.familyname, u.bio, u.city, u.country, u.birthday, u.socialmediainstagram, u.socialmediax, u.socialmediatiktok, u.userprofile, 
       l.id, l.name AS list_name, l.description, l.movies, l.ispublic, l.userid, u.icon, 
       (SELECT COUNT(*) FROM reviews WHERE userId = $1) AS contadorreviews, 
-      (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists,
-      COUNT(DISTINCT movie) AS movies_count
+      (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists
       FROM user_profile u
-      INNER JOIN lists l ON u.userid = l.userid,
-      LATERAL unnest(l.movies) AS movie
-      WHERE u.userId = $1 AND l.name = 'Meus filmes favoritos'\
-      GROUP BY u.id, l.id
+      INNER JOIN lists l ON u.userid = l.userid
+      WHERE u.userId = $1 AND l.name = 'Meus filmes favoritos'
       `,
       [userId]
     );
+
+    const { rows: [ watchlistCount ] } = await db.query(
+      `
+      SELECT 
+      COUNT(DISTINCT movie) AS movies_count
+      FROM lists l
+      JOIN users u ON l.userId = u.id
+      JOIN user_profile up ON u.id = up.userid,
+      LATERAL unnest(l.movies) AS movie
+      WHERE l.name = 'Watchlist' and u.id = $1
+      GROUP BY u.username, l.name, l.moviesid,l.movies, l.description, l.created_at, up.name, up.familyname;
+      `,
+      [userId]
+    )
 
     // Formata a data de nascimento para o formato 'DD/MM/AAAA'
     if (userProfile && userProfile.birthday) {
@@ -177,7 +188,7 @@ exports.getUserProfile = async (req, res) => {
     res.status(200).json({
       message: 'Perfil encontrado com sucesso!',
       body: {
-        profile: userProfile,
+        profile: userProfile, watchlistCount
       },
     });
   } catch (error) {
