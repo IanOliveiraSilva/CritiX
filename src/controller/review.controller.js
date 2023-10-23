@@ -220,7 +220,7 @@ exports.getAllReviewsFromMovie = async (req, res) => {
       LEFT JOIN comments c ON reviews.id = c.reviewId 
       WHERE movies.imdbid = $1 AND reviews.ispublic = true
       GROUP BY reviews.id, users.username, movies.title, movies.genre
-      ORDER BY created_at DESC
+      ORDER BY comment_count DESC
       `,
       [movieimbdId]
     );
