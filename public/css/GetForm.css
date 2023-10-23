@@ -322,6 +322,65 @@ hr {
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
 }
 
+.sortOptions {
+  margin-bottom: 20px;
+}
+
+#sortOptions {
+  width: 200px;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(to right, #cfa600, #000000);
+  color: #ffffff; 
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+}
+
+#sortOptions:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, #cfa600, #ffcc00);
+  color: #000000; 
+}
+
+#sortOptions option {
+  font-size: 18px;
+  background-color: #FFD700;
+  color: #333333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+#sortOptions option:hover {
+  background-color: #FFA500;
+  color: #000000;
+  transform: scale(1.05);
+}
+
+#sortOptions::-ms-expand {
+  display: none;
+}
+
+#sortOptions::before {
+  content: '\25BC';
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: #555555;
+}
+
+
+#sortOptions option {
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+}
+
 .star-rating {
   color: #FFD700;
   border: solid;
