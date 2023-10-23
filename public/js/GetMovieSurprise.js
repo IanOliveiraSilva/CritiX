@@ -70,8 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <li><strong>IMDb Rating:</strong> ${omdbMovie.imdbRating}</li>
           <li><strong>Metascore Rating:</strong> ${omdbMovie.Metascore}</li>
           <li><strong>Review Count:</strong> ${data.body.reviewCount !== '0' ? omdbMovie.reviewCount : 'Esse filme ainda não possui review'}</li>
-          <li><strong>Media de Notas:</strong> ${data.body.movie.medianotas !== 0 ? generateStarRating(data.body.movie.medianotas) : 'Esse filme ainda não possui nota'}</li>
-          <li><strong>${movieGenreMapped}</strong> ${data.body.movie.mediaspecialrating !== 0 ? generateStarRating(data.body.movie.mediaspecialrating) : 'Esse filme ainda não possui nota'}</li>
           <strong><button id="create-review-button" class="btn-back">Criar Review</button></strong>
           <strong><button id="get-review-button" class="btn-back">Ver Review</button></strong>
           <strong><button id="get-list-button" class="btn-back">Ver Listas</button></strong>

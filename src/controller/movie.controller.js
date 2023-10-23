@@ -112,8 +112,7 @@ exports.surpriseMe = async (req, res) => {
         FROM movies WHERE title = $1
         `,
           [omdbMovieData.Title]);
-
-
+          
         const { rows: [reviewCount] } = await db.query(
           `
       SELECT COUNT(*) AS review_count 
