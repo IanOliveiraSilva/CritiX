@@ -7,10 +7,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const familynameElement = document.getElementById('familyName');
     familynameElement.value = actualfamilyname;
 
-    const actualCountry = localStorage.getItem('country');
-    const countryElement = document.getElementById('country');
-    countryElement.value = actualCountry;
-
     const actualBio = localStorage.getItem('bio');
     const bioElement = document.getElementById('bio');
     bioElement.value = actualBio;
@@ -37,36 +33,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const actualuserprofile = localStorage.getItem('userprofile');
     const userprofileElement = document.getElementById('user');
     userprofileElement.value = actualuserprofile;
-
-    fetch("http://api.geonames.org/countryInfoJSON?formatted=true&username=testandoparacritix")
-        .then(response => response.json())
-        .then(data => {
-            const countrySelect = document.getElementById("country");
-            data.geonames.forEach(country => {
-                const option = document.createElement("option");
-                option.value = country.countryCode;
-                option.textContent = country.countryName;
-                countrySelect.appendChild(option);
-            });
-        });
-
-    document.getElementById("country").addEventListener("change", function () {
-        const selectedCountry = this.value;
-        const citySelect = document.getElementById("city");
-        citySelect.innerHTML = "<option value='' disabled selected>Selecione uma cidade</option>";
-
-        fetch(`http://api.geonames.org/searchJSON?formatted=true&country=${selectedCountry}&username=testandoparacritix`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                data.geonames.forEach(city => {
-                    const option = document.createElement("option");
-                    option.value = city.name;
-                    option.textContent = city.name;
-                    citySelect.appendChild(option);
-                });
-            });
-    });
 })
 
 const catImages = document.querySelectorAll('.cat-image');
@@ -92,8 +58,6 @@ updateProfileForm.addEventListener('submit', async (event) => {
     const givenName = document.getElementById('name').value;
     const familyName = document.getElementById('familyName').value;
     const bio = document.getElementById('bio').value;
-    const city = document.getElementById('city').value;
-    const country = document.getElementById('country').value;
     const birthday = document.getElementById('birthday').value;
     const socialMediaX = document.getElementById('socialmediax').value;
     const socialmediaInstagram = document.getElementById('socialmediaInstagram').value;
@@ -108,7 +72,6 @@ updateProfileForm.addEventListener('submit', async (event) => {
         return;
     }
 
-
     const response = await fetch(`/api/user/profile`, {
         method: 'PATCH',
         headers: {
@@ -119,8 +82,6 @@ updateProfileForm.addEventListener('submit', async (event) => {
             name: givenName,
             familyName,
             bio,
-            city,
-            country,
             birthday,
             socialMediaX,
             socialmediaInstagram,
