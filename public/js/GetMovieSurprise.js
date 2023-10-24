@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <img class="img-poster img-poster-hover" src="${omdbMovie.Poster}" alt="${omdbMovie.Title} poster" class="mt-3">
         <p>${omdbMovie.Plot}</p>
         </div>
-
+        
         <ul>
           <li><strong>Released:</strong> ${omdbMovie.Released}</li>
           <li><strong>Writer:</strong> ${omdbMovie.Writer}</li>
@@ -69,7 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <li><strong>Rated:</strong> ${omdbMovie.Rated}</li>
           <li><strong>IMDb Rating:</strong> ${omdbMovie.imdbRating}</li>
           <li><strong>Metascore Rating:</strong> ${omdbMovie.Metascore}</li>
-          <li><strong>Review Count:</strong> ${data.body.reviewCount !== '0' ? omdbMovie.reviewCount : 'Esse filme ainda não possui review'}</li>
+          <li><strong>Review Count:</strong> ${data.body.reviewCount !== '0' ? data.body.reviewCount : 'Esse filme ainda não possui review'}</li>
+          <li><strong>Media de Notas:</strong> ${data.body.movie.medianotas !== null ? generateStarRating(data.body.movie.medianotas) : 'Esse filme ainda não possui nota'}</li>
+          <li><strong>${movieGenreMapped}:</strong> ${data.body.movie.mediaspecialrating !== null ? generateStarRating(data.body.movie.mediaspecialrating) : 'Esse filme ainda não possui nota'}</li>
           <strong><button id="create-review-button" class="btn-back">Criar Review</button></strong>
           <strong><button id="get-review-button" class="btn-back">Ver Review</button></strong>
           <strong><button id="get-list-button" class="btn-back">Ver Listas</button></strong>

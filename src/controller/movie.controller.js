@@ -49,7 +49,7 @@ exports.getMovieByTitle = async (req, res) => {
 
 exports.getMovieById = async (req, res) => {
   const { imdbID } = req.query;
-  
+
   try {
     const omdbResponse = await axios.get(`http://www.omdbapi.com/?i=${imdbID}&apikey=${OMDB_API_KEY}`);
 
@@ -112,7 +112,14 @@ exports.surpriseMe = async (req, res) => {
         FROM movies WHERE title = $1
         `,
           [omdbMovieData.Title]);
-          
+
+        if(movie == undefined){
+          movie = {
+            "medianotas": null,
+            "mediaspecialrating": null
+          }
+        }
+
         const { rows: [reviewCount] } = await db.query(
           `
       SELECT COUNT(*) AS review_count 
