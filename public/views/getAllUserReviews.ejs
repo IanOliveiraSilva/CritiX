@@ -1,20 +1,42 @@
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
 
-<%- include('partials/header', {pageTitle: 'Critix - Movie Search'}) %>
+  <link rel="stylesheet" href="../css/GetForm.css">
+  <main class="container">
+    <section class="reviews bg-light p-4">
 
-<link rel="stylesheet" href="../css/GetForm.css">
-<main class="container">
-  <section class="reviews bg-light p-4">
-    <h1 id="pageTitle"></h1>
-    <div id="reviews">
-    </div>
+      <h1 id="pageTitle"></h1>
+      <select id="genreFilter">
+        <option value="">Todos</option>
+        <option value="Action">Ação</option>
+        <option value="Comedy">Comédia</option>
+        <option value="Drama">Drama</option>
+        <option value="Fantasy">Fantasia</option>
+        <option value="Thriller">Suspense</option>
+        <option value="Romance">Romance</option>
+        <option value="Horror">Horror</option>
+      </select>
+      <br>
+      <select id="sortOptions">
+        <option value="latest">Mais Recente</option>
+        <option value="oldest">Mais Antigo</option>
+        <option value="rating_desc">Maior Nota</option>
+        <option value="rating_asc">Menor Nota</option>
+        <option value="comment_desc">Mais Comentada</option>
+        <option value="comment_asc">Menos Comentada</option>
+        <option value="title_desc">A - Z</option>
+        <option value="title_asc">Z - A</option>
+      </select>
 
-    <a href="/" class="back-link d-block mt-4 text-center">
-      <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;">
-  </i>
-</a>
-  </section>
-</main>
+      <div id="reviews">
+      </div>
 
-<%- include('partials/footer') %>
+      <a href="/" class="back-link d-block mt-4 text-center">
+        <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;">
+        </i>
+      </a>
+    </section>
+  </main>
 
-<script src="../js/getAllReviewsUser.js"></script>
+  <%- include('partials/footer') %>
+
+    <script src="../js/getAllReviewsUser.js"></script>

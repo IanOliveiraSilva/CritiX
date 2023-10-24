@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const titleContainer = document.getElementById('pageTitle')
   const movieContainer = document.createElement('div');
 
+  const username = localStorage.getItem('username');
+
   const id = localStorage.getItem('listId');
 
   try {
@@ -75,29 +77,31 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const listName = list.list_name;
       const buttonContainer = document.getElementById('button');
-
-      if (listName !== 'Watchlist' && listName !== 'Meus filmes favoritos') {
-        const editButton = document.createElement('a');
-        editButton.textContent = 'Editar';
-        editButton.href = '/updateList';
-        editButton.addEventListener('click', () => {
-          localStorage.setItem('listId', list.id);
-          localStorage.setItem('name', list.list_name);
-          localStorage.setItem('description', list.list_description);
-        });
-        editButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
-
-        const deleteButton = document.createElement('a');
-        deleteButton.textContent = 'Apagar';
-        deleteButton.href = '/deleteList';
-        deleteButton.addEventListener('click', () => {
-          localStorage.setItem('listId', list.id);
-        });
-        deleteButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
-
-        buttonContainer.appendChild(editButton);
-        buttonContainer.insertAdjacentHTML('beforeend', '&emsp;');
-        buttonContainer.appendChild(deleteButton);
+      
+      if(username == listsData[0].user){
+        if (listName !== 'Watchlist' && listName !== 'Meus filmes favoritos') {
+          const editButton = document.createElement('a');
+          editButton.textContent = 'Editar';
+          editButton.href = '/updateList';
+          editButton.addEventListener('click', () => {
+            localStorage.setItem('listId', list.id);
+            localStorage.setItem('name', list.list_name);
+            localStorage.setItem('description', list.list_description);
+          });
+          editButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
+  
+          const deleteButton = document.createElement('a');
+          deleteButton.textContent = 'Apagar';
+          deleteButton.href = '/deleteList';
+          deleteButton.addEventListener('click', () => {
+            localStorage.setItem('listId', list.id);
+          });
+          deleteButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
+  
+          buttonContainer.appendChild(editButton);
+          buttonContainer.insertAdjacentHTML('beforeend', '&emsp;');
+          buttonContainer.appendChild(deleteButton);
+        }
       }
     };
   } catch (error) {

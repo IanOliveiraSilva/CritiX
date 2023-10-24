@@ -246,17 +246,42 @@ exports.getAllReviewsFromUser = async (req, res) => {
 
     const userId = userIdQuery.rows[0].userid;
 
+    const { genre } = req.query;
+
+    let queryParams = [userId];
+    let queryConditions = `WHERE r.userId = $1 AND r.isPublic`;
+
+    if (genre) {
+      queryParams.push(`%${genre}%`);
+      queryConditions += ` AND LOWER(movies.genre) LIKE LOWER($${queryParams.length})`;
+    }
+
+    const { sort } = req.query;
+
+    const sortOptions = {
+      rating_desc: 'r.rating DESC',
+      rating_asc: 'r.rating ASC',
+      latest: 'created_at DESC',
+      oldest: 'created_at ASC',
+      comment_desc: 'count DESC',
+      comment_asc: 'count ASC',
+      title_desc: 'title ASC',
+      title_asc: 'title DESC'
+    };
+
+    const orderBy = sortOptions[sort] || 'created_at DESC';
+
     const reviews = await db.query(
       `SELECT users.username, movies.title, movies.genre, r.rating, r.id, r.specialRating, r.review, r.created_at, COUNT(c.id)
       FROM reviews r
       INNER JOIN movies ON r.movieId = movies.id
       LEFT JOIN comments c ON r.id = c.reviewId 
       INNER JOIN users ON r.userId = users.id
-      WHERE r.userId = $1 AND r.isPublic = true
+      ${queryConditions}
       GROUP BY r.id, users.username, movies.title, movies.genre, movies.imdbid
-      ORDER BY created_at DESC
+      ORDER BY ${orderBy}
       `,
-      [userId]
+      queryParams
     );
 
     if (reviews.rows.length === 0) {

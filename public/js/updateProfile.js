@@ -1,3 +1,5 @@
+let selectedCatInput;
+
 document.addEventListener('DOMContentLoaded', async () => {
     const actualName = localStorage.getItem('ProfileName');
     const NameElement = document.getElementById('name');
@@ -33,22 +35,58 @@ document.addEventListener('DOMContentLoaded', async () => {
     const actualuserprofile = localStorage.getItem('userprofile');
     const userprofileElement = document.getElementById('user');
     userprofileElement.value = actualuserprofile;
-})
 
-const catImages = document.querySelectorAll('.cat-image');
-const selectedCatInput = document.getElementById('selectedCat');
+    let categoryImages = {
+        terror: [
+            { id: "house-shape", url: "https://media.tenor.com/EiUrRlSeNbMAAAAC/i-burned-the-house-the-shape.gif" },
+            { id: "jason-voorhees", url: "https://media.tenor.com/fPveH1pma68AAAAC/mask-jason-voorhees.gif" }
+        ],
+        animals: [
+            { id: "animal-1", url: "https://i.pinimg.com/originals/16/24/b0/1624b0ab3834896b524eb732eeb19526.gif" },
+            { id: "animal-2", url: "https://usagif.com/wp-content/uploads/gifs/monkey-55.gif" },
+            { id: "animal-3", url: "https://media.tenor.com/u7n-mlPhhFAAAAAd/monkey-apple.gif" },
+            { id: "animal-4", url: "https://media.tenor.com/XkhNfJx3jfsAAAAC/gato_maluco-gato_insano.gif" },
+            { id: "animal-5", url: "https://media.tenor.com/mjCtsRA_AMgAAAAC/angry-cat-meme-cat.gif" },
+            { id: "animal-6", url: "https://media.tenor.com/U282vYfv7xAAAAAd/gato-barril.gif" }
+        ]
+    };
 
-catImages.forEach(catImage => {
-    catImage.addEventListener('click', function () {
-        selectedCatInput.value = this.id;
-        catImages.forEach(image => {
-            image.style.border = 'none';
-        });
-        this.style.border = '3px solid red';
+    optionsDiv = document.getElementById("photo-options");
+    selectedCatInput = document.getElementById("selectedCat");
+
+
+    optionsDiv.addEventListener("click", function (event) {
+        if (event.target.classList.contains('cat-image')) {
+            let selectedImageId = event.target.id;
+            selectedCatInput.value = selectedImageId;
+
+            document.querySelectorAll('.cat-image').forEach(image => {
+                image.style.border = 'none';
+            });
+            event.target.style.border = '3px solid red';
+        }
     });
 
+    let categorySelect = document.getElementById("category");
 
+    categorySelect.addEventListener("change", function () {
+        let selectedCategory = categorySelect.value;
+        let categoryImagesData = categoryImages[selectedCategory];
+
+        optionsDiv.innerHTML = "";
+
+        categoryImagesData.forEach(function (imageData) {
+            let imgElement = document.createElement("img");
+            imgElement.setAttribute("src", imageData.url);
+            imgElement.setAttribute("alt", "Imagem da categoria " + selectedCategory);
+            imgElement.classList.add('cat-image', 'cat-option');
+            imgElement.id = imageData.id;
+            optionsDiv.appendChild(imgElement);
+        });
+    })
 });
+
+
 
 const updateProfileForm = document.getElementById('update-profile-form');
 updateProfileForm.addEventListener('submit', async (event) => {
@@ -63,7 +101,8 @@ updateProfileForm.addEventListener('submit', async (event) => {
     const socialmediaInstagram = document.getElementById('socialmediaInstagram').value;
     const socialMediaTikTok = document.getElementById('socialmediaTikTok').value;
     const userProfileTag = document.getElementById('user').value;
-    const selectedCatUrl = document.getElementById(selectedCatInput.value).src;
+
+    const selectedImageSrc = document.getElementById(selectedCatInput.value).src;
 
     const isValidDate = isValidDateOfBirth(birthday);
 
@@ -87,7 +126,7 @@ updateProfileForm.addEventListener('submit', async (event) => {
             socialmediaInstagram,
             socialMediaTikTok,
             userProfileTag,
-            icon: selectedCatUrl
+            icon: selectedImageSrc
         })
     });
     const data = await response.json();
