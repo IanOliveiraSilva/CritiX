@@ -176,11 +176,20 @@ form {
   margin-bottom: 10px;
 }
 
-.profile-bio {
+.profile-user {
   font-size: 16px;
   color: #666666;
+  margin-top: -15px;
+  margin-bottom: 30px;
+}
+
+.profile-bio {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333333;
   margin-bottom: 20px;
 }
+
 
 .profile-stats {
   display: flex;
