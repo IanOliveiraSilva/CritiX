@@ -135,13 +135,14 @@ label {
 .btn-primary {
   background-color: #000000;
   border-color: #ffc107;
-  color: #ffd900;
+  color: #ffffff;
   font-weight: bold;
 }
 
 .btn-primary:hover {
-  background-color: #e0a800;
+  background-color: #000000;
   border-color: #e0a800;
+  color: #ffc107;
 }
 
 .profile-container {
@@ -233,7 +234,7 @@ label {
 
 .cat-options {
   display: flex;
-  justify-content: center;
+  justify-content:left;
 }
 
 .cat-option {
@@ -250,10 +251,14 @@ label {
 }
 
 .cat-image {
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   object-fit: cover;
   cursor: pointer;
+  border: 3px solid rgb(0, 0, 0);
+  border-radius: 100px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  transition: all 0.5s ease;
 }
 
 .img-bordered {
