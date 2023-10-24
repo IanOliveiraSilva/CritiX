@@ -6,7 +6,7 @@ function generateStarRating(rating, additionalClass = '') {
     const emptyStars = maxRating - fullStars - (halfStar ? 1 : 0);
 
     const ratingContainer = document.createElement('div');
-    ratingContainer.classList.add('star-rating', additionalClass);
+    ratingContainer.classList.add('star-rating-review', additionalClass);
 
     for (let i = 0; i < fullStars; i++) {
         const star = document.createElement('i');
@@ -130,8 +130,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         buttonsContainer.classList.add('text-center');
 
         if (username == reviewsData[0].username) {
+
             const editButton = document.createElement('a');
-            editButton.textContent = 'Editar';
+            editButton.innerHTML = `<i class="fas fa-pencil-alt" style="color: #000000; font-size: 30px;"></i>`;
+            editButton.classList.add('edit-button');
             editButton.href = '/updateReview';
             editButton.addEventListener('click', () => {
                 localStorage.setItem('reviewId', reviewsData[0].id);
@@ -139,20 +141,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                 localStorage.setItem('review', reviewsData[0].review);
                 localStorage.setItem('specialRating', reviewsData[0].specialrating);
             });
-            editButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
 
             const deleteButton = document.createElement('a');
-            deleteButton.textContent = 'Apagar';
-            deleteButton.href = '/deleteReview'
+            deleteButton.innerHTML = '<i class="fas fa-trash" style="color: #000000; font-size: 30px;"></i> ';
+            deleteButton.classList.add('delete-button');
+            deleteButton.href = '/getAllReviews'
             deleteButton.addEventListener('click', () => {
-                localStorage.setItem('reviewId', reviewsData[0].id);
+                const confirmDelete = confirm('Tem certeza que deseja excluir a review?');
+                if (confirmDelete) {
+                    const response = fetch(`/api/review/?id=${encodeURIComponent(reviewsData[0].id)}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    alert('Review excluida com sucesso!.');
+                }
             });
-            deleteButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
 
             const profileButton = document.createElement('a');
-            profileButton.textContent = 'Voltar ao perfil';
+            profileButton.innerHTML = `<i class="fa-solid fa-user" style="color: #000000; font-size: 30px;"></i>`;
             profileButton.href = '/profile'
-            profileButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
+
 
             buttonsContainer.appendChild(editButton);
             buttonsContainer.insertAdjacentHTML('beforeend', '&emsp;');
@@ -165,10 +175,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (username != reviewsData[0].username) {
             // FORM COMENTARIO
+            const commentDiv = document.createElement('div');
+            commentDiv.classList.add('comment-section');
+
             const form = document.createElement('form');
 
+
             const comentarioLabel = document.createElement('label');
+            comentarioLabel.classList.add('comment-label')
             const comentarioInput = document.createElement('input');
+            comentarioInput.classList.add('comment-input');
+            comentarioInput.placeholder = 'Adorei a sua review!';
             comentarioInput.type = 'text';
             comentarioInput.name = 'comment';
             comentarioLabel.appendChild(comentarioInput);
@@ -211,13 +228,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             const commentButton = document.createElement('button');
             commentButton.id = 'get-review-id';
             commentButton.textContent = 'Comentar';
-            commentButton.classList.add('btn', 'btn-primary', 'text-warning', 'btn-link', 'profile-stat');
+            commentButton.classList.add('comment-button');
             commentButton.addEventListener('click', function (event) {
                 form.dispatchEvent(new Event('submit'));
             });
 
-            reviewsContainer.appendChild(form);
-            reviewsContainer.appendChild(commentButton);
+            commentDiv.appendChild(form);
+            commentDiv.appendChild(commentButton);
+            reviewsContainer.appendChild(commentDiv)
+
 
 
 

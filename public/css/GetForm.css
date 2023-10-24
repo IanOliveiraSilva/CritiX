@@ -22,28 +22,39 @@ span {
   font-weight: 300;
 }
 
-
-.span-text{
-  font-weight: 300;
-  font-size: 20px;
+.span-text {
+  font-weight: 400;
+  font-size: 19px;
   display: block;
-  margin-top: 10px;
+  margin-top: 20px;
   text-align: center;
   text-decoration: none;
-
+  color: #333;
 }
 
-.span-text-border{
-  border: .2px solid #000000;
-  border-radius: 5px;
+.span-text-border {
+  border: 2px solid #000000;
+  border-radius: 10px;
   padding: 10px;
   margin-bottom: 5px;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.3s ease-in-out;
   list-style-type: none;
-  flex: 0 0 calc(20% - 20px);
+  flex: 0 0 calc(30% - 40px);
   margin: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
+.span-text-border:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.span-text-border:hover .span-text {
+  color: #ffd900;
+  transition: color 0.3s ease-in-out;
+}
 
 
 p { 
@@ -388,3 +399,77 @@ hr {
   width: 109px;
   padding: 5px;
 }
+
+.star-rating-review {
+  color: #000000;
+  border: solid;
+  border-radius: 20px;
+  width: 150px;
+  padding: 1px;
+  margin: 0 auto;
+  text-align: center; 
+}
+
+.comment-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.comment-label {
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: block;
+  color: #333;
+  font-size: 24px;
+}
+
+.comment-input {
+  width: calc(100% - 24px);
+  padding: 16px;
+  font-size: 18px;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  color: #333;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+.comment-input:focus {
+  border-color: #ff9100;
+}
+
+.comment-button {
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 16px 28px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comment-button:hover {
+  background-color: #ffe600;
+  color: black;
+}
+
+.comment-section::before {
+  content: "\f075";
+  font-family: FontAwesome;
+  font-size: 60px;
+  color: #000000;
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
