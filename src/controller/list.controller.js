@@ -432,14 +432,18 @@ exports.getUserWatchlist = async (req, res) => {
         const lists = await db.query(
             `
             SELECT u.username AS user, 
-            l.name AS list_name, l.movies AS movie_titles, l.moviesid,l.description AS list_description, l.created_at AS Created_At, ,CONCAT(up.name, ' ', up.familyName) as name,
+            l.name AS list_name, 
+            l.movies AS movie_titles, 
+            l.moviesid,l.description AS list_description, 
+            l.created_at AS Created_At, 
+            CONCAT(up.name, ' ', up.familyName) as name,
             COUNT(DISTINCT movie) AS movies_count
             FROM lists l
             JOIN users u ON l.userId = u.id
             JOIN user_profile up ON u.id = up.userid,
             LATERAL unnest(l.movies) AS movie
             WHERE l.name = $1 and up.userprofile = $2
-            GROUP BY u.username, l.name, l.movies, l.description, l.created_at, up.name, up.familyname;
+            GROUP BY u.username, l.moviesid, l.name, l.movies, l.description, l.created_at, up.name, up.familyname;
             `,
             [name, userprofile]
         );

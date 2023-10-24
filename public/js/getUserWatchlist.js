@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     for (const movieTitle of listData.body.Lista.movie_titles) {
       try {
-        const movieResponse = await fetch(`/api/movie/title?title=${encodeURIComponent(movieTitle)}`, {
+        const movieResponse = await fetch(`/api/movie/id?imdbID=${encodeURIComponent(movieTitle)}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           posterImage.classList.add('movie-poster');
 
           movieLink.addEventListener('click', function () {
-            localStorage.setItem('movieTitle', movieTitle);
+            localStorage.setItem('movieimbdId', movieTitle);
           });
 
           movieLink.appendChild(posterImage);

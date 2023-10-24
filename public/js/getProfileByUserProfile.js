@@ -22,19 +22,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="profile-details">
             <br>
             <div class="ul-profile">
-            <img class="profile-image" src="../uploads/icon-1696055357956.jpeg" alt="Ícone do perfil do usuário"/>
+            <img class="profile-image" src="${profileData.body.profile.icon ? profileData.body.profile.icon : 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.webp'}" alt="Ícone do perfil do usuário"/>
                 <h1 class="profile-name">${profileData.body.profile.givenname} ${profileData.body.profile.familyname}</h1> 
                 <p class="profile-bio">@${profileData.body.profile.userprofile}</p>
+                <p class="profile-bio">${profileData.body.profile.bio}</p>
+
                 </div>
                 <div class="profile-info">
                 <br>
                     
                 <ul class="list-group ul-profile">
                 <ul>
-
-                <li class="list-group-item li-profile">
-                <strong><i class="fas fa-pencil-alt"></i> </strong>${profileData.body.profile.bio}
-                </li>
 
                 <li class="list-group-item li-profile">
                 <strong><i class="fas fa-map-marker-alt"></i> </strong>${profileData.body.profile.country}, ${profileData.body.profile.city}
@@ -68,13 +66,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             </ul>
             <hr class="hr-bottom">
             <div class="text-center">
-                    <a href="/getAllUserLists" id="list-link" class="btn btn-primary text-warning btn-link profile-stat">Listas: <span class="stat-count">
-                    ${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}
-                    </span>
+                    <a href="/getAllUserLists" id="list-link" class="btn btn-primary text-warning btn-link profile-stat"><i class="fas fa-list-ul"></i> <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span>
                     </a>
-
-                    </a><br><br>
-                    <a id="get-user-watchlist" href="/getUserWatchlist" class="btn btn-primary text-warning btn-link profile-stat">Watchlist<span class="stat-count"></span></a>
+                    <a id="get-user-watchlist" href="/getUserWatchlist" class="btn btn-primary text-warning btn-link profile-stat"><i class="fa-solid fa-clock"></i> <span class="stat-count">${profileData.body.watchlistCount.movies_count !== null ? profileData.body.watchlistCount.movies_count : 0}</span>
+                    </a>
+                    <a href="/" class="back-link d-block mt-4 text-center">
+                    <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;"></i>
                     </div>
             </div>
                 </div>
@@ -146,7 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             // Rating count
-            const ratingCountResponse = await fetch('api/user/rating', {
+            const ratingCountResponse = await fetch(`api/rating/id?userProfile=${encodeURIComponent(profileData.body.profile.userprofile)}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`

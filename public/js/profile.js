@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <hr class="hr-bottom">
                     <div class="text-center">
                     
-                    <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat"></i><i class="fas fa-list-ul"></i> <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a>
+                    <a href="/getAllLists" class="btn btn-primary text-warning btn-link profile-stat"><i class="fas fa-list-ul"></i> <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span></a>
                     <a href="/getWatchlist" class="btn btn-primary text-warning btn-link profile-stat"><i class="fa-solid fa-clock"></i> <span class="stat-count">${profileData.body.watchlistCount.movies_count !== null ? profileData.body.watchlistCount.movies_count : 0}</span></a><br><br>
                     <a href="/createList" class="btn btn-primary text-warning btn-link profile-stat"><span class="stat-count">Criar Lista</span></a>
                     <a href="/" class="back-link d-block mt-4 text-center">

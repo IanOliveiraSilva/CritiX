@@ -218,7 +218,7 @@ exports.getProfileByUser = async (req, res) => {
     // Consulta o perfil do usuário
     const { rows: [userProfile] } = await db.query(
       `SELECT u.id, u.userid, u.name as givenName, u.familyname, u.bio, u.city, u.country, u.birthday, u.socialmediainstagram, u.socialmediax, u.socialmediatiktok, u.userprofile, 
-      l.id, l.name AS list_name, l.description, l.movies, l.ispublic, l.userid, 
+      l.id, l.name AS list_name, l.description, l.movies, l.ispublic, l.userid, u.icon, 
       (SELECT COUNT(*) FROM reviews WHERE userId = $1) AS contadorreviews, 
       (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists
       FROM user_profile u
@@ -226,6 +226,20 @@ exports.getProfileByUser = async (req, res) => {
       WHERE u.userId = $1 AND l.name = 'Meus filmes favoritos'`,
       [userId]
     );
+
+    const { rows: [ watchlistCount ] } = await db.query(
+      `
+      SELECT 
+      COUNT(DISTINCT movie) AS movies_count
+      FROM lists l
+      JOIN users u ON l.userId = u.id
+      JOIN user_profile up ON u.id = up.userid,
+      LATERAL unnest(l.movies) AS movie
+      WHERE l.name = 'Watchlist' and u.id = $1
+      GROUP BY u.username, l.name, l.moviesid,l.movies, l.description, l.created_at, up.name, up.familyname;
+      `,
+      [userId]
+    )
 
     // Formata a data de nascimento para o formato 'DD/MM/AAAA'
     if (userProfile && userProfile.birthday) {
@@ -236,7 +250,7 @@ exports.getProfileByUser = async (req, res) => {
     res.status(200).json({
       message: 'Perfil encontrado com sucesso!',
       body: {
-        profile: userProfile,
+        profile: userProfile, watchlistCount
       },
     });
   } catch (error) {
@@ -425,6 +439,41 @@ exports.AuthMiddleware = async (req, res, next) => {
 exports.GetRatingCount = async (req, res, next) => {
   try {
     const userId = req.user.id;
+
+    const ratingCount = await db.query(
+      `
+      SELECT rating, COUNT(*) 
+      FROM reviews r
+      JOIN users u ON r.userId = u.id
+      WHERE userId = $1
+      GROUP BY rating
+      ORDER BY rating DESC;      
+      `,
+      [userId]
+    );
+
+    const ratings = ratingCount.rows;
+
+    res.status(200).json({
+      rating: ratings
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Um erro aconteceu enquanto o perfil era buscado',
+      error,
+    });
+  }
+}
+
+exports.GetRatingCountByUser = async (req, res, next) => {
+  try {
+
+    const userProfile = req.query.userProfile;
+
+    const userIdQuery = await db.query('SELECT * FROM user_profile WHERE userProfile = $1', [userProfile]);
+
+    const userId = userIdQuery.rows[0].userid;
 
     const ratingCount = await db.query(
       `
