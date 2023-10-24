@@ -48,6 +48,7 @@ p {
   color: #333;
   font-weight: bold;
   transition: color 0.3s;
+  margin-right: 20px;
 }
 
 .nav-link:hover {
