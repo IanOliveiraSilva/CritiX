@@ -286,4 +286,43 @@ label {
   text-align: center;
 }
 
+.movie-poster {
+  width: 200px;
+  height: 300px;
+  cursor: pointer;
+  background-color: #000000;
+  border: .2px solid #000000;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+  transition: transform 0.2s ease-in-out;
+  list-style-type: none;
+}
+
+.movie-poster:hover{
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.movie-container {
+  width: 200px;
+  margin: 10px;
+  text-align: center;
+}
+
+
+#filmes-tendencia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.films-container {
+  display: flex;
+  justify-content: center;
+}
+
+
+
 

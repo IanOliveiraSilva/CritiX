@@ -148,6 +148,28 @@ exports.surpriseMe = async (req, res) => {
   }
 };
 
+exports.getMoviesTendency = async (req, res) => {
+  try {
+    const { rows: moviesWithReviewCounts } = await db.query(
+      `
+      SELECT movies.id, movies.imdbid, movies.title, COUNT(reviews.id) AS review_count
+      FROM movies
+      LEFT JOIN reviews ON movies.id = reviews.movieId
+      WHERE reviews.ispublic = true OR reviews.ispublic IS NULL
+      GROUP BY movies.id, movies.title
+      ORDER BY review_count DESC
+      LIMIT 4
+      `
+    );
+
+    res.status(200).json({
+      movies: moviesWithReviewCounts 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao processar a solicitação.' });
+  }
+};
 
 
 

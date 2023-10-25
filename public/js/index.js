@@ -81,3 +81,53 @@ window.onload = function () {
   const usernameDisplay = document.getElementById('username-display');
   usernameDisplay.innerHTML = `<i class="fas fa-user"></i> Olá, ${username}!`;
 };
+
+const token = localStorage.getItem('token')
+
+document.addEventListener('DOMContentLoaded', async () => {
+
+  const response = await fetch(`/api/movie/tendency`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  const movieData = await response.json();
+
+  const filmsContainer = document.createElement('div');
+  filmsContainer.classList.add('films-container');
+  for (const movie of movieData.movies) {
+    const movieId = movie.imdbid;
+
+    const movieResponse = await fetch(`/api/movie/id?imdbID=${encodeURIComponent(movieId)}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const moviePoster = await movieResponse.json();
+
+    const movieContainer = document.createElement('div');
+    movieContainer.classList.add('movie-container');
+
+    const movieLink = document.createElement('a');
+    movieLink.href = '/getMovieByTitle';
+
+    const posterImage = document.createElement('img');
+    posterImage.src = moviePoster.body.movieData.Poster;
+    posterImage.alt = 'Poster do Filme';
+    posterImage.classList.add('movie-poster');
+
+    movieLink.addEventListener('click', function () {
+      localStorage.setItem('movieimbdId', moviePoster.body.movieData.imdbID);
+    });
+
+    movieLink.appendChild(posterImage);
+    movieContainer.appendChild(movieLink);
+    filmsContainer.appendChild(movieContainer);
+  }
+  const tendencySection = document.querySelector('#filmes-tendencia');
+  tendencySection.appendChild(filmsContainer);
+})

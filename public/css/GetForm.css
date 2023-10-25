@@ -56,6 +56,10 @@ span {
   transition: color 0.3s ease-in-out;
 }
 
+.action-cell {
+  text-align: right;
+}
+
 
 p { 
   font-weight: 600;

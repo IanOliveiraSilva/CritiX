@@ -103,4 +103,6 @@ router.get('/movie/id', movieController.getMovieById);
  */
 router.get('/movie/surpriseMe', movieController.surpriseMe);
 
+router.get('/movie/tendency', movieController.getMoviesTendency);
+
 module.exports = router;
