@@ -5,7 +5,7 @@ const db = require("../config/db");
 const OMDB_API_KEY = process.env.OMDB_API_KEY;
 
 exports.createList = async (req, res) => {
-    const { name, description, movieTitles, moviesId, isPublic } = req.body;
+    const { name, description, movieIds, moviesId, isPublic } = req.body;
     const userId = req.user.id;
 
     try {
@@ -23,10 +23,10 @@ exports.createList = async (req, res) => {
             userId)
             VALUES ($1,$2,$3,$4,$5,$6)
             RETURNING *`,
-            [name, description, movieTitles, moviesId, isPublic, userId]
+            [name, description, movieIds, moviesId, isPublic, userId]
         );
 
-        for (const title of movieTitles) {
+        for (const title of movieIds) {
             const omdbResponse = await axios.get(`http://www.omdbapi.com/?t=${title}&apikey=${OMDB_API_KEY}`);
             if (omdbResponse.status === 200 && omdbResponse.data && omdbResponse.data.Response === 'True') {
                 const movieData = omdbResponse.data;
@@ -312,7 +312,7 @@ exports.deleteList = async (req, res) => {
 exports.updateList = async (req, res) => {
     const { id } = req.query;
     const userId = req.user.id;
-    const { name, description, isPublic, movieTitles } = req.body;
+    const { name, description, isPublic, movieIds } = req.body;
 
     try {
         if (!name) {
@@ -323,7 +323,7 @@ exports.updateList = async (req, res) => {
 
         const { rows } = await db.query(
             'UPDATE lists SET name = $1, description = $2, isPublic = $3, movies = $4 WHERE id = $5 AND userId = $6 RETURNING *',
-            [name, description, isPublic, movieTitles, id, userId]
+            [name, description, isPublic, movieIds, id, userId]
         );
 
         if (rows.length === 0) {
@@ -349,7 +349,7 @@ exports.updateList = async (req, res) => {
 exports.updateListPartially = async (req, res) => {
     const { id } = req.query;
     const userId = req.user.id;
-    const { name, description, isPublic, movieTitles } = req.body;
+    const { name, description, isPublic, movieIds } = req.body;
 
     try {
         const existingList = await db.query(
@@ -368,7 +368,7 @@ exports.updateListPartially = async (req, res) => {
             name: name || existingList.rows[0].name,
             description: description || existingList.rows[0].description,
             isPublic: isPublic !== undefined ? isPublic : existingList.rows[0].ispublic,
-            movies: movieTitles || existingList.rows[0].movies
+            movies: movieIds || existingList.rows[0].movies
         };
 
         const { rows } = await db.query(
@@ -652,9 +652,9 @@ exports.getRandomMovieFromWatchlist = async (req, res) => {
             [name, userId]
         );
 
-        const movieTitles = lists.rows[0].movie_titles;
-        const randomIndex = Math.floor(Math.random() * movieTitles.length);
-        const randomMovie = movieTitles[randomIndex];
+        const movieIds = lists.rows[0].movie_titles;
+        const randomIndex = Math.floor(Math.random() * movieIds.length);
+        const randomMovie = movieIds[randomIndex];
 
         return res.status(200).json({
             message: 'O filme escolhido foi: ' + randomMovie,
@@ -678,7 +678,7 @@ exports.getRandomMovieFromList = async (req, res) => {
 
         const lists = await db.query(
             `
-            SELECT l.movies AS movie_titles
+            SELECT l.moviesid AS movie_ids
             FROM lists l
             JOIN users u ON l.userId = u.id
             WHERE l.name = $1 and u.id = $2
@@ -686,14 +686,14 @@ exports.getRandomMovieFromList = async (req, res) => {
             [name, userId]
         );
 
-        const movieTitles = lists.rows[0].movie_titles;
-        const randomIndex = Math.floor(Math.random() * movieTitles.length);
-        const randomMovie = movieTitles[randomIndex];
+        const movieIds = lists.rows[0].movie_ids;
+        const randomIndex = Math.floor(Math.random() * movieIds.length);
+        const randomId = movieIds[randomIndex];
 
         return res.status(200).json({
-            message: 'O filme escolhido foi: ' + randomMovie,
+            message: 'O filme escolhido foi: ' + randomId,
             body: {
-                Filme: randomMovie
+                Filme: randomId,
             }
         });
     } catch (error) {

@@ -8,13 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedMoviesHtml = document.getElementById('selected-movies');
 
     const imdbIdMovies = [];
-  
+    const createListButton = document.getElementById('create-list-button');
+
     createListForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       const name = document.getElementById('name').value;
       const description = document.getElementById('description').value;
       const isPublic = document.getElementById('isPublic').checked;
       const token = localStorage.getItem('token');
+
+      createListButton.disabled = true;
   
       try {
         const response = await fetch('/api/list', {

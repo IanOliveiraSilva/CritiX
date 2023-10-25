@@ -32,9 +32,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     movieCount.textContent = 'Filmes: ' + listsData[0].movies_count;
     movieCount.classList.add('title', 'uppercase-text');
 
+    const randomMovieButton = document.createElement('a');
+
     titleContainer.appendChild(listName);
     titleContainer.appendChild(hr);
     titleContainer.appendChild(movieCount);
+
+    const movieIndex = listsData[0].moviesid;
+    const randomIndex = Math.floor(Math.random() * movieIndex.length);
+    const randomMovie = movieIndex[randomIndex];
 
     for (const list of listsData) {
       if (list.moviesid && list.moviesid.length > 0) {
@@ -60,9 +66,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             localStorage.setItem('movieimbdId', movieData.body.movieData.imdbID);
           });
 
+        
           movieLink.appendChild(posterImg);
           movieContainer.appendChild(movieLink);
           listContainer.appendChild(movieContainer);
+
+          randomMovieButton.innerHTML = '<i class="fa-solid fa-dice" style="color: #000000; font-size:30px"></i>';
+          randomMovieButton.href = '/getMovieByTitle'
+          randomMovieButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            localStorage.setItem('movieimbdId', randomMovie);
+            window.location.href = randomMovieButton.href;
+          });
         }
       } else if (list.movie_titles) {
         const moviesCell = document.createElement('p');
@@ -74,6 +89,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         noMoviesCell.textContent = 'Esta lista não possui filmes.';
         listContainer.appendChild(noMoviesCell);
       }
+
+      titleContainer.appendChild(randomMovieButton);
 
       const listName = list.list_name;
       const buttonContainer = document.getElementById('button');
