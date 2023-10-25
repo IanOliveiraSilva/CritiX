@@ -165,7 +165,7 @@ exports.getUserProfile = async (req, res) => {
       [userId]
     );
 
-    const { rows: [ watchlistCount ] } = await db.query(
+    let { rows: [ watchlistCount ] } = await db.query(
       `
       SELECT 
       COUNT(DISTINCT movie) AS movies_count
@@ -178,6 +178,12 @@ exports.getUserProfile = async (req, res) => {
       `,
       [userId]
     )
+
+    if(watchlistCount == undefined){
+      watchlistCount = {
+        "movies_count": null
+      };
+    }
 
     // Formata a data de nascimento para o formato 'DD/MM/AAAA'
     if (userProfile && userProfile.birthday) {
