@@ -159,8 +159,10 @@ exports.getListByName = async (req, res) => {
             COUNT(DISTINCT movie) AS movies_count
             FROM lists l
             JOIN users u ON l.userId = u.id
-            JOIN user_profile up ON u.id = up.userid,
+            JOIN user_profile up ON u.id = up.userid
+            LEFT JOIN 
             LATERAL unnest(l.moviesid) AS movie
+            ON true
             WHERE l.name = $1 and u.id = $2
             GROUP BY u.username, l.name, l.moviesid,l.movies, l.description, l.created_at, up.name, up.familyname;
             `,
@@ -407,8 +409,10 @@ exports.getWatchlist = async (req, res) => {
             COUNT(DISTINCT movie) AS movies_count
             FROM lists l
             JOIN users u ON l.userId = u.id
-            JOIN user_profile up ON u.id = up.userid,
+            JOIN user_profile up ON u.id = up.userid
+            LEFT JOIN 
             LATERAL unnest(l.moviesid) AS movie
+            ON true
             WHERE l.name = $1 and u.id = $2
             GROUP BY u.username, l.name, l.moviesid,l.movies, l.description, l.created_at, up.name, up.familyname;
             `,
