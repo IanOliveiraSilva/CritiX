@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
-  const removeFromWatchlist = async (token, movieTitle) => {
+  const removeFromWatchlist = async (token, moviesid) => {
     try {
       const response = await fetch(`/api/watchlist/remove`, {
         method: 'DELETE',
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          movieTitle: movieTitle
+          moviesid: moviesid
         })
       });
 
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
-  const removeFromFavoriteList = async (token, movieTitle) => {
+  const removeFromFavoriteList = async (token, moviesid) => {
     try {
       const response = await fetch(`/api/favoriteMovies/remove`, {
         method: 'DELETE',
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          movieTitle: movieTitle
+          moviesid: moviesid
         })
       });
 
@@ -225,6 +225,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     resultsList.innerHTML = '';
     resultsList.appendChild(details);
 
+    const movieid = movieData.body.movieData.imdbID;
+
+    const favoriteData = await getFavoriteList(token);
+    const watchlistData = await getWatchlist(token);
+
+    if (
+      favoriteData.body &&
+      favoriteData.body.Lista &&
+      favoriteData.body.Lista.moviesid !== undefined &&
+      favoriteData.body.Lista.moviesid.includes(movieid)
+    ) {
+      const favoriteIcon = document.getElementById('favorite-icon')
+      favoriteIcon.classList.add('fas', 'fa-heart');
+    }
+
+    if (
+      watchlistData.body &&
+      watchlistData.body.Lista &&
+      watchlistData.body.Lista.moviesid !== undefined &&
+      watchlistData.body.Lista.moviesid.includes(movieid)
+    ) {
+      const watchlistIcon = document.getElementById('watchlist-icon')
+      watchlistIcon.classList.add('fas', 'fa-clock');
+    }
+
     // Botões
     const reviewButton = document.getElementById('create-review-button');
     reviewButton.addEventListener('click', () => {
@@ -254,8 +279,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (watchlistData.body &&
           watchlistData.body.Lista &&
-          watchlistData.body.Lista.movie_titles !== undefined &&
-          watchlistData.body.Lista.movie_titles.includes(moviesid)) {
+          watchlistData.body.Lista.moviesid !== undefined &&
+          watchlistData.body.Lista.moviesid.includes(moviesid)) {
           await removeFromWatchlist(token, moviesid);
           alert('Filme removido da watchlist.');
           watchlistIcon.classList.remove('fas', 'fa-clock');
@@ -279,8 +304,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (favoriteData.body &&
           favoriteData.body.Lista &&
-          favoriteData.body.Lista.movie_titles !== undefined &&
-          favoriteData.body.Lista.movie_titles.includes(moviesid)) {
+          favoriteData.body.Lista.moviesid !== undefined &&
+          favoriteData.body.Lista.moviesid.includes(moviesid)) {
           await removeFromFavoriteList(token, moviesid);
           alert('Filme removido da lista de favoritos.');
           favoriteIcon.classList.remove('fas', 'fa-heart');

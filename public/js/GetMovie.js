@@ -267,8 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
               watchlistIcon.classList.add('fas', 'fa-clock');
             }
 
-
-
             // Botões
             const reviewButton = document.getElementById('create-review-button');
             reviewButton.addEventListener('click', () => {
