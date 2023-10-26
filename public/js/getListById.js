@@ -38,9 +38,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     titleContainer.appendChild(hr);
     titleContainer.appendChild(movieCount);
 
-    const movieIndex = listsData[0].moviesid;
-    const randomIndex = Math.floor(Math.random() * movieIndex.length);
-    const randomMovie = movieIndex[randomIndex];
+    if (listsData && listsData[0] && listsData[0].moviesid && listsData[0].moviesid.length > 0) {
+      const movieIndex = listsData[0].moviesid;
+      const randomIndex = Math.floor(Math.random() * movieIndex.length);
+      const randomMovie = movieIndex[randomIndex];
+    }
 
     for (const list of listsData) {
       if (list.moviesid && list.moviesid.length > 0) {

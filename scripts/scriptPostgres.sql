@@ -1,5 +1,6 @@
 
 -- Criação da tabela 'users'
+DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(255) NOT NULL,
@@ -9,12 +10,13 @@ CREATE TABLE users (
 );
 
 -- Criação da tabela 'user_profile'
+DROP TABLE IF EXISTS user_profile;
 CREATE TABLE user_profile (
   id SERIAL PRIMARY KEY,
   userid integer UNIQUE NOT NULL,
   name character varying(30) NOT NULL,
   familyName character varying(30) NOT NULL,
-  icon bytea,
+  icon character varying (255),
   bio character varying(30) NOT NULL,
   contadorreviews integer,
   contadorlists integer,
@@ -29,31 +31,23 @@ CREATE TABLE user_profile (
 );
 
 -- Criação da tabela 'movies'
+DROP TABLE IF EXISTS movies;
 CREATE TABLE movies (
   id SERIAL PRIMARY KEY,
   imdbID VARCHAR(255) NOT NULL,
   title VARCHAR(255) NOT NULL,
   year VARCHAR(255) NOT NULL,
-  runtime VARCHAR(255) NOT NULL,
-  released VARCHAR(255) NOT NULL,
-  genre VARCHAR(255) NOT NULL,
-  director VARCHAR(255) NOT NULL,
-  writer VARCHAR(255) NOT NULL,
-  actors VARCHAR(255) NOT NULL,
-  plot TEXT NOT NULL,
-  country VARCHAR(255) NOT NULL,
-  awards VARCHAR(255) NOT NULL,
-  poster VARCHAR(255) NOT NULL,
-  imdbRating VARCHAR(255) NOT NULL,
-  metascore VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   mediaNotas DECIMAL(10,2),
   mediaspecialrating DOUBLE PRECISION 	
 );
 
+
 -- Criação da tabela 'reviews'
+DROP TABLE IF EXISTS reviews;
 CREATE TABLE reviews (
   id SERIAL PRIMARY KEY,
+  imdbid character varying(30) NOT NULL,
   userId INTEGER REFERENCES users(id) ON DELETE CASCADE,
   movieId INTEGER REFERENCES movies(id) ON DELETE CASCADE,
   specialRating double precision,
@@ -65,10 +59,12 @@ CREATE TABLE reviews (
 
 
 -- Criação da tabela 'Lists'
+DROP TABLE IF EXISTS lists;
 CREATE TABLE IF NOT EXISTS lists (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT,
+    moviesid CHARACTER VARYING(255)[],
     movies CHARACTER VARYING(255)[],
     ispublic BOOLEAN NOT NULL,
     userid INTEGER NOT NULL,
@@ -77,15 +73,8 @@ CREATE TABLE IF NOT EXISTS lists (
 );
 
 
--- Criação da tabela 'Movie_Lists'
-CREATE TABLE IF NOT EXISTS movies_lists (
-    listid INTEGER NOT NULL,
-    movieid INTEGER NOT NULL,
-    FOREIGN KEY (listid) REFERENCES lists(id),
-    FOREIGN KEY (movieid) REFERENCES movies(id)
-);
-
 -- Criação da tabela 'Comments'
+DROP TABLE IF EXISTS comments; 
 CREATE TABLE IF NOT EXISTS comments (
     id SERIAL PRIMARY KEY,
     reviewid INTEGER NOT NULL,
@@ -95,4 +84,5 @@ CREATE TABLE IF NOT EXISTS comments (
     FOREIGN KEY (reviewid) REFERENCES reviews(id),
     FOREIGN KEY (userid) REFERENCES users(id)
 );
+
 

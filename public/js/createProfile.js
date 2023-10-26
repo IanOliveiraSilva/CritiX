@@ -148,6 +148,7 @@ registerForm.addEventListener('submit', async (event) => {
         name: 'Watchlist',
         description: 'Lista de filmes para assistir',
         movieIds: [],
+        moviesId: [],
         isPublic: true,
       })
     });
@@ -162,6 +163,7 @@ registerForm.addEventListener('submit', async (event) => {
         name: 'Meus filmes favoritos',
         description: 'Os melhores!',
         movieIds: [],
+        moviesId: [],
         isPublic: true,
       }),
     });

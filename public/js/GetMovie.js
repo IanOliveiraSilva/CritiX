@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const addToFavoriteList = async (token, movieTitle) => {
+  const addToFavoriteList = async (token, moviesid) => {
     try {
       const response = await fetch(`/api/list/favoriteMovies`, {
         method: 'PATCH',
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          movieTitle: movieTitle
+          moviesid: moviesid
         })
       });
 
@@ -295,19 +295,19 @@ document.addEventListener('DOMContentLoaded', () => {
               try {
                 const favoriteIcon = document.getElementById('favorite-icon')
                 const favoriteData = await getFavoriteList(token);
-                const movieTitle = movie.Title;
+                const moviesid = movie.imdbID;
 
                 if (favoriteData.body &&
                   favoriteData.body.Lista &&
                   favoriteData.body.Lista.movie_titles !== undefined &&
-                  favoriteData.body.Lista.movie_titles.includes(movieTitle)) {
-                  await removeFromFavoriteList(token, movieTitle);
+                  favoriteData.body.Lista.movie_titles.includes(moviesid)) {
+                  await removeFromFavoriteList(token, moviesid);
                   alert('Filme removido da lista de favoritos.');
                   favoriteIcon.classList.remove('fas', 'fa-heart');
                   favoriteIcon.classList.add('far', 'fa-heart');
 
                 } else {
-                  await addToFavoriteList(token, movieTitle);
+                  await addToFavoriteList(token, moviesid);
                   alert('Filme adicionado à lista de favoritos.');
                   favoriteIcon.classList.add('fas', 'fa-heart');
                 }

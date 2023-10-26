@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify({
             name,
             description,
-            movieTitles: selectedMovies,
+            movieIds: selectedMovies,
             moviesId: imdbIdMovies,
             isPublic,
           }),

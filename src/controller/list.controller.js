@@ -122,8 +122,9 @@ exports.getListById = async (req, res) => {
             COUNT(DISTINCT movie) AS movies_count
             FROM lists l
             JOIN users u ON l.userId = u.id
-            JOIN user_profile up ON u.id = up.userid,
-            LATERAL unnest(l.movies) AS movie
+            JOIN user_profile up ON u.id = up.userid
+            LEFT JOIN 
+            unnest(l.moviesid) AS movie ON true
             WHERE l.id = $1
             GROUP BY u.username, l.id,l.moviesid ,l.name, l.movies, l.description, l.created_at;
             `,
@@ -155,8 +156,8 @@ exports.getListByName = async (req, res) => {
             `SELECT u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
             FROM lists l
             JOIN users u ON l.userId = u.id
-            WHERE l.name = $1 and u.id = $2;
-            ORDER BY Created_at DESC;
+            WHERE l.name = $1 and u.id = $2 and l.created_at IS NOT NULL
+            ORDER BY CASE WHEN l.created_at IS NOT NULL THEN l.created_at ELSE CURRENT_TIMESTAMP END DESC;            
             `,
             [name, userId]
         );
@@ -485,15 +486,15 @@ exports.updateWatchlist = async (req, res) => {
                 message: "Não foi possível encontrar a lista com o id fornecido.",
             });
         }
-        const existingMovies = existingList.rows[0].movies || [];
+        const existingMovies = existingList.rows[0].moviesid || [];
         if (existingMovies.includes(moviesid)) {
             return res.status(400).json({
                 message: "O filme já está na lista.",
             });
         }
-        const updatedMovies = [...existingMovies, moviesid].map(movie => movie.toString());
+        const updatedMovies = [...existingMovies, moviesid].map(moviesid => moviesid.toString());
         const { rows } = await db.query(
-            "UPDATE lists SET name = $1, description = $2, isPublic = $3, movies = $4 WHERE userId = $5 AND name = $6 RETURNING *",
+            "UPDATE lists SET name = $1, description = $2, isPublic = $3, moviesid = $4 WHERE userId = $5 AND name = $6 RETURNING *",
             [name || existingList.rows[0].name, description || existingList.rows[0].description, isPublic !== undefined ? isPublic : existingList.rows[0].ispublic, updatedMovies, userId, watchlistName]
         );
         return res.status(200).json({
@@ -512,7 +513,7 @@ exports.updateWatchlist = async (req, res) => {
 exports.updateFavoriteList = async (req, res) => {
     const watchlistName = 'Meus filmes favoritos';
     const userId = req.user.id;
-    const { name, description, isPublic, movieTitle } = req.body;
+    const { name, description, isPublic, moviesid } = req.body;
 
     try {
         const existingList = await db.query(
@@ -525,15 +526,15 @@ exports.updateFavoriteList = async (req, res) => {
                 message: "Não foi possível encontrar a lista com o id fornecido.",
             });
         }
-        const existingMovies = existingList.rows[0].movies || [];
-        if (existingMovies.includes(movieTitle)) {
+        const existingMovies = existingList.rows[0].moviesid || [];
+        if (existingMovies.includes(moviesid)) {
             return res.status(400).json({
                 message: "O filme já está na lista.",
             });
         }
-        const updatedMovies = [...existingMovies, movieTitle].map(movie => movie.toString());
+        const updatedMovies = [...existingMovies, moviesid].map(moviesid => moviesid.toString());
         const { rows } = await db.query(
-            "UPDATE lists SET name = $1, description = $2, isPublic = $3, movies = $4 WHERE userId = $5 AND name = $6 RETURNING *",
+            "UPDATE lists SET name = $1, description = $2, isPublic = $3, moviesid = $4 WHERE userId = $5 AND name = $6 RETURNING *",
             [name || existingList.rows[0].name, description || existingList.rows[0].description, isPublic !== undefined ? isPublic : existingList.rows[0].ispublic, updatedMovies, userId, watchlistName]
         );
         return res.status(200).json({
