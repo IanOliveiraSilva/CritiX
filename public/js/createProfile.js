@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("http://api.geonames.org/countryInfoJSON?formatted=true&username=testandoparacritix")
+  fetch("https://api.geonames.org/countryInfoJSON?formatted=true&username=testandoparacritix")
     .then(response => response.json())
     .then(data => {
       const countrySelect = document.getElementById("country");
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const citySelect = document.getElementById("city");
     citySelect.innerHTML = "<option value='' disabled selected>Selecione uma cidade</option>";
 
-    fetch(`http://api.geonames.org/searchJSON?formatted=true&country=${selectedCountry}&username=testandoparacritix`)
+    fetch(`https://api.geonames.org/searchJSON?formatted=true&country=${selectedCountry}&username=testandoparacritix`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
