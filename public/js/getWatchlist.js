@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           posterImage.classList.add('movie-poster');
 
           movieLink.addEventListener('click', function () {
-            localStorage.setItem('movieTitle', movieTitle);
+            localStorage.setItem('movieimbdId', movieData.body.movieData.imdbID);
           });
 
           movieLink.appendChild(posterImage);

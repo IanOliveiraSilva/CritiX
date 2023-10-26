@@ -558,7 +558,7 @@ exports.updateFavoriteList = async (req, res) => {
 exports.removeFromWatchlist = async (req, res) => {
     const watchlistName = 'Watchlist';
     const userId = req.user.id;
-    const { movieTitle } = req.body;
+    const { moviesid } = req.body;
 
     try {
         const existingList = await db.query(
@@ -572,17 +572,18 @@ exports.removeFromWatchlist = async (req, res) => {
             });
         }
 
-        const existingMovies = existingList.rows[0].movies;
-        if (!existingMovies.includes(movieTitle)) {
+        const existingMovies = existingList.rows[0].moviesid;
+        if (!existingMovies.includes(moviesid)) {
             return res.status(400).json({
                 message: "O filme não está na lista.",
             });
         }
 
-        const updatedMovies = existingMovies.filter(movie => movie !== movieTitle);
+        const updatedMovies = existingMovies.filter(movie => movie !== moviesid);
+        
 
         const { rows } = await db.query(
-            "UPDATE lists SET movies = $1 WHERE userId = $2 AND name = $3 RETURNING *",
+            "UPDATE lists SET moviesid = $1 WHERE userId = $2 AND name = $3 RETURNING *",
             [updatedMovies, userId, watchlistName]
         );
 
@@ -602,7 +603,7 @@ exports.removeFromWatchlist = async (req, res) => {
 exports.removeFromFavoriteList = async (req, res) => {
     const watchlistName = 'Meus filmes favoritos';
     const userId = req.user.id;
-    const { movieTitle } = req.body;
+    const { moviesid } = req.body;
 
     try {
         const existingList = await db.query(
@@ -616,17 +617,18 @@ exports.removeFromFavoriteList = async (req, res) => {
             });
         }
 
-        const existingMovies = existingList.rows[0].movies;
-        if (!existingMovies.includes(movieTitle)) {
+       
+        const existingMovies = existingList.rows[0].moviesid;
+        if (!existingMovies.includes(moviesid)) {
             return res.status(400).json({
                 message: "O filme não está na lista.",
             });
         }
 
-        const updatedMovies = existingMovies.filter(movie => movie !== movieTitle);
+        const updatedMovies = existingMovies.filter(movie => movie !== moviesid);
 
         const { rows } = await db.query(
-            "UPDATE lists SET movies = $1 WHERE userId = $2 AND name = $3 RETURNING *",
+            "UPDATE lists SET moviesid = $1 WHERE userId = $2 AND name = $3 RETURNING *",
             [updatedMovies, userId, watchlistName]
         );
 
