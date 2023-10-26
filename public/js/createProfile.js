@@ -1,33 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("http://api.geonames.org/countryInfoJSON?formatted=true&username=testandoparacritix", {mode: 'no-cors'})
-    .then(response => response.json())
-    .then(data => {
-      const countrySelect = document.getElementById("country");
-      data.geonames.forEach(country => {
-        const option = document.createElement("option");
-        option.value = country.countryCode;
-        option.textContent = country.countryName;
-        countrySelect.appendChild(option);
-      });
-    });
-
-  document.getElementById("country").addEventListener("change", function () {
-    const selectedCountry = this.value;
-    const citySelect = document.getElementById("city");
-    citySelect.innerHTML = "<option value='' disabled selected>Selecione uma cidade</option>";
-
-    fetch(`http://api.geonames.org/searchJSON?formatted=true&country=${selectedCountry}&username=testandoparacritix`, {mode: 'no-cors'})
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        data.geonames.forEach(city => {
-          const option = document.createElement("option");
-          option.value = city.name;
-          option.textContent = city.name;
-          citySelect.appendChild(option);
-        });
-      });
-  });
 
   let categoryImages = {
     horror: [
