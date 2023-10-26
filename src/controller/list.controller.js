@@ -153,11 +153,16 @@ exports.getListByName = async (req, res) => {
         const userId = req.user.id;
 
         const lists = await db.query(
-            `SELECT u.username AS user, l.name AS list_name, l.movies AS movie_titles, l.description AS list_description, l.created_at AS Created_At
+            `
+            SELECT u.username AS user, 
+            l.name AS list_name, l.movies AS movie_titles, l.moviesid,l.description AS list_description, l.created_at AS Created_At, CONCAT(up.name, ' ', up.familyName) as name,
+            COUNT(DISTINCT movie) AS movies_count
             FROM lists l
             JOIN users u ON l.userId = u.id
-            WHERE l.name = $1 and u.id = $2 and l.created_at IS NOT NULL
-            ORDER BY CASE WHEN l.created_at IS NOT NULL THEN l.created_at ELSE CURRENT_TIMESTAMP END DESC;            
+            JOIN user_profile up ON u.id = up.userid,
+            LATERAL unnest(l.moviesid) AS movie
+            WHERE l.name = $1 and u.id = $2
+            GROUP BY u.username, l.name, l.moviesid,l.movies, l.description, l.created_at, up.name, up.familyname;
             `,
             [name, userId]
         );
@@ -403,7 +408,7 @@ exports.getWatchlist = async (req, res) => {
             FROM lists l
             JOIN users u ON l.userId = u.id
             JOIN user_profile up ON u.id = up.userid,
-            LATERAL unnest(l.movies) AS movie
+            LATERAL unnest(l.moviesid) AS movie
             WHERE l.name = $1 and u.id = $2
             GROUP BY u.username, l.name, l.moviesid,l.movies, l.description, l.created_at, up.name, up.familyname;
             `,
@@ -442,7 +447,7 @@ exports.getUserWatchlist = async (req, res) => {
             FROM lists l
             JOIN users u ON l.userId = u.id
             JOIN user_profile up ON u.id = up.userid,
-            LATERAL unnest(l.movies) AS movie
+            LATERAL unnest(l.moviesids) AS movie
             WHERE l.name = $1 and up.userprofile = $2
             GROUP BY u.username, l.moviesid, l.name, l.movies, l.description, l.created_at, up.name, up.familyname;
             `,

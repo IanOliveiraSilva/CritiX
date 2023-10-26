@@ -38,10 +38,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     titleContainer.appendChild(hr);
     titleContainer.appendChild(movieCount);
 
+    let randomMovie 
     if (listsData && listsData[0] && listsData[0].moviesid && listsData[0].moviesid.length > 0) {
       const movieIndex = listsData[0].moviesid;
       const randomIndex = Math.floor(Math.random() * movieIndex.length);
-      const randomMovie = movieIndex[randomIndex];
+      randomMovie = movieIndex[randomIndex];
     }
 
     for (const list of listsData) {
@@ -97,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const listName = list.list_name;
       const buttonContainer = document.getElementById('button');
       
-      if(username == listsData[0].user){
+      if(username == listsData[0].user ){
         if (listName !== 'Watchlist' && listName !== 'Meus filmes favoritos') {
           const editButton = document.createElement('a');
           editButton.textContent = 'Editar';

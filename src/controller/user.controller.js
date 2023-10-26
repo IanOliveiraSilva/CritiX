@@ -172,7 +172,7 @@ exports.getUserProfile = async (req, res) => {
       FROM lists l
       JOIN users u ON l.userId = u.id
       JOIN user_profile up ON u.id = up.userid,
-      LATERAL unnest(l.movies) AS movie
+      LATERAL unnest(l.moviesid) AS movie
       WHERE l.name = 'Watchlist' and u.id = $1
       GROUP BY u.username, l.name, l.moviesid,l.movies, l.description, l.created_at, up.name, up.familyname;
       `,

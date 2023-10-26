@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     titleContainer.appendChild(movieCount);
     titleContainer.appendChild(hr);
 
-    const movieIndex = listData.body.Lista.movie_titles;
+    const movieIndex = listData.body.Lista.moviesid;
     const randomIndex = Math.floor(Math.random() * movieIndex.length);
     const randomMovie = movieIndex[randomIndex];
 
-    for (const movieTitle of listData.body.Lista.movie_titles) {
+    for (const movieid of listData.body.Lista.moviesid) {
       try {
-        const movieResponse = await fetch(`/api/movie/id?imdbID=${encodeURIComponent(movieTitle)}`, {
+        const movieResponse = await fetch(`/api/movie/id?imdbID=${encodeURIComponent(movieid)}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
