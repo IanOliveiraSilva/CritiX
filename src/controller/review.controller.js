@@ -69,7 +69,7 @@ exports.createReview = async (req, res) => {
       return res.status(400).json({ message: 'Filme não encontrado no OMDB' });
     }
 
-    const { Title, Year, Runtime, Released, Genre, Director, Writer, Actors, Plot, Country, Awards, Poster, imdbRating, Metascore } = omdbResponse.data;
+    const { Title, Year, Genre} = omdbResponse.data;
 
     let movieId;
     const { rows: [existingMovie] } = await db.query('SELECT * FROM movies WHERE imdbId = $1', [imdbID]);
@@ -79,11 +79,11 @@ exports.createReview = async (req, res) => {
     } else {
       const { rows: [newMovie] } = await db.query(
         `
-        INSERT INTO movies (imdbID, title, year, runtime, released, genre, director, writer, actors, plot, country, awards, poster, imdbRating, metascore)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) 
+        INSERT INTO movies (imdbID, title, year, genre)
+        VALUES ($1, $2, $3, $4) 
         RETURNING *
         `,
-        [imdbID, Title, Year, Runtime, Released, Genre, Director, Writer, Actors, Plot, Country, Awards, Poster, imdbRating, Metascore]
+        [imdbID, Title, Year, Genre]
       );
       movieId = newMovie.id;
     }

@@ -34,12 +34,10 @@ exports.createList = async (req, res) => {
 
                 if (!movie) {
                     const { rows: [newMovie] } = await db.query(
-                        `INSERT INTO movies (imdbid, title, year, runtime, released, genre, director, writer, actors, plot, country, awards, poster, imdbrating, metascore)
-                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+                        `INSERT INTO movies (imdbid, title, year, genre)
+                        VALUES ($1, $2, $3, $4)
                         RETURNING id`,
-                        [movieData.imdbID, movieData.Title, movieData.Year, movieData.Runtime, movieData.Released,
-                        movieData.Genre, movieData.Director, movieData.Writer, movieData.Actors, movieData.Plot,
-                        movieData.Country, movieData.Awards, movieData.Poster, movieData.imdbRating, movieData.Metascore]
+                        [movieData.imdbID, movieData.Title, movieData.Year, movieData.Genre,]
                     );
                     movie = newMovie;
                 }
@@ -168,6 +166,7 @@ exports.getListByName = async (req, res) => {
             `,
             [name, userId]
         );
+
 
         if (lists.rows.length === 0) {
             return res.status(404).json({

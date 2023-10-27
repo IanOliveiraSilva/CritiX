@@ -243,9 +243,11 @@ document.addEventListener('DOMContentLoaded', () => {
             resultsList.appendChild(details);
 
             const movieid = movie.imdbID;
+           
 
             const favoriteData = await getFavoriteList(token);
             const watchlistData = await getWatchlist(token);
+
 
             if (
               favoriteData.body &&
