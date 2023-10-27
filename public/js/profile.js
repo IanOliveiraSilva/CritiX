@@ -110,9 +110,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // mostrar filmes favoritos
     const filmsContainer = document.createElement('div');
     filmsContainer.classList.add('films-container');
-    for (const movieTitle of profileData.body.profile.movies) {
+    for (const movieTitle of profileData.body.profile.moviesid) {
       try {
-        const movieResponse = await fetch(`/api/movie/title?title=${encodeURIComponent(movieTitle)}`, {
+        const movieResponse = await fetch(`/api/movie/id?imdbID=${encodeURIComponent(movieTitle)}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`

@@ -67,38 +67,45 @@ document.addEventListener('DOMContentLoaded', async () => {
       nameCell.appendChild(document.createElement('br'));
       nameCell.appendChild(descriptionText);
 
-      const editButton = document.createElement('a');
-      editButton.innerHTML = '<i class="fas fa-pencil-alt"></i>';
-      editButton.classList.add('edit-button');
-      editButton.href = '/updateList';
-      editButton.addEventListener('click', () => {
-        localStorage.setItem('listId', list.id);
-        localStorage.setItem('name', list.list_name);
-        localStorage.setItem('description', list.list_description);
-      });
-
-      const deleteButton = document.createElement('a');
-      deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
-      deleteButton.classList.add('delete-button');
-      deleteButton.href = '/getAllLists'
-      deleteButton.addEventListener('click', () => {
-        const confirmDelete = confirm('Tem certeza que deseja excluir a lista?');
-          if (confirmDelete) {
-            const response = fetch(`/api/list/?id=${encodeURIComponent(list.id)}`, {
-              method: 'DELETE',
-              headers: {
-                'Authorization': `Bearer ${token}`
-              }
-            });
-            alert('Lista excluida com sucesso!.');
-          }
-      });
-
+      const listName = list.list_name;
       const actionsCell = document.createElement('td');
-      actionsCell.appendChild(editButton);
-      actionsCell.insertAdjacentHTML('beforeend', '&emsp;');
-      actionsCell.appendChild(deleteButton);
 
+      if (listName !== 'Watchlist' && listName !== 'Meus filmes favoritos') {
+        const editButton = document.createElement('a');
+        editButton.innerHTML = '<i class="fas fa-pencil-alt"></i>';
+        editButton.classList.add('edit-button');
+        editButton.href = '/updateList';
+        editButton.addEventListener('click', () => {
+          localStorage.setItem('listId', list.id);
+          localStorage.setItem('name', list.list_name);
+          localStorage.setItem('description', list.list_description);
+        });
+  
+        const deleteButton = document.createElement('a');
+        deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+        deleteButton.classList.add('delete-button');
+        deleteButton.href = '/getAllLists'
+        deleteButton.addEventListener('click', () => {
+          const confirmDelete = confirm('Tem certeza que deseja excluir a lista?');
+            if (confirmDelete) {
+              const response = fetch(`/api/list/?id=${encodeURIComponent(list.id)}`, {
+                method: 'DELETE',
+                headers: {
+                  'Authorization': `Bearer ${token}`
+                }
+              });
+              alert('Lista excluida com sucesso!.');
+            }
+        });
+
+
+        actionsCell.appendChild(editButton);
+        actionsCell.insertAdjacentHTML('beforeend', '&emsp;');
+        actionsCell.appendChild(deleteButton);
+  
+      }
+
+    
       nameRow.appendChild(nameCell);
       nameRow.appendChild(actionsCell);
       tbody.appendChild(nameRow);
