@@ -17,87 +17,96 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             const profileData = await detailsResponse.json();
 
-
             const resultProfile = document.createElement('div');
 
-            resultProfile.innerHTML = `
-            <div class="profile-container">
-            <div class="profile-details">
-            <br>
-            <div class="ul-profile">
-            <img class="profile-image" src="${profileData.body.profile.icon ? profileData.body.profile.icon : 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.webp'}" alt="Ícone do perfil do usuário"/>
-                <h1 class="profile-name">${profileData.body.profile.givenname} ${profileData.body.profile.familyname}</h1> 
-                <p class="profile-user">@${profileData.body.profile.userprofile}</p>
-                <p class="profile-bio">${profileData.body.profile.bio}</p>
-
-                </div>
-                <div class="profile-info">
+            if (profileData.message == 'O usuário não foi encontrado') {
+                resultProfile.innerHTML =
+                    `
+                    <div class="profile-container">
+                <h2 class="text-white">Usuario não encontrado</h2>
+                </div><br>
+                <a class="btn btn-primary text-warning btn-link profile-stat" href="/">Voltar para a página inicial</a>
+                `
+            } else {
+                resultProfile.innerHTML = `
+                <div class="profile-container">
+                <div class="profile-details">
                 <br>
-
-                <li id="showMoreBtn" class="list-group-item li-profile uppercase-text">
-                <i class="fas fa-eye"></i> <span>Ver Mais</span>
-            </li>
-                <ul class="list-group ul-profile">
-                
-  
-            
-                <div id="additionalInfo" style="display: none;">
-
-                    <li class="list-group-item li-profile uppercase-text">
-                    <strong><i class="fas fa-map-marker-alt"></i> </strong> ${profileData.body.profile.location}
-                    </li>
-  
-                      <li class="list-group-item li-profile">
-                      <strong><i class="fas fa-calendar-alt"></i></strong>  ${profileData.body.profile.birthday}
-                      </li>
-  
-                      <li class="list-group-item li-profile ">
-                      <i class="fab fa-twitter"></i> <strong>
-                      <a href="https://www.twitter.com/${profileData.body.profile.socialmediax}" target="_blank">
-                      ${profileData.body.profile.socialmediax !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediax : '___'} 
-                      </a>
-                      </strong>
-                       </li>
-       
-                      <li class="list-group-item li-profile">
-                      <i class="fab fa-instagram"></i> <strong>
-                      <a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}" target="_blank">
-                      ${profileData.body.profile.socialmediainstagram !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediainstagram : '___'}
-                      </a>
-                      </strong>
-                      </li>
-      
-                      <li class="list-group-item li-profile">
-                      <i class="fab fa-tiktok"></i> <strong>
-                      <a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}" target="_blank">
-                      ${profileData.body.profile.socialmediatiktok !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediatiktok : '___'}
-                      </a>
-                      </strong>
-                      </li><br>
-                </div>
-                </ul> <hr>
-                <ul id="filmes-favoritos"></ul><hr><br>
-
-                <a href="/getAllUserReviews" id="review-link" class="btn btn-primary text-warning btn-link profile-stat">
-                Reviews: 
-                <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}
-                </span>
-                </a>
-                <canvas id="myChart"></canvas><br>
-            </ul>
-            <hr class="hr-bottom">
-            <div class="text-center">
-                    <a href="/getAllUserLists" id="list-link" class="btn btn-primary text-warning btn-link profile-stat"><i class="fas fa-list-ul"></i> <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span>
-                    </a>
-                    <a id="get-user-watchlist" href="/getUserWatchlist" class="btn btn-primary text-warning btn-link profile-stat"><i class="fa-solid fa-clock"></i> <span class="stat-count">${profileData.body.watchlistCount.movies_count !== null ? profileData.body.watchlistCount.movies_count : 0}</span>
-                    </a>
-                    <a href="/" class="back-link d-block mt-4 text-center">
-                    <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;"></i>
+                <div class="ul-profile">
+                <img class="profile-image" src="${profileData.body.profile.icon ? profileData.body.profile.icon : 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.webp'}" alt="Ícone do perfil do usuário"/>
+                    <h1 class="profile-name">${profileData.body.profile.givenname} ${profileData.body.profile.familyname}</h1> 
+                    <p class="profile-user">@${profileData.body.profile.userprofile}</p>
+                    <p class="profile-bio">${profileData.body.profile.bio}</p>
+    
                     </div>
-            </div>
+                    <div class="profile-info">
+                    <br>
+    
+                    <li id="showMoreBtn" class="list-group-item li-profile uppercase-text">
+                    <i class="fas fa-eye"></i> <span>Ver Mais</span>
+                </li>
+                    <ul class="list-group ul-profile">
+                    
+      
+                
+                    <div id="additionalInfo" style="display: none;">
+    
+                        <li class="list-group-item li-profile uppercase-text">
+                        <strong><i class="fas fa-map-marker-alt"></i> </strong> ${profileData.body.profile.location}
+                        </li>
+      
+                          <li class="list-group-item li-profile">
+                          <strong><i class="fas fa-calendar-alt"></i></strong>  ${profileData.body.profile.birthday}
+                          </li>
+      
+                          <li class="list-group-item li-profile ">
+                          <i class="fab fa-twitter"></i> <strong>
+                          <a href="https://www.twitter.com/${profileData.body.profile.socialmediax}" target="_blank">
+                          ${profileData.body.profile.socialmediax !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediax : '___'} 
+                          </a>
+                          </strong>
+                           </li>
+           
+                          <li class="list-group-item li-profile">
+                          <i class="fab fa-instagram"></i> <strong>
+                          <a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}" target="_blank">
+                          ${profileData.body.profile.socialmediainstagram !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediainstagram : '___'}
+                          </a>
+                          </strong>
+                          </li>
+          
+                          <li class="list-group-item li-profile">
+                          <i class="fab fa-tiktok"></i> <strong>
+                          <a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}" target="_blank">
+                          ${profileData.body.profile.socialmediatiktok !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediatiktok : '___'}
+                          </a>
+                          </strong>
+                          </li><br>
+                    </div>
+                    </ul> <hr>
+                    <ul id="filmes-favoritos"></ul><hr><br>
+    
+                    <a href="/getAllUserReviews" id="review-link" class="btn btn-primary text-warning btn-link profile-stat">
+                    Reviews: 
+                    <span class="stat-count">${profileData.body.profile.contadorreviews !== null ? profileData.body.profile.contadorreviews : 0}
+                    </span>
+                    </a>
+                    <canvas id="myChart"></canvas><br>
+                </ul>
+                <hr class="hr-bottom">
+                <div class="text-center">
+                        <a href="/getAllUserLists" id="list-link" class="btn btn-primary text-warning btn-link profile-stat"><i class="fas fa-list-ul"></i> <span class="stat-count">${profileData.body.profile.contadorlists !== null ? profileData.body.profile.contadorlists : 0}</span>
+                        </a>
+                        <a id="get-user-watchlist" href="/getUserWatchlist" class="btn btn-primary text-warning btn-link profile-stat"><i class="fa-solid fa-clock"></i> <span class="stat-count">${profileData.body.watchlistCount.movies_count !== null ? profileData.body.watchlistCount.movies_count : 0}</span>
+                        </a>
+                        <a href="/" class="back-link d-block mt-4 text-center">
+                        <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;"></i>
+                        </div>
                 </div>
-            </div>
-            `;
+                    </div>
+                </div>
+                `;
+            }
 
             resultContainer.addEventListener('click', (event) => {
                 if (event.target.id === 'list-link') {
