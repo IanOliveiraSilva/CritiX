@@ -22,6 +22,145 @@ function generateStarRating(rating) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const resultsList = document.querySelector('#results');
+  const token = localStorage.getItem('token');
+
+    // WATCHLIST
+    const getWatchlist = async (token) => {
+      try {
+        const response = await fetch(`/api/watchlist/`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+  
+        if (response.ok) {
+          return await response.json();
+        } else {
+          throw new Error('Erro ao obter a watchlist.');
+        }
+      } catch (error) {
+        console.error('Erro ao obter a watchlist:', error);
+        throw error;
+      }
+    };
+  
+    const addToWatchlist = async (token, moviesid) => {
+      try {
+        const response = await fetch(`/api/watchlist/`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            moviesid: moviesid
+          })
+        });
+  
+        if (response.ok) {
+          return true;
+        } else {
+          throw new Error('Erro ao adicionar filme à watchlist.');
+        }
+      } catch (error) {
+        console.error('Erro ao adicionar filme à watchlist:', error);
+        throw error;
+      }
+    };
+  
+    const removeFromWatchlist = async (token, moviesid) => {
+      try {
+        const response = await fetch(`/api/watchlist/remove`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            moviesid: moviesid
+          })
+        });
+  
+        if (response.ok) {
+          return true;
+        } else {
+          throw new Error('Erro ao remover filme da watchlist.');
+        }
+      } catch (error) {
+        console.error('Erro ao remover filme da watchlist:', error);
+        throw error;
+      }
+    };
+  
+    // FAVORITES
+    const getFavoriteList = async (token) => {
+      try {
+        const response = await fetch(`/api/list/favoriteMovies`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+  
+        if (response.ok) {
+          return await response.json();
+        } else {
+          throw new Error('Erro ao obter a watchlist.');
+        }
+      } catch (error) {
+        console.error('Erro ao obter a watchlist:', error);
+        throw error;
+      }
+    };
+  
+    const addToFavoriteList = async (token, moviesid) => {
+      try {
+        const response = await fetch(`/api/list/favoriteMovies`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            moviesid: moviesid
+          })
+        });
+  
+        if (response.ok) {
+          return true;
+        } else {
+          throw new Error('Erro ao adicionar filme à watchlist.');
+        }
+      } catch (error) {
+        console.error('Erro ao adicionar filme à watchlist:', error);
+        throw error;
+      }
+    };
+  
+    const removeFromFavoriteList = async (token, moviesid) => {
+      try {
+        const response = await fetch(`/api/favoriteMovies/remove`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            moviesid: moviesid
+          })
+        });
+  
+        if (response.ok) {
+          return true;
+        } else {
+          throw new Error('Erro ao remover filme da watchlist.');
+        }
+      } catch (error) {
+        console.error('Erro ao remover filme da watchlist:', error);
+        throw error;
+      }
+    };
 
   surpriseButton.addEventListener('click', async () => {
     try {
@@ -54,6 +193,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="d-flex flex-column align-items-center text-justify">
         <h2>${omdbMovie.Title} (${omdbMovie.Year})</h2>
         <img class="img-poster img-poster-hover" src="${omdbMovie.Poster}" alt="${omdbMovie.Title} poster" class="mt-3">
+        <div class="button-container">
+            <strong><button id="add-favorite-button" class="btn-unstyled"><i id="favorite-icon" class="far fa-heart"></i></button></strong><p>&emsp;</p>
+            <strong><button id="add-watchlist-button" class="btn-unstyled-clock"><i id="watchlist-icon" class="far fa-clock"></i></button></strong>
+            </div>
         <p>${omdbMovie.Plot}</p>
         </div>
         
@@ -80,6 +223,31 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsList.innerHTML = '';
         resultsList.appendChild(movieDetails);
 
+        const movieid = omdbMovie.imdbID;
+           
+            const favoriteData = await getFavoriteList(token);
+            const watchlistData = await getWatchlist(token);
+
+            if (
+              favoriteData.body &&
+              favoriteData.body.Lista &&
+              favoriteData.body.Lista.moviesid !== undefined &&
+              favoriteData.body.Lista.moviesid.includes(movieid)
+            ) {
+              const favoriteIcon = document.getElementById('favorite-icon')
+              favoriteIcon.classList.add('fas', 'fa-heart');
+            }
+
+            if (
+              watchlistData.body &&
+              watchlistData.body.Lista &&
+              watchlistData.body.Lista.moviesid !== undefined &&
+              watchlistData.body.Lista.moviesid.includes(movieid)
+            ) {
+              const watchlistIcon = document.getElementById('watchlist-icon')
+              watchlistIcon.classList.add('fas', 'fa-clock');
+            }
+
         const createReviewButton = document.getElementById('create-review-button');
         createReviewButton.addEventListener('click', () => {
           localStorage.setItem('movieTitle', omdbMovie.Title);
@@ -99,8 +267,56 @@ document.addEventListener('DOMContentLoaded', () => {
           window.location.href = '/getAllMovieLists';
         });
 
-        
+        const addWatchlistButton = document.getElementById('add-watchlist-button');
+            addWatchlistButton.addEventListener('click', async () => {
+              try {
+                const watchlistIcon = document.getElementById('watchlist-icon')
+                const watchlistData = await getWatchlist(token);
+                const moviesid = omdbMovie.imdbID;
 
+                if (watchlistData.body &&
+                  watchlistData.body.Lista &&
+                  watchlistData.body.Lista.moviesid !== undefined &&
+                  watchlistData.body.Lista.moviesid.includes(moviesid)) {
+                  await removeFromWatchlist(token, moviesid);
+                  alert('Filme removido da watchlist.');
+                  watchlistIcon.classList.remove('fas', 'fa-clock');
+                  watchlistIcon.classList.add('far', 'fa-clock');
+                } else {
+                  await addToWatchlist(token, moviesid);
+                  alert('Filme adicionado à watchlist com sucesso.');
+                  watchlistIcon.classList.add('fas', 'fa-clock');
+                }
+              } catch (error) {
+                console.error('Erro ao fazer a solicitação:', error);
+              }
+            });
+
+            const addFavoriteButton = document.getElementById('add-favorite-button');
+            addFavoriteButton.addEventListener('click', async () => {
+              try {
+                const favoriteIcon = document.getElementById('favorite-icon')
+                const favoriteData = await getFavoriteList(token);
+                const moviesid = omdbMovie.imdbID;
+
+                if (favoriteData.body &&
+                  favoriteData.body.Lista &&
+                  favoriteData.body.Lista.moviesid !== undefined &&
+                  favoriteData.body.Lista.moviesid.includes(moviesid)) {
+                  await removeFromFavoriteList(token, moviesid);
+                  alert('Filme removido da lista de favoritos.');
+                  favoriteIcon.classList.remove('fas', 'fa-heart');
+                  favoriteIcon.classList.add('far', 'fa-heart');
+
+                } else {
+                  await addToFavoriteList(token, moviesid);
+                  alert('Filme adicionado à lista de favoritos.');
+                  favoriteIcon.classList.add('fas', 'fa-heart');
+                }
+              } catch (error) {
+                console.error('Erro ao fazer a solicitação:', error);
+              }
+            });
         resultsList.appendChild(li);
       } else {
         console.error('Erro ao obter filme surpresa');

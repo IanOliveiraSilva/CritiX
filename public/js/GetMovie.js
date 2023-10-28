@@ -244,10 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const movieid = movie.imdbID;
            
-
             const favoriteData = await getFavoriteList(token);
             const watchlistData = await getWatchlist(token);
-
 
             if (
               favoriteData.body &&
