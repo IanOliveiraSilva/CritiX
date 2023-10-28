@@ -56,31 +56,47 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
                 <div class="profile-info">
                 <br>
-                    
-                    <ul class="list-group ul-profile">
-                    <ul>
 
-                    <li class="list-group-item li-profile uppercase-text">
-                    <strong><i class="fas fa-map-marker-alt"></i> </strong> ${profileData.body.profile.location}
-                    </li>
-                    
+                <ul class="list-group ul-profile">
+              
+              <li id="showMoreBtn" class="list-group-item li-profile uppercase-text">
+              <strong><i class="fas fa-map-marker-alt"></i> </strong> ${profileData.body.profile.location}
+              </li>
+
+          
+              <div id="additionalInfo" style="display: none;">
+
                     <li class="list-group-item li-profile">
                     <strong><i class="fas fa-calendar-alt"></i></strong>  ${profileData.body.profile.birthday}
                     </li>
 
+                    <li class="list-group-item li-profile ">
+                    <i class="fab fa-twitter"></i> <strong>
+                    <a href="https://www.twitter.com/${profileData.body.profile.socialmediax}">
+                    ${profileData.body.profile.socialmediax !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediax : '___'} 
+                    </a>
+                    </strong>
+                     </li>
+     
                     <li class="list-group-item li-profile">
-                   <i class="fab fa-twitter"></i> <strong><a href="https://www.twitter.com/${profileData.body.profile.socialmediax}" target="_blank">${profileData.body.profile.socialmediax}</a></strong>
+                    <i class="fab fa-instagram"></i> <strong>
+                    <a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}">
+                    ${profileData.body.profile.socialmediainstagram !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediainstagram : '___'}
+                    </a>
+                    </strong>
                     </li>
-
+    
                     <li class="list-group-item li-profile">
-                    <i class="fab fa-instagram"></i> <strong><a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}" target="_blank">${profileData.body.profile.socialmediainstagram}</a></strong>
-                    </li>
-
-                    <li class="list-group-item li-profile">
-                    <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}" target="_blank">${profileData.body.profile.socialmediatiktok}</a></strong>
+                    <i class="fab fa-tiktok"></i> <strong>
+                    <a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}">
+                    ${profileData.body.profile.socialmediatiktok !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediatiktok : '___'}
+                    </a>
+                    </strong>
                     </li><br>
-                    </ul><hr>
-                    
+              </div>
+
+
+              </ul> <hr>
                     <ul id="filmes-favoritos"></ul><hr><br>
 
                     <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">
@@ -107,9 +123,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     resultProfile.innerHTML = '';
     resultProfile.appendChild(details);
 
+    const showMoreBtn = document.getElementById("showMoreBtn");
+    const additionalInfo = document.getElementById("additionalInfo");
+
+    showMoreBtn.addEventListener("click", () => {
+      const isHidden = additionalInfo.style.display === "none" || additionalInfo.style.display === "";
+      additionalInfo.style.display = isHidden ? "block" : "none";
+      
+      additionalInfo.classList.toggle("show");
+    });
+
+
+
     // mostrar filmes favoritos
     const filmsContainer = document.createElement('div');
     filmsContainer.classList.add('films-container');
+
     for (const movieTitle of profileData.body.profile.moviesid) {
       try {
         const movieResponse = await fetch(`/api/movie/id?imdbID=${encodeURIComponent(movieTitle)}`, {
@@ -162,6 +191,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       localStorage.setItem('socialmediax', profileData.body.profile.socialmediax);
       localStorage.setItem('birthday', profileData.body.profile.birthday);
       localStorage.setItem('userprofile', profileData.body.profile.userprofile);
+      localStorage.setItem('icon', profileData.body.profile.icon);
     });
 
     // Rating count

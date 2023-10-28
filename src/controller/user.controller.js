@@ -359,7 +359,7 @@ exports.updateUserProfilePartially = async (req, res) => {
       bio: bio || existingProfile.rows[0].bio,
       location: location || existingProfile.rows[0].location,
       birthday: birthday || existingProfile.rows[0].birthday,
-      socialmediaInstagram: socialmediaInstagram || existingProfile.rows[0].socialmediainstagram,
+      socialmediaInstagram: socialmediaInstagram || existingProfile.rows[0].socialmediaInstagram,
       socialMediaX: socialMediaX || existingProfile.rows[0].socialMediax,
       socialMediaTikTok: socialMediaTikTok || existingProfile.rows[0].socialMediatiktok,
       userProfile: userProfileTag || existingProfile.rows[0].userprofile,

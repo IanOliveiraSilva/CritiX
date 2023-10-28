@@ -162,7 +162,7 @@ exports.getListByName = async (req, res) => {
             LATERAL unnest(l.moviesid) AS movie
             ON true
             WHERE l.name = $1 and u.id = $2
-            GROUP BY u.username, l.name, l.moviesid,l.movies, l.description, l.created_at, up.name, up.familyname;
+            GROUP BY u.username, l.name, l.moviesid,l.movies, l.description, l.created_at, up.name, up.familyname
             `,
             [name, userId]
         );
@@ -538,6 +538,13 @@ exports.updateFavoriteList = async (req, res) => {
                 message: "O filme já está na lista.",
             });
         }
+        
+        if(existingMovies.length >= 4){
+            return res.status(400).json({
+                message: "Você só pode ter 4 filmes na lista.",
+            });
+        }
+
         const updatedMovies = [...existingMovies, moviesid].map(moviesid => moviesid.toString());
         const { rows } = await db.query(
             "UPDATE lists SET name = $1, description = $2, isPublic = $3, moviesid = $4 WHERE userId = $5 AND name = $6 RETURNING *",

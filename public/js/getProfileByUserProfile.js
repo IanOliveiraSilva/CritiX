@@ -30,31 +30,43 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
                 <div class="profile-info">
                 <br>
-                    
                 <ul class="list-group ul-profile">
-                <ul>
-
-                <li class="list-group-item li-profile uppercase-text">
-                <strong><i class="fas fa-map-marker-alt"></i> </strong>${profileData.body.profile.location}
+                <li id="showMoreBtn" class="list-group-item li-profile uppercase-text">
+                <strong><i class="fas fa-map-marker-alt"></i> </strong> ${profileData.body.profile.location}
                 </li>
-                
-                <li class="list-group-item li-profile">
-                <strong><i class="fas fa-calendar-alt"></i></strong> ${profileData.body.profile.birthday}
-                </li>
-
-                <li class="list-group-item li-profile">
-                <i class="fab fa-twitter"></i> <strong><a href="https://www.twitter.com/${profileData.body.profile.socialmediax}">${profileData.body.profile.socialmediax}</a></strong>
-                 </li>
- 
-                <li class="list-group-item li-profile">
-                <i class="fab fa-instagram"></i> <strong><a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}">${profileData.body.profile.socialmediainstagram}</a></strong>
-                </li>
-
-                <li class="list-group-item li-profile">
-                <i class="fab fa-tiktok"></i> <strong><a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}">${profileData.body.profile.socialmediatiktok}</a></strong>
-                </li><br>
+  
+            
+                <div id="additionalInfo" style="display: none;">
+  
+                      <li class="list-group-item li-profile">
+                      <strong><i class="fas fa-calendar-alt"></i></strong>  ${profileData.body.profile.birthday}
+                      </li>
+  
+                      <li class="list-group-item li-profile ">
+                      <i class="fab fa-twitter"></i> <strong>
+                      <a href="https://www.twitter.com/${profileData.body.profile.socialmediax}">
+                      ${profileData.body.profile.socialmediax !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediax : '___'} 
+                      </a>
+                      </strong>
+                       </li>
+       
+                      <li class="list-group-item li-profile">
+                      <i class="fab fa-instagram"></i> <strong>
+                      <a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}">
+                      ${profileData.body.profile.socialmediainstagram !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediainstagram : '___'}
+                      </a>
+                      </strong>
+                      </li>
+      
+                      <li class="list-group-item li-profile">
+                      <i class="fab fa-tiktok"></i> <strong>
+                      <a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}">
+                      ${profileData.body.profile.socialmediatiktok !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediatiktok : '___'}
+                      </a>
+                      </strong>
+                      </li><br>
+                </div>
                 </ul> <hr>
-
                 <ul id="filmes-favoritos"></ul><hr><br>
 
                 <a href="/getAllUserReviews" id="review-link" class="btn btn-primary text-warning btn-link profile-stat">
@@ -92,6 +104,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             resultContainer.innerHTML = '';
             resultContainer.appendChild(resultProfile);
+
+            const showMoreBtn = document.getElementById("showMoreBtn");
+            const additionalInfo = document.getElementById("additionalInfo");
+        
+            showMoreBtn.addEventListener("click", () => {
+              const isHidden = additionalInfo.style.display === "none" || additionalInfo.style.display === "";
+              additionalInfo.style.display = isHidden ? "block" : "none";
+              
+              additionalInfo.classList.toggle("show");
+            });
 
             // mostrar filmes favoritos
             const filmsContainer = document.createElement('div');

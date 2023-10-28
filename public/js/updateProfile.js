@@ -1,6 +1,9 @@
+
 let selectedCatInput;
+let selectedImageSrc;
 
 document.addEventListener('DOMContentLoaded', async () => {
+
     const actualName = localStorage.getItem('ProfileName');
     const NameElement = document.getElementById('name');
     NameElement.value = actualName;
@@ -40,15 +43,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userprofileElement = document.getElementById('user');
     userprofileElement.value = actualuserprofile;
 
+
+
+
     let categoryImages = {
         horror: [
             { id: "house-shape", url: "https://media.tenor.com/EiUrRlSeNbMAAAAC/i-burned-the-house-the-shape.gif" },
             { id: "jason-voorhees", url: "https://media.tenor.com/fPveH1pma68AAAAC/mask-jason-voorhees.gif" },
-            { id: "freedy-krueger", url: "https://media.tenor.com/OhUAe3M2dDkAAAAC/a-nightmare-on-elm-street-freddy-krueger.gif"},
-            { id: "leatherface", url: "https://media4.giphy.com/media/3o7aTuy3b4TwuUSUzm/giphy.gif"},
-            { id: "ghostface", url: "https://media.tenor.com/hUZWT9W6VScAAAAC/ghostface-scream-mask.gif"},
-            { id: "pinhead", url: "https://64.media.tumblr.com/d69664c7f87d6e3fcaff9edcf9729d5e/794467b0f1c74cb0-72/s540x810/1a3b5b27f9e831226834d40f8b4d5e3d2cabbad1.gif"}
-            
+            { id: "freedy-krueger", url: "https://media.tenor.com/OhUAe3M2dDkAAAAC/a-nightmare-on-elm-street-freddy-krueger.gif" },
+            { id: "leatherface", url: "https://media4.giphy.com/media/3o7aTuy3b4TwuUSUzm/giphy.gif" },
+            { id: "ghostface", url: "https://media.tenor.com/hUZWT9W6VScAAAAC/ghostface-scream-mask.gif" },
+            { id: "pinhead", url: "https://64.media.tumblr.com/d69664c7f87d6e3fcaff9edcf9729d5e/794467b0f1c74cb0-72/s540x810/1a3b5b27f9e831226834d40f8b4d5e3d2cabbad1.gif" }
+
         ],
         animals: [
             { id: "animal-1", url: "https://i.pinimg.com/originals/16/24/b0/1624b0ab3834896b524eb732eeb19526.gif" },
@@ -59,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             { id: "animal-6", url: "https://media.tenor.com/U282vYfv7xAAAAAd/gato-barril.gif" }
         ],
         action: [
-            { id: "john-mcclane", url: "https://64.media.tumblr.com/3f6f046a387d0c3e9f1cfde8b0b8b1c5/2c4bdc0d5222d559-35/s540x810/2cd3244d77297565e9df778c39af9b0456f2e057.gif"},
+            { id: "john-mcclane", url: "https://64.media.tumblr.com/3f6f046a387d0c3e9f1cfde8b0b8b1c5/2c4bdc0d5222d559-35/s540x810/2cd3244d77297565e9df778c39af9b0456f2e057.gif" },
             { id: "john-wick", url: "https://media.tenor.com/BJlqapqu8vQAAAAC/head-nod-john-wick.gif" },
             { id: "james-bond", url: "https://i.gifer.com/Nssn.gif" },
             { id: "Beatrix-Kiddo", url: "https://filmtheoryfilmtheory.files.wordpress.com/2018/07/kill-bill.gif" },
@@ -67,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             { id: "Bryan-Mills ", url: "https://i.pinimg.com/originals/b2/c4/2a/b2c42ae93afd163dfe7acf89b2b7ca92.gif" }
         ],
         animation: [
-            { id: "minino", url: "https://66.media.tumblr.com/3e335b79d4b093816c9d06d15b814ec4/eff627a093b61045-84/s500x750/26dea3e9fd698738a5ed8d8dbc44c53a0e7010d6.gif"},
+            { id: "minino", url: "https://66.media.tumblr.com/3e335b79d4b093816c9d06d15b814ec4/eff627a093b61045-84/s500x750/26dea3e9fd698738a5ed8d8dbc44c53a0e7010d6.gif" },
             { id: "miguel", url: "https://stories.recreio.com.br/curiosidades-sobre-viva-a-vida-e-uma-festa/assets/8.gif" },
             { id: "chihiro", url: "https://i.pinimg.com/originals/66/9a/03/669a032ddac1220a579f60399b716918.gif" },
             { id: "timao-pumba", url: "https://media.tenor.com/wTexepHXUmQAAAAC/timon-pumba.gif" },
@@ -79,6 +85,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     optionsDiv = document.getElementById("photo-options");
     selectedCatInput = document.getElementById("selectedCat");
 
+    const actualIcon = localStorage.getItem('icon');
+    selectedCatInput.src = actualIcon;
+    selectedCatInput.value = actualIcon;
+    selectedImageSrc = actualIcon;
+
 
     optionsDiv.addEventListener("click", function (event) {
         if (event.target.classList.contains('cat-image')) {
@@ -89,6 +100,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 image.style.border = 'none';
             });
             event.target.style.border = '3px solid red';
+
+            selectedImageSrc = event.target.src;
         }
     });
 
@@ -128,7 +141,8 @@ updateProfileForm.addEventListener('submit', async (event) => {
     const socialMediaTikTok = document.getElementById('socialmediaTikTok').value;
     const userProfileTag = document.getElementById('user').value;
 
-    const selectedImageSrc = document.getElementById(selectedCatInput.value).src;
+
+
 
     const isValidDate = isValidDateOfBirth(birthday);
 

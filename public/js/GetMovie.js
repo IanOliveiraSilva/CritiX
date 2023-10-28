@@ -321,6 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const favoriteData = await getFavoriteList(token);
                 const moviesid = movie.imdbID;
 
+
                 if (favoriteData.body &&
                   favoriteData.body.Lista &&
                   favoriteData.body.Lista.moviesid !== undefined &&
@@ -331,6 +332,12 @@ document.addEventListener('DOMContentLoaded', () => {
                   favoriteIcon.classList.add('far', 'fa-heart');
 
                 } else {
+                  if(favoriteData.body &&
+                    favoriteData.body.Lista &&
+                    favoriteData.body.Lista.moviesid !== undefined &&
+                    favoriteData.body.Lista.moviesid.length >= 4){
+                      alert('Você só pode ter 4 filmes na lista de favoritos');
+                    }
                   await addToFavoriteList(token, moviesid);
                   alert('Filme adicionado à lista de favoritos.');
                   favoriteIcon.classList.add('fas', 'fa-heart');
