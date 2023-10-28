@@ -1,19 +1,25 @@
 <%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
 
-<link rel="stylesheet" href="../css/GetForm.css">
+    <link rel="stylesheet" href="../css/GetForm.css">
 
-<main class="container">
+    <main class="container">
         <section class="reviews bg-light p-4">
 
             <h1 id="pageTitle"></h1>
             <div id="lists"></div>
+            <a href="/profile" class="back-link d-block mt-4 text-center">
+                <i class="fa-solid fa-user" style="color: #000000; font-size: 30px;"></i>
+            </a>
             <a href="/" class="back-link d-block mt-4 text-center">
                 <i class="fa-solid fa-house" style="color: #000000; font-size: 30px;">
-            </i>
-        </a>
+                </i>
+            </a>
+           
+
+           
         </section>
-</main>
+    </main>
 
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>
 
-<script src="../js/getAllLists.js"></script>
+        <script src="../js/getAllLists.js"></script>
