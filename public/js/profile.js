@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <ul>
 
                     <li class="list-group-item li-profile uppercase-text">
-                    <strong><i class="fas fa-map-marker-alt"></i> </strong> ${profileData.body.profile.country}, ${profileData.body.profile.city}
+                    <strong><i class="fas fa-map-marker-alt"></i> </strong> ${profileData.body.profile.location}
                     </li>
                     
                     <li class="list-group-item li-profile">
@@ -156,8 +156,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       localStorage.setItem('ProfileName', profileData.body.profile.givenname);
       localStorage.setItem('familyname', profileData.body.profile.familyname);
       localStorage.setItem('bio', profileData.body.profile.bio);
-      localStorage.setItem('city', profileData.body.profile.city);
-      localStorage.setItem('country', profileData.body.profile.country);
+      localStorage.setItem('location', profileData.body.profile.location);
       localStorage.setItem('socialmediainstagram', profileData.body.profile.socialmediainstagram);
       localStorage.setItem('socialmediatiktok', profileData.body.profile.socialmediatiktok);
       localStorage.setItem('socialmediax', profileData.body.profile.socialmediax);

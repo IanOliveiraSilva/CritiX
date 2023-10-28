@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const bioElement = document.getElementById('bio');
     bioElement.value = actualBio;
 
+    const actualLocation = localStorage.getItem('location');
+    const locationElement = document.getElementById('location');
+    locationElement.value = actualLocation;
+
     const actualbirthday = localStorage.getItem('birthday');
     const birthdayElement = document.getElementById('birthday');
 
@@ -118,6 +122,7 @@ updateProfileForm.addEventListener('submit', async (event) => {
     const familyName = document.getElementById('familyName').value;
     const bio = document.getElementById('bio').value;
     const birthday = document.getElementById('birthday').value;
+    const location = document.getElementById('location').value;
     const socialMediaX = document.getElementById('socialmediax').value;
     const socialmediaInstagram = document.getElementById('socialmediaInstagram').value;
     const socialMediaTikTok = document.getElementById('socialmediaTikTok').value;
@@ -142,6 +147,7 @@ updateProfileForm.addEventListener('submit', async (event) => {
             name: givenName,
             familyName,
             bio,
+            location,
             birthday,
             socialMediaX,
             socialmediaInstagram,

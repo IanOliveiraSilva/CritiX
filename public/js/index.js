@@ -50,7 +50,6 @@ window.onload = function () {
   if (username) {
     document.getElementById('username-display').textContent = `Olá, ${username}!`;
     document.getElementById('logout').textContent = `Sair da conta`;
-    document.getElementById('profile').textContent = `Meu Perfil`;
 
 
     document.getElementById('login-display').style.display = 'none';
@@ -59,8 +58,7 @@ window.onload = function () {
     document.getElementById('login-display').textContent = `Entre em sua conta`;
     document.getElementById('signup-display').textContent = `Crie uma conta`;
 
-    document.getElementById('profile').style.display = 'none';
-    document.getElementById('create-list-display').style.display = 'none';
+    document.getElementById('username-display').style.display = 'none';
   }
 
   const navbar = document.querySelector('.navbar');

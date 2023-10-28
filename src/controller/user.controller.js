@@ -102,8 +102,7 @@ exports.createUserProfile = async (req, res) => {
       name,
       familyName,
       bio,
-      city,
-      country,
+      location,
       birthday,
       socialmediaInstagram,
       socialMediaX,
@@ -115,16 +114,15 @@ exports.createUserProfile = async (req, res) => {
     const userId = req.user.id;
 
     const { rows: [userProfile] } = await db.query(
-      `INSERT INTO user_profile(name, familyName, bio, userId, city, country, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfile, icon) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) 
+      `INSERT INTO user_profile(name, familyName, bio, userId, location, birthday, socialmediaInstagram, socialMediaX, socialMediaTikTok, userProfile, icon) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) 
         RETURNING *`,
       [
         name,
         familyName,
         bio,
         userId,
-        city,
-        country,
+        location,
         birthday,
         socialmediaInstagram,
         socialMediaX,
@@ -154,7 +152,7 @@ exports.getUserProfile = async (req, res) => {
     const userId = req.user.id;
 
     const { rows: [userProfile] } = await db.query(
-      `SELECT u.id, u.userid, u.name as givenName, u.familyname, u.bio, u.city, u.country, u.birthday, u.socialmediainstagram, u.socialmediax, u.socialmediatiktok, u.userprofile, 
+      `SELECT u.id, u.userid, u.name as givenName, u.familyname, u.location, u.bio, u.birthday, u.socialmediainstagram, u.socialmediax, u.socialmediatiktok, u.userprofile, 
       l.id, l.name AS list_name, l.description, l.moviesid, l.ispublic, l.userid, u.icon, 
       (SELECT COUNT(*) FROM reviews WHERE userId = $1) AS contadorreviews, 
       (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists
@@ -281,8 +279,7 @@ exports.updateUserProfile = async (req, res) => {
       name,
       familyName,
       bio,
-      city,
-      country,
+      location,
       birthday,
       socialmediaInstagram,
       socialMediaX,
@@ -297,21 +294,19 @@ exports.updateUserProfile = async (req, res) => {
        SET name = $1,
         familyName = $2,
         bio = $3,
-        city = $4,
-        country = $5,
-        birthday = $6,
-        socialmediaInstagram = $7, 
-        socialMediaX = $8,
-        socialMediaTikTok = $9, 
-        userProfile = $10
-       WHERE userId = $11
+        location = $4,
+        birthday = $5,
+        socialmediaInstagram = $6, 
+        socialMediaX = $7,
+        socialMediaTikTok = $8, 
+        userProfile = $9
+       WHERE userId = $10
        RETURNING *`,
       [
         name,
         familyName,
         bio,
-        city,
-        country,
+        location,
         birthday,
         socialmediaInstagram,
         socialMediaX,
@@ -341,8 +336,7 @@ exports.updateUserProfilePartially = async (req, res) => {
       name,
       familyName,
       bio,
-      city,
-      country,
+      location,
       birthday,
       socialmediaInstagram,
       socialMediaX,
@@ -363,8 +357,7 @@ exports.updateUserProfilePartially = async (req, res) => {
       name: name || existingProfile.rows[0].name,
       familyName: familyName || existingProfile.rows[0].familyname,
       bio: bio || existingProfile.rows[0].bio,
-      city: city || existingProfile.rows[0].city,
-      country: country || existingProfile.rows[0].country,
+      location: location || existingProfile.rows[0].location,
       birthday: birthday || existingProfile.rows[0].birthday,
       socialmediaInstagram: socialmediaInstagram || existingProfile.rows[0].socialmediainstagram,
       socialMediaX: socialMediaX || existingProfile.rows[0].socialMediax,
@@ -379,22 +372,20 @@ exports.updateUserProfilePartially = async (req, res) => {
        SET name = $1, 
         familyName = $2, 
         bio = $3, 
-        city = $4, 
-        country = $5, 
-        birthday = $6, 
-        socialmediaInstagram = $7, 
-        socialMediaX = $8, 
-        socialMediaTikTok = $9, 
-        userProfile = $10,
-        icon = $11
-       WHERE userId = $12 
+        location = $4,
+        birthday = $5, 
+        socialmediaInstagram = $6, 
+        socialMediaX = $7, 
+        socialMediaTikTok = $8, 
+        userProfile = $9,
+        icon = $10
+       WHERE userId = $11 
        RETURNING *`,
       [
         updatedProfile.name,
         updatedProfile.familyName,
         updatedProfile.bio,
-        updatedProfile.city,
-        updatedProfile.country,
+        updatedProfile.location,
         updatedProfile.birthday,
         updatedProfile.socialmediaInstagram,
         updatedProfile.socialMediaX,

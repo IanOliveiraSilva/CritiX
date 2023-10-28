@@ -467,7 +467,6 @@ hr {
 }
 
 .comment-section::before {
-  content: "\f075";
   font-family: FontAwesome;
   font-size: 60px;
   color: #000000;

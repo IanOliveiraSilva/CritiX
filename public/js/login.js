@@ -15,7 +15,7 @@ loginForm.addEventListener('submit', async (event) => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.user.username);
         alert(`Usuário ${data.user.username} logado com sucesso!`);
-        window.location.href = '/profile';
+        window.location.href = '/';
     } else {
         alert(data.message);
     }
