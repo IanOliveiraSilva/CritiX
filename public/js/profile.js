@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     <li class="list-group-item li-profile ">
                     <i class="fab fa-twitter"></i> <strong>
-                    <a target=href="https://www.twitter.com/${profileData.body.profile.socialmediax}" target="_blank">
+                    <a href="https://www.twitter.com/${profileData.body.profile.socialmediax}" target="_blank">
                     ${profileData.body.profile.socialmediax !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediax : '___'} 
                     </a>
                     </strong>
