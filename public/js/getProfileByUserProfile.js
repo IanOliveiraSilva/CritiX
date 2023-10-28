@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <ul class="list-group ul-profile">
                 <ul>
 
-                <li class="list-group-item li-profile">
-                <strong><i class="fas fa-map-marker-alt"></i> </strong>${profileData.body.profile.country}, ${profileData.body.profile.city}
+                <li class="list-group-item li-profile uppercase-text">
+                <strong><i class="fas fa-map-marker-alt"></i> </strong>${profileData.body.profile.location}
                 </li>
                 
                 <li class="list-group-item li-profile">
