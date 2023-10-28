@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
             const profileData = await detailsResponse.json();
+
+
             const resultProfile = document.createElement('div');
+
             resultProfile.innerHTML = `
             <div class="profile-container">
             <div class="profile-details">
@@ -30,13 +33,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
                 <div class="profile-info">
                 <br>
-                <ul class="list-group ul-profile">
+
                 <li id="showMoreBtn" class="list-group-item li-profile uppercase-text">
-                <strong><i class="fas fa-map-marker-alt"></i> </strong> ${profileData.body.profile.location}
-                </li>
+                <i class="fas fa-eye"></i> <span>Ver Mais</span>
+            </li>
+                <ul class="list-group ul-profile">
+                
   
             
                 <div id="additionalInfo" style="display: none;">
+
+                    <li class="list-group-item li-profile uppercase-text">
+                    <strong><i class="fas fa-map-marker-alt"></i> </strong> ${profileData.body.profile.location}
+                    </li>
   
                       <li class="list-group-item li-profile">
                       <strong><i class="fas fa-calendar-alt"></i></strong>  ${profileData.body.profile.birthday}
@@ -105,14 +114,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             resultContainer.innerHTML = '';
             resultContainer.appendChild(resultProfile);
 
+            let isHidden = true;
+
             const showMoreBtn = document.getElementById("showMoreBtn");
             const additionalInfo = document.getElementById("additionalInfo");
-        
+
             showMoreBtn.addEventListener("click", () => {
-              const isHidden = additionalInfo.style.display === "none" || additionalInfo.style.display === "";
-              additionalInfo.style.display = isHidden ? "block" : "none";
-              
-              additionalInfo.classList.toggle("show");
+                isHidden = !isHidden;
+                additionalInfo.style.display = isHidden ? "none" : "block";
+
+                additionalInfo.classList.toggle("show");
+                showMoreBtn.innerHTML = `${isHidden ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>'} <span>${isHidden ? 'Ver Mais' : 'Ver Menos'}</span>`;
+
             });
 
             // mostrar filmes favoritos

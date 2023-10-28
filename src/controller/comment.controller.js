@@ -69,7 +69,7 @@ exports.getReviewComments = async (req, res) => {
   try {
     const { id } = req.query;
     const { rows: comments } = await db.query(
-      `SELECT c.id, c.userId, u.username, c.comment, c.createdAt, COUNT(*)
+      `SELECT c.id, c.userId, u.username, c.comment, c.createdAt, c.reviewid, COUNT(*)
       FROM comments c 
       JOIN users u ON c.userId = u.id 
       WHERE c.reviewId = $1

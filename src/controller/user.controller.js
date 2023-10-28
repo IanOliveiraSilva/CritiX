@@ -209,7 +209,7 @@ exports.getProfileByUser = async (req, res) => {
     const userProfileQuery = req.query.userProfile;
 
     // Consulta o userId baseado no userProfile
-    const userIdQuery = await db.query('SELECT * FROM user_profile WHERE userProfile = $1', [userProfileQuery]);
+    const userIdQuery = await db.query('SELECT * FROM user_profile WHERE LOWER(userProfile) = $1', [userProfileQuery]);
 
     if (userIdQuery.rows.length === 0) {
       return res.status(400).json({

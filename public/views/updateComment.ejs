@@ -1,0 +1,21 @@
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
+
+    <link rel="stylesheet" href="../css/createAndUpdate.css">
+
+    <main>
+        <div class="container background-container">
+            <form class="review-form bg-warning text-dark" id="update-review-form">
+
+                <label for="comment">Digite seu comentário: </label><br>
+                <textarea id="comment" name="comment" rows="2" cols="10"></textarea><br><br>
+
+                <input class="submit-button bg-dark text-warning" type="submit" value="Enviar">
+
+                <a href="/" class="back-link">Voltar para a página inicial</a>
+            </form>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+
+        <script src="../js/updateComment.js"></script>
