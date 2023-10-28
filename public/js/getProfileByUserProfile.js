@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 resultProfile.innerHTML =
                     `
                     <div class="profile-container">
-                <h2 class="text-white">Usuario não encontrado</h2>
+                <h2 class="movie-title">Usuario não encontrado</h2>
                 </div><br>
                 <a class="btn btn-primary text-warning btn-link profile-stat" href="/">Voltar para a página inicial</a>
                 `
