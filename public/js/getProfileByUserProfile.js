@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   
                       <li class="list-group-item li-profile ">
                       <i class="fab fa-twitter"></i> <strong>
-                      <a href="https://www.twitter.com/${profileData.body.profile.socialmediax}">
+                      <a href="https://www.twitter.com/${profileData.body.profile.socialmediax}" target="_blank">
                       ${profileData.body.profile.socialmediax !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediax : '___'} 
                       </a>
                       </strong>
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
        
                       <li class="list-group-item li-profile">
                       <i class="fab fa-instagram"></i> <strong>
-                      <a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}">
+                      <a href="https://www.instagram.com/${profileData.body.profile.socialmediainstagram}" target="_blank">
                       ${profileData.body.profile.socialmediainstagram !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediainstagram : '___'}
                       </a>
                       </strong>
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       
                       <li class="list-group-item li-profile">
                       <i class="fab fa-tiktok"></i> <strong>
-                      <a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}">
+                      <a href="https://www.tiktok.com/@${profileData.body.profile.socialmediatiktok}" target="_blank">
                       ${profileData.body.profile.socialmediatiktok !== null && profileData.body.profile.socialmediax !== "null" ? profileData.body.profile.socialmediatiktok : '___'}
                       </a>
                       </strong>
