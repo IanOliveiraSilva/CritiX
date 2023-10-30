@@ -1,4 +1,6 @@
+
 # CritiX - API de avalição de filmes
+![App Screenshot](logo.png)
 
 Este projeto é uma plataforma para avaliação de filmes, permitindo que os usuários compartilhem suas opiniões e classifiquem filmes.
 ## Tech Stack
