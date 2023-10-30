@@ -83,7 +83,7 @@ registerForm.addEventListener('submit', async (event) => {
   const socialMediaX = document.getElementById('socialmediax').value;
   const socialmediaInstagram = document.getElementById('socialmediaInstagram').value;
   const socialMediaTikTok = document.getElementById('socialmediaTikTok').value;
-  const userProfileTag = document.getElementById('user').value;
+  const userProfileTag = localStorage.getItem('username');
   const selectedImageSrc = document.getElementById(selectedCatInput.value).src;
 
   const isValidDate = isValidDateOfBirth(birthday);
