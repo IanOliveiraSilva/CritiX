@@ -71,7 +71,6 @@
                           imdbIdMovies.push(movie.imdbID);
                           updateSelectedMovies();
                           input.value = '';
-                          alert(`Filme "${movie.Title}" adicionado à lista!`);
                       });
                       resultsList.appendChild(li);
                   });
