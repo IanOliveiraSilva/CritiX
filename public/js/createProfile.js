@@ -78,8 +78,7 @@ registerForm.addEventListener('submit', async (event) => {
   const name = document.getElementById('name').value;
   const familyName = document.getElementById('familyName').value;
   const bio = document.getElementById('bio').value;
-  const city = document.getElementById('city').value;
-  const country = document.getElementById('country').value;
+  const location = document.getElementById('location').value;
   const birthday = document.getElementById('birthday').value;
   const socialMediaX = document.getElementById('socialmediax').value;
   const socialmediaInstagram = document.getElementById('socialmediaInstagram').value;
@@ -102,7 +101,7 @@ registerForm.addEventListener('submit', async (event) => {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-    body: JSON.stringify({ name, familyName, bio, city, country, birthday, socialMediaX, socialmediaInstagram, socialMediaTikTok, userProfileTag, icon: selectedImageSrc })
+    body: JSON.stringify({ name, familyName, bio, location, birthday, socialMediaX, socialmediaInstagram, socialMediaTikTok, userProfileTag, icon: selectedImageSrc })
   });
   const data = await response.json();
   console.log(response);
