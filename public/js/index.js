@@ -2,7 +2,6 @@ document.getElementById('logout').addEventListener('click', function () {
   const confirmLogout = confirm('Tem certeza que deseja sair da conta?');
   if (confirmLogout) {
     localStorage.clear();
-    alert('Logout bem-sucedido.');
   }
 });
 
