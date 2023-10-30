@@ -68,7 +68,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                     if(response.ok){
                         window.location.href = '/getAllUserReviews';
-                        alert('Comentario excluido com sucesso!.');
                     }
                 });
 

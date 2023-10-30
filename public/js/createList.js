@@ -37,7 +37,6 @@
     
           if (response.ok) {
             const data = await response.json();
-            alert('Lista criada com sucesso!');
             window.location.href = '/getAllLists';
           } else {
             const data = await response.json();

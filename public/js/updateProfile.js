@@ -164,7 +164,6 @@ updateProfileForm.addEventListener('submit', async (event) => {
     });
     const data = await response.json();
     if (response.ok) {
-        alert(`Perfil Atualizado com sucesso!`);
         window.location.href = '/profile';
     } else {
         alert(data.message);

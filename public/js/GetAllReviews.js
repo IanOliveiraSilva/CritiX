@@ -174,7 +174,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 'Authorization': `Bearer ${token}`
               }
             });
-            alert('Review excluida com sucesso!.');
           }
         });
 

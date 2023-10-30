@@ -143,8 +143,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     });
 
-
-
     // mostrar filmes favoritos
     const filmsContainer = document.createElement('div');
     filmsContainer.classList.add('films-container');

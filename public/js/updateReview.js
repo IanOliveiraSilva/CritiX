@@ -103,7 +103,6 @@ updateReviewForm.addEventListener('submit', async (event) => {
   });
   const data = await response.json();
   if (response.ok) {
-    alert(`Review Atualizada com sucesso!`);
     window.location.href = '/getAllReviews';
   } else {
     alert(data.message);

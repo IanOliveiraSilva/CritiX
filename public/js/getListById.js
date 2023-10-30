@@ -124,7 +124,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                   'Authorization': `Bearer ${token}`
                 }
               });
-              alert('Lista excluida com sucesso!.');
             }
           });
 

@@ -156,7 +156,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                             'Authorization': `Bearer ${token}`
                         }
                     });
-                    alert('Review excluida com sucesso!.');
                 }
             });
 
@@ -214,7 +213,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     if (response.ok) {
                         const data = await response.json();
-                        alert('Comentário criado com sucesso!');
                         window.location.href = '/getAllReviewsComments';
                     } else {
                         const data = await response.json();

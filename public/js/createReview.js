@@ -70,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const data = await response.json();
 
     if (response.ok) {
-      alert(`Review criada com sucesso!`);
       window.location.href = '/getAllReviews';
     } else {
       alert(data.message);

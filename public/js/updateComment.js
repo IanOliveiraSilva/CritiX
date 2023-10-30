@@ -26,7 +26,6 @@ updateReviewForm.addEventListener('submit', async (event) => {
   });
   const data = await response.json();
   if (response.ok) {
-    alert(`Comentario Atualizado com sucesso!`);
     window.location.href = '/getAllReviewsComments';
   } else {
     alert(data.message);

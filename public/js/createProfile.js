@@ -106,7 +106,6 @@ registerForm.addEventListener('submit', async (event) => {
   const data = await response.json();
   console.log(response);
   if (response.ok) {
-    alert(`Usuário ${username} criado com sucesso!`);
 
     const watchlistResponse = await fetch('api/list', {
       method: 'POST',
