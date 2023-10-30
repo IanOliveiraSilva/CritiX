@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', async () => {
+  const movieTitle = localStorage.getItem('movieTitle');
+  const titleElement = document.getElementById('movieTitle');
+
   const idInput = document.getElementById('reviewId');
   const reviewId = localStorage.getItem('reviewId');
   const idElement = document.getElementById('reviewId');
+
   const specialRatingInputTitle = document.getElementById('specialRatingTitle');
   const movieGenre = localStorage.getItem('genre');
 
@@ -35,6 +39,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (movieGenre) {
     specialRatingInputTitle.textContent = `${movieGenreMapped}: `;
+  }
+
+  if (movieTitle) {
+    titleElement.textContent = movieTitle;
   }
 
   if (actualRating) {

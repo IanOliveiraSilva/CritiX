@@ -103,7 +103,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
               </ul> <hr>
                     <ul id="filmes-favoritos">
-                    <h2 class="">Meus favoritos</h2>
                     </ul><hr><br>
 
                     <a href="/getAllReviews" class="btn btn-primary text-warning btn-link profile-stat">

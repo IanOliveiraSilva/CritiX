@@ -5,6 +5,7 @@
     <main>
         <div class="container background-container">
             <form class="review-form bg-warning text-dark" id="update-review-form">
+                <h1 id="movieTitle">Título do Filme</h1><br>
 
                 <label for="rating">De 1 a 5, como você classificaria esse filme?</label>
                 <input type="hidden" id="rating" name="rating" required>
@@ -32,6 +33,8 @@
                     <span class="star" data-value="4">☆</span>
                     <span class="star" data-value="5">☆</span>
                 </div><br>
+
+                <input type="hidden" id="reviewId" name="reviewId" required>
 
                 <input class="submit-button bg-dark text-warning" type="submit" value="Enviar">
 

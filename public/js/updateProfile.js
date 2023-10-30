@@ -39,11 +39,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const actualsocialmediaxElement = document.getElementById('socialmediax');
     actualsocialmediaxElement.value = actualsocialmediax;
 
-    const actualuserprofile = localStorage.getItem('userprofile');
-    const userprofileElement = document.getElementById('user');
-    userprofileElement.value = actualuserprofile;
-
-
 
 
     let categoryImages = {
@@ -139,8 +134,6 @@ updateProfileForm.addEventListener('submit', async (event) => {
     const socialMediaX = document.getElementById('socialmediax').value;
     const socialmediaInstagram = document.getElementById('socialmediaInstagram').value;
     const socialMediaTikTok = document.getElementById('socialmediaTikTok').value;
-    const userProfileTag = document.getElementById('user').value;
-
 
 
 
@@ -166,7 +159,6 @@ updateProfileForm.addEventListener('submit', async (event) => {
             socialMediaX,
             socialmediaInstagram,
             socialMediaTikTok,
-            userProfileTag,
             icon: selectedImageSrc
         })
     });

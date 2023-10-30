@@ -279,12 +279,10 @@ document.addEventListener('DOMContentLoaded', () => {
                   watchlistData.body.Lista.moviesid !== undefined &&
                   watchlistData.body.Lista.moviesid.includes(moviesid)) {
                   await removeFromWatchlist(token, moviesid);
-                  alert('Filme removido da watchlist.');
                   watchlistIcon.classList.remove('fas', 'fa-clock');
                   watchlistIcon.classList.add('far', 'fa-clock');
                 } else {
                   await addToWatchlist(token, moviesid);
-                  alert('Filme adicionado à watchlist com sucesso.');
                   watchlistIcon.classList.add('fas', 'fa-clock');
                 }
               } catch (error) {
@@ -304,13 +302,17 @@ document.addEventListener('DOMContentLoaded', () => {
                   favoriteData.body.Lista.moviesid !== undefined &&
                   favoriteData.body.Lista.moviesid.includes(moviesid)) {
                   await removeFromFavoriteList(token, moviesid);
-                  alert('Filme removido da lista de favoritos.');
                   favoriteIcon.classList.remove('fas', 'fa-heart');
                   favoriteIcon.classList.add('far', 'fa-heart');
 
                 } else {
+                  if(favoriteData.body &&
+                    favoriteData.body.Lista &&
+                    favoriteData.body.Lista.moviesid !== undefined &&
+                    favoriteData.body.Lista.moviesid.length >= 4){
+                      alert('Você só pode ter 4 filmes na lista de favoritos');
+                    }
                   await addToFavoriteList(token, moviesid);
-                  alert('Filme adicionado à lista de favoritos.');
                   favoriteIcon.classList.add('fas', 'fa-heart');
                 }
               } catch (error) {

@@ -80,6 +80,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or username or password' });
     }
 
+
     // Gera um token de autenticação
     const token = jwt.sign(
       { id: user.rows[0].id, username: user.rows[0].username },
@@ -283,8 +284,7 @@ exports.updateUserProfile = async (req, res) => {
       birthday,
       socialmediaInstagram,
       socialMediaX,
-      socialMediaTikTok,
-      userProfileTag
+      socialMediaTikTok
     } = req.body;
     const userId = req.user.id;
 
@@ -298,9 +298,8 @@ exports.updateUserProfile = async (req, res) => {
         birthday = $5,
         socialmediaInstagram = $6, 
         socialMediaX = $7,
-        socialMediaTikTok = $8, 
-        userProfile = $9
-       WHERE userId = $10
+        socialMediaTikTok = $8
+       WHERE userId = $9
        RETURNING *`,
       [
         name,
@@ -311,7 +310,6 @@ exports.updateUserProfile = async (req, res) => {
         socialmediaInstagram,
         socialMediaX,
         socialMediaTikTok,
-        userProfileTag,
         userId]
     );
 
@@ -341,7 +339,6 @@ exports.updateUserProfilePartially = async (req, res) => {
       socialmediaInstagram,
       socialMediaX,
       socialMediaTikTok,
-      userProfileTag,
       icon
     } = req.body;
     const userId = req.user.id;
@@ -362,7 +359,6 @@ exports.updateUserProfilePartially = async (req, res) => {
       socialmediaInstagram: socialmediaInstagram || existingProfile.rows[0].socialmediaInstagram,
       socialMediaX: socialMediaX || existingProfile.rows[0].socialMediax,
       socialMediaTikTok: socialMediaTikTok || existingProfile.rows[0].socialMediatiktok,
-      userProfile: userProfileTag || existingProfile.rows[0].userprofile,
       icon: icon || existingProfile.rows[0].icon
     };
 
@@ -376,10 +372,9 @@ exports.updateUserProfilePartially = async (req, res) => {
         birthday = $5, 
         socialmediaInstagram = $6, 
         socialMediaX = $7, 
-        socialMediaTikTok = $8, 
-        userProfile = $9,
-        icon = $10
-       WHERE userId = $11 
+        socialMediaTikTok = $8,
+        icon = $9
+       WHERE userId = $10 
        RETURNING *`,
       [
         updatedProfile.name,
@@ -390,7 +385,6 @@ exports.updateUserProfilePartially = async (req, res) => {
         updatedProfile.socialmediaInstagram,
         updatedProfile.socialMediaX,
         updatedProfile.socialMediaTikTok,
-        updatedProfile.userProfile,
         icon,
         userId
       ]

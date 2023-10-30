@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <li><strong>Media de Notas:</strong> ${detailsData.body.movie.medianotas !== 0 ? generateStarRating(detailsData.body.movie.medianotas) : 'Esse filme ainda não possui nota'}</li>
               <li><strong>${movieGenreMapped}:</strong> ${detailsData.body.movie.mediaspecialrating !== 0 ? generateStarRating(detailsData.body.movie.mediaspecialrating) : 'Esse filme ainda não possui nota'}</li>
               <strong><button id="create-review-button" class="btn-back">Criar Review</button></strong>
-              <strong><button id="get-review-button" class="btn-back">Ver Review</button></strong>
+              <strong><button id="get-review-button" class="btn-back">Ver Reviews</button></strong>
               <strong><button id="get-list-button" class="btn-back">Ver Listas</button></strong><br>
               </ul>
               `;
@@ -301,12 +301,10 @@ document.addEventListener('DOMContentLoaded', () => {
                   watchlistData.body.Lista.moviesid !== undefined &&
                   watchlistData.body.Lista.moviesid.includes(moviesid)) {
                   await removeFromWatchlist(token, moviesid);
-                  alert('Filme removido da watchlist.');
                   watchlistIcon.classList.remove('fas', 'fa-clock');
                   watchlistIcon.classList.add('far', 'fa-clock');
                 } else {
                   await addToWatchlist(token, moviesid);
-                  alert('Filme adicionado à watchlist com sucesso.');
                   watchlistIcon.classList.add('fas', 'fa-clock');
                 }
               } catch (error) {
@@ -327,7 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
                   favoriteData.body.Lista.moviesid !== undefined &&
                   favoriteData.body.Lista.moviesid.includes(moviesid)) {
                   await removeFromFavoriteList(token, moviesid);
-                  alert('Filme removido da lista de favoritos.');
                   favoriteIcon.classList.remove('fas', 'fa-heart');
                   favoriteIcon.classList.add('far', 'fa-heart');
 
@@ -339,7 +336,6 @@ document.addEventListener('DOMContentLoaded', () => {
                       alert('Você só pode ter 4 filmes na lista de favoritos');
                     }
                   await addToFavoriteList(token, moviesid);
-                  alert('Filme adicionado à lista de favoritos.');
                   favoriteIcon.classList.add('fas', 'fa-heart');
                 }
               } catch (error) {

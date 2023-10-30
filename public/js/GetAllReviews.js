@@ -157,6 +157,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           localStorage.setItem('rating', review.rating);
           localStorage.setItem('review', review.review);
           localStorage.setItem('specialRating', review.specialrating);
+          localStorage.setItem('genre', review.genre);
+          localStorage.setItem('movieTitle', review.title);
         });
 
         const deleteButton = document.createElement('a');

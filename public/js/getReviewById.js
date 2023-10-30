@@ -113,18 +113,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         reviewsContainer.appendChild(commentCell);
 
 
+        reviewsContainer.appendChild(ratingCell);
+        reviewsContainer.appendChild(generateStarRating(reviewsData[0].rating, 'movie-title'));
+        const br = document.createElement('br');
+        reviewsContainer.appendChild(br);
+
         if (reviewsData[0].specialrating !== null) {
             const specialRatingCell = document.createElement('p');
             specialRatingCell.textContent = `${movieGenreMapped}:`;
             specialRatingCell.classList.add('movie-title');
             reviewsContainer.appendChild(specialRatingCell);
             reviewsContainer.appendChild(generateStarRating(reviewsData[0].specialrating, 'movie-title'));
+            reviewsContainer.appendChild(br);
         }
-
-        reviewsContainer.appendChild(ratingCell);
-        reviewsContainer.appendChild(generateStarRating(reviewsData[0].rating, 'movie-title'));
-        const br = document.createElement('br');
-        reviewsContainer.appendChild(br);
 
         const buttonsContainer = document.createElement('div');
         buttonsContainer.classList.add('text-center');

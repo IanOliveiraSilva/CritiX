@@ -65,6 +65,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 'Authorization': `Bearer ${token}`
                             }
                         });
+                    }
+                    if(response.ok){
+                        window.location.href = '/getAllUserReviews';
                         alert('Comentario excluido com sucesso!.');
                     }
                 });
