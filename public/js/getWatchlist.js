@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const listData = await response.json();
 
     const movieCount = document.createElement('p');
-    movieCount.textContent = listData.body.Lista.name + ' POSSUI ' + listData.body.Lista.movies_count + ' FILMES NA WATCHLIST ';
+    movieCount.textContent = listData.body.Lista.user + ' POSSUI ' + listData.body.Lista.movies_count + ' FILMES NA WATCHLIST ';
     const hr = document.createElement('hr');
     movieCount.classList.add('title', 'uppercase-text');
 

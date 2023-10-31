@@ -274,6 +274,46 @@ exports.getProfileByUser = async (req, res) => {
   }
 };
 
+exports.searchUsers = async (req, res) => {
+  try {
+    const searchQuery = req.query.query.toLowerCase().trim();
+
+    const { rows: users } = await db.query(
+      'SELECT * FROM user_profile WHERE LOWER(userProfile) LIKE $1',
+      [`%${searchQuery}%`]
+    );
+
+    if (users.length === 0) {
+      return res.status(400).json({
+        message: 'Nenhum usuário encontrado com a consulta fornecida',
+      });
+    }
+
+    const profiles = users.map(user => {
+      return {
+        userId: user.userid,
+        givenName: user.name,
+        familyName: user.familyname,
+        userProfile: user.userprofile,
+        icon: user.icon || 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.webp',
+      };
+    });
+
+    res.status(200).json({
+      message: 'Usuários encontrados com sucesso!',
+      body: {
+        users: profiles,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Um erro aconteceu durante a busca de usuários',
+      error,
+    });
+  }
+};
+
 exports.updateUserProfile = async (req, res) => {
   try {
     // Requisição do body e do usuario autenticado

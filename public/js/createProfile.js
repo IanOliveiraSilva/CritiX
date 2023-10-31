@@ -106,7 +106,7 @@ registerForm.addEventListener('submit', async (event) => {
   const data = await response.json();
   console.log(response);
   if (response.ok) {
-
+    localStorage.setItem('icon', icon);
     const watchlistResponse = await fetch('api/list', {
       method: 'POST',
       headers: {

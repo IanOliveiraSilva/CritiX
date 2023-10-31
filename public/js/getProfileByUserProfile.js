@@ -1,13 +1,58 @@
 const token = localStorage.getItem('token')
 
+
 document.addEventListener('DOMContentLoaded', async () => {
     const resultContainer = document.querySelector('#results');
-    const form = document.querySelector('#search-form');
     const input = document.querySelector('#search-input');
+    const suggestionsContainer = document.querySelector('#suggestions-container');
+    let query = '';
+    
 
-    form.addEventListener('submit', async (event) => {
-        const query = input.value.trim();
-        event.preventDefault();
+    input.addEventListener('input', async () => {
+        query = input.value.trim();
+        suggestionsContainer.innerHTML = '';
+    
+        if (query.length >= 3) {
+            try {
+                const response = await fetch(`/api/profile/searchUsers?query=${encodeURIComponent(query)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+    
+                if (response.ok) {
+                    const responseBody = await response.json();
+                    const users = responseBody.body.users;
+    
+                    users.forEach(user => {
+                        const suggestion = document.createElement('div');
+                        suggestion.innerHTML = `
+                        <div class="profile-container">
+                            <img src="${user.icon}" class="profile-image"> &emsp; <h2 class="movie-title">${user.userProfile}</h2>
+                        </div><br>
+                        `;
+                        suggestion.addEventListener('click', async () => {
+                            input.value = user.userProfile;
+                            query = user.userProfile
+                            suggestionsContainer.innerHTML = '';
+                            await showUserProfile(query);
+                        });
+    
+                        suggestionsContainer.appendChild(suggestion);
+                    });
+                } else {
+                    console.error('Erro ao obter sugestões de usuários:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar sugestões de usuários:', error);
+            }
+        }
+    
+    });
+
+
+    async function showUserProfile(query) {
         try {
             const detailsResponse = await fetch(`/api/profile/userProfile?userProfile=${encodeURIComponent(query)}`, {
                 method: 'GET',
@@ -303,15 +348,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             };
 
-
             var ctx = document.getElementById('myChart');
             new Chart(ctx, chartData);
 
-
-
-
+            input.value = '';
         } catch (error) {
             console.log(error);
         }
-    });
+    };
 });
