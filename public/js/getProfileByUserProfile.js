@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
                     users.forEach(user => {
                         const suggestion = document.createElement('div');
+                        suggestion.classList.add('suggestion')
                         suggestion.innerHTML = `
                         <div class="profile-container">
                             <img src="${user.icon}" class="profile-image"> &emsp; <h2 class="movie-title">${user.userProfile}</h2>

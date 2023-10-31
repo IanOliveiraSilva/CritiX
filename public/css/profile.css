@@ -152,6 +152,16 @@ form {
   text-align: center;
 }
 
+
+.suggestion:hover{ 
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3), 
+  inset 0px 0px 5px rgb(0, 0, 0); 
+  transform: scale(1.1) rotate(.5deg); 
+  border-radius: 50%; 
+  transition: all 0.5s ease-in-out; 
+}
+
+
 .profile-image-container {
   margin-right: 20px;
 }
