@@ -38,21 +38,24 @@ p {
 
 
 .navbar {
-  background-color: #ff8800;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 10px 0;
+  background: linear-gradient(to right, #ff9900, #ffd900);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px 0;
+  z-index: 1000;
+  border-radius: 10px;
 }
 
 .nav-link {
   text-decoration: none;
   color: #333;
   font-weight: bold;
-  transition: color 0.3s;
+  transition: color 0.3s, transform .3s;
   margin-right: 20px;
 }
 
 .nav-link:hover {
   color: #ff6600;
+  transform: scale(1.1);
 }
 
 .navbar-toggler-icon {
@@ -64,11 +67,27 @@ p {
       flex-direction: column;
       align-items: center;
       padding-top: 10px;
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,.2);
+      transition: all .3s ease-in-out;
+      transform-origin: top left;
+      transform: scale(1);
+      opacity:1;
+      visibility: visible;
+      height:auto;
+      pointer-events:auto;
+      
   }
 
-  .navbar-toggler {
-      margin-bottom: 10px;
-  }
+.navbar-toggler {
+    margin-bottom: 10px;
+    background-color:#333;
+    border:none;
+    color:#fff;
+    cursor:pointer
+}
 }
 
 a {
@@ -160,11 +179,11 @@ label {
 }
 
 .profile-image {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
   border-radius: 50%;
-  border: 3px solid #000000;
+  border: 2px solid #000000;
 }
 
 .profile-details {
@@ -322,7 +341,5 @@ label {
   display: flex;
   justify-content: center;
 }
-
-
 
 

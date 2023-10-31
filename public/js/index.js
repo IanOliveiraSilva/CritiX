@@ -9,6 +9,7 @@ window.onload = function () {
   const sectionTitles = document.querySelectorAll('.section-title');
   const sectionTexts = document.querySelectorAll('.section-text');
 
+
   sectionTitles.forEach((title, index) => {
     setTimeout(() => {
       title.classList.add('animate__animated', 'animate__fadeInUp');
@@ -35,6 +36,8 @@ window.onload = function () {
 
   const requireLoginLinks = document.querySelectorAll('.require-login');
   const username = localStorage.getItem('username');
+  const icon = localStorage.getItem('icon');
+  const iconDisplay = document.getElementById('icon-display');
 
   requireLoginLinks.forEach(function (link) {
     link.addEventListener('click', function (event) {
@@ -47,18 +50,22 @@ window.onload = function () {
   });
 
   if (username) {
-    document.getElementById('username-display').textContent = `Olá, ${username}!`;
     document.getElementById('logout').textContent = `Sair da conta`;
     document.getElementById('get-started').href = `/getMovie`;
-
+    document.getElementById('navbarDropdownMenuLink').innerHTML = `<img class="profile-image" src="${icon}"> ${username}`;
 
     document.getElementById('login-display').style.display = 'none';
     document.getElementById('signup-display').style.display = 'none';
   } else {
+    document.getElementById('navbarDropdownMenuLink').textContent = `Conta`;
     document.getElementById('login-display').textContent = `Entre em sua conta`;
     document.getElementById('signup-display').textContent = `Crie uma conta`;
     document.getElementById('get-started').href = `/register`;
 
+    document.getElementById('reviews-display').style.display = 'none';
+    document.getElementById('lists-display').style.display = 'none';
+    document.getElementById('watchlist-display').style.display = 'none';
+    document.getElementById('profile-display').style.display = 'none';
     document.getElementById('username-display').style.display = 'none';
   }
 
@@ -77,8 +84,7 @@ window.onload = function () {
     });
   });
 
-  const usernameDisplay = document.getElementById('username-display');
-  usernameDisplay.innerHTML = `<i class="fas fa-user"></i> Olá, ${username}!`;
+
 };
 
 const token = localStorage.getItem('token')

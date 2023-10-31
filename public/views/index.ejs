@@ -5,12 +5,23 @@
     <main class="">
         <nav class="navbar navbar-expand-lg navbar-light bg-warning">
             <div class="container">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link" href="/profile" id="username-display"></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/register" id="signup-display"></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/login" id="login-display"></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/" id="logout"></a></li>
-                    <li class="nav-item"><a class="nav-link require-login" href="/getMovie">Buscar filmes</a></li>
+                <ul class="navbar-nav mx-auto d-flex align-items-center">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </a> 
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">  
+                            <a class="dropdown-item" href="/profile" id="profile-display">Profile</a>
+                            <a class="dropdown-item" href="/getAllReviews" id="reviews-display">Reviews</a>
+                            <a class="dropdown-item" href="/getAllLists" id="lists-display">Lists</a>
+                            <a class="dropdown-item" href="/getWatchlist" id="watchlist-display">Watchlist</a>
+                            <hr>
+                            <a class="dropdown-item" href="/register" id="signup-display"></a>
+                            <a class="dropdown-item" href="/login" id="login-display"></a>
+                            <a class="dropdown-item" href="/" id="logout"></a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link require-login" href="/getMovie">Filmes</a></li>
                     <li class="nav-item"><a class="nav-link require-login" href="/getMovieSurprise">Surpreenda-me</a>
                     </li>
                     <li class="nav-item"><a class="nav-link require-login" href="/getProfileByUserProfile">Buscar
@@ -18,7 +29,6 @@
                 </ul>
             </div>
         </nav>
-
 
         <section class="container mt-5 index-container">
             <div class="row">
@@ -36,7 +46,8 @@
                         compartilhe suas
                         opiniões e descubra filmes que vão deslumbrar seus sentidos.
                     </p>
-                    <a href="/register" id="get-started" class="btn btn-primary btn-lg animate__animated animate__fadeInUp">Comece
+                    <a href="/register" id="get-started"
+                        class="btn btn-primary btn-lg animate__animated animate__fadeInUp">Comece
                         Agora</a>
                 </div>
             </div>
@@ -52,7 +63,7 @@
                 </div>
             </div>
         </section><br>
-        
+
 
 
         <section class="container mt-5 index-container">

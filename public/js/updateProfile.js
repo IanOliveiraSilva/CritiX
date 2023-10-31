@@ -164,6 +164,7 @@ updateProfileForm.addEventListener('submit', async (event) => {
     });
     const data = await response.json();
     if (response.ok) {
+        localStorage.setItem('icon', selectedImageSrc);
         window.location.href = '/profile';
     } else {
         alert(data.message);

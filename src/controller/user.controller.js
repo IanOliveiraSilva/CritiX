@@ -69,7 +69,8 @@ exports.login = async (req, res) => {
     }
 
     // Consulta o usuário no banco de dados pelo email ou nome de usuário
-    const user = await db.query('SELECT * FROM users WHERE username  = $1 OR email  = $1', [email_or_username]);
+    const user = await db.query('SELECT u.id, u.username, u.email, u.password, u.created_at, up.icon FROM users u JOIN user_profile up ON up.userid = u.id WHERE username  = $1 OR email  = $1',
+    [email_or_username]);
     if (user.rows.length === 0) {
       return res.status(400).json({ message: 'Invalid email or username or password' });
     }

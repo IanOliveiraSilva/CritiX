@@ -13,6 +13,7 @@ loginForm.addEventListener('submit', async (event) => {
     const data = await response.json();
     if (response.ok) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('icon', data.user.icon)
         localStorage.setItem('username', data.user.username);
         window.location.href = '/';
     } else {
