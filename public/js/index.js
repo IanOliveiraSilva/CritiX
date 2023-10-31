@@ -10,6 +10,7 @@ window.onload = function () {
   const sectionTexts = document.querySelectorAll('.section-text');
 
 
+
   sectionTitles.forEach((title, index) => {
     setTimeout(() => {
       title.classList.add('animate__animated', 'animate__fadeInUp');
@@ -37,7 +38,6 @@ window.onload = function () {
   const requireLoginLinks = document.querySelectorAll('.require-login');
   const username = localStorage.getItem('username');
   const icon = localStorage.getItem('icon');
-  const iconDisplay = document.getElementById('icon-display');
 
   requireLoginLinks.forEach(function (link) {
     link.addEventListener('click', function (event) {
@@ -84,6 +84,15 @@ window.onload = function () {
     });
   });
 
+  var pumpkinImg = document.getElementById("pumpkin-img");
+
+  pumpkinImg.addEventListener("mouseover", function () {
+    pumpkinImg.src = "../images/aboboraAcessa.png";
+  });
+
+  pumpkinImg.addEventListener("mouseout", function () {
+    pumpkinImg.src = "../images/39fa0ee71c5f3e20078dee1784f7e0c7.png";
+  });
 
 };
 
