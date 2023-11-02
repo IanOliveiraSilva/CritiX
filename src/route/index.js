@@ -26,6 +26,7 @@ const routes = [
   { path: '/getListById', title: 'Get List By ID'},
   { path: '/getReviewById', title: 'Get Review By ID'},
   { path: '/updateComment', title: 'Update Comment'},
+  { path: '/changePassword', title: 'Change Password'},
   { path: '/', title: 'CritiX' }
 ];
 

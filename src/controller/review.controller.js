@@ -49,7 +49,6 @@ exports.createReview = async (req, res) => {
   const { title, imdbID, rating, comment, isPublic, specialRating } = req.body;
   const userId = req.user.id;
 
-
   try {
     if (!rating || rating < lowRating || rating > highRating) {
       return res.status(400).json({ message: 'Rating deve ser um numero entre 0 a 5' });

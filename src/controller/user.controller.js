@@ -70,7 +70,7 @@ exports.login = async (req, res) => {
 
     // Consulta o usuário no banco de dados pelo email ou nome de usuário
     const user = await db.query('SELECT u.id, u.username, u.email, u.password, u.created_at, up.icon FROM users u JOIN user_profile up ON up.userid = u.id WHERE username  = $1 OR email  = $1',
-    [email_or_username]);
+      [email_or_username]);
     if (user.rows.length === 0) {
       return res.status(400).json({ message: 'Invalid email or username or password' });
     }
@@ -96,6 +96,28 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.changePassword = async (req, res) => {
+  try {
+    const { newPassword } = req.body;
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const userId = req.user.id;
+
+    const user = await db.query(
+      `
+      UPDATE users
+      SET password = $1 
+      WHERE id = $2
+      `,
+      [
+        hashedPassword,
+        userId
+      ]
+    )
+    return res.status(201).json({ user: 'Senha alterada com sucesso!'});
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
 
 exports.createUserProfile = async (req, res) => {
   try {
@@ -165,7 +187,7 @@ exports.getUserProfile = async (req, res) => {
       [userId]
     );
 
-    let { rows: [ watchlistCount ] } = await db.query(
+    let { rows: [watchlistCount] } = await db.query(
       `
       SELECT 
       COUNT(DISTINCT movie) AS movies_count
@@ -179,7 +201,7 @@ exports.getUserProfile = async (req, res) => {
       [userId]
     )
 
-    if(watchlistCount == undefined){
+    if (watchlistCount == undefined) {
       watchlistCount = {
         "movies_count": null
       };
@@ -233,7 +255,7 @@ exports.getProfileByUser = async (req, res) => {
       [userId]
     );
 
-    let { rows: [ watchlistCount ] } = await db.query(
+    let { rows: [watchlistCount] } = await db.query(
       `
       SELECT 
       COUNT(DISTINCT movie) AS movies_count
@@ -247,7 +269,7 @@ exports.getProfileByUser = async (req, res) => {
       [userId]
     )
 
-    if(watchlistCount == undefined){
+    if (watchlistCount == undefined) {
       watchlistCount = {
         "movies_count": null
       };

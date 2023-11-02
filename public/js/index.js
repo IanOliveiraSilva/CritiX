@@ -87,7 +87,7 @@ window.onload = function () {
   var pumpkinImg = document.getElementById("pumpkin-img");
 
   pumpkinImg.addEventListener("mouseover", function () {
-    pumpkinImg.src = "../images/aboboraAcessa.png";
+    pumpkinImg.src = "../images/aboboraAcessa2.png";
   });
 
   pumpkinImg.addEventListener("mouseout", function () {

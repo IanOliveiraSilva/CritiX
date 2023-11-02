@@ -45,6 +45,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="profile-container">
             <div class="profile-details">
             <div class="ul-profile">
+            <div class="dropdown">
+            <i class="fas fa-gear" id="gear-icon"></i>
+            <div class="dropdown-content" id="dropdown-options">
+            <a href="/changePassword">Trocar senha</a>
+
+            </div>
+            </div>
+           
             <a href="/updateProfile" id="edit-profile-link"><br><br>
             <i class="fas fa-pencil-alt" style="font-size: 30px;"></i>
             </a>
@@ -321,6 +329,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     var ctx = document.getElementById('myChart');
     new Chart(ctx, chartData);
+
+    var gearIcon = document.getElementById("gear-icon");
+    var dropdownOptions = document.getElementById("dropdown-options");
+
+    gearIcon.addEventListener("click", function () {
+      if (dropdownOptions.style.display === "none" || dropdownOptions.style.display === "") {
+        dropdownOptions.style.display = "block";
+      } else {
+        dropdownOptions.style.display = "none";
+      }
+    });
+
+    window.addEventListener("click", function (event) {
+      if (!event.target.matches("#gear-icon")) {
+        dropdownOptions.style.display = "none";
+      }
+    });
+
 
   } catch (error) {
     console.error('Erro:', error);

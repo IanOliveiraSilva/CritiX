@@ -96,6 +96,8 @@ router.post('/user/signup', userController.signup);
  */
 router.post('/user/login', userController.login);
 
+router.post('/user/changePassword', userController.AuthMiddleware, userController.changePassword);
+
 /**
  * @swagger
  * /api/user/profile:
