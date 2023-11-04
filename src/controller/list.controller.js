@@ -356,7 +356,7 @@ exports.updateList = async (req, res) => {
 exports.updateListPartially = async (req, res) => {
     const { id } = req.query;
     const userId = req.user.id;
-    const { name, description, isPublic, movieIds } = req.body;
+    const { name, description, isPublic, moviesid, movies} = req.body;
 
     try {
         const existingList = await db.query(
@@ -374,13 +374,27 @@ exports.updateListPartially = async (req, res) => {
         const updatedList = {
             name: name || existingList.rows[0].name,
             description: description || existingList.rows[0].description,
-            isPublic: isPublic !== undefined ? isPublic : existingList.rows[0].ispublic,
-            movies: movieIds || existingList.rows[0].movies
+            isPublic: isPublic !== undefined ? isPublic : existingList.rows[0].ispublic
         };
 
+        const existingMoviesId = existingList.rows[0].moviesid || [];
+        const existingMovies = existingList.rows[0].movies || [];
+        let updatedMovies;
+        let updatedMoviesId;
+        if (existingMoviesId.includes(moviesid)) {
+            return res.status(400).json({
+                message: "O filme já está na lista.",
+            });
+        }
+        if(moviesid && movies){
+            updatedMoviesId = [...existingMoviesId, moviesid].map(moviesid => moviesid.toString()); 
+            updatedMovies = [...existingMovies, movies].map(movies => movies.toString());
+        }
+
+        
         const { rows } = await db.query(
-            "UPDATE lists SET name = $1, description = $2, isPublic = $3, movies = $4 WHERE userId = $5 AND id = $6 RETURNING *",
-            [updatedList.name, updatedList.description, updatedList.isPublic, updatedList.movies, userId, id]
+            "UPDATE lists SET name = $1, description = $2, isPublic = $3, moviesid = $4, movies = $5 WHERE userId = $6 AND id = $7 RETURNING *",
+            [updatedList.name, updatedList.description, updatedList.isPublic, updatedMoviesId, updatedMovies ,userId, id]
         );
 
         return res.status(200).json({
@@ -492,12 +506,14 @@ exports.updateWatchlist = async (req, res) => {
                 message: "Não foi possível encontrar a lista com o id fornecido.",
             });
         }
+
         const existingMovies = existingList.rows[0].moviesid || [];
         if (existingMovies.includes(moviesid)) {
             return res.status(400).json({
                 message: "O filme já está na lista.",
             });
         }
+
         const updatedMovies = [...existingMovies, moviesid].map(moviesid => moviesid.toString());
         const { rows } = await db.query(
             "UPDATE lists SET name = $1, description = $2, isPublic = $3, moviesid = $4 WHERE userId = $5 AND name = $6 RETURNING *",

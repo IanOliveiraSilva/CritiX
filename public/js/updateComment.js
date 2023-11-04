@@ -9,9 +9,7 @@ updateReviewForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const token = localStorage.getItem('token');
   const commentId = localStorage.getItem('commentId');
-
   const comment = document.getElementById('comment').value;
-
 
   const response = await fetch(`/api/comment/?id=${encodeURIComponent(commentId)}`, {
     method: 'PUT',
@@ -21,7 +19,6 @@ updateReviewForm.addEventListener('submit', async (event) => {
     },
     body: JSON.stringify({
       comment,
-
     })
   });
   const data = await response.json();

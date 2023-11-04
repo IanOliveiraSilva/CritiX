@@ -1,27 +1,36 @@
-<%- include('partials/header', {pageTitle: 'Critix - Movie Search'}) %>
+<%- include('partials/header', {pageTitle: 'Critix - Movie Search' }) %>
 
-<link rel="stylesheet" href="../css/createAndUpdate.css">
+    <link rel="stylesheet" href="../css/createAndUpdate.css">
 
-<main>
-    <div class="container background-container">
-        <form class="review-form bg-warning text-dark" id="update-list-form">
+    <main>
+        <div class="container background-container">
+            <form class="review-form bg-warning text-dark" id="update-list-form">
 
-            <label for="name">Nome da Sua Lista de Filmes:</label>
-            <input type="text" id="name" name="name"><br><br>
+                <label for="name">Nome da Sua Lista de Filmes:</label>
+                <input type="text" id="name" name="name"><br><br>
 
-            <label for="description">Adicione uma Descrição para a Lista:</label>
-            <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+                <label for="description">Adicione uma Descrição para a Lista:</label>
+                <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
 
-            <label for="isPublic">Deseja que os outros vejam sua lista?</label>
-            <input type="checkbox" id="isPublic" name="isPublic" checked><br><br>
+                <label for="isPublic">Deseja que os outros vejam sua lista?</label>
+                <input type="checkbox" id="isPublic" name="isPublic" checked><br><br>
 
-            <input class="submit-button bg-dark text-warning" type="submit" value="Enviar">
+                <label for="movieTitles">Títulos dos Filmes</label><br>
+                <input type="search" name="search" id="search-input" placeholder="Titanic"><br>
+                <ul class="results" id="results"></ul>
 
-            <a href="/" class="back-link">Voltar para a página inicial</a>
-        </form>
-    </div>
-</main>
+                <label for="movieTitles">Filmes escolhidos</label>
+                <ul class="selected-movies">
+                    <li id="selected-movies"></li>
+                </ul><br>
 
-<%- include('partials/footer') %>
+                <input class="submit-button bg-dark text-warning" type="submit" value="Enviar">
 
-<script src="../js/updateList.js"></script>
+                <a href="/" class="back-link">Voltar para a página inicial</a>
+            </form>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+
+        <script src="../js/updateList.js"></script>

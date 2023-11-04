@@ -32,11 +32,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     movieCount.textContent = 'Filmes: ' + listsData[0].movies_count;
     movieCount.classList.add('title', 'uppercase-text');
 
+    const listDescription = document.createElement('p');
+    listDescription.textContent = `${listsData[0].list_description}`;
+    listDescription.classList.add('title');
+
     const randomMovieButton = document.createElement('a');
 
     titleContainer.appendChild(listName);
     titleContainer.appendChild(hr);
     titleContainer.appendChild(movieCount);
+    titleContainer.appendChild(listDescription);
 
     let randomMovie
     if (listsData && listsData[0] && listsData[0].moviesid && listsData[0].moviesid.length > 0) {
@@ -106,6 +111,10 @@ document.addEventListener('DOMContentLoaded', async () => {
           editButton.classList.add('edit-button');
           editButton.href = '/updateList';
           editButton.addEventListener('click', () => {
+            localStorage.removeItem('movieTitles');
+            localStorage.removeItem('movieIds');
+            localStorage.setItem('movieTitles', listsData[0].movie_titles);
+            localStorage.setItem('movieIds', listsData[0].moviesid);
             localStorage.setItem('listId', list.id);
             localStorage.setItem('name', list.list_name);
             localStorage.setItem('description', list.list_description);

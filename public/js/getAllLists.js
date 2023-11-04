@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (listName !== 'Watchlist' && listName !== 'Meus filmes favoritos') {
         const editButton = document.createElement('a');
-        editButton.innerHTML = '<i class="fas fa-pencil-alt"></i>';
+        editButton.innerHTML = '<i class="fas fa-pencil-alt" style="color: #000000;"></i>';
         editButton.classList.add('edit-button');
         editButton.href = '/updateList';
         editButton.addEventListener('click', () => {
