@@ -58,9 +58,6 @@ exports.createReview = async (req, res) => {
       return res.status(400).json({ message: 'Titulo é obrigatorio!' });
     }
 
-    if (!comment) {
-      return res.status(400).json({ message: 'Review é obrigatoria!' });
-    }
 
     const omdbApiKey = process.env.OMDB_API_KEY;
     const omdbResponse = await axios.get(`http://www.omdbapi.com/?t=${title}&apikey=${omdbApiKey}`);
