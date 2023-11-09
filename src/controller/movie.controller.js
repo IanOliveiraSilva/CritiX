@@ -77,6 +77,7 @@ exports.getMovieById = async (req, res) => {
           mediaspecialrating: 0,
         };
       }
+
       res.status(200).json({
         body: {
           movieData,
@@ -113,7 +114,7 @@ exports.surpriseMe = async (req, res) => {
         `,
           [omdbMovieData.Title]);
 
-        if(movie == undefined){
+        if (movie == undefined) {
           movie = {
             "medianotas": null,
             "mediaspecialrating": null
@@ -163,7 +164,7 @@ exports.getMoviesTendency = async (req, res) => {
     );
 
     res.status(200).json({
-      movies: moviesWithReviewCounts 
+      movies: moviesWithReviewCounts
     });
   } catch (error) {
     console.error(error);

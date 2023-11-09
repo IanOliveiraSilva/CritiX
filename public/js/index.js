@@ -49,6 +49,17 @@ window.onload = function () {
     });
   });
 
+  var pumpkinImg = document.getElementById("pumpkin-img");
+
+  pumpkinImg.addEventListener("mouseover", function () {
+    pumpkinImg.src = "../images/aboboraAcessa2.png";
+  });
+
+  pumpkinImg.addEventListener("mouseout", function () {
+    pumpkinImg.src = "../images/39fa0ee71c5f3e20078dee1784f7e0c7.png";
+  });
+
+
   if (username) {
     document.getElementById('logout').textContent = `Sair da conta`;
     document.getElementById('get-started').href = `/getMovie`;
@@ -83,17 +94,6 @@ window.onload = function () {
       item.style.transform = 'scale(1)';
     });
   });
-
-  var pumpkinImg = document.getElementById("pumpkin-img");
-
-  pumpkinImg.addEventListener("mouseover", function () {
-    pumpkinImg.src = "../images/aboboraAcessa2.png";
-  });
-
-  pumpkinImg.addEventListener("mouseout", function () {
-    pumpkinImg.src = "../images/39fa0ee71c5f3e20078dee1784f7e0c7.png";
-  });
-
 };
 
 const token = localStorage.getItem('token')
