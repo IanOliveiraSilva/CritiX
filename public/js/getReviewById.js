@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const titleContainer = document.getElementById('pageTitle')
     const movieContainer = document.createElement('div');
 
+
     try {
         // Requests
         const response = await fetch(`/api/reviewById/?id=${encodeURIComponent(id)}`, {
@@ -165,12 +166,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             profileButton.href = '/profile'
 
 
+            const shareButton = document.createElement('a');
+            shareButton.innerHTML = `<i class="fa-solid fa-share" style="color: #000000; font-size: 30px;"></i>`;
+            shareButton.addEventListener('click', function(){
+                html2canvas(reviewsContainer).then(function(canvas) {
+                    let link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png');
+                    link.download = 'screenshot.png';
+                    link.click();
+                });
+            });
+
+
             buttonsContainer.appendChild(editButton);
             buttonsContainer.insertAdjacentHTML('beforeend', '&emsp;');
             buttonsContainer.appendChild(deleteButton);
             buttonsContainer.insertAdjacentHTML('beforeend', '<br>');
             buttonsContainer.insertAdjacentHTML('beforeend', '<br>');
             buttonsContainer.appendChild(profileButton);
+            buttonsContainer.insertAdjacentHTML('beforeend', '&emsp;');
+            buttonsContainer.appendChild(shareButton);
             reviewsContainer.appendChild(buttonsContainer);
         }
 

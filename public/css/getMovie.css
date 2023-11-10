@@ -8,6 +8,11 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
+  background-image: url('../images/movietheater.webp');
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .navbar {
@@ -137,7 +142,7 @@ button[type="submit"]:hover {
   border: .2px solid #ccc;
   border-radius: 5px;
   padding: 10px;
-  margin-bottom: 5px;
+  margin-top: 26px;
   transition: transform 0.2s ease-in-out;
   list-style-type: none;
 }
@@ -299,4 +304,67 @@ button[type="submit"]:hover {
 
 .btn-unstyled-clock:focus { 
   outline: none; 
+}
+
+.plot-container {
+  background-color: #ffffff; /* Cor de fundo da seção do enredo */
+  padding: 20px; /* Espaçamento interno */
+  border-radius: 15px; /* Borda arredondada */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra */
+  transition: all 0.3s ease; /* Suaviza a transição de hover */
+}
+
+.plot-container:hover {
+  transform: translateY(-5px); /* Eleva um pouco a caixa ao passar o mouse */
+}
+
+.plot-text {
+  font-size: 16px; /* Tamanho da fonte para o texto do enredo */
+  line-height: 1.5; /* Altura da linha para melhor legibilidade */
+  color: #444; /* Cor do texto */
+  margin-top: 10px; /* Espaçamento superior */
+}
+
+.plot-text::first-letter {
+  font-size: 25px; /* Tamanho da primeira letra maior para ênfase */
+  font-weight: bold; /* Deixa a primeira letra em negrito */
+  color: #000000; /* Cor da primeira letra */
+}
+
+.movie-title {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #000000;
+}
+
+.movie-li {
+  font-size: 1em;
+  font-weight: bold;
+  color: #000000;
+}
+
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.create-review-button {
+  background-color: #f8d7da;
+  padding: 10px;
+  border: 2px solid #d9534f;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.create-review-button i {
+  margin-right: 5px; /* Espaçamento à direita do ícone */
 }

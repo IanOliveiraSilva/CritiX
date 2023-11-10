@@ -179,7 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsList.innerHTML = '';
         data.Search.forEach(movie => {
           const li = document.createElement('li');
-          li.textContent = `${movie.Title} (${movie.Year})`;
+          li.classList.add('movie-li')
+          li.innerHTML = `${movie.Title}(${movie.Year}) `;
           li.addEventListener('click', async () => {
             const detailsResponse = await fetch(`/api/movie/id?title=${encodeURIComponent(movie.Title)}&imdbID=${encodeURIComponent(movie.imdbID)}`, {
               method: 'GET',
@@ -207,43 +208,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const details = document.createElement('div');
             details.innerHTML = `
-            <div class="d-flex flex-column align-items-center text-justify">
-            <h2>${detailsData.body.movieData.Title}</h2><br>
-            
-            <img class="img-poster img-poster-hover" src="${detailsData.body.movieData.Poster}" alt="${detailsData.body.movieData.Title} poster" class="mt-3">
-            <div class="button-container">
-            <strong><button id="add-favorite-button" class="btn-unstyled"><i id="favorite-icon" class="far fa-heart"></i></button></strong><p>&emsp;</p>
-            <strong><button id="add-watchlist-button" class="btn-unstyled-clock"><i id="watchlist-icon" class="far fa-clock"></i></button></strong>
+            <div class="profile-container">
+            <div class="row">
+              <div class="col-md-4 text-center">
+                <img class="img-poster img-fluid img-poster-hover" src="${detailsData.body.movieData.Poster}" alt="${detailsData.body.movieData.Title} poster">
+                <strong><button id="add-favorite-button" draggable="true" class="btn-unstyled"><i id="favorite-icon" class="far fa-heart"></i></button></strong>&emsp;
+                <strong><button id="add-watchlist-button" draggable="true" class="btn-unstyled-clock"><i id="watchlist-icon" class="far fa-clock"></i></button></strong>
+              </div>
+             <div class="col-md-8">
+             <div class="plot-container">
+             <h3 class="movie-title">${detailsData.body.movieData.Title}</h3>
+             <p class="plot-text">${detailsData.body.movieData.Plot}</p>
+         </div><br>
+                <ul class="list-unstyled">
+                  <li><strong>Gênero:</strong> ${detailsData.body.movieData.Genre}</li>
+                  <li><strong>Duração:</strong> ${detailsData.body.movieData.Runtime}</li>
+                  <li><strong>Média de Notas:</strong> ${detailsData.body.movie.medianotas !== 0 ? generateStarRating(detailsData.body.movie.medianotas) : 'Esse filme ainda não possui nota'}</li>
+                  <li><strong>${movieGenreMapped}:</strong> ${detailsData.body.movie.mediaspecialrating !== 0 ? generateStarRating(detailsData.body.movie.mediaspecialrating) : 'Esse filme ainda não possui nota'}</li>
+                  <li id="create-review-button" class="create-review-button">
+                  <i class="fas fa-pencil-alt"></i> <strong>Criar uma review</strong>
+                  </li>
+                  </ul>
+                <button id="get-review-button" class="btn btn-primary mt-3">Ver Reviews</button>
+                <button id="get-list-button" class="btn btn-secondary mt-3">Ver Listas</button><br>
+                <a class="text-dark" href="/">Voltar para a página inicial</a>
+              </div>
             </div>
-
-            <p>${detailsData.body.movieData.Plot}</p><br>
-            </div>
-  
-            <ul>
-              <li><strong>Released:</strong> ${detailsData.body.movieData.Released}</li>
-              <li><strong>Writer:</strong> ${detailsData.body.movieData.Writer}</li>
-              <li><strong>Country:</strong> ${detailsData.body.movieData.Country}</li>
-              <li><strong>Box Office:</strong> ${detailsData.body.movieData.BoxOffice}</li>
-              <li><strong>Awards:</strong> ${detailsData.body.movieData.Awards}</li>
-              <li><strong>Actors:</strong> ${detailsData.body.movieData.Actors}</li>
-              <li><strong>Genre:</strong> ${detailsData.body.movieData.Genre}</li>
-              <li><strong>Runtime:</strong> ${detailsData.body.movieData.Runtime}</li>
-              <li><strong>Rated:</strong> ${detailsData.body.movieData.Rated}</li>
-              <li><strong>IMDb Rating:</strong> ${detailsData.body.movieData.imdbRating}</li>
-              <li><strong>Metascore Rating:</strong> ${detailsData.body.movieData.Metascore}</li>
-              <li><strong>Quantidade de reviews:</strong> ${detailsData.body.reviewCount !== '0' ? detailsData.body.reviewCount : 'Esse filme ainda não possui review'}</li>
-              <li><strong>Media de Notas:</strong> ${detailsData.body.movie.medianotas !== 0 ? generateStarRating(detailsData.body.movie.medianotas) : 'Esse filme ainda não possui nota'}</li>
-              <li><strong>${movieGenreMapped}:</strong> ${detailsData.body.movie.mediaspecialrating !== 0 ? generateStarRating(detailsData.body.movie.mediaspecialrating) : 'Esse filme ainda não possui nota'}</li>
-              <strong><button id="create-review-button" class="btn-back">Criar Review</button></strong>
-              <strong><button id="get-review-button" class="btn-back">Ver Reviews</button></strong>
-              <strong><button id="get-list-button" class="btn-back">Ver Listas</button></strong><br>
-              </ul>
+          </div>
               `;
             resultsList.innerHTML = '';
             resultsList.appendChild(details);
 
             const movieid = movie.imdbID;
-           
+
             const favoriteData = await getFavoriteList(token);
             const watchlistData = await getWatchlist(token);
 
@@ -329,12 +326,12 @@ document.addEventListener('DOMContentLoaded', () => {
                   favoriteIcon.classList.add('far', 'fa-heart');
 
                 } else {
-                  if(favoriteData.body &&
+                  if (favoriteData.body &&
                     favoriteData.body.Lista &&
                     favoriteData.body.Lista.moviesid !== undefined &&
-                    favoriteData.body.Lista.moviesid.length >= 4){
-                      alert('Você só pode ter 4 filmes na lista de favoritos');
-                    }
+                    favoriteData.body.Lista.moviesid.length >= 4) {
+                    alert('Você só pode ter 4 filmes na lista de favoritos');
+                  }
                   await addToFavoriteList(token, moviesid);
                   favoriteIcon.classList.add('fas', 'fa-heart');
                 }
