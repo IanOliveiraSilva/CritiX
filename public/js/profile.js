@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             <i class="fas fa-gear" id="gear-icon"></i>
             <div class="dropdown-content" id="dropdown-options">
             <a href="/changePassword">Trocar senha</a>
-
             </div>
             </div>
            
@@ -68,11 +67,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <li id="showMoreBtn" class="list-group-item li-profile uppercase-text">
                 <i class="fas fa-eye"></i> <span>Ver Mais</span>
             </li>
-
                 <ul class="list-group ul-profile">
-       
 
-          
               <div id="additionalInfo" style="display: none;">
 
                     <li class="list-group-item li-profile">
@@ -107,8 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </strong>
                     </li><br>
               </div>
-
-
+              
               </ul> <hr>
                     <ul id="filmes-favoritos">
                     </ul><hr><br>

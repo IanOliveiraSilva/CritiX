@@ -28,6 +28,7 @@ const userRoute = require('./route/user.routes');
 const movieRoute = require('./route/movie.routes');
 const listRoute = require('./route/list.routes');
 const commentRoute = require('./route/comment.routes');
+const gameRoute = require('./route/game.routes');
 
 // Middleware para o uso das rotas
 app.use(index);
@@ -36,6 +37,7 @@ app.use('/api/', userRoute);
 app.use('/api/', movieRoute);
 app.use('/api/', listRoute);
 app.use('/api/', commentRoute);
+app.use('/api/', gameRoute);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 module.exports = app;
