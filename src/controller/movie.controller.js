@@ -55,6 +55,7 @@ exports.getMovieById = async (req, res) => {
 
     if (omdbResponse.status === 200 && omdbResponse.data && omdbResponse.data.Response === 'True') {
       const movieData = omdbResponse.data;
+      
       let { rows: [movie] } = await db.query(
         `
       SELECT medianotas, mediaspecialrating

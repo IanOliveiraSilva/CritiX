@@ -132,19 +132,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     resultProfile.innerHTML = '';
     resultProfile.appendChild(details);
 
-    let isHidden = true;
+      let isHidden = true;
 
-    const showMoreBtn = document.getElementById("showMoreBtn");
-    const additionalInfo = document.getElementById("additionalInfo");
+      const showMoreBtn = document.getElementById("showMoreBtn");
+      const additionalInfo = document.getElementById("additionalInfo");
 
-    showMoreBtn.addEventListener("click", () => {
-      isHidden = !isHidden;
-      additionalInfo.style.display = isHidden ? "none" : "block";
+      showMoreBtn.addEventListener("click", () => {
+        isHidden = !isHidden;
+        additionalInfo.style.display = isHidden ? "none" : "block";
 
-      additionalInfo.classList.toggle("show");
-      showMoreBtn.innerHTML = `${isHidden ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>'} <span>${isHidden ? 'Ver Mais' : 'Ver Menos'}</span>`;
+        additionalInfo.classList.toggle("show");
+        showMoreBtn.innerHTML = `${isHidden ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>'} <span>${isHidden ? 'Ver Mais' : 'Ver Menos'}</span>`;
 
-    });
+      });
 
     // mostrar filmes favoritos
     const filmsContainer = document.createElement('div');

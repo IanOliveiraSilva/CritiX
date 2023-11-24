@@ -20,8 +20,7 @@ CREATE TABLE user_profile (
   bio character varying(30) NOT NULL,
   contadorreviews integer,
   contadorlists integer,
-  city varchar(50),
-  country varchar(50),
+  location varchar(50),
   birthday date,
   socialMediaInstagram varchar(50),
   socialMediaX varchar(50),
@@ -31,26 +30,22 @@ CREATE TABLE user_profile (
 );
 
 -- Criação da tabela 'movies'
-DROP TABLE IF EXISTS movies;
-CREATE TABLE movies (
-  id SERIAL PRIMARY KEY,
-  imdbID VARCHAR(255) NOT NULL,
+DROP TABLE IF EXISTS games;
+CREATE TABLE games (
+  gameid VARCHAR(255) PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
-  year VARCHAR(255) NOT NULL,
+  image VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  mediaNotas DECIMAL(10,2),
-  mediaspecialrating DOUBLE PRECISION 	
+  mediaNotas DECIMAL(10,2)	
 );
 
 
 -- Criação da tabela 'reviews'
 DROP TABLE IF EXISTS reviews;
 CREATE TABLE reviews (
-  id SERIAL PRIMARY KEY,
-  imdbid character varying(30) NOT NULL,
+  id SERIAL PRIMARY KEY
   userId INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  movieId INTEGER REFERENCES movies(id) ON DELETE CASCADE,
-  specialRating double precision,
+  gameid VARCHAR(255) REFERENCES games(gameid) ON DELETE CASCADE,
   rating FLOAT NOT NULL,
   review TEXT NOT NULL,
   isPublic BOOLEAN DEFAULT true,
@@ -64,8 +59,8 @@ CREATE TABLE IF NOT EXISTS lists (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT,
-    moviesid CHARACTER VARYING(255)[],
-    movies CHARACTER VARYING(255)[],
+    gamesid CHARACTER VARYING(255)[],
+    games CHARACTER VARYING(255)[],
     ispublic BOOLEAN NOT NULL,
     userid INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
