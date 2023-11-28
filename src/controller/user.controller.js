@@ -176,13 +176,11 @@ exports.getUserProfile = async (req, res) => {
     const userId = req.user.id;
 
     const { rows: [userProfile] } = await db.query(
-      `SELECT u.id, u.userid, u.name as givenName, u.familyname, u.location, u.bio, u.birthday, u.socialmediainstagram, u.socialmediax, u.socialmediatiktok, u.userprofile, 
-      l.id, l.name AS list_name, l.description, l.moviesid, l.ispublic, l.userid, u.icon, 
+      `SELECT u.id, u.userid, u.name as givenName, u.familyname, u.location, u.bio, u.birthday, u.socialmediainstagram, u.socialmediax, u.socialmediatiktok, u.userprofile, u.icon, 
       (SELECT COUNT(*) FROM reviews WHERE userId = $1) AS contadorreviews, 
       (SELECT COUNT(*) FROM lists WHERE userId = $1) AS contadorlists
       FROM user_profile u
-      INNER JOIN lists l ON u.userid = l.userid
-      WHERE u.userId = $1 AND l.name = 'Meus filmes favoritos'
+      WHERE u.userId = $1
       `,
       [userId]
     );
@@ -206,6 +204,7 @@ exports.getUserProfile = async (req, res) => {
         "movies_count": null
       };
     }
+
 
     // Formata a data de nascimento para o formato 'DD/MM/AAAA'
     if (userProfile && userProfile.birthday) {

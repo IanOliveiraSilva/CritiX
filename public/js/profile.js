@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             <a href="/updateProfile" id="edit-profile-link"><br><br>
             <i class="fas fa-pencil-alt" style="font-size: 30px;"></i>
             </a>
-            <img class="profile-image" src="${profileData.body.profile.icon ? profileData.body.profile.icon : 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.webp'}" alt="Ícone do perfil do usuário"/>
                 <h1 class="profile-name">${profileData.body.profile.givenname} ${profileData.body.profile.familyname}</h1> 
                 <p class="profile-user">@${profileData.body.profile.userprofile}</p>
                 <p class="profile-bio">${profileData.body.profile.bio}</p>

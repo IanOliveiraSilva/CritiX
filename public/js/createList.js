@@ -37,7 +37,7 @@
     
           if (response.ok) {
             const data = await response.json();
-            window.location.href = '/getAllLists';
+            window.location.href = '/profile/lists';
           } else {
             const data = await response.json();
             alert(`Erro: ${data.message}`);

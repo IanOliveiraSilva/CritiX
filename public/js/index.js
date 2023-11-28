@@ -9,8 +9,6 @@ window.onload = function () {
   const sectionTitles = document.querySelectorAll('.section-title');
   const sectionTexts = document.querySelectorAll('.section-text');
 
-
-
   sectionTitles.forEach((title, index) => {
     setTimeout(() => {
       title.classList.add('animate__animated', 'animate__fadeInUp');

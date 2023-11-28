@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const nameText = document.createElement('p');
       nameText.textContent = list.list_name;
-
+      
       const descriptionText = document.createElement('span');
       descriptionText.textContent = list.list_description;
 
