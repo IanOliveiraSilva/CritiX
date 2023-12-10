@@ -98,4 +98,5 @@ Se você tem algum feedback, por favor me contate: ianoliveira.tec@gmail.com
 ## Autor
 
 - [@IanOliveiraSilva](https://github.com/IanOliveiraSilva)
+- [@Gabi](https://github.com/mgabrielef)
 
